@@ -1,22 +1,23 @@
-# ui_main_window.py
 from PySide6.QtWidgets import (
     QMainWindow, QWidget, QPushButton, QLabel, QDateEdit, QInputDialog,
-    QVBoxLayout, QHBoxLayout, QLineEdit, QApplication, QSizePolicy, QMessageBox, QMenu
+    QVBoxLayout, QHBoxLayout, QLineEdit, QApplication, QSizePolicy, QMessageBox, QMenu, QFileDialog
 )
 from PySide6.QtCore import QDate, Qt
 from schedule_view import ScheduleView
-from encoder_utils import list_encoders, init_socket, close_socket, send_persistent_command
+from encoder_utils import list_encoders, send_command, connect_socket
 from datetime import datetime
 import os
+
+import json
+
+CONFIG_FILE = "config.json"
 
 class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
 
-        # 初始化持久 socket，模擬 telnet 風格的連線模式
-        init_socket()
+        self.record_root = self.load_record_root()  # 自動載入使用者設定
 
-        # 🄟️ 顯示所有 encoder 名稱
         self.encoder_names = list_encoders()
         if not self.encoder_names:
             print("⚠️ 沒有從 socket 抓到 encoder，使用預設值")
@@ -38,7 +39,6 @@ class MainWindow(QMainWindow):
         encoder_layout.setSpacing(10)
         encoder_panel.setFixedWidth(500)
 
-        # 建立每個 encoder 的控制列
         for name in self.encoder_names:
             line = QHBoxLayout()
             label = QLabel(name)
@@ -68,7 +68,6 @@ class MainWindow(QMainWindow):
             self.encoder_entries[name] = entry
             self.encoder_status[name] = status
 
-        # 右側畫面顯示區
         right_panel = QWidget()
         right_panel.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
         right_layout = QVBoxLayout(right_panel)
@@ -83,6 +82,9 @@ class MainWindow(QMainWindow):
 
         self.add_button = QPushButton("➕ 新增排程")
         self.add_button.clicked.connect(self.add_new_block)
+
+        self.root_button = QPushButton("📁 設定儲存路徑")
+        self.root_button.clicked.connect(self.select_record_root)
 
         self.save_button = QPushButton("💾 儲存")
         self.save_button.clicked.connect(lambda: self.view.save_schedule())
@@ -99,6 +101,7 @@ class MainWindow(QMainWindow):
         toolbar_layout.addWidget(self.date_label)
         toolbar_layout.addWidget(self.date_picker)
         toolbar_layout.addStretch()
+        toolbar_layout.addWidget(self.root_button)
         toolbar_layout.addWidget(self.prev_button)
         toolbar_layout.addWidget(self.next_button)
         toolbar_layout.addWidget(self.add_button)
@@ -118,10 +121,17 @@ class MainWindow(QMainWindow):
         main_layout.addWidget(encoder_panel)
         main_layout.addWidget(right_panel)
 
-    def closeEvent(self, event):
-        # UI 關閉時自動釋放 socket
-        close_socket()
-        event.accept()
+    def select_record_root(self):
+        folder = QFileDialog.getExistingDirectory(self, "選擇儲存根目錄", self.record_root)
+        if folder:
+            self.record_root = folder
+            print(f"📁 使用者設定儲存路徑為：{self.record_root}")
+            self.save_record_root(folder)
+
+    def get_full_path(self, encoder_name, filename):
+        date_folder = datetime.today().strftime("%m.%d.%Y")
+        date_prefix = datetime.today().strftime("%m%d")
+        return os.path.abspath(os.path.join(self.record_root, date_folder, f"{date_prefix}_{filename}"))
 
     def add_new_block(self):
         text, ok = QInputDialog.getText(self, "節目名稱", "請輸入節目名稱：")
@@ -142,10 +152,12 @@ class MainWindow(QMainWindow):
         if filename == "":
             QMessageBox.information(self, "檔案路徑", f"{encoder_name} 尚未設定檔名。")
             return
-        date_folder = datetime.today().strftime("%m.%d.%Y")
-        date_prefix = datetime.today().strftime("%m%d")
-        path = f'{date_folder}\\{date_prefix}_{filename}'
-        QMessageBox.information(self, "📁 檔案儲存位置", f"{encoder_name} 檔案儲存路徑為：\n\n{path}")
+        full_path = self.get_full_path(encoder_name, filename)
+        folder_path = os.path.dirname(full_path)
+        if os.path.exists(folder_path):
+            os.startfile(folder_path)
+        else:
+            QMessageBox.information(self, "📁 找不到資料夾", f"{folder_path} 不存在")
 
     def show_block_context_menu(self, pos):
         scene_pos = self.view.mapToScene(pos)
@@ -153,8 +165,23 @@ class MainWindow(QMainWindow):
             if hasattr(item, 'label') and item.contains(item.mapFromScene(scene_pos)):
                 menu = QMenu(self)
                 label = item.label
+                path = self.get_full_path("", label)
+
                 menu.addAction(f"查看檔案名稱：{label}")
-                menu.exec(self.view.mapToGlobal(pos))
+                open_action = menu.addAction("📂 開啟資料夾")
+                copy_action = menu.addAction("📋 複製路徑")
+
+                selected = menu.exec(self.view.mapToGlobal(pos))
+
+                if selected == open_action:
+                    folder_path = os.path.dirname(path)
+                    if os.path.exists(folder_path):
+                        os.startfile(folder_path)
+                    else:
+                        QMessageBox.information(self, "📁 找不到資料夾", f"{folder_path} 不存在")
+                elif selected == copy_action:
+                    clipboard = QApplication.clipboard()
+                    clipboard.setText(path)
                 break
 
     def encoder_start(self, encoder_name, entry_widget, status_label):
@@ -164,16 +191,22 @@ class MainWindow(QMainWindow):
             status_label.setStyleSheet("color: orange;")
             return
 
-        date_folder = datetime.today().strftime("%m.%d.%Y")
-        date_prefix = datetime.today().strftime("%m%d")
-        path = f'{date_folder}\\{date_prefix}_{filename}'
+        full_path = self.get_full_path(encoder_name, filename)
+        rel_path = os.path.relpath(full_path, start=self.record_root)
 
         status_label.setText("🔁 傳送中...")
         status_label.setStyleSheet("color: blue;")
         QApplication.processEvents()
 
-        res1 = send_persistent_command(f'Setfile "{encoder_name}" 1 {path}')
-        res2 = send_persistent_command(f'Start "{encoder_name}" 1')
+        sock = connect_socket()
+        if not sock:
+            status_label.setText("❌ 無法連線")
+            status_label.setStyleSheet("color: red;")
+            return
+
+        res1 = send_command(sock, f'Setfile "{encoder_name}" 1 {rel_path}')
+        res2 = send_command(sock, f'Start "{encoder_name}" 1')
+        sock.close()
 
         if "OK" in res1 and "OK" in res2:
             status_label.setText("✅ 錄影中")
@@ -182,12 +215,36 @@ class MainWindow(QMainWindow):
             status_label.setText("❌ 錯誤")
             status_label.setStyleSheet("color: red;")
 
+    def save_record_root(self, path):
+        try:
+            with open(CONFIG_FILE, 'w', encoding='utf-8') as f:
+                json.dump({'record_root': path}, f)
+        except Exception as e:
+            print("❌ 無法儲存 config:", e)
+
+    def load_record_root(self):
+        try:
+            if os.path.exists(CONFIG_FILE):
+                with open(CONFIG_FILE, 'r', encoding='utf-8') as f:
+                    data = json.load(f)
+                    return data.get('record_root', 'E:/')
+        except Exception as e:
+            print("❌ 無法讀取 config:", e)
+        return 'E:/'
+
     def encoder_stop(self, encoder_name, status_label):
         status_label.setText("🔁 停止中...")
         status_label.setStyleSheet("color: blue;")
         QApplication.processEvents()
 
-        res = send_persistent_command(f'Stop "{encoder_name}" 1')
+        sock = connect_socket()
+        if not sock:
+            status_label.setText("❌ 無法建立連線")
+            status_label.setStyleSheet("color: red;")
+            return
+
+        res = send_command(sock, f'Stop "{encoder_name}" 1')
+        sock.close()
 
         if "OK" in res:
             status_label.setText("⏹ 已停止")
