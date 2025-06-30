@@ -104,7 +104,14 @@ class ScheduleView(QGraphicsView):
             "label": label
         })
         self.draw_blocks()
-
+    def remove_block_by_label(self, label):
+        for item in self.blocks:
+            if item.label == label:
+                self.scene.removeItem(item)
+                self.blocks.remove(item)
+                break
+        self.block_data = [b for b in self.block_data if b["label"] != label]
+        self.save_schedule()
     def set_start_date(self, qdate):
         self.base_date = qdate
         self.draw_grid()

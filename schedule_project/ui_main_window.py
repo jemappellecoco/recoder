@@ -1,5 +1,5 @@
 from PySide6.QtWidgets import (
-    QMainWindow, QWidget, QPushButton, QLabel, QDateEdit, QInputDialog,
+    QMainWindow, QWidget, QPushButton, QLabel, QDateEdit, QInputDialog,QDialog,
     QVBoxLayout, QHBoxLayout, QLineEdit, QApplication, QSizePolicy, QMessageBox, QMenu, QFileDialog
 )
 from PySide6.QtCore import QDate, Qt
@@ -7,18 +7,23 @@ from schedule_view import ScheduleView
 from encoder_utils import list_encoders, send_command, connect_socket
 from datetime import datetime
 import os
-
+from schedule_runner import ScheduleRunner
 import json
-
+from block_manager import BlockManager
+from encoder_controller import EncoderController
+from add_block_dialog import AddBlockDialog
+from path_manager import PathManager
 CONFIG_FILE = "config.json"
 
 class MainWindow(QMainWindow):
     def __init__(self):
+        print("🔧 MainWindow 建立中...")  # ✅ 放在最上面
         super().__init__()
-
-        self.record_root = self.load_record_root()  # 自動載入使用者設定
-
+        
+        self.path_manager = PathManager()
+        self.record_root = self.path_manager.record_root  # 自動載入使用者設定
         self.encoder_names = list_encoders()
+        self.encoder_controller = EncoderController(self.record_root) 
         if not self.encoder_names:
             print("⚠️ 沒有從 socket 抓到 encoder，使用預設值")
             self.encoder_names = ["encoder1", "encoder2"]
@@ -38,7 +43,7 @@ class MainWindow(QMainWindow):
         encoder_layout = QVBoxLayout(encoder_panel)
         encoder_layout.setSpacing(10)
         encoder_panel.setFixedWidth(500)
-
+        
         for name in self.encoder_names:
             line = QHBoxLayout()
             label = QLabel(name)
@@ -114,31 +119,47 @@ class MainWindow(QMainWindow):
         self.view.draw_grid()
         self.view.setContextMenuPolicy(Qt.CustomContextMenu)
         self.view.customContextMenuRequested.connect(self.show_block_context_menu)
-
+        self.runner = ScheduleRunner(
+            schedule_data=self.view.block_data,
+            encoder_status=self.encoder_status,
+            record_root=self.record_root,
+            encoder_names=self.encoder_names,
+            blocks=self.view.blocks
+        )
         right_layout.addWidget(toolbar)
         right_layout.addWidget(self.view)
 
         main_layout.addWidget(encoder_panel)
         main_layout.addWidget(right_panel)
-
+        self.block_manager = BlockManager(self.view)
     def select_record_root(self):
         folder = QFileDialog.getExistingDirectory(self, "選擇儲存根目錄", self.record_root)
         if folder:
             self.record_root = folder
             print(f"📁 使用者設定儲存路徑為：{self.record_root}")
-            self.save_record_root(folder)
+            self.path_manager.save_record_root(folder)
 
-    def get_full_path(self, encoder_name, filename):
-        date_folder = datetime.today().strftime("%m.%d.%Y")
-        date_prefix = datetime.today().strftime("%m%d")
-        return os.path.abspath(os.path.join(self.record_root, date_folder, f"{date_prefix}_{filename}"))
-
+    
     def add_new_block(self):
-        text, ok = QInputDialog.getText(self, "節目名稱", "請輸入節目名稱：")
-        if ok and text:
-            new_date = self.view.base_date.addDays(1)
-            self.view.add_time_block(qdate=new_date, track_index=1, start_hour=9, duration=4, label=text)
+        def check_overlap(track_index, start_hour, duration):
+         return self.view.is_overlap(self.view.base_date, track_index, start_hour, duration)
 
+        dialog = AddBlockDialog(self, 
+                encoder_names=self.encoder_names, 
+                overlap_checker=check_overlap)
+        if dialog.exec() == QDialog.Accepted:
+            name, time_obj, duration, encoder_name = dialog.get_values()
+            track_index = self.encoder_names.index(encoder_name)
+            start_hour = round(time_obj.hour() + time_obj.minute() / 60, 2)
+            self.block_manager.add_block_with_unique_label(
+                name, 
+                track_index=track_index, 
+                start_hour=start_hour, 
+                duration=duration, 
+                encoder_name=encoder_name
+                )
+
+            
     def update_start_date(self, qdate):
         self.view.set_start_date(qdate)
 
@@ -152,7 +173,7 @@ class MainWindow(QMainWindow):
         if filename == "":
             QMessageBox.information(self, "檔案路徑", f"{encoder_name} 尚未設定檔名。")
             return
-        full_path = self.get_full_path(encoder_name, filename)
+        full_path = self.path_manager.get_full_path(encoder_name, filename)
         folder_path = os.path.dirname(full_path)
         if os.path.exists(folder_path):
             os.startfile(folder_path)
@@ -165,12 +186,12 @@ class MainWindow(QMainWindow):
             if hasattr(item, 'label') and item.contains(item.mapFromScene(scene_pos)):
                 menu = QMenu(self)
                 label = item.label
-                path = self.get_full_path("", label)
+                path = self.path_manager.get_full_path("", label)
 
                 menu.addAction(f"查看檔案名稱：{label}")
                 open_action = menu.addAction("📂 開啟資料夾")
                 copy_action = menu.addAction("📋 複製路徑")
-
+                delete_action = menu.addAction("🗑️ 刪除排程")
                 selected = menu.exec(self.view.mapToGlobal(pos))
 
                 if selected == open_action:
@@ -182,73 +203,38 @@ class MainWindow(QMainWindow):
                 elif selected == copy_action:
                     clipboard = QApplication.clipboard()
                     clipboard.setText(path)
+                elif selected == delete_action:
+                    self.view.remove_block_by_label(label)
                 break
 
     def encoder_start(self, encoder_name, entry_widget, status_label):
         filename = entry_widget.text().strip()
-        if filename == "":
+        if not filename:
             status_label.setText("⚠️ 檔名空白")
             status_label.setStyleSheet("color: orange;")
             return
 
-        full_path = self.get_full_path(encoder_name, filename)
-        rel_path = os.path.relpath(full_path, start=self.record_root)
-
-        status_label.setText("🔁 傳送中...")
-        status_label.setStyleSheet("color: blue;")
-        QApplication.processEvents()
-
-        sock = connect_socket()
-        if not sock:
-            status_label.setText("❌ 無法連線")
-            status_label.setStyleSheet("color: red;")
-            return
-
-        res1 = send_command(sock, f'Setfile "{encoder_name}" 1 {rel_path}')
-        res2 = send_command(sock, f'Start "{encoder_name}" 1')
-        sock.close()
-
-        if "OK" in res1 and "OK" in res2:
+        ok, _ = self.encoder_controller.start_encoder(encoder_name, filename)
+        if ok:
             status_label.setText("✅ 錄影中")
             status_label.setStyleSheet("color: green;")
         else:
             status_label.setText("❌ 錯誤")
             status_label.setStyleSheet("color: red;")
 
-    def save_record_root(self, path):
-        try:
-            with open(CONFIG_FILE, 'w', encoding='utf-8') as f:
-                json.dump({'record_root': path}, f)
-        except Exception as e:
-            print("❌ 無法儲存 config:", e)
+    
 
-    def load_record_root(self):
-        try:
-            if os.path.exists(CONFIG_FILE):
-                with open(CONFIG_FILE, 'r', encoding='utf-8') as f:
-                    data = json.load(f)
-                    return data.get('record_root', 'E:/')
-        except Exception as e:
-            print("❌ 無法讀取 config:", e)
-        return 'E:/'
+    
 
     def encoder_stop(self, encoder_name, status_label):
         status_label.setText("🔁 停止中...")
-        status_label.setStyleSheet("color: blue;")
+        status_label.setStyleSheet("color: blue")
         QApplication.processEvents()
 
-        sock = connect_socket()
-        if not sock:
-            status_label.setText("❌ 無法建立連線")
-            status_label.setStyleSheet("color: red;")
-            return
-
-        res = send_command(sock, f'Stop "{encoder_name}" 1')
-        sock.close()
-
-        if "OK" in res:
+        ok = self.encoder_controller.stop_encoder(encoder_name)
+        if ok:
             status_label.setText("⏹ 已停止")
-            status_label.setStyleSheet("color: gray;")
+            status_label.setStyleSheet("color: gray")
         else:
             status_label.setText("❌ 停止失敗")
-            status_label.setStyleSheet("color: red;")
+            status_label.setStyleSheet("color: red")
