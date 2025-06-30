@@ -1,0 +1,37 @@
+[
+  {
+    "qdate": "2025-06-30",
+    "track_index": 1,
+    "start_hour": 10.95,
+    "duration": 27.049999999999958,
+    "label": "1"
+  },
+  {
+    "qdate": "2025-06-27",
+    "track_index": 1,
+    "start_hour": 0.0,
+    "duration": 34.10000000000005,
+    "label": "2"
+  },
+  {
+    "qdate": "2024-06-28",
+    "track_index": 1,
+    "start_hour": 0.15,
+    "duration": 47.35,
+    "label": "2024"
+  },
+  {
+    "qdate": "2025-06-28",
+    "track_index": 0,
+    "start_hour": 1.35,
+    "duration": 24.05000000000001,
+    "label": "3"
+  },
+  {
+    "qdate": "2025-07-01",
+    "track_index": 1,
+    "start_hour": 9,
+    "duration": 4,
+    "label": "1"
+  }
+]
