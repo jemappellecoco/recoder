@@ -79,7 +79,8 @@ class MainWindow(QMainWindow):
 
         toolbar = QWidget()
         toolbar_layout = QHBoxLayout(toolbar)
-
+        undo_button = QPushButton("↩️ 復原刪除")
+        undo_button.clicked.connect(lambda: self.block_manager.undo_last_delete())
         self.date_label = QLabel("起始日期：")
         self.date_picker = QDateEdit(QDate.currentDate())
         self.date_picker.setCalendarPopup(True)
@@ -112,7 +113,7 @@ class MainWindow(QMainWindow):
         toolbar_layout.addWidget(self.add_button)
         toolbar_layout.addWidget(self.save_button)
         toolbar_layout.addWidget(self.load_button)
-
+        toolbar_layout.addWidget(undo_button)
         self.view = ScheduleView()
         self.view.encoder_names = self.encoder_names
         self.view.encoder_status = self.encoder_status
@@ -132,6 +133,8 @@ class MainWindow(QMainWindow):
         main_layout.addWidget(encoder_panel)
         main_layout.addWidget(right_panel)
         self.block_manager = BlockManager(self.view)
+        self.runner.check_schedule()
+        
     def select_record_root(self):
         folder = QFileDialog.getExistingDirectory(self, "選擇儲存根目錄", self.record_root)
         if folder:
@@ -148,7 +151,7 @@ class MainWindow(QMainWindow):
                 encoder_names=self.encoder_names, 
                 overlap_checker=check_overlap)
         if dialog.exec() == QDialog.Accepted:
-            name, time_obj, duration, encoder_name = dialog.get_values()
+            name, qdate, time_obj, duration, encoder_name = dialog.get_values()
             track_index = self.encoder_names.index(encoder_name)
             start_hour = round(time_obj.hour() + time_obj.minute() / 60, 2)
             self.block_manager.add_block_with_unique_label(
@@ -156,7 +159,8 @@ class MainWindow(QMainWindow):
                 track_index=track_index, 
                 start_hour=start_hour, 
                 duration=duration, 
-                encoder_name=encoder_name
+                encoder_name=encoder_name,
+                qdate=qdate
                 )
 
             
@@ -204,7 +208,8 @@ class MainWindow(QMainWindow):
                     clipboard = QApplication.clipboard()
                     clipboard.setText(path)
                 elif selected == delete_action:
-                    self.view.remove_block_by_label(label)
+                    self.block_manager.remove_block_by_id(item.block_id)
+
                 break
 
     def encoder_start(self, encoder_name, entry_widget, status_label):
@@ -216,11 +221,38 @@ class MainWindow(QMainWindow):
 
         ok, _ = self.encoder_controller.start_encoder(encoder_name, filename)
         if ok:
-            status_label.setText("✅ 錄影中")
-            status_label.setStyleSheet("color: green;")
+            # ❌ 不手動設定狀態，讓 ScheduleRunner 控制
+
+            if not any(b["label"] == filename for b in self.view.block_data):
+                now = datetime.now()
+                minute = (now.minute + 7) // 15 * 15
+                if minute == 60:
+                    hour = now.hour + 1
+                    minute = 0
+                else:
+                    hour = now.hour
+                start_hour = round(hour + minute / 60, 2)
+                track_index = self.encoder_names.index(encoder_name)
+                qdate = QDate.currentDate()
+                self.block_manager.add_block_with_unique_label(
+                    filename,
+                    track_index=track_index,
+                    start_hour=start_hour,
+                    duration=4.0,
+                    encoder_name=encoder_name,
+                    qdate = qdate
+                )
+
+            # ✅ 同步更新 runner 的內部資料再 check
+            self.runner.schedule_data = self.view.block_data
+            self.runner.blocks = self.view.blocks
+            self.runner.check_schedule()
+
         else:
             status_label.setText("❌ 錯誤")
-            status_label.setStyleSheet("color: red;")
+            status_label.setStyleSheet("color: red")
+
+
 
     
 
@@ -233,8 +265,8 @@ class MainWindow(QMainWindow):
 
         ok = self.encoder_controller.stop_encoder(encoder_name)
         if ok:
-            status_label.setText("⏹ 已停止")
-            status_label.setStyleSheet("color: gray")
+            # ✅ 不再手動設定狀態
+            self.runner.check_schedule()
         else:
             status_label.setText("❌ 停止失敗")
             status_label.setStyleSheet("color: red")

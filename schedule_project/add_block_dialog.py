@@ -1,8 +1,8 @@
 from PySide6.QtWidgets import (
-    QDialog, QVBoxLayout, QFormLayout, QLineEdit, QDialogButtonBox,
-    QLabel, QTimeEdit, QDoubleSpinBox, QComboBox
+        QDialog, QVBoxLayout, QFormLayout, QLineEdit, QDialogButtonBox,
+    QLabel, QTimeEdit, QDoubleSpinBox, QComboBox, QDateEdit,
 )
-from PySide6.QtCore import QTime
+from PySide6.QtCore import QTime,QDate
 
 class AddBlockDialog(QDialog):
     def __init__(self, parent=None, encoder_names=None, overlap_checker=None):
@@ -22,6 +22,11 @@ class AddBlockDialog(QDialog):
         self.duration_input.setValue(1.0)
 
         self.encoder_selector = QComboBox()
+        self.date_input = QDateEdit()
+        self.date_input.setDate(QDate.currentDate())
+        self.date_input.setCalendarPopup(True)
+
+        
         for name in self.encoder_names:
             self.encoder_selector.addItem(name)
 
@@ -29,6 +34,7 @@ class AddBlockDialog(QDialog):
         self.status_label.setStyleSheet("color: red")
 
         form = QFormLayout()
+        form.addRow("排程日期：", self.date_input)
         form.addRow("節目名稱：", self.name_input)
         form.addRow("開始時間：", self.time_input)
         form.addRow("持續時間（小時）：", self.duration_input)
@@ -63,8 +69,10 @@ class AddBlockDialog(QDialog):
 
     def get_values(self):
         return (
-            self.name_input.text().strip(),
-            self.time_input.time(),
-            self.duration_input.value(),
-            self.encoder_selector.currentText()
-        )
+        self.name_input.text().strip(),
+        self.date_input.date(),         
+        self.time_input.time(),
+        self.duration_input.value(),
+        self.encoder_selector.currentText()
+    )
+

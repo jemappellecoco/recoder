@@ -1,44 +1,38 @@
 [
   {
-    "qdate": "2025-06-27",
-    "track_index": 1,
-    "start_hour": 0.0,
-    "duration": 34.10000000000005,
-    "label": "2"
-  },
-  {
-    "qdate": "2024-06-28",
-    "track_index": 1,
-    "start_hour": 0.15,
-    "duration": 47.35,
-    "label": "2024"
-  },
-  {
-    "qdate": "2025-07-01",
-    "track_index": 1,
-    "start_hour": 10.23,
-    "duration": 4,
-    "label": "123"
-  },
-  {
-    "qdate": "2025-07-01",
+    "qdate": "2025-07-02",
     "track_index": 0,
-    "start_hour": 4.0,
-    "duration": 8.0,
-    "label": "123 (1)"
+    "start_hour": 9.0,
+    "duration": 1.0,
+    "label": "1",
+    "id": "579dab08-f7ff-472d-bdfc-1ac6c3972751",
+    "encoder_name": "Bak4-1"
   },
   {
-    "qdate": "2025-06-30",
-    "track_index": 1,
-    "start_hour": 10.85,
-    "duration": 13.05,
-    "label": "111"
-  },
-  {
-    "qdate": "2025-06-30",
+    "qdate": "2025-07-02",
     "track_index": 0,
     "start_hour": 11.0,
     "duration": 1.0,
-    "label": "111"
+    "label": "2",
+    "id": "01de16f6-1c0a-4306-8d21-4995304e5377",
+    "encoder_name": "Bak4-1"
+  },
+  {
+    "qdate": "2025-07-05",
+    "track_index": 0,
+    "start_hour": 18.0,
+    "duration": 14.0,
+    "label": "3",
+    "id": "59421417-4eda-4585-81cb-471d7c41690d",
+    "encoder_name": "Bak4-1"
+  },
+  {
+    "qdate": "2025-07-04",
+    "track_index": 0,
+    "start_hour": 11.85,
+    "duration": 24.45,
+    "label": "4",
+    "id": "eb2ac58b-41b1-4f68-81a9-74dcdeeac89c",
+    "encoder_name": "Bak4-1"
   }
 ]

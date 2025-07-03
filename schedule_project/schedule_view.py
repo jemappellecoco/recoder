@@ -1,5 +1,5 @@
 from PySide6.QtWidgets import QGraphicsView, QGraphicsScene
-from PySide6.QtCore import Qt, QDate, QTimer
+from PySide6.QtCore import Qt, QDate, QTimer,QDateTime, QTime
 from PySide6.QtGui import QPainter, QFont
 from time_block import TimeBlock
 import json
@@ -18,6 +18,7 @@ class ScheduleView(QGraphicsView):
         self.encoder_names = []
         self.encoder_status = {}
         self.setSceneRect(-120, -40, self.days * self.day_width + 150, 1000)
+        
         self.setRenderHint(QPainter.Antialiasing)
         self.schedule_timer = QTimer()
         self.schedule_timer.start(1000)
@@ -61,7 +62,7 @@ class ScheduleView(QGraphicsView):
             label.setPos(-95, y + 15)
 
         self.draw_blocks()
-
+        
     def draw_blocks(self):
         for item in self.scene.items():
             if isinstance(item, TimeBlock):
@@ -71,39 +72,69 @@ class ScheduleView(QGraphicsView):
         end_range = self.base_date.addDays(self.days)
         for data in self.block_data:
             block_start = data["qdate"]
-            block_end = block_start.addDays(int((data["start_hour"] + data["duration"]) // 24))
-            if block_start < end_range and block_end >= start_range:
+            total_hours = data["start_hour"] + data["duration"]
+            extra_days = int(total_hours // 24)
+            block_end = block_start.addDays(extra_days)
+
+            # ✅ 改為：只要 block 有任何部分落在顯示區間，就畫出來
+            if block_end >= start_range and block_start <= end_range:
                 block = TimeBlock(
                     data["qdate"], data["track_index"],
-                    data["start_hour"], data["duration"], data["label"]
+                    data["start_hour"], data["duration"], data["label"], block_id=data.get("id")
                 )
                 self.scene.addItem(block)
                 block.update_geometry(self.base_date)
                 self.blocks.append(block)
 
     def is_overlap(self, qdate, track_index, start_hour, duration, exclude_label=None):
+        from PySide6.QtCore import QDateTime, QTime
+
+        new_start_dt = QDateTime(qdate, QTime(int(start_hour), int((start_hour % 1) * 60)))
+        new_end_dt = new_start_dt.addSecs(int(duration * 3600))
+
         for block in self.block_data:
-            if block["qdate"] == qdate and block["track_index"] == track_index:
-                if exclude_label and block["label"] == exclude_label:
-                    continue
-                exist_start = block["start_hour"]
-                exist_end = exist_start + block["duration"]
-                new_end = start_hour + duration
-                if not (new_end <= exist_start or start_hour >= exist_end):
-                    print(f"🔴 重疊：{exclude_label=} 跟 {block['label']} 撞到")
-                    return True
+            
+            if exclude_label and block["label"] == exclude_label:
+                continue
+
+            # 🟡 正確取得 block 起始時間
+            b_qdate = block["qdate"]
+            if isinstance(b_qdate, str):
+                b_qdate = QDate.fromString(b_qdate, "yyyy-MM-dd")
+
+            b_start_hour = float(block["start_hour"])
+            b_duration = float(block["duration"])
+
+            b_start_dt = QDateTime(b_qdate, QTime(int(b_start_hour), int((b_start_hour % 1) * 60)))
+            b_end_dt = b_start_dt.addSecs(int(b_duration * 3600))
+
+            # 🔴 真正的重疊邏輯（只要有交集就算）
+            if new_start_dt < b_end_dt and new_end_dt > b_start_dt:
+                print(f"🔴 重疊偵測：{exclude_label=} 撞到 {block['label']}")
+                return True
+
         return False
+    
 
+    def add_time_block(self, qdate: QDate, track_index, start_hour, duration=4, label="節目", encoder_name=None, block_id=None):
+        if isinstance(qdate, str):
+            qdate = QDate.fromString(qdate, "yyyy-MM-dd")
 
-    def add_time_block(self, qdate: QDate, track_index, start_hour, duration=4, label="節目"):
-        self.block_data.append({
+        block = {
             "qdate": qdate,
             "track_index": track_index,
             "start_hour": start_hour,
             "duration": duration,
             "label": label
-        })
+        }
+        if encoder_name is not None:
+            block["encoder_name"] = encoder_name
+        if block_id:
+            block["id"] = block_id
+
+        self.block_data.append(block)
         self.draw_blocks()
+
     def remove_block_by_label(self, label):
         for item in self.blocks:
             if item.label == label:
@@ -125,12 +156,15 @@ class ScheduleView(QGraphicsView):
                         "track_index": b["track_index"],
                         "start_hour": b["start_hour"],
                         "duration": b["duration"],
-                        "label": b["label"]
+                        "label": b["label"],
+                        "id": b.get("id"),  # ✅ 儲存 block_id
+                        "encoder_name": b.get("encoder_name")  # ✅ 若未來要還原 encoder 名稱
                     } for b in self.block_data
                 ], f, ensure_ascii=False, indent=2)
             print("✅ 已儲存節目排程 schedule.json")
         except Exception as e:
             print(f"❌ 儲存失敗: {e}")
+
 
     def load_schedule(self, filename="schedule.json"):
         try:
@@ -142,7 +176,9 @@ class ScheduleView(QGraphicsView):
                         "track_index": b["track_index"],
                         "start_hour": b["start_hour"],
                         "duration": b["duration"],
-                        "label": b["label"]
+                        "label": b["label"],
+                        "id": b.get("id"),
+                        "encoder_name": b.get("encoder_name")
                     } for b in raw
                 ]
             self.draw_blocks()
