@@ -4,11 +4,13 @@ from PySide6.QtGui import QPainter, QFont
 from time_block import TimeBlock
 import json
 import os
+from path_manager import PathManager 
 class ScheduleView(QGraphicsView):
     def __init__(self):
         super().__init__()
         self.blocks = []
         self.block_data = []
+        self.path_manager = None
         self.scene = QGraphicsScene(self)
         self.setScene(self.scene)
         self.days = 7
@@ -23,7 +25,7 @@ class ScheduleView(QGraphicsView):
         self.schedule_timer = QTimer()
         self.schedule_timer.start(1000)
         self.load_schedule()
-
+        self.path_manager = PathManager()
     def draw_grid(self):
         print("🎯 draw_grid encoder_names:", self.encoder_names)
 
@@ -92,7 +94,7 @@ class ScheduleView(QGraphicsView):
                     data["label"],
                     block_id=data.get("id")
                 )
-
+                block.path_manager = self.path_manager
                 # 先加到 scene 才能安全操作 scene() 相關功能
                 self.scene.addItem(block)
                 block.update_geometry(self.base_date)
@@ -163,6 +165,7 @@ class ScheduleView(QGraphicsView):
             "duration": duration,
             "label": label
         }
+        # block.path_manager = self.path_manager
         if encoder_name is not None:
             block["encoder_name"] = encoder_name
         if block_id:
@@ -170,7 +173,7 @@ class ScheduleView(QGraphicsView):
 
         self.block_data.append(block)
         self.draw_blocks()
-
+        
     def remove_block_by_label(self, label):
         for item in self.blocks:
             if item.label == label:

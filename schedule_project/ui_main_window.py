@@ -13,6 +13,7 @@ from block_manager import BlockManager
 from encoder_controller import EncoderController
 from add_block_dialog import AddBlockDialog
 from path_manager import PathManager
+from utils_conflict import find_conflict_blocks
 CONFIG_FILE = "config.json"
 
 class MainWindow(QMainWindow):
@@ -120,7 +121,7 @@ class MainWindow(QMainWindow):
         self.view.draw_grid()
         self.view.setContextMenuPolicy(Qt.CustomContextMenu)
         self.view.customContextMenuRequested.connect(self.show_block_context_menu)
-
+        self.view.path_manager = self.path_manager
         # ✅ 一定要在 runner 建立後再指定回去 view
         self.runner = ScheduleRunner(
             schedule_data=self.view.block_data,
@@ -226,20 +227,24 @@ class MainWindow(QMainWindow):
         encoder_index = self.encoder_names.index(encoder_name)
 
         if ok:
-            for block in self.view.blocks:
-                if block.track_index == encoder_index:
-                    start_dt = QDateTime(block.start_date, QTime(int(block.start_hour), int((block.start_hour % 1) * 60)))
-                    end_dt = start_dt.addSecs(int(block.duration_hours * 3600))
-                    if start_dt <= now <= end_dt:
-                        block.status = "⏹ 停止中"
-                        block.update_text_position()
+            stopped_block_id = None  # 用來記錄有被停止的 block id
 
-            # ✅ 同步 runner 狀態：加入 already_stopped，避免被覆蓋
-            for b in self.view.block_data:
-                if b.get("encoder_name") == encoder_name:
-                    block_id = b.get("id")
-                    if block_id:
-                        self.runner.already_stopped.add(block_id)
+            for block in self.view.blocks:
+                if block.track_index != encoder_index:
+                    continue
+
+                start_dt = QDateTime(block.start_date, QTime(int(block.start_hour), int((block.start_hour % 1) * 60)))
+                end_dt = start_dt.addSecs(int(block.duration_hours * 3600))
+
+                if start_dt <= now <= end_dt:
+                    block.status = "⏹ 停止中"
+                    block.update_text_position()
+                    stopped_block_id = block.block_id
+                    break  # ✅ 只處理一個正在錄的 block
+
+            # ✅ 同步 runner 狀態：只加上那一個 block_id
+            if stopped_block_id:
+                self.runner.already_stopped.add(stopped_block_id)
 
             status_label.setText("狀態：⏹ 停止中")
             status_label.setStyleSheet("color: gray")
@@ -250,7 +255,6 @@ class MainWindow(QMainWindow):
         self.runner.refresh_encoder_statuses()
         self.view.draw_grid()
 
-
     def encoder_start(self, encoder_name, entry_widget, status_label):
         filename = entry_widget.text().strip()
         if not filename:
@@ -258,38 +262,53 @@ class MainWindow(QMainWindow):
             status_label.setStyleSheet("color: orange;")
             return
 
+        # ✅ 先計算出錄影時間資訊
+        now = datetime.now()
+        minute = (now.minute + 7) // 15 * 15
+        if minute == 60:
+            hour = now.hour + 1
+            minute = 0
+        else:
+            hour = now.hour
+        start_hour = round(hour + minute / 60, 2)
+        duration = 4.0
+        track_index = self.encoder_names.index(encoder_name)
+        qdate = QDate.currentDate()
+
+        # ✅ 加入衝突檢查
+        if not any(b["label"] == filename for b in self.view.block_data):
+            conflicts = find_conflict_blocks(
+                "schedule.json", qdate, track_index, start_hour, duration
+            )
+            if conflicts:
+                QMessageBox.warning(
+                    self,
+                    "❌ 時段衝突",
+                    "⚠️ 無法錄影，該時段與以下排程衝突：\n" + "\n".join(conflicts),
+                )
+                return  # ❌ 還沒 start encoder，不會覆蓋！
+
+        # ✅ 到這裡才真正啟動 encoder
         ok, _ = self.encoder_controller.start_encoder(encoder_name, filename)
         if ok:
-            # ✅ 自動補 block（如沒有）
+            # ✅ 補 block（如沒有）
             if not any(b["label"] == filename for b in self.view.block_data):
-                now = datetime.now()
-                minute = (now.minute + 7) // 15 * 15
-                if minute == 60:
-                    hour = now.hour + 1
-                    minute = 0
-                else:
-                    hour = now.hour
-                start_hour = round(hour + minute / 60, 2)
-                track_index = self.encoder_names.index(encoder_name)
-                qdate = QDate.currentDate()
                 self.block_manager.add_block_with_unique_label(
                     filename,
                     track_index=track_index,
                     start_hour=start_hour,
-                    duration=4.0,
+                    duration=duration,
                     encoder_name=encoder_name,
                     qdate=qdate
                 )
 
             # ✅ 找出對應 block 更新狀態
-            now = QDateTime.currentDateTime()
-            encoder_index = self.encoder_names.index(encoder_name)
-
+            now_qt = QDateTime.currentDateTime()
             for block in self.view.blocks:
-                if block.track_index == encoder_index:
+                if block.track_index == track_index:
                     start_dt = QDateTime(block.start_date, QTime(int(block.start_hour), int((block.start_hour % 1) * 60)))
                     end_dt = start_dt.addSecs(int(block.duration_hours * 3600))
-                    if start_dt <= now <= end_dt:
+                    if start_dt <= now_qt <= end_dt:
                         block.status = "✅ 錄影中"
                         block.update_text_position()
                         break
@@ -299,3 +318,22 @@ class MainWindow(QMainWindow):
         else:
             status_label.setText("狀態：❌ 錯誤")
             status_label.setStyleSheet("color: red")
+
+    def mark_block_stopped(self, encoder_name):
+        now = QDateTime.currentDateTime()
+        encoder_index = self.encoder_names.index(encoder_name)
+
+        for block in self.view.blocks:
+            if block.track_index == encoder_index:
+                start_dt = QDateTime(block.start_date, QTime(int(block.start_hour), int((block.start_hour % 1) * 60)))
+                end_dt = start_dt.addSecs(int(block.duration_hours * 3600))
+                if start_dt <= now <= end_dt:
+                    block.status = "⏹ 停止中"
+                    block.update_text_position()
+                    self.runner.already_stopped.add(block.block_id)
+
+                    # ✅ 同步 block_data 裡的狀態（儲存用）
+                    for b in self.view.block_data:
+                        if b.get("id") == block.block_id:
+                            b["status"] = "⏹ 停止中"
+                    break  

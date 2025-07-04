@@ -1,8 +1,9 @@
-from PySide6.QtWidgets import QGraphicsRectItem, QGraphicsSimpleTextItem,QGraphicsPixmapItem
+from PySide6.QtWidgets import QGraphicsRectItem, QGraphicsSimpleTextItem, QGraphicsPixmapItem, QDialog, QVBoxLayout, QLabel
 from PySide6.QtCore import Qt, QTimer, QDate,QDateTime,QTime
 from PySide6.QtGui import QBrush, QColor, QFont,QPixmap
 from edit_block_dialog import EditBlockDialog
 import logging
+from path_manager import PathManager
 import os
 logging.basicConfig(level=logging.INFO)
 class TimeBlock(QGraphicsRectItem):
@@ -49,7 +50,8 @@ class TimeBlock(QGraphicsRectItem):
             handle.setCursor(Qt.SizeHorCursor)
             handle.setVisible(False)
         self.dragging_handle = None
-
+        self.preview_item.setAcceptedMouseButtons(Qt.NoButton)
+        self.preview_item.setAcceptHoverEvents(True)
     def hoverEnterEvent(self, event):
         self.left_handle.setVisible(True)
         self.right_handle.setVisible(True)
@@ -135,7 +137,7 @@ class TimeBlock(QGraphicsRectItem):
     def mousePressEvent(self, event):
         now = QDateTime.currentDateTime()
         start_dt = QDateTime(self.start_date, QTime(int(self.start_hour), int((self.start_hour % 1) * 60)))
-        self.has_started = now >= start_dt  # ⏱️ 存成屬性，後面 mouseMove 也可用
+        self.has_started = now >= start_dt  # ⏱️ 判斷是否已開始錄影
 
         # 清除其他 block 的拖曳狀態
         for item in self.scene().items():
@@ -156,7 +158,7 @@ class TimeBlock(QGraphicsRectItem):
             self.dragging_handle = 'right'
             return
 
-        # 整塊拖曳
+        # ✅ 整塊拖曳不允許（即使點擊中間區域）
         if self.has_started:
             print(f"⛔ 已開始：整塊不能移動（{self.label}）")
             return
@@ -167,15 +169,20 @@ class TimeBlock(QGraphicsRectItem):
 
 
 
+
     def mouseMoveEvent(self, event):
         parent_view = self.scene().parent()
+
+    # ⛔ 若 block 已開始且不是在拉 handle，就禁止拖曳
+        if getattr(self, "has_started", False) and self.dragging_handle is None:
+            return
 
         if self.dragging_handle == 'right':
             delta = event.pos().x()
             new_duration = round(max(1.0, delta / 20), 2)
 
             new_right_x = self.scenePos().x() + new_duration * 20
-            if new_right_x <= self.scenePos().x():  # ⛔ 不可縮短（即使未開始）
+            if new_right_x <= self.scenePos().x():
                 print(f"⛔ 無法將右邊往前拖（{self.label}）")
                 return
 
@@ -184,9 +191,6 @@ class TimeBlock(QGraphicsRectItem):
                 self.update_geometry(parent_view.base_date)
 
         elif self.dragging_handle == 'left':
-            if getattr(self, "has_started", False):
-                return
-
             delta = event.pos().x()
             max_shift = self.rect().width() - 20
             shift_pixels = min(delta, max_shift)
@@ -202,9 +206,11 @@ class TimeBlock(QGraphicsRectItem):
                     self.update_geometry(parent_view.base_date)
 
         else:
+            # ✅ 尚未開始，才允許整塊移動
             if getattr(self, "has_started", False):
                 return
             super().mouseMoveEvent(event)
+
 
 
 
@@ -267,27 +273,45 @@ class TimeBlock(QGraphicsRectItem):
         super().mouseReleaseEvent(event)
         parent_view.save_schedule()
     def mouseDoubleClickEvent(self, event):
+        pos = event.pos()
+
+        # ✅ 點到圖片就顯示圖片 popup
+        if self.preview_item and self.preview_item.isVisible():
+            if self.preview_item.contains(self.mapToItem(self.preview_item, pos)):
+                print(f"🖼️ 點到圖片縮圖：{self.block_id}")
+                if hasattr(self, "path_manager"):
+                    img_path = self.path_manager.get_image_path(self.block_id, self.start_date)
+                    if os.path.exists(img_path):
+                        self.show_image_popup(img_path)
+                    else:
+                        print(f"❌ 找不到圖片：{img_path}")
+                else:
+                    print("⚠️ 未設定 path_manager")
+                event.accept()
+                return
+
+        # ✅ 點到區塊其他地方 → 編輯 Dialog
+        print(f"📝 點擊 block：{self.label}")
         parent_view = self.scene().parent()
         block_data = None
         for b in parent_view.block_data:
             if b.get("id") == self.block_id:
                 block_data = b
                 break
+
         if not block_data:
-            print("⚠️ 找不到對應 block 資料，無法編輯")
+            print("⚠️ 找不到對應 block 資料")
             return
 
         dialog = EditBlockDialog(block_data, parent_view.encoder_names)
         if dialog.exec():
             updated = dialog.get_updated_data()
-            # 更新 block 資料
             self.start_date = updated["qdate"]
             self.label = updated["label"]
             self.start_hour = updated["start_hour"]
             self.duration_hours = updated["duration"]
             self.track_index = parent_view.encoder_names.index(updated["encoder_name"])
 
-            # 更新畫面與資料
             self.update_geometry(parent_view.base_date)
             self.update_text_position()
 
@@ -300,6 +324,10 @@ class TimeBlock(QGraphicsRectItem):
             })
 
             parent_view.save_schedule()
+
+        event.accept()
+
+
     def flash_red(self):
         original_color = self.brush().color()
         flash_color = QColor(255, 0, 0, 180)
@@ -308,16 +336,35 @@ class TimeBlock(QGraphicsRectItem):
 
     def load_preview_images(self, image_folder):
         image_path = os.path.join(image_folder, f"{self.block_id}.png")
-        if os.path.exists(image_path):
-            pixmap = QPixmap(image_path).scaledToWidth(60)
-            self.preview_item.setPixmap(pixmap)
-            self.preview_item.setVisible(True)
-            self.update()
-            self.scene().update()
-            print(f"🖼️ 已載入縮圖：{image_path}")
-        else:
+        pixmap = QPixmap(image_path)
+
+        if pixmap.isNull():
             self.preview_item.setVisible(False)
-            print(f"⚠️ 找不到縮圖：{image_path}")
+            print(f"❌ 無法載入圖片：{image_path}")
+            return
+
+        # ✅ 縮圖尺寸
+        width = 60
+        scaled = pixmap.scaledToWidth(width, Qt.SmoothTransformation)
+        self.preview_item.setPixmap(scaled)
+
+        # ✅ 放在文字右邊
+        text_rect = self.text.boundingRect()
+        x_offset = text_rect.width() + 8
+        y_offset = self.text.y()
+        self.preview_item.setOffset(x_offset, y_offset)
+
+        self.preview_item.setVisible(True)
+        self.preview_item.setZValue(10)
+        self.preview_item.setAcceptedMouseButtons(Qt.LeftButton)
+
+        # ✅ 強制重繪
+        self.update()
+        if self.scene():
+            self.scene().update()
+
+        print(f"🖼️ 圖片放在右邊：{image_path}")
+
     def safe_delete(self):
         if self.scene():
             self.scene().removeItem(self)
@@ -327,3 +374,19 @@ class TimeBlock(QGraphicsRectItem):
             if item and item.scene():
                 item.scene().removeItem(item)
             setattr(self, item_attr, None)  # ✅ 解引用，防止後續被誤用
+ 
+    def show_image_popup(self, image_path):
+        dialog = QDialog()
+        dialog.setWindowTitle(f"預覽：{self.label}")
+        layout = QVBoxLayout(dialog)
+
+        label = QLabel()
+        pixmap = QPixmap(image_path)
+
+        if not pixmap.isNull():
+            scaled = pixmap.scaled(800, 600, Qt.KeepAspectRatio, Qt.SmoothTransformation)
+            label.setPixmap(scaled)
+
+        layout.addWidget(label)
+        dialog.setLayout(layout)
+        dialog.exec()

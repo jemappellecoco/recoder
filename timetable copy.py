@@ -9,7 +9,7 @@ from PySide6.QtWidgets import (
 )
 from PySide6.QtCore import Qt, QDate, QTimer
 from PySide6.QtGui import QBrush, QColor, QPainter, QFont
-
+import os
 
 class TimeBlock(QGraphicsRectItem):
     HANDLE_WIDTH = 6
@@ -69,10 +69,17 @@ class TimeBlock(QGraphicsRectItem):
         super().hoverLeaveEvent(event)
 
     def mouseDoubleClickEvent(self, event):
-        if event.pos().x() < 40:
-            self.send_start_command()
-        elif event.pos().x() > self.rect().width() - 40:
-            self.send_stop_command()
+        if not hasattr(self, "path_manager"):
+            print("⚠️ 未設定 path_manager，無法預覽圖片")
+            return
+
+        img_path = self.path_manager.get_image_path(self.label, self.start_date)
+        if os.path.exists(img_path):
+            self.show_image_popup(img_path)  # ✅ 用上面的方法
+        else:
+            print(f"❌ 找不到圖片：{img_path}")
+
+        event.accept()
 
     def send_command(self, cmd):
         try:

@@ -2,7 +2,7 @@
 import os
 import json
 from datetime import datetime
-
+from PySide6.QtCore import QDate
 CONFIG_FILE = "config.json"
 
 class PathManager:
@@ -30,3 +30,12 @@ class PathManager:
         except Exception as e:
             print("❌ 無法讀取 config:", e)
         return 'E:/'
+    def get_image_path(self, block_id: str, qdate: QDate):
+            
+        if not isinstance(block_id, str):
+            raise ValueError("block_id 必須是字串（UUID）")
+        if not isinstance(qdate, QDate):
+            raise ValueError("qdate 必須是 QDate 物件")
+
+        date_folder = qdate.toString("MM.dd.yyyy")
+        return os.path.join(self.record_root, date_folder, "img", f"{block_id}.png")
