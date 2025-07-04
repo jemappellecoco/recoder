@@ -9,6 +9,7 @@ import socket
 from PySide6.QtCore import Qt, QDate, QTimer,QDateTime
 from PySide6.QtGui import QBrush, QColor, QPainter, QFont
 import datetime
+import os
 def send_command(cmd):
     HOST = "192.168.30.228"
     PORT = 32108
@@ -238,7 +239,7 @@ class ScheduleView(QGraphicsView):
 
     
     def draw_blocks(self):
-        # 先清除舊有的 block item（視覺上的圖形物件）
+        # 清除畫面上舊的 TimeBlock
         for item in self.scene.items():
             if isinstance(item, TimeBlock):
                 self.scene.removeItem(item)
@@ -248,19 +249,43 @@ class ScheduleView(QGraphicsView):
         start_range = self.base_date
         end_range = self.base_date.addDays(self.days)
 
-        for data in self.block_data:
-            block_start = data["qdate"]
-            block_end = block_start.addDays(int((data["start_hour"] + data["duration"]) // 24))
+        for block_data in self.block_data:
+            qdate = block_data["qdate"]
+            if isinstance(qdate, str):
+                qdate = QDate.fromString(qdate, "yyyy-MM-dd")
 
-            # 檢查是否有任何部分落在目前顯示範圍
-            if block_start < end_range and block_end >= start_range:
-                block = TimeBlock(
-                    data["qdate"], data["track_index"],
-                    data["start_hour"], data["duration"], data["label"]
-                )
-                self.scene.addItem(block)
-                block.update_geometry(self.base_date)
-                self.blocks.append(block)
+            if not (start_range <= qdate < end_range):
+                continue  # 不在目前顯示範圍內就略過
+
+            track_index = block_data["track_index"]
+            start_hour = block_data["start_hour"]
+            duration = block_data["duration"]
+            label = block_data["label"]
+            block_id = block_data.get("id", None)
+
+            # 建立新的 TimeBlock
+            block = TimeBlock(
+                start_date=qdate,
+                track_index=track_index,
+                start_hour=start_hour,
+                duration_hours=duration,
+                label=label,
+                block_id=block_id
+            )
+
+            # 加入場景中
+            self.scene.addItem(block)
+            self.blocks.append(block)
+
+            # ✅ 載入該 block 的圖片預覽（若有）
+            date_folder = qdate.toString("MM.dd.yyyy")
+            img_path = os.path.join(self.record_root, date_folder, "img")
+            block.load_preview_images(img_path)
+
+        # ✅ 更新 ScheduleRunner 的 blocks（避免操作已刪除 block）
+        if hasattr(self, "runner"):
+            self.runner.blocks = self.blocks
+
 
     def is_overlap(self, qdate, track_index, start_hour, duration, exclude_label=None):
         for block in self.block_data:

@@ -3,7 +3,7 @@ from PySide6.QtCore import Qt, QDate, QTimer,QDateTime, QTime
 from PySide6.QtGui import QPainter, QFont
 from time_block import TimeBlock
 import json
-
+import os
 class ScheduleView(QGraphicsView):
     def __init__(self):
         super().__init__()
@@ -64,12 +64,19 @@ class ScheduleView(QGraphicsView):
         self.draw_blocks()
         
     def draw_blocks(self):
+            # 建立舊 block 映射（label → block）以便繼承狀態
+        old_block_map = {block.label: block for block in self.blocks}
+
+        # 清除舊的 TimeBlock（但不刪除其他 scene 內容）
         for item in self.scene.items():
             if isinstance(item, TimeBlock):
-                self.scene.removeItem(item)
+                item.safe_delete()
+
         self.blocks = []
+
         start_range = self.base_date
         end_range = self.base_date.addDays(self.days)
+
         for data in self.block_data:
             block_start = data["qdate"]
             total_hours = data["start_hour"] + data["duration"]
@@ -78,16 +85,41 @@ class ScheduleView(QGraphicsView):
 
             if block_end >= start_range and block_start <= end_range:
                 block = TimeBlock(
-                    data["qdate"], data["track_index"],
-                    data["start_hour"], data["duration"], data["label"], block_id=data.get("id")
+                    data["qdate"],
+                    data["track_index"],
+                    data["start_hour"],
+                    data["duration"],
+                    data["label"],
+                    block_id=data.get("id")
                 )
+
+                # 先加到 scene 才能安全操作 scene() 相關功能
                 self.scene.addItem(block)
                 block.update_geometry(self.base_date)
+
+                # 從舊 block 繼承狀態與圖片
+                old_block = old_block_map.get(data["label"])
+                if old_block:
+                    block.status = old_block.status
+                    if hasattr(old_block, "status_text") and old_block.status_text:
+                        block.status_text.setText(old_block.status)
+                    if hasattr(old_block, "image_item") and old_block.image_item:
+                        block.image_item = old_block.image_item
+                        block.image_item.setParentItem(block)
+
+                # 自動載入縮圖
+                if block.block_id and hasattr(self, "record_root"):
+                    img_folder = os.path.join(self.record_root, block.start_date.toString("MM.dd.yyyy"), "img")
+                    block.load_preview_images(img_folder)
+
                 self.blocks.append(block)
 
-        # ✅ 更新 ScheduleRunner 裡面的 block 清單
+        # 更新 ScheduleRunner 的 block 清單
         if hasattr(self, "runner"):
             self.runner.blocks = self.blocks
+
+
+
 
 
     def is_overlap(self, qdate, track_index, start_hour, duration, exclude_label=None):

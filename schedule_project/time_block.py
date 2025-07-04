@@ -62,23 +62,33 @@ class TimeBlock(QGraphicsRectItem):
 
     def update_text_position(self):
         try:
+        # ✅ 檢查主文字是否存在且仍屬於場景中
+            if self.text is None or self.text.scene() is None:
+                return
+
+            # ✅ 更新上方主文字（節目名稱＋時間）
             self.text.setText(self.format_text())
             self.text.setPos(4, 2)
 
-            # 強制更新「等待中」的狀態倒數，否則會卡住
+            # ✅ 檢查狀態文字是否存在且仍屬於場景中
+            if self.status_text is None or self.status_text.scene() is None:
+                return  # 避免已被刪除後仍嘗試操作造成 RuntimeError
+
+            # ✅ 根據狀態更新下方狀態文字內容
             if self.status.startswith("狀態：⏳ 等待中"):
                 self.status_text.setText(self.status)
             else:
-                # 只有非等待中才跳過更新來節省資源
                 if self.status_text.text() != self.status:
                     self.status_text.setText(self.status)
 
-            # 動態調整位置
+            # ✅ 動態調整狀態文字的位置（在主文字下方）
             text_rect = self.text.boundingRect()
             self.status_text.setPos(4, text_rect.height() + 6)
 
-        except RuntimeError:
-            pass
+        except RuntimeError as e:
+           pass
+
+
 
     def format_text(self):
         
@@ -125,40 +135,48 @@ class TimeBlock(QGraphicsRectItem):
     def mousePressEvent(self, event):
         now = QDateTime.currentDateTime()
         start_dt = QDateTime(self.start_date, QTime(int(self.start_hour), int((self.start_hour % 1) * 60)))
-        if now >= start_dt:
-            print(f"⚠️ 無法修改已開始錄影的區塊：{self.label}")
-            return
+        self.has_started = now >= start_dt  # ⏱️ 存成屬性，後面 mouseMove 也可用
 
         # 清除其他 block 的拖曳狀態
         for item in self.scene().items():
             if isinstance(item, TimeBlock) and item is not self:
                 item.dragging_handle = None
 
-        self.setFocus()  # 🔑 取得事件焦點
+        self.setFocus()
         self.drag_start_offset = event.pos()
 
         if self.left_handle.contains(event.pos()):
+            if self.has_started:
+                print(f"⛔ 已開始：左側不能拖動（{self.label}）")
+                return
             self.dragging_handle = 'left'
             return
+
         elif self.right_handle.contains(event.pos()):
             self.dragging_handle = 'right'
             return
-        else:
-            self.dragging_handle = None
-            super().mousePressEvent(event)
+
+        # 整塊拖曳
+        if self.has_started:
+            print(f"⛔ 已開始：整塊不能移動（{self.label}）")
+            return
+
+        self.dragging_handle = None
+        super().mousePressEvent(event)
+
 
 
 
     def mouseMoveEvent(self, event):
         parent_view = self.scene().parent()
-        scene_width = self.scene().sceneRect().width()
 
         if self.dragging_handle == 'right':
             delta = event.pos().x()
             new_duration = round(max(1.0, delta / 20), 2)
 
             new_right_x = self.scenePos().x() + new_duration * 20
-            if new_right_x > scene_width:
+            if new_right_x <= self.scenePos().x():  # ⛔ 不可縮短（即使未開始）
+                print(f"⛔ 無法將右邊往前拖（{self.label}）")
                 return
 
             if not parent_view.is_overlap(self.start_date, self.track_index, self.start_hour, new_duration, exclude_label=self.label):
@@ -166,6 +184,9 @@ class TimeBlock(QGraphicsRectItem):
                 self.update_geometry(parent_view.base_date)
 
         elif self.dragging_handle == 'left':
+            if getattr(self, "has_started", False):
+                return
+
             delta = event.pos().x()
             max_shift = self.rect().width() - 20
             shift_pixels = min(delta, max_shift)
@@ -179,8 +200,12 @@ class TimeBlock(QGraphicsRectItem):
                     self.start_hour = new_start_hour
                     self.duration_hours = new_duration
                     self.update_geometry(parent_view.base_date)
+
         else:
+            if getattr(self, "has_started", False):
+                return
             super().mouseMoveEvent(event)
+
 
 
     def mouseReleaseEvent(self, event):
@@ -293,3 +318,12 @@ class TimeBlock(QGraphicsRectItem):
         else:
             self.preview_item.setVisible(False)
             print(f"⚠️ 找不到縮圖：{image_path}")
+    def safe_delete(self):
+        if self.scene():
+            self.scene().removeItem(self)
+        
+        for item_attr in ["text", "status_text", "preview_item"]:
+            item = getattr(self, item_attr, None)
+            if item and item.scene():
+                item.scene().removeItem(item)
+            setattr(self, item_attr, None)  # ✅ 解引用，防止後續被誤用

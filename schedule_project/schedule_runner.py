@@ -1,9 +1,10 @@
 # schedule_runner.py
-
+from encoder_controller import EncoderController 
 from PySide6.QtCore import QObject, QTimer, QDateTime, QDate, QTime
 from encoder_utils import connect_socket, send_command,send_persistent_command
 import os
 import logging
+from PySide6.QtWidgets import QApplication
 from capture import take_snapshot_from_block 
 REFRESH_INTERVAL_MS = 8 * 60 * 1000
 class ScheduleRunner(QObject):
@@ -14,29 +15,36 @@ class ScheduleRunner(QObject):
         self.record_root = record_root
         self.encoder_names = encoder_names
         self.blocks = blocks  # 傳入 TimeBlock 實例列表
-
+        self.encoder_controller = EncoderController(self.record_root)
         self.already_started = set()
         self.already_stopped = set()
-
+        
         self.timer = QTimer(self)
         self.timer.timeout.connect(self.check_schedule)
         self.timer.start(1000)  # 每秒檢查一次
         self.encoder_last_state = {}
         self.status_timer = QTimer(self)
         self.status_timer.timeout.connect(self.refresh_encoder_statuses)
+        
         self.status_timer.start(REFRESH_INTERVAL_MS)  
+        
     def check_schedule(self):
         now = QDateTime.currentDateTime()
-
+        
         for b in self.schedule_data:
-            label = b["label"]
-            qdate = b["qdate"]
+            block_id = b.get("id")
 
-            # 字串轉換成 QDate
+            if block_id in self.already_stopped:
+                block = self.find_block_by_id(block_id)
+                if block:
+                    block.status = "⏹ 停止中"
+                    block.update_text_position()
+                continue
+
+            qdate = b["qdate"]
             if isinstance(qdate, str):
                 qdate = QDate.fromString(qdate, "yyyy-MM-dd")
 
-            # 解析開始時間
             start_hour = float(b["start_hour"])
             h = int(start_hour)
             m = int((start_hour - h) * 60)
@@ -44,54 +52,50 @@ class ScheduleRunner(QObject):
             duration_secs = int(b["duration"] * 3600)
             end_dt = start_dt.addSecs(duration_secs)
 
-            # 取得對應 encoder 和 block
             track_index = b["track_index"]
             encoder_name = self.encoder_names[track_index]
             status_label = self.encoder_status.get(encoder_name)
-            block = self.find_block_by_label(label)
+            block = self.find_block_by_id(block_id)
 
-            if not block:
-                continue  # 沒找到 block 就跳過
+            if (
+                not block or
+                block.text is None or block.text.scene() is None or
+                block.status_text is None or block.status_text.scene() is None
+            ):
+                continue
 
-            # 錄影中：現在時間介於開始與結束之間
+            # 狀態一：錄影中
             if start_dt <= now < end_dt:
                 remaining = end_dt.toSecsSinceEpoch() - now.toSecsSinceEpoch()
                 time_text = self.format_remaining_time(remaining)
-
-                # 更新 block 狀態文字
                 block.status = f"狀態：✅ 錄影中\n剩餘 {time_text}"
                 block.update_text_position()
 
-                # 若尚未啟動過，則觸發 encoder 開始錄影
-                if label not in self.already_started:
-                    self.start_encoder(encoder_name, label, status_label, b.get("id"))
-                    self.already_started.add(label)
+                if block_id not in self.already_started:
+                    self.start_encoder(encoder_name, b["label"], status_label, block_id)
+                    self.already_started.add(block_id)
 
-            # 已結束：時間超過結束時間
-            elif now >= end_dt and label not in self.already_stopped:
+            # 狀態二：已結束
+            elif now >= end_dt and block_id not in self.already_stopped:
                 block.status = "狀態：⏹ 已結束"
                 block.update_text_position()
 
                 self.stop_encoder(encoder_name, status_label)
-                self.already_stopped.add(label)
+                self.already_stopped.add(block_id)
 
-            # 等待中：時間尚未開始
+            # 狀態三：等待中
             elif now < start_dt:
                 countdown = start_dt.toSecsSinceEpoch() - now.toSecsSinceEpoch()
-
-                if countdown <= 10 * 60:  # 🔔 只在開始前十分鐘內更新倒數
+                if countdown <= 10 * 60:
                     countdown_str = self.format_remaining_time(countdown)
                     start_time_str = f"{h:02d}:{m:02d}"
+                    block.status = f"狀態：⏳ 等待中\n啟動於 {start_time_str}\n倒數 {countdown_str}"
+                else:
+                    block.status = "狀態：⏳ 等待中"
+                block.update_text_position()
 
-                    # 加入安全防呆，避免操作已被 Qt 刪除的物件
-                    try:
-                        if block.status_text and block.status_text.scene() is not None:
-                            block.status_text.setText(
-                                f"狀態：⏳ 等待中\n啟動於 {start_time_str}\n倒數 {countdown_str}"
-                            )
-                            block.update_text_position()
-                    except RuntimeError:
-                        print(f"⚠️ block {label} 的狀態元件已被刪除，略過更新")
+
+
 
     def start_encoder(self, encoder_name, filename, status_label, block_id=None):
         
@@ -126,21 +130,32 @@ class ScheduleRunner(QObject):
             status_label.setStyleSheet("color: red;")
 
     def stop_encoder(self, encoder_name, status_label):
-        sock = connect_socket()
-        if not sock:
-            status_label.setText("❌ 停止失敗")
-            status_label.setStyleSheet("color: red;")
-            return
+        status_label.setText("狀態：🔁 停止中...")
+        status_label.setStyleSheet("color: blue")
+        QApplication.processEvents()
 
-        res = send_command(sock, f'Stop "{encoder_name}" 1')
-        sock.close()
+        ok = self.encoder_controller.stop_encoder(encoder_name)
+        now = QDateTime.currentDateTime()
+        encoder_index = self.encoder_names.index(encoder_name)
 
-        if "OK" in res:
-            status_label.setText("⏹ 已停止")
-            status_label.setStyleSheet("color: gray;")
+        if ok:
+            for block in self.blocks:
+                if block.track_index == encoder_index:
+                    start_dt = QDateTime(block.start_date, QTime(int(block.start_hour), int((block.start_hour % 1) * 60)))
+                    end_dt = start_dt.addSecs(int(block.duration_hours * 3600))
+                    if start_dt <= now <= end_dt:
+                        block.status = "⏹ 停止中"
+                        block.update_text_position()
+                        self.already_stopped.add(block.block_id)
+
+            status_label.setText("狀態：⏹ 停止中")
+            status_label.setStyleSheet("color: gray")
         else:
-            status_label.setText("❌ 停止失敗")
-            status_label.setStyleSheet("color: red;")
+            status_label.setText("狀態：❌ 停止失敗")
+            status_label.setStyleSheet("color: red")
+
+        self.refresh_encoder_statuses()
+
     def refresh_encoder_statuses(self):
         for encoder_name in self.encoder_names:
             try:
@@ -175,11 +190,11 @@ class ScheduleRunner(QObject):
                 status_text = f"❓未知\n{res}"
                 color = "black"
 
-            # 🔁 更新該 encoder 所在的所有 block + encoder 狀態 label
-            for block in self.blocks:
-                if block.track_index < len(self.encoder_names) and self.encoder_names[block.track_index] == encoder_name:
-                    block.status = f"狀態：{status_text}"
-                    block.update_text_position()
+            
+            # for block in self.blocks:
+            #     if block.track_index < len(self.encoder_names) and self.encoder_names[block.track_index] == encoder_name:
+            #         block.status = f"狀態：{status_text}"
+            #         block.update_text_position()
 
             if self.encoder_status.get(encoder_name):
                 self.encoder_status[encoder_name].setText(f"狀態：{status_text}")

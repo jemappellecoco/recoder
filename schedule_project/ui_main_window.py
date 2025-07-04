@@ -2,7 +2,7 @@ from PySide6.QtWidgets import (
     QMainWindow, QWidget, QPushButton, QLabel, QDateEdit, QInputDialog,QDialog,
     QVBoxLayout, QHBoxLayout, QLineEdit, QApplication, QSizePolicy, QMessageBox, QMenu, QFileDialog
 )
-from PySide6.QtCore import QDate, Qt
+from PySide6.QtCore import QDate, Qt,QDateTime,QTime
 from schedule_view import ScheduleView
 from encoder_utils import list_encoders, send_command, connect_socket
 from datetime import datetime
@@ -103,7 +103,6 @@ class MainWindow(QMainWindow):
 
         self.next_button = QPushButton("➡️ 下一週")
         self.next_button.clicked.connect(lambda: self.shift_date(+7))
-
         toolbar_layout.addWidget(self.date_label)
         toolbar_layout.addWidget(self.date_picker)
         toolbar_layout.addStretch()
@@ -117,9 +116,12 @@ class MainWindow(QMainWindow):
         self.view = ScheduleView()
         self.view.encoder_names = self.encoder_names
         self.view.encoder_status = self.encoder_status
+        self.view.record_root = self.record_root
         self.view.draw_grid()
         self.view.setContextMenuPolicy(Qt.CustomContextMenu)
         self.view.customContextMenuRequested.connect(self.show_block_context_menu)
+
+        # ✅ 一定要在 runner 建立後再指定回去 view
         self.runner = ScheduleRunner(
             schedule_data=self.view.block_data,
             encoder_status=self.encoder_status,
@@ -127,6 +129,7 @@ class MainWindow(QMainWindow):
             encoder_names=self.encoder_names,
             blocks=self.view.blocks
         )
+        self.view.runner = self.runner  
         right_layout.addWidget(toolbar)
         right_layout.addWidget(self.view)
 
@@ -212,6 +215,42 @@ class MainWindow(QMainWindow):
 
                 break
 
+    def encoder_stop(self, encoder_name, status_label):
+        status_label.setText("狀態：🔁 停止中...")
+        status_label.setStyleSheet("color: blue")
+        QApplication.processEvents()
+
+        ok = self.encoder_controller.stop_encoder(encoder_name)
+
+        now = QDateTime.currentDateTime()
+        encoder_index = self.encoder_names.index(encoder_name)
+
+        if ok:
+            for block in self.view.blocks:
+                if block.track_index == encoder_index:
+                    start_dt = QDateTime(block.start_date, QTime(int(block.start_hour), int((block.start_hour % 1) * 60)))
+                    end_dt = start_dt.addSecs(int(block.duration_hours * 3600))
+                    if start_dt <= now <= end_dt:
+                        block.status = "⏹ 停止中"
+                        block.update_text_position()
+
+            # ✅ 同步 runner 狀態：加入 already_stopped，避免被覆蓋
+            for b in self.view.block_data:
+                if b.get("encoder_name") == encoder_name:
+                    block_id = b.get("id")
+                    if block_id:
+                        self.runner.already_stopped.add(block_id)
+
+            status_label.setText("狀態：⏹ 停止中")
+            status_label.setStyleSheet("color: gray")
+        else:
+            status_label.setText("狀態：❌ 停止失敗")
+            status_label.setStyleSheet("color: red")
+
+        self.runner.refresh_encoder_statuses()
+        self.view.draw_grid()
+
+
     def encoder_start(self, encoder_name, entry_widget, status_label):
         filename = entry_widget.text().strip()
         if not filename:
@@ -221,8 +260,7 @@ class MainWindow(QMainWindow):
 
         ok, _ = self.encoder_controller.start_encoder(encoder_name, filename)
         if ok:
-            # ❌ 不手動設定狀態，讓 ScheduleRunner 控制
-
+            # ✅ 自動補 block（如沒有）
             if not any(b["label"] == filename for b in self.view.block_data):
                 now = datetime.now()
                 minute = (now.minute + 7) // 15 * 15
@@ -240,37 +278,24 @@ class MainWindow(QMainWindow):
                     start_hour=start_hour,
                     duration=4.0,
                     encoder_name=encoder_name,
-                    qdate = qdate
+                    qdate=qdate
                 )
 
-            # ✅ 同步更新 runner 的內部資料再 check
-            self.runner.schedule_data = self.view.block_data
-            self.runner.blocks = self.view.blocks
-            self.runner.check_schedule()
+            # ✅ 找出對應 block 更新狀態
+            now = QDateTime.currentDateTime()
+            encoder_index = self.encoder_names.index(encoder_name)
+
+            for block in self.view.blocks:
+                if block.track_index == encoder_index:
+                    start_dt = QDateTime(block.start_date, QTime(int(block.start_hour), int((block.start_hour % 1) * 60)))
+                    end_dt = start_dt.addSecs(int(block.duration_hours * 3600))
+                    if start_dt <= now <= end_dt:
+                        block.status = "✅ 錄影中"
+                        block.update_text_position()
+                        break
+
             self.runner.refresh_encoder_statuses()
             self.view.draw_grid()
         else:
             status_label.setText("狀態：❌ 錯誤")
-
             status_label.setStyleSheet("color: red")
-
-
-
-    
-
-    
-
-    def encoder_stop(self, encoder_name, status_label):
-        status_label.setText("狀態：🔁 停止中...")
-        status_label.setStyleSheet("color: blue")
-        QApplication.processEvents()
-
-        ok = self.encoder_controller.stop_encoder(encoder_name)
-        if ok:
-            # ✅ 不再手動設定狀態
-            self.runner.check_schedule()
-        else:
-            status_label.setText("狀態：❌ 停止失敗")
-            status_label.setStyleSheet("color: red")
-        self.runner.refresh_encoder_statuses()
-        self.view.draw_grid()
