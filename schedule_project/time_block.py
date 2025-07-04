@@ -1,8 +1,10 @@
-from PySide6.QtWidgets import QGraphicsRectItem, QGraphicsSimpleTextItem
+from PySide6.QtWidgets import QGraphicsRectItem, QGraphicsSimpleTextItem,QGraphicsPixmapItem
 from PySide6.QtCore import Qt, QTimer, QDate,QDateTime,QTime
-from PySide6.QtGui import QBrush, QColor, QFont
-
-
+from PySide6.QtGui import QBrush, QColor, QFont,QPixmap
+from edit_block_dialog import EditBlockDialog
+import logging
+import os
+logging.basicConfig(level=logging.INFO)
 class TimeBlock(QGraphicsRectItem):
     HANDLE_WIDTH = 6
     BLOCK_HEIGHT = 100
@@ -38,6 +40,10 @@ class TimeBlock(QGraphicsRectItem):
         self.setAcceptedMouseButtons(Qt.LeftButton)
         self.setFlag(QGraphicsRectItem.ItemIsFocusable, True)
 
+        self.preview_item = QGraphicsPixmapItem(self)
+        self.preview_item.setZValue(5)
+        self.preview_item.setOffset(4, self.status_text.y() + self.status_text.boundingRect().height() + 6)
+        self.preview_item.setVisible(False)
         for handle in (self.left_handle, self.right_handle):
             handle.setBrush(QBrush(QColor(80, 80, 80)))
             handle.setCursor(Qt.SizeHorCursor)
@@ -59,13 +65,21 @@ class TimeBlock(QGraphicsRectItem):
             self.text.setText(self.format_text())
             self.text.setPos(4, 2)
 
-            self.status_text.setText(self.status)
+            # 強制更新「等待中」的狀態倒數，否則會卡住
+            if self.status.startswith("狀態：⏳ 等待中"):
+                self.status_text.setText(self.status)
+            else:
+                # 只有非等待中才跳過更新來節省資源
+                if self.status_text.text() != self.status:
+                    self.status_text.setText(self.status)
 
-            # 動態位置：放在主文字底下 + 一點 padding
+            # 動態調整位置
             text_rect = self.text.boundingRect()
             self.status_text.setPos(4, text_rect.height() + 6)
+
         except RuntimeError:
             pass
+
     def format_text(self):
         
 
@@ -226,10 +240,56 @@ class TimeBlock(QGraphicsRectItem):
 
         parent_view.save_schedule()
         super().mouseReleaseEvent(event)
+        parent_view.save_schedule()
+    def mouseDoubleClickEvent(self, event):
+        parent_view = self.scene().parent()
+        block_data = None
+        for b in parent_view.block_data:
+            if b.get("id") == self.block_id:
+                block_data = b
+                break
+        if not block_data:
+            print("⚠️ 找不到對應 block 資料，無法編輯")
+            return
 
+        dialog = EditBlockDialog(block_data, parent_view.encoder_names)
+        if dialog.exec():
+            updated = dialog.get_updated_data()
+            # 更新 block 資料
+            self.start_date = updated["qdate"]
+            self.label = updated["label"]
+            self.start_hour = updated["start_hour"]
+            self.duration_hours = updated["duration"]
+            self.track_index = parent_view.encoder_names.index(updated["encoder_name"])
 
+            # 更新畫面與資料
+            self.update_geometry(parent_view.base_date)
+            self.update_text_position()
+
+            block_data.update({
+                "qdate": self.start_date,
+                "start_hour": self.start_hour,
+                "duration": self.duration_hours,
+                "label": self.label,
+                "encoder_name": updated["encoder_name"]
+            })
+
+            parent_view.save_schedule()
     def flash_red(self):
         original_color = self.brush().color()
         flash_color = QColor(255, 0, 0, 180)
         self.setBrush(flash_color)
         QTimer.singleShot(300, lambda: self.setBrush(QBrush(original_color)))
+
+    def load_preview_images(self, image_folder):
+        image_path = os.path.join(image_folder, f"{self.block_id}.png")
+        if os.path.exists(image_path):
+            pixmap = QPixmap(image_path).scaledToWidth(60)
+            self.preview_item.setPixmap(pixmap)
+            self.preview_item.setVisible(True)
+            self.update()
+            self.scene().update()
+            print(f"🖼️ 已載入縮圖：{image_path}")
+        else:
+            self.preview_item.setVisible(False)
+            print(f"⚠️ 找不到縮圖：{image_path}")

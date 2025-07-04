@@ -76,7 +76,6 @@ class ScheduleView(QGraphicsView):
             extra_days = int(total_hours // 24)
             block_end = block_start.addDays(extra_days)
 
-            # ✅ 改為：只要 block 有任何部分落在顯示區間，就畫出來
             if block_end >= start_range and block_start <= end_range:
                 block = TimeBlock(
                     data["qdate"], data["track_index"],
@@ -85,6 +84,11 @@ class ScheduleView(QGraphicsView):
                 self.scene.addItem(block)
                 block.update_geometry(self.base_date)
                 self.blocks.append(block)
+
+        # ✅ 更新 ScheduleRunner 裡面的 block 清單
+        if hasattr(self, "runner"):
+            self.runner.blocks = self.blocks
+
 
     def is_overlap(self, qdate, track_index, start_hour, duration, exclude_label=None):
         from PySide6.QtCore import QDateTime, QTime

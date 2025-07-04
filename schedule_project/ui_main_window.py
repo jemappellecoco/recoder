@@ -134,7 +134,7 @@ class MainWindow(QMainWindow):
         main_layout.addWidget(right_panel)
         self.block_manager = BlockManager(self.view)
         self.runner.check_schedule()
-        
+        self.runner.refresh_encoder_statuses()
     def select_record_root(self):
         folder = QFileDialog.getExistingDirectory(self, "選擇儲存根目錄", self.record_root)
         if folder:
@@ -247,9 +247,11 @@ class MainWindow(QMainWindow):
             self.runner.schedule_data = self.view.block_data
             self.runner.blocks = self.view.blocks
             self.runner.check_schedule()
-
+            self.runner.refresh_encoder_statuses()
+            self.view.draw_grid()
         else:
-            status_label.setText("❌ 錯誤")
+            status_label.setText("狀態：❌ 錯誤")
+
             status_label.setStyleSheet("color: red")
 
 
@@ -259,7 +261,7 @@ class MainWindow(QMainWindow):
     
 
     def encoder_stop(self, encoder_name, status_label):
-        status_label.setText("🔁 停止中...")
+        status_label.setText("狀態：🔁 停止中...")
         status_label.setStyleSheet("color: blue")
         QApplication.processEvents()
 
@@ -268,5 +270,7 @@ class MainWindow(QMainWindow):
             # ✅ 不再手動設定狀態
             self.runner.check_schedule()
         else:
-            status_label.setText("❌ 停止失敗")
+            status_label.setText("狀態：❌ 停止失敗")
             status_label.setStyleSheet("color: red")
+        self.runner.refresh_encoder_statuses()
+        self.view.draw_grid()

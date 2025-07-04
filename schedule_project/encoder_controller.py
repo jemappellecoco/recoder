@@ -2,19 +2,19 @@
 
 from encoder_utils import connect_socket, send_command
 import os
+from path_manager import PathManager
 from datetime import datetime
-
+import base64
 class EncoderController:
     def __init__(self, record_root):
         self.record_root = record_root
+        self.path_manager = PathManager()
 
-    def get_full_path(self, encoder_name, filename):
-        date_folder = datetime.today().strftime("%m.%d.%Y")
-        date_prefix = datetime.today().strftime("%m%d")
-        return os.path.abspath(os.path.join(self.record_root, date_folder, f"{date_prefix}_{filename}"))
+    
 
     def start_encoder(self, encoder_name, filename):
-        full_path = self.get_full_path(encoder_name, filename)
+        full_path = self.path_manager.get_full_path(encoder_name, filename)
+
         rel_path = os.path.relpath(full_path, start=self.record_root).replace("\\", "/")
 
         print(f"[debug] Setfile target: encoder_name='{encoder_name}', rel_path='{rel_path}'")
@@ -42,3 +42,4 @@ class EncoderController:
         res = send_command(sock, f'Stop "{encoder_name}" 1')
         sock.close()
         return "OK" in res
+   

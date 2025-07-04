@@ -1,9 +1,10 @@
 import uuid
 from PySide6.QtWidgets import QMessageBox
+from collections import deque
 class BlockManager:
     def __init__(self, schedule_view):
         self.view = schedule_view
-        self.recently_deleted = None
+        self.deleted_stack = deque()
     def add_block_with_unique_label(self, base_label, track_index=0, start_hour=9, duration=4, encoder_name=None, qdate=None):
         label = base_label
         existing_labels = [b["label"] for b in self.view.block_data]
@@ -35,38 +36,36 @@ class BlockManager:
         return None
 
     def remove_block_by_id(self, block_id):
-        # ✅ 從畫面上移除 block
-        for item in list(self.view.blocks):  # 避免迭代時刪除錯誤
-            if hasattr(item, "block_id") and item.block_id == block_id:
-                self.view.scene.removeItem(item)
-                self.view.blocks.remove(item)
-                break
-
-        # ✅ 從 block_data 移除
-        self.view.block_data = [b for b in self.view.block_data if b.get("id") != block_id]
-        self.view.save_schedule()
-    def remove_block_by_id(self, block_id):
+        # 從畫面上移除
         for item in list(self.view.blocks):
             if hasattr(item, "block_id") and item.block_id == block_id:
                 self.view.scene.removeItem(item)
                 self.view.blocks.remove(item)
                 break
 
+        # 找出要刪除的 block 資料
+        deleted_block = None
         for b in self.view.block_data:
             if b.get("id") == block_id:
-                self.recently_deleted = b  # 👈 儲存起來方便復原
+                deleted_block = b
                 break
 
+        # 如果有找到就推進 stack
+        if deleted_block:
+            self.deleted_stack.append(deleted_block)
+
+        # 從 block_data 移除
         self.view.block_data = [b for b in self.view.block_data if b.get("id") != block_id]
         self.view.save_schedule()
         print(f"🗑️ 已刪除 block：{block_id}")
+
     def undo_last_delete(self):
-        if not self.recently_deleted:
-            print("⚠️ 沒有可復原的刪除記錄")
+        if not self.deleted_stack:
+            print("⚠️ 沒有可復原的排程")
             QMessageBox.information(None, "⚠️ 無法復原", "目前沒有可以復原的排程。")
             return
 
-        b = self.recently_deleted
+        b = self.deleted_stack.pop()
         self.view.add_time_block(
             qdate=b["qdate"],
             track_index=b["track_index"],
@@ -77,6 +76,5 @@ class BlockManager:
             block_id=b.get("id")
         )
         self.view.save_schedule()
-        print(f"↩️ 已復原刪除的 block：{b['label']}")
-        QMessageBox.information(None, "✅ 復原成功", f"已復原節目：{b['label']}")  # ✅ 這行放在這裡剛剛好！
-        self.recently_deleted = None
+        print(f"↩️ 已復原 block：{b['label']}")
+        QMessageBox.information(None, "✅ 復原成功", f"已復原節目：{b['label']}")
