@@ -21,7 +21,7 @@ class TimeBlock(QGraphicsRectItem):
         self.status = "等待中"
 
         self.setBrush(QBrush(QColor(100, 150, 255, 180)))
-        self.setFlag(QGraphicsRectItem.ItemIsMovable, True)
+        self.setFlag(QGraphicsRectItem.ItemIsMovable, False)
         self.setFlag(QGraphicsRectItem.ItemIsSelectable, True)
         self.setAcceptHoverEvents(True)
 
@@ -52,6 +52,7 @@ class TimeBlock(QGraphicsRectItem):
         self.dragging_handle = None
         self.preview_item.setAcceptedMouseButtons(Qt.NoButton)
         self.preview_item.setAcceptHoverEvents(True)
+        self.prevent_drag = False
     def hoverEnterEvent(self, event):
         self.left_handle.setVisible(True)
         self.right_handle.setVisible(True)
@@ -135,6 +136,7 @@ class TimeBlock(QGraphicsRectItem):
         
 
     def mousePressEvent(self, event):
+        self.prevent_drag = False  # 每次按下都先重置
         now = QDateTime.currentDateTime()
         start_dt = QDateTime(self.start_date, QTime(int(self.start_hour), int((self.start_hour % 1) * 60)))
         self.has_started = now >= start_dt  # ⏱️ 判斷是否已開始錄影
@@ -143,13 +145,14 @@ class TimeBlock(QGraphicsRectItem):
         for item in self.scene().items():
             if isinstance(item, TimeBlock) and item is not self:
                 item.dragging_handle = None
-
+                item.prevent_drag = False
         self.setFocus()
         self.drag_start_offset = event.pos()
 
         if self.left_handle.contains(event.pos()):
             if self.has_started:
                 print(f"⛔ 已開始：左側不能拖動（{self.label}）")
+                self.prevent_drag = True
                 return
             self.dragging_handle = 'left'
             return
@@ -159,9 +162,10 @@ class TimeBlock(QGraphicsRectItem):
             return
 
         # ✅ 整塊拖曳不允許（即使點擊中間區域）
-        if self.has_started:
-            print(f"⛔ 已開始：整塊不能移動（{self.label}）")
-            return
+        if not self.has_started and self.dragging_handle is None:
+            self.setFlag(QGraphicsRectItem.ItemIsMovable, True)
+            self.drag_start_offset = event.pos()
+
 
         self.dragging_handle = None
         super().mousePressEvent(event)
@@ -171,6 +175,8 @@ class TimeBlock(QGraphicsRectItem):
 
 
     def mouseMoveEvent(self, event):
+        if getattr(self, "prevent_drag", False):
+            return
         parent_view = self.scene().parent()
 
     # ⛔ 若 block 已開始且不是在拉 handle，就禁止拖曳
@@ -215,6 +221,7 @@ class TimeBlock(QGraphicsRectItem):
 
 
     def mouseReleaseEvent(self, event):
+        self.prevent_drag = False
         if self.dragging_handle is not None:
             self.dragging_handle = None
             return  # 不處理整塊移動邏輯
@@ -226,7 +233,7 @@ class TimeBlock(QGraphicsRectItem):
             self.update_geometry(parent_view.base_date)
             return
 
-        scene_pos = self.scenePos() + self.drag_start_offset
+        scene_pos = self.scenePos()
         new_x = scene_pos.x()
         new_y = scene_pos.y()
 
@@ -272,10 +279,15 @@ class TimeBlock(QGraphicsRectItem):
         parent_view.save_schedule()
         super().mouseReleaseEvent(event)
         parent_view.save_schedule()
+        self.setFlag(QGraphicsRectItem.ItemIsMovable, False)  
+
     def mouseDoubleClickEvent(self, event):
+        event.accept()  # ✅ 優先阻止事件傳遞
+        self.setFlag(QGraphicsRectItem.ItemIsMovable, False)
+        QTimer.singleShot(0, lambda: self.setFlag(QGraphicsRectItem.ItemIsMovable, False))
+
         pos = event.pos()
 
-        # ✅ 點到圖片就顯示圖片 popup
         if self.preview_item and self.preview_item.isVisible():
             if self.preview_item.contains(self.mapToItem(self.preview_item, pos)):
                 print(f"🖼️ 點到圖片縮圖：{self.block_id}")
@@ -287,8 +299,8 @@ class TimeBlock(QGraphicsRectItem):
                         print(f"❌ 找不到圖片：{img_path}")
                 else:
                     print("⚠️ 未設定 path_manager")
-                event.accept()
                 return
+
 
         # ✅ 點到區塊其他地方 → 編輯 Dialog
         print(f"📝 點擊 block：{self.label}")
