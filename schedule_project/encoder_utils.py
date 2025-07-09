@@ -37,8 +37,17 @@ def send_persistent_command(cmd):
     global persistent_sock
     if persistent_sock is None:
         persistent_sock = connect_socket()
-    return send_command(persistent_sock, cmd)
-
+    try:
+        return send_command(persistent_sock, cmd)
+    except Exception as e:
+        print("⚠️ 可能連線已失效，重試一次：", e)
+        close_socket()
+        persistent_sock = connect_socket()
+        if persistent_sock:
+            return send_command(persistent_sock, cmd)
+        else:
+            return "❌ 無法重新建立連線"
+    
 def connect_socket():
     """
     建立一次性 socket，連接 encoder。
@@ -73,8 +82,11 @@ def send_command(sock, cmd):
         response = data.decode("cp950", errors="replace")
         print("⬅️ Response:\n", response)
         return response.strip()
+    except (ConnectionResetError, BrokenPipeError, OSError) as e:
+        print("❌ 指令傳送失敗（連線中斷）:", e)
+        raise  # ➜ 讓外層 handle 重連
     except Exception as e:
-        print("❌ 指令傳送失敗:", e)
+        print("❌ 指令傳送失敗（其他）:", e)
         return ""
 
 def list_encoders():

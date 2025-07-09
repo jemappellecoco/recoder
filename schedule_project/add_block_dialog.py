@@ -2,7 +2,7 @@ from PySide6.QtWidgets import (
         QDialog, QVBoxLayout, QFormLayout, QLineEdit, QDialogButtonBox,
     QLabel, QTimeEdit, QDoubleSpinBox, QComboBox, QDateEdit,
 )
-from PySide6.QtCore import QTime,QDate
+from PySide6.QtCore import QTime,QDate,QDateTime
 
 class AddBlockDialog(QDialog):
     def __init__(self, parent=None, encoder_names=None, overlap_checker=None):
@@ -52,16 +52,33 @@ class AddBlockDialog(QDialog):
 
     def accept(self):
         name = self.name_input.text().strip()
+        print(f"🧪 檢查名稱: {name}")
         if not name:
             self.status_label.setText("❌ 節目名稱不能空白")
             return
-
+        
+        time = self.time_input.time()
         start_hour = round(self.time_input.time().hour() + self.time_input.time().minute() / 60, 2)
         duration = self.duration_input.value()
         encoder_name = self.encoder_selector.currentText()
         track_index = self.encoder_names.index(encoder_name)
+        qdate = self.date_input.date()
+        
+        start_dt = QDateTime(qdate, time)
+        end_dt = start_dt.addSecs(int(duration * 3600))
+        now = QDateTime.currentDateTime()
+       # ✅ 開始時間不能早於現在
+        if start_dt < now:
+            self.status_label.setText("❌ 無法新增過去的行程")
+            return
 
-        if self.overlap_checker and self.overlap_checker(track_index, start_hour, duration):
+        # ✅ 結束時間也不能早於現在（防止長度過短 + 過期）
+        if end_dt < now:
+            self.status_label.setText("❌ 結束時間不能早於現在時間")
+            return
+
+        # ✅ 檢查時間重疊
+        if self.overlap_checker and self.overlap_checker(track_index, start_hour, duration, qdate):
             self.status_label.setText("⚠️ 時間重疊")
             return
 

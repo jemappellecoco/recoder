@@ -1,9 +1,10 @@
 from PySide6.QtWidgets import QGraphicsView, QGraphicsScene
 from PySide6.QtCore import Qt, QDate, QTimer,QDateTime, QTime
-from PySide6.QtGui import QPainter, QFont
+from PySide6.QtGui import QPainter, QFont,QPen
 from time_block import TimeBlock
 import json
 import os
+import uuid
 from path_manager import PathManager 
 class ScheduleView(QGraphicsView):
     def __init__(self):
@@ -15,7 +16,7 @@ class ScheduleView(QGraphicsView):
         self.setScene(self.scene)
         self.days = 7
         self.hour_width = 20
-        self.day_width = 24 * self.hour_width + 20
+        self.day_width = 24 * self.hour_width
         self.base_date = QDate.currentDate()
         self.encoder_names = []
         self.encoder_status = {}
@@ -26,18 +27,75 @@ class ScheduleView(QGraphicsView):
         self.schedule_timer.start(1000)
         self.load_schedule()
         self.path_manager = PathManager()
+        self.now_timer = QTimer(self)
+        self.now_timer.timeout.connect(self.update_now_line)
+        self.now_timer.start(1000)  # 每秒更新
+        self.now_line_item = None
+        self.now_time_label = None
+        
+    def update_now_line(self):
+        now = QDateTime.currentDateTime()
+        days_from_base = self.base_date.daysTo(now.date())
+
+        # 不在可視範圍內時，移除現在時間線
+        if not (0 <= days_from_base < self.days):
+            try:
+                if self.now_line_item and self.now_line_item.scene():
+                    self.scene.removeItem(self.now_line_item)
+            except RuntimeError:
+                pass
+            self.now_line_item = None
+
+            try:
+                if self.now_time_label and self.now_time_label.scene():
+                    self.scene.removeItem(self.now_time_label)
+            except RuntimeError:
+                pass
+            self.now_time_label = None
+            return
+
+        # ➤ 計算目前時間對應的 X 座標
+        time = now.time()
+        total_hours = time.hour() + time.minute() / 60 + time.second() / 3600
+        x = days_from_base * self.day_width + total_hours * self.hour_width
+
+        # ✅ 安全地移除舊紅線
+        try:
+            if self.now_line_item and self.now_line_item.scene():
+                self.scene.removeItem(self.now_line_item)
+        except RuntimeError:
+            self.now_line_item = None
+        self.now_line_item = self.scene.addLine(x, 0, x, self.tracks * 100, QPen(Qt.red, 2))
+        self.now_line_item.setZValue(1000)
+
+        # ✅ 安全地移除舊時間文字
+        try:
+            if self.now_time_label and self.now_time_label.scene():
+                self.scene.removeItem(self.now_time_label)
+        except RuntimeError:
+            self.now_time_label = None
+
+        # ➤ 新增現在時間文字
+        time_str = now.time().toString("HH:mm:ss")
+        self.now_time_label = self.scene.addText(f"TIME {time_str}")
+        self.now_time_label.setFont(QFont("Arial", 8, QFont.Bold))
+        self.now_time_label.setDefaultTextColor(Qt.red)
+        self.now_time_label.setPos(x - 10, -18)
+        self.now_time_label.setZValue(1000)
+
     def draw_grid(self):
         print("🎯 draw_grid encoder_names:", self.encoder_names)
 
         self.scene.clear()
         self.tracks = len(self.encoder_names)
-
+    
         for day in range(self.days):
             for hour in range(24):
                 x = day * self.day_width + hour * self.hour_width
                 label = self.scene.addText(f"{hour:02d}")
                 label.setFont(QFont("Arial", 8))
-                label.setPos(x + 2, -35)
+                label_rect = label.boundingRect()
+                label.setPos(x - label_rect.width() / 2, -35)       
                 self.scene.addLine(x, 0, x, self.tracks * 100, Qt.DotLine)
 
         for day in range(self.days):
@@ -65,6 +123,8 @@ class ScheduleView(QGraphicsView):
 
         self.draw_blocks()
         
+        self.update_now_line()
+
     def draw_blocks(self):
             # 建立舊 block 映射（label → block）以便繼承狀態
         old_block_map = {block.label: block for block in self.blocks}
@@ -98,7 +158,7 @@ class ScheduleView(QGraphicsView):
                 # 先加到 scene 才能安全操作 scene() 相關功能
                 self.scene.addItem(block)
                 block.update_geometry(self.base_date)
-
+                block.encoder_names = self.encoder_names
                 # 從舊 block 繼承狀態與圖片
                 old_block = old_block_map.get(data["label"])
                 if old_block:
@@ -118,37 +178,39 @@ class ScheduleView(QGraphicsView):
 
         # 更新 ScheduleRunner 的 block 清單
         if hasattr(self, "runner"):
+            self.runner.schedule_data = self.block_data
             self.runner.blocks = self.blocks
-
+            
 
 
 
 
     def is_overlap(self, qdate, track_index, start_hour, duration, exclude_label=None):
-        from PySide6.QtCore import QDateTime, QTime
-
         new_start_dt = QDateTime(qdate, QTime(int(start_hour), int((start_hour % 1) * 60)))
-        new_end_dt = new_start_dt.addSecs(int(duration * 3600))
+        end_hour = start_hour + duration
+        end_qdate = qdate.addDays(1) if end_hour >= 24 else qdate
+        new_end_dt = QDateTime(end_qdate, QTime(int(end_hour % 24), int(((end_hour % 1) * 60))))
 
         for block in self.block_data:
-            
-            if exclude_label and block["label"] == exclude_label:
+            if block["track_index"] != track_index:
                 continue
 
-            # 🟡 正確取得 block 起始時間
+            # ✅ 用 exclude_label 當作 exclude_id（只要確定你傳的是 block["id"]）
+            if exclude_label and block.get("id") == exclude_label:
+                continue  
+
+            b_start_hour = float(block["start_hour"])
+            b_end_hour = float(block.get("end_hour", b_start_hour + block["duration"]))
             b_qdate = block["qdate"]
             if isinstance(b_qdate, str):
                 b_qdate = QDate.fromString(b_qdate, "yyyy-MM-dd")
-
-            b_start_hour = float(block["start_hour"])
-            b_duration = float(block["duration"])
+            b_end_qdate = block.get("end_qdate", b_qdate.addDays(1) if b_end_hour >= 24 else b_qdate)
 
             b_start_dt = QDateTime(b_qdate, QTime(int(b_start_hour), int((b_start_hour % 1) * 60)))
-            b_end_dt = b_start_dt.addSecs(int(b_duration * 3600))
+            b_end_dt = QDateTime(b_end_qdate, QTime(int(b_end_hour % 24), int((b_end_hour % 1) * 60)))
 
-            # 🔴 真正的重疊邏輯（只要有交集就算）
             if new_start_dt < b_end_dt and new_end_dt > b_start_dt:
-                print(f"🔴 重疊偵測：{exclude_label=} 撞到 {block['label']}")
+                print(f"🔴 重疊偵測：與 {block['label']} 發生重疊")
                 return True
 
         return False
@@ -158,13 +220,23 @@ class ScheduleView(QGraphicsView):
         if isinstance(qdate, str):
             qdate = QDate.fromString(qdate, "yyyy-MM-dd")
 
+        end_hour = round(start_hour + duration, 4)
+        end_qdate = qdate.addDays(1) if end_hour >= 24 else qdate
+
         block = {
             "qdate": qdate,
             "track_index": track_index,
             "start_hour": start_hour,
             "duration": duration,
-            "label": label
+            "end_hour": end_hour,
+            "end_qdate": end_qdate,
+            "label": label,
+            "encoder_name": encoder_name,
+            "id": block_id or str(uuid.uuid4()),
+            "snapshot_path": ""
         }
+
+       
         # block.path_manager = self.path_manager
         if encoder_name is not None:
             block["encoder_name"] = encoder_name
@@ -173,15 +245,34 @@ class ScheduleView(QGraphicsView):
 
         self.block_data.append(block)
         self.draw_blocks()
-        
+    def can_delete_block(self, block):
+        now = QDateTime.currentDateTime()
+        start_dt = QDateTime(block["qdate"], QTime(int(block["start_hour"]), int((block["start_hour"] % 1) * 60)))
+        return start_dt >= now    
     def remove_block_by_label(self, label):
+        # 🔍 找出對應的 block 資料（從 block_data 查）
+        block_to_remove = next((b for b in self.block_data if b["label"] == label), None)
+
+        if not block_to_remove:
+            print(f"⚠️ 找不到節目：{label}")
+            return
+
+        # ⛔ 判斷是否在過去
+        if not self.can_delete_block(block_to_remove):
+            print(f"⛔ 節目 {label} 已在過去，不可刪除")
+            return
+
+        # ✅ 找出場景中的 block item 並刪除
         for item in self.blocks:
             if item.label == label:
                 self.scene.removeItem(item)
                 self.blocks.remove(item)
                 break
+
+        # ✅ 從 block_data 移除
         self.block_data = [b for b in self.block_data if b["label"] != label]
         self.save_schedule()
+
     def set_start_date(self, qdate):
         self.base_date = qdate
         self.draw_grid()
@@ -195,14 +286,22 @@ class ScheduleView(QGraphicsView):
                         "track_index": b["track_index"],
                         "start_hour": b["start_hour"],
                         "duration": b["duration"],
+                        "end_hour": round(b["start_hour"] + b["duration"], 4),
+                        "end_qdate": (
+                            b["qdate"].addDays(1).toString("yyyy-MM-dd")
+                            if b["start_hour"] + b["duration"] >= 24
+                            else b["qdate"].toString("yyyy-MM-dd")
+                        ),
                         "label": b["label"],
-                        "id": b.get("id"),  # ✅ 儲存 block_id
-                        "encoder_name": b.get("encoder_name")  # ✅ 若未來要還原 encoder 名稱
-                    } for b in self.block_data
+                        "id": b.get("id"),
+                        "encoder_name": b.get("encoder_name"),
+                        "snapshot_path": b.get("snapshot_path", "")
+                    } for b in self.block_data  # ✅ 修正這行
                 ], f, ensure_ascii=False, indent=2)
             print("✅ 已儲存節目排程 schedule.json")
         except Exception as e:
             print(f"❌ 儲存失敗: {e}")
+
 
 
     def load_schedule(self, filename="schedule.json"):
@@ -215,9 +314,12 @@ class ScheduleView(QGraphicsView):
                         "track_index": b["track_index"],
                         "start_hour": b["start_hour"],
                         "duration": b["duration"],
+                        "end_hour": b.get("end_hour", b["start_hour"] + b["duration"]),
+                        "end_qdate": QDate.fromString(b.get("end_qdate"), "yyyy-MM-dd") if b.get("end_qdate") else None,
                         "label": b["label"],
                         "id": b.get("id"),
-                        "encoder_name": b.get("encoder_name")
+                        "encoder_name": b.get("encoder_name"),
+                        "snapshot_path": b.get("snapshot_path", "")
                     } for b in raw
                 ]
             self.draw_blocks()

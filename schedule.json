@@ -1,65 +1,38 @@
 [
   {
-    "qdate": "2025-07-02",
-    "track_index": 0,
-    "start_hour": 9.0,
-    "duration": 1.0,
-    "label": "1",
-    "id": "579dab08-f7ff-472d-bdfc-1ac6c3972751",
-    "encoder_name": "Bak4-1"
-  },
-  {
-    "qdate": "2025-07-02",
-    "track_index": 0,
-    "start_hour": 11.0,
-    "duration": 1.0,
-    "label": "2",
-    "id": "01de16f6-1c0a-4306-8d21-4995304e5377",
-    "encoder_name": "Bak4-1"
-  },
-  {
     "qdate": "2025-07-07",
     "track_index": 0,
-    "start_hour": 8.2,
-    "duration": 17.65,
+    "start_hour": 17.07,
+    "duration": 1.0,
+    "end_hour": 18.07,
+    "end_qdate": "2025-07-07",
     "label": "3",
-    "id": "59421417-4eda-4585-81cb-471d7c41690d",
-    "encoder_name": "Bak4-1"
+    "id": "aa3a67da-650f-4591-83a9-b974d00c0866",
+    "encoder_name": "Bak4-1",
+    "snapshot_path": ""
   },
   {
-    "qdate": "2025-07-03",
+    "qdate": "2025-07-08",
     "track_index": 0,
-    "start_hour": 17.68,
-    "duration": 3.25,
-    "label": "123",
-    "id": "f8597952-2714-47ef-804a-10f581f3f303",
-    "encoder_name": "Bak4-1"
+    "start_hour": 17.5,
+    "duration": 4.0,
+    "end_hour": 21.5,
+    "end_qdate": "2025-07-08",
+    "label": "5",
+    "id": "3edf9c0e-f481-47bb-a600-bc8dd080af5f",
+    "encoder_name": "Bak4-1",
+    "snapshot_path": ""
   },
   {
-    "qdate": "2025-07-06",
+    "qdate": "2025-07-09",
     "track_index": 0,
-    "start_hour": 2.9,
-    "duration": 12.8,
-    "label": "2222",
-    "id": "7b585831-6f74-4e53-afff-954dc26abaaf",
-    "encoder_name": "Bak4-1"
-  },
-  {
-    "qdate": "2025-07-05",
-    "track_index": 0,
-    "start_hour": 9.95,
-    "duration": 13.65,
-    "label": "222",
-    "id": "c85fbabf-1ac0-42e8-9815-521ab897da3e",
-    "encoder_name": "Bak4-1"
-  },
-  {
-    "qdate": "2025-07-04",
-    "track_index": 0,
-    "start_hour": 9.8,
-    "duration": 13.4,
-    "label": "中文",
-    "id": "c2fec027-860c-438a-95e3-4cac59b6f365",
-    "encoder_name": "Bak4-1"
+    "start_hour": 10.63,
+    "duration": 1.0,
+    "end_hour": 11.63,
+    "end_qdate": "2025-07-09",
+    "label": "4",
+    "id": "73717c78-56c5-49fc-935c-9f759eef3a6a",
+    "encoder_name": "Bak4-1",
+    "snapshot_path": ""
   }
 ]

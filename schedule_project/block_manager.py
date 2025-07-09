@@ -1,11 +1,12 @@
 import uuid
 from PySide6.QtWidgets import QMessageBox
 from collections import deque
+from uuid import uuid4
 class BlockManager:
     def __init__(self, schedule_view):
         self.view = schedule_view
         self.deleted_stack = deque()
-    def add_block_with_unique_label(self, base_label, track_index=0, start_hour=9, duration=4, encoder_name=None, qdate=None):
+    def add_block_with_unique_label(self, base_label, track_index=0, start_hour=9, duration=4, encoder_name=None, qdate=None, block_id=None):
         label = base_label
         existing_labels = [b["label"] for b in self.view.block_data]
         i = 1
@@ -16,8 +17,11 @@ class BlockManager:
         if qdate is None:
             qdate = self.view.base_date
 
-        block_id = str(uuid.uuid4())  # ✅ 唯一識別碼
-
+        if block_id is None:
+            block_id = str(uuid4()) 
+        end_hour = round(start_hour + duration, 4)
+        end_qdate = qdate.addDays(1) if end_hour >= 24 else qdate
+        print("✅ 呼叫 add_time_block")
         self.view.add_time_block(
             qdate=qdate,
             track_index=track_index,
@@ -25,8 +29,12 @@ class BlockManager:
             duration=duration,
             label=label,
             encoder_name=encoder_name,
-            block_id=block_id
+            block_id=block_id 
         )
+        print("✅ 已加入 block:", label)
+       
+        
+        self.view.draw_blocks()
         self.view.save_schedule()
 
     def get_block_by_id(self, block_id):

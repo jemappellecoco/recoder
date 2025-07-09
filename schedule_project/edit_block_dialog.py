@@ -1,9 +1,9 @@
 # edit_block_dialog.py
 from PySide6.QtWidgets import QDialog, QFormLayout, QLineEdit, QDialogButtonBox, QLabel, QTimeEdit, QDoubleSpinBox, QComboBox, QDateEdit, QVBoxLayout
-from PySide6.QtCore import QTime, QDate
+from PySide6.QtCore import QTime, QDate,QDateTime
 
 class EditBlockDialog(QDialog):
-    def __init__(self, block_data, encoder_names):
+    def __init__(self, block_data, encoder_names,readonly=False):
         super().__init__()
         self.setWindowTitle("編輯排程")
         self.block_data = block_data
@@ -15,7 +15,12 @@ class EditBlockDialog(QDialog):
         minute = int((block_data["start_hour"] % 1) * 60)
         self.time_input.setTime(QTime(hour, minute))
         self.time_input.setDisplayFormat("HH:mm")
+        start_qdate = block_data["qdate"]
+        start_qtime = QTime(hour, minute)
+        start_dt = QDateTime(start_qdate, start_qtime)
 
+        if start_dt <= QDateTime.currentDateTime():
+            readonly = True
         self.duration_input = QDoubleSpinBox()
         self.duration_input.setRange(0.25, 24.0)
         self.duration_input.setSingleStep(0.25)
@@ -43,9 +48,18 @@ class EditBlockDialog(QDialog):
 
         layout = QVBoxLayout()
         layout.addLayout(form)
+
+        if readonly:
+            warning_label = QLabel("⛔ 此排程已開始，僅可修改節目名稱與持續時間（不可早於現在）")
+            warning_label.setStyleSheet("color: red; font-weight: bold")
+            layout.addWidget(warning_label)
+
+            # ✅ 鎖定不可修改的欄位
+            self.date_input.setEnabled(False)
+            self.time_input.setEnabled(False)
+            self.encoder_selector.setEnabled(False)
         layout.addWidget(buttons)
         self.setLayout(layout)
-
     def get_updated_data(self):
         time = self.time_input.time()
         return {

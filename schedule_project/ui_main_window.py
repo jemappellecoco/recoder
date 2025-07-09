@@ -2,7 +2,7 @@ from PySide6.QtWidgets import (
     QMainWindow, QWidget, QPushButton, QLabel, QDateEdit, QInputDialog,QDialog,
     QVBoxLayout, QHBoxLayout, QLineEdit, QApplication, QSizePolicy, QMessageBox, QMenu, QFileDialog
 )
-from PySide6.QtCore import QDate, Qt,QDateTime,QTime
+from PySide6.QtCore import QDate, Qt,QDateTime,QTime,QTimer
 from schedule_view import ScheduleView
 from encoder_utils import list_encoders, send_command, connect_socket
 from datetime import datetime
@@ -15,7 +15,7 @@ from add_block_dialog import AddBlockDialog
 from path_manager import PathManager
 from utils_conflict import find_conflict_blocks
 CONFIG_FILE = "config.json"
-
+from uuid import uuid4
 class MainWindow(QMainWindow):
     def __init__(self):
         print("🔧 MainWindow 建立中...")  # ✅ 放在最上面
@@ -81,7 +81,8 @@ class MainWindow(QMainWindow):
         toolbar = QWidget()
         toolbar_layout = QHBoxLayout(toolbar)
         undo_button = QPushButton("↩️ 復原刪除")
-        undo_button.clicked.connect(lambda: self.block_manager.undo_last_delete())
+        undo_button.clicked.connect(lambda: (self.block_manager.undo_last_delete(), self.sync_runner_data()))
+
         self.date_label = QLabel("起始日期：")
         self.date_picker = QDateEdit(QDate.currentDate())
         self.date_picker.setCalendarPopup(True)
@@ -97,8 +98,8 @@ class MainWindow(QMainWindow):
         self.save_button.clicked.connect(lambda: self.view.save_schedule())
 
         self.load_button = QPushButton("📂 載入")
-        self.load_button.clicked.connect(lambda: self.view.load_schedule())
-
+        self.load_button.clicked.connect(lambda: (self.view.load_schedule(), self.sync_runner_data()))
+        
         self.prev_button = QPushButton("⬅️ 前一週")
         self.prev_button.clicked.connect(lambda: self.shift_date(-7))
 
@@ -130,7 +131,8 @@ class MainWindow(QMainWindow):
             encoder_names=self.encoder_names,
             blocks=self.view.blocks
         )
-        self.view.runner = self.runner  
+        self.view.runner = self.runner
+        self.sync_runner_data()  
         right_layout.addWidget(toolbar)
         right_layout.addWidget(self.view)
 
@@ -139,6 +141,9 @@ class MainWindow(QMainWindow):
         self.block_manager = BlockManager(self.view)
         self.runner.check_schedule()
         self.runner.refresh_encoder_statuses()
+        self.schedule_timer = QTimer(self)
+        self.schedule_timer.timeout.connect(self.runner.check_schedule)
+        self.schedule_timer.start(1000)  # 每 1000ms (1秒) 檢查一次
     def select_record_root(self):
         folder = QFileDialog.getExistingDirectory(self, "選擇儲存根目錄", self.record_root)
         if folder:
@@ -148,8 +153,8 @@ class MainWindow(QMainWindow):
 
     
     def add_new_block(self):
-        def check_overlap(track_index, start_hour, duration):
-         return self.view.is_overlap(self.view.base_date, track_index, start_hour, duration)
+        def check_overlap(track_index, start_hour, duration, qdate):
+            return self.view.is_overlap(qdate, track_index, start_hour, duration, exclude_label=None)
 
         dialog = AddBlockDialog(self, 
                 encoder_names=self.encoder_names, 
@@ -166,7 +171,7 @@ class MainWindow(QMainWindow):
                 encoder_name=encoder_name,
                 qdate=qdate
                 )
-
+            self.sync_runner_data()
             
     def update_start_date(self, qdate):
         self.view.set_start_date(qdate)
@@ -200,6 +205,10 @@ class MainWindow(QMainWindow):
                 open_action = menu.addAction("📂 開啟資料夾")
                 copy_action = menu.addAction("📋 複製路徑")
                 delete_action = menu.addAction("🗑️ 刪除排程")
+                 # ✅ 禁用已結束 block 的刪除功能
+                if hasattr(item, 'has_ended') and item.has_ended:
+                    delete_action.setEnabled(False)
+                    delete_action.setText("🗑️ 已完成，不可刪")
                 selected = menu.exec(self.view.mapToGlobal(pos))
 
                 if selected == open_action:
@@ -251,11 +260,12 @@ class MainWindow(QMainWindow):
         else:
             status_label.setText("狀態：❌ 停止失敗")
             status_label.setStyleSheet("color: red")
-
+        
         self.runner.refresh_encoder_statuses()
         self.view.draw_grid()
 
     def encoder_start(self, encoder_name, entry_widget, status_label):
+        
         filename = entry_widget.text().strip()
         if not filename:
             status_label.setText("⚠️ 檔名空白")
@@ -264,19 +274,19 @@ class MainWindow(QMainWindow):
 
         # ✅ 先計算出錄影時間資訊
         now = datetime.now()
-        minute = (now.minute + 7) // 15 * 15
-        if minute == 60:
-            hour = now.hour + 1
-            minute = 0
-        else:
-            hour = now.hour
-        start_hour = round(hour + minute / 60, 2)
+        start_hour = round(now.hour + now.minute / 60, 2)
         duration = 4.0
         track_index = self.encoder_names.index(encoder_name)
         qdate = QDate.currentDate()
-
-        # ✅ 加入衝突檢查
-        if not any(b["label"] == filename for b in self.view.block_data):
+        already_exists = any(
+            b["label"] == filename and
+            b["qdate"] == qdate and
+            b["start_hour"] == start_hour and
+            b["track_index"] == track_index
+            for b in self.view.block_data
+        )
+     # ✅ 檢查時間衝突（只有在尚未加入 block 才檢查）
+        if not already_exists:
             conflicts = find_conflict_blocks(
                 "schedule.json", qdate, track_index, start_hour, duration
             )
@@ -286,23 +296,39 @@ class MainWindow(QMainWindow):
                     "❌ 時段衝突",
                     "⚠️ 無法錄影，該時段與以下排程衝突：\n" + "\n".join(conflicts),
                 )
-                return  # ❌ 還沒 start encoder，不會覆蓋！
+                return
 
-        # ✅ 到這裡才真正啟動 encoder
-        ok, _ = self.encoder_controller.start_encoder(encoder_name, filename)
-        if ok:
+        
+        # ok, _ = self.encoder_controller.start_encoder(encoder_name, filename)
+        # if ok:
             # ✅ 補 block（如沒有）
-            if not any(b["label"] == filename for b in self.view.block_data):
+            if not already_exists:
+                block_id = str(uuid4())
                 self.block_manager.add_block_with_unique_label(
                     filename,
                     track_index=track_index,
                     start_hour=start_hour,
                     duration=duration,
                     encoder_name=encoder_name,
-                    qdate=qdate
+                    qdate=qdate,
+                    block_id=block_id
+                )
+            else:
+                # 🔍 找出現有 block_id（防止重複）
+                block_id = next(
+                    (b["id"] for b in self.view.block_data if
+                    b["label"] == filename and
+                    b["qdate"] == qdate and
+                    b["start_hour"] == start_hour and
+                    b["track_index"] == track_index),
+                    None
                 )
 
-            # ✅ 找出對應 block 更新狀態
+            # ✅ 記得標記已啟動，防止 check_schedule 重啟
+            if block_id:
+                self.runner.already_started.add(block_id)
+                self.runner.start_encoder(encoder_name, filename, status_label, block_id)
+            # ✅ 更新畫面狀態
             now_qt = QDateTime.currentDateTime()
             for block in self.view.blocks:
                 if block.track_index == track_index:
@@ -315,9 +341,10 @@ class MainWindow(QMainWindow):
 
             self.runner.refresh_encoder_statuses()
             self.view.draw_grid()
-        else:
-            status_label.setText("狀態：❌ 錯誤")
-            status_label.setStyleSheet("color: red")
+        # else:
+        #     status_label.setText("狀態：❌ 錯誤")
+        #     status_label.setStyleSheet("color: red")
+
 
     def mark_block_stopped(self, encoder_name):
         now = QDateTime.currentDateTime()
@@ -337,3 +364,9 @@ class MainWindow(QMainWindow):
                         if b.get("id") == block.block_id:
                             b["status"] = "⏹ 停止中"
                     break  
+    def sync_runner_data(self):
+        self.runner.schedule_data = self.view.block_data
+        self.runner.blocks = self.view.blocks  # ✅ 這行很重要！
+        print(f"🔁 [同步] Runner block 數量：{len(self.runner.blocks)}")
+
+        
