@@ -308,7 +308,18 @@ class MainWindow(QMainWindow):
 
                 if start_dt <= now <= end_dt:
                     block.status = "⏹ 停止中"
+                     # ⏱️ 依據停止時間更新長度與畫面
+                    new_duration = max(0.0, round(start_dt.secsTo(now) / 3600, 2))
+                    block.duration_hours = new_duration
+                    block.update_geometry(self.view.base_date)
+                    end_hour, end_qdate = block.compute_end_info()
+                    block.update_block_data({
+                        "duration": block.duration_hours,
+                        "end_hour": end_hour,
+                        "end_qdate": end_qdate
+                    })
                     block.update_text_position()
+                    self.view.save_schedule()
                     stopped_block_id = block.block_id
                     break  # ✅ 只處理一個正在錄的 block
 
@@ -324,7 +335,7 @@ class MainWindow(QMainWindow):
         
         self.runner.refresh_encoder_statuses()
         self.view.draw_grid()
-
+        self.sync_runner_data()
     def encoder_start(self, encoder_name, entry_widget, status_label):
         
         filename = entry_widget.text().strip()
