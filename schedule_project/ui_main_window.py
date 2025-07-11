@@ -167,9 +167,9 @@ class MainWindow(QMainWindow):
         self.block_manager = BlockManager(self.view)
         self.runner.check_schedule()
         self.runner.refresh_encoder_statuses()
-        # self.schedule_timer = QTimer(self)
-        # self.schedule_timer.timeout.connect(self.runner.check_schedule)
-        # self.schedule_timer.start(1000)  # 每 1000ms (1秒) 檢查一次
+        self.schedule_timer = QTimer(self)
+        self.schedule_timer.timeout.connect(self.runner.check_schedule)
+        self.schedule_timer.start(1000)  # 每 1000ms (1秒) 檢查一次
     # 🔽 在 encoder 初始化後（ex: encoder_names 取得後）：
         for name in self.encoder_names:
             snapshot_path = take_snapshot_by_encoder(name, snapshot_root=self.record_root)

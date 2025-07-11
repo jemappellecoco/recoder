@@ -9,7 +9,8 @@
     "label": "3",
     "id": "aa3a67da-650f-4591-83a9-b974d00c0866",
     "encoder_name": "Bak4-1",
-    "snapshot_path": ""
+    "snapshot_path": "",
+    "status": ""
   },
   {
     "qdate": "2025-07-08",
@@ -21,7 +22,8 @@
     "label": "5",
     "id": "3edf9c0e-f481-47bb-a600-bc8dd080af5f",
     "encoder_name": "Bak4-1",
-    "snapshot_path": ""
+    "snapshot_path": "",
+    "status": ""
   },
   {
     "qdate": "2025-07-09",
@@ -33,19 +35,8 @@
     "label": "4",
     "id": "73717c78-56c5-49fc-935c-9f759eef3a6a",
     "encoder_name": "Bak4-1",
-    "snapshot_path": ""
-  },
-  {
-    "qdate": "2026-07-09",
-    "track_index": 0,
-    "start_hour": 1.0,
-    "duration": 14.75,
-    "end_hour": 15.75,
-    "end_qdate": "2026-07-09",
-    "label": "5_1",
-    "id": "15128584-0de3-4876-9bc0-8cdde1771c5e",
-    "encoder_name": "Bak4-1",
-    "snapshot_path": ""
+    "snapshot_path": "",
+    "status": ""
   },
   {
     "qdate": "2025-07-09",
@@ -57,7 +48,8 @@
     "label": "5_2",
     "id": "9791465f-bda1-4327-9db5-b53f42e434a4",
     "encoder_name": "Bak4-1",
-    "snapshot_path": ""
+    "snapshot_path": "",
+    "status": ""
   },
   {
     "qdate": "2025-07-09",
@@ -69,7 +61,8 @@
     "label": "5_3",
     "id": "c5cb47aa-b720-42d0-9d71-36ada530fff6",
     "encoder_name": "Bak4-1",
-    "snapshot_path": ""
+    "snapshot_path": "",
+    "status": ""
   },
   {
     "qdate": "2025-07-10",
@@ -81,7 +74,8 @@
     "label": "6",
     "id": "8fcd01f3-c470-439d-83ec-58d634ec50ec",
     "encoder_name": "Bak4-1",
-    "snapshot_path": ""
+    "snapshot_path": "",
+    "status": ""
   },
   {
     "qdate": "2025-07-10",
@@ -93,7 +87,8 @@
     "label": "999",
     "id": "43cf213b-3c5e-4f0d-8ccc-4675642eb418",
     "encoder_name": "Bak4-1",
-    "snapshot_path": ""
+    "snapshot_path": "",
+    "status": ""
   },
   {
     "qdate": "2025-07-11",
@@ -105,6 +100,20 @@
     "label": "7",
     "id": "76bc28e8-5dfd-455e-8d41-f0adc953fa0e",
     "encoder_name": "Bak4-1",
-    "snapshot_path": ""
+    "snapshot_path": "",
+    "status": ""
+  },
+  {
+    "qdate": "2025-07-11",
+    "track_index": 0,
+    "start_hour": 16.77,
+    "duration": 0.76,
+    "end_hour": 17.53,
+    "end_qdate": "2025-07-11",
+    "label": "2222",
+    "id": "9330d08f-52a9-4a6e-9848-7ef97200c71c",
+    "encoder_name": "Bak4-1",
+    "snapshot_path": "",
+    "status": ""
   }
 ]

@@ -44,7 +44,7 @@ class ScheduleView(QGraphicsView):
 
         for item in self.scene.items(visible_scene_rect):  # ✅ 限定畫面內
             if isinstance(item, TimeBlock):
-                item.update_status_by_time()
+                
                 #  ✅ 圖片 lazy load：只載一次
                 if not getattr(item, "preview_item", None):  # 尚未載入過
                     if hasattr(self, "record_root"):
@@ -317,7 +317,8 @@ class ScheduleView(QGraphicsView):
                         "label": b["label"],
                         "id": b.get("id"),
                         "encoder_name": b.get("encoder_name"),
-                        "snapshot_path": b.get("snapshot_path", "")
+                        "snapshot_path": b.get("snapshot_path", ""),
+                        "status": b.get("status", "")
                     } for b in self.block_data  # ✅ 修正這行
                 ], f, ensure_ascii=False, indent=2)
             print("✅ 已儲存節目排程 schedule.json")
@@ -341,7 +342,8 @@ class ScheduleView(QGraphicsView):
                         "label": b["label"],
                         "id": b.get("id"),
                         "encoder_name": b.get("encoder_name"),
-                        "snapshot_path": b.get("snapshot_path", "")
+                        "snapshot_path": b.get("snapshot_path", ""),
+                        "status": b.get("status", "")
                     } for b in raw
                 ]
             self.draw_blocks()
