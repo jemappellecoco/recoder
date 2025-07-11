@@ -24,12 +24,12 @@ class ScheduleView(QGraphicsView):
         self.setSceneRect(-120, -40, self.days * self.day_width + 150, 1000)
         
         self.setRenderHint(QPainter.Antialiasing)
-        self.schedule_timer = QTimer()
-        self.schedule_timer.start(1000)
+        # self.schedule_timer = QTimer()
+        # self.schedule_timer.start(1000)
         self.load_schedule()
         self.path_manager = PathManager()
         self.record_root = self.path_manager.record_root  
-       
+
         self.now_timer = QTimer(self)
         self.now_timer.timeout.connect(self.update_now_line)
         self.now_timer.start(1000)  # 每秒更新
@@ -136,7 +136,7 @@ class ScheduleView(QGraphicsView):
                 encoder_name = self.encoder_names[track]
                 status_label = self.encoder_status.get(encoder_name)
                 status_text = status_label.text() if status_label else "未知"
-                full_label = f"{encoder_name}\n {status_text}"
+                full_label = f"{encoder_name}\n{status_text}"
             else:
                 full_label = f"未指定\n--"
 
@@ -145,7 +145,7 @@ class ScheduleView(QGraphicsView):
             label.setPos(-95, y + 15)
 
         self.draw_blocks()
-       
+        
         self.update_now_line()
 
     def draw_blocks(self):
@@ -203,7 +203,7 @@ class ScheduleView(QGraphicsView):
         if hasattr(self, "runner"):
             self.runner.schedule_data = self.block_data
             self.runner.blocks = self.blocks
-            self.runner.refresh_encoder_statuses()
+            
 
 
 
