@@ -34,5 +34,77 @@
     "id": "73717c78-56c5-49fc-935c-9f759eef3a6a",
     "encoder_name": "Bak4-1",
     "snapshot_path": ""
+  },
+  {
+    "qdate": "2026-07-09",
+    "track_index": 0,
+    "start_hour": 1.0,
+    "duration": 14.75,
+    "end_hour": 15.75,
+    "end_qdate": "2026-07-09",
+    "label": "5_1",
+    "id": "15128584-0de3-4876-9bc0-8cdde1771c5e",
+    "encoder_name": "Bak4-1",
+    "snapshot_path": ""
+  },
+  {
+    "qdate": "2025-07-09",
+    "track_index": 0,
+    "start_hour": 15.37,
+    "duration": 1.0,
+    "end_hour": 16.37,
+    "end_qdate": "2025-07-09",
+    "label": "5_2",
+    "id": "9791465f-bda1-4327-9db5-b53f42e434a4",
+    "encoder_name": "Bak4-1",
+    "snapshot_path": ""
+  },
+  {
+    "qdate": "2025-07-09",
+    "track_index": 0,
+    "start_hour": 21.55,
+    "duration": 7.2,
+    "end_hour": 28.75,
+    "end_qdate": "2025-07-10",
+    "label": "5_3",
+    "id": "c5cb47aa-b720-42d0-9d71-36ada530fff6",
+    "encoder_name": "Bak4-1",
+    "snapshot_path": ""
+  },
+  {
+    "qdate": "2025-07-10",
+    "track_index": 0,
+    "start_hour": 11.0,
+    "duration": 1.0,
+    "end_hour": 12.0,
+    "end_qdate": "2025-07-10",
+    "label": "6",
+    "id": "8fcd01f3-c470-439d-83ec-58d634ec50ec",
+    "encoder_name": "Bak4-1",
+    "snapshot_path": ""
+  },
+  {
+    "qdate": "2025-07-10",
+    "track_index": 0,
+    "start_hour": 17.08,
+    "duration": 4.0,
+    "end_hour": 21.08,
+    "end_qdate": "2025-07-10",
+    "label": "999",
+    "id": "43cf213b-3c5e-4f0d-8ccc-4675642eb418",
+    "encoder_name": "Bak4-1",
+    "snapshot_path": ""
+  },
+  {
+    "qdate": "2025-07-11",
+    "track_index": 0,
+    "start_hour": 9.48,
+    "duration": 1.62,
+    "end_hour": 11.1,
+    "end_qdate": "2025-07-11",
+    "label": "7",
+    "id": "76bc28e8-5dfd-455e-8d41-f0adc953fa0e",
+    "encoder_name": "Bak4-1",
+    "snapshot_path": ""
   }
 ]

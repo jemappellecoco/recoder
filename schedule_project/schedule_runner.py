@@ -59,56 +59,24 @@ class ScheduleRunner(QObject):
             end_m = int((end_hour % 1) * 60)
             end_s = int(((end_hour * 60) % 1) * 60)
             end_qdate = b.get("end_qdate", None)
-            if end_qdate:
-                if isinstance(end_qdate, str):
-                    end_qdate = QDate.fromString(end_qdate, "yyyy-MM-dd")
-            else:
-                end_qdate = qdate.addDays(1) if end_hour < start_hour else qdate
+            if isinstance(end_qdate, str):
+                end_qdate = QDate.fromString(end_qdate, "yyyy-MM-dd")
 
-            end_dt = QDateTime(end_qdate, QTime(end_h, end_m, end_s))
+        end_dt = QDateTime(end_qdate, QTime(end_h, end_m, end_s))
 
-            track_index = b["track_index"]
-            encoder_name = self.encoder_names[track_index]
-            status_label = self.encoder_status.get(encoder_name)
-            block = self.find_block_by_id(block_id)
+        track_index = b["track_index"]
+        encoder_name = self.encoder_names[track_index]
+        status_label = self.encoder_status.get(encoder_name)
 
-            if (
-                not block or
-                block.text is None or block.text.scene() is None or
-                block.status_text is None or block.status_text.scene() is None
-            ):
-                continue
+        if start_dt <= now < end_dt:
+            if block_id not in self.already_started:
+                print(f"🚀 啟動錄影: {b['label']} ({block_id})")
+                self.start_encoder(encoder_name, b["label"], status_label, block_id)
+                self.already_started.add(block_id)
 
-            # 狀態一：錄影中
-            if start_dt <= now < end_dt:
-                remaining = end_dt.toSecsSinceEpoch() - now.toSecsSinceEpoch()
-                time_text = self.format_remaining_time(remaining)
-                block.status = f"狀態：✅ 錄影中\n剩餘 {time_text}"
-                block.update_text_position()
-
-                if block_id not in self.already_started:
-                    print(f"🚀 準備啟動 block: {b['label']} ({block_id})")
-                    self.start_encoder(encoder_name, b["label"], status_label, block_id)
-                    self.already_started.add(block_id)
-
-            # 狀態二：已結束
-            elif now >= end_dt and block_id not in self.already_stopped:
-                block.status = "狀態：⏹ 已結束"
-                block.update_text_position()
-
-                self.stop_encoder(encoder_name, status_label)
-                self.already_stopped.add(block_id)
-
-            # 狀態三：等待中
-            elif now < start_dt:
-                countdown = start_dt.toSecsSinceEpoch() - now.toSecsSinceEpoch()
-                if countdown <= 10 * 60:
-                    countdown_str = self.format_remaining_time(countdown)
-                    start_time_str = f"{h:02d}:{m:02d}"
-                    block.status = f"狀態：⏳ 等待中\n啟動於 {start_time_str}\n倒數 {countdown_str}"
-                else:
-                    block.status = "狀態：⏳ 等待中"
-                block.update_text_position()
+        elif now >= end_dt:
+            self.stop_encoder(encoder_name, status_label)
+            self.already_stopped.add(block_id)
 
 
 

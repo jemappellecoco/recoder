@@ -2,9 +2,11 @@ from PySide6.QtWidgets import (
     QMainWindow, QWidget, QPushButton, QLabel, QDateEdit, QInputDialog,QDialog,
     QVBoxLayout, QHBoxLayout, QLineEdit, QApplication, QSizePolicy, QMessageBox, QMenu, QFileDialog
 )
+from PySide6.QtGui import QPixmap
 from PySide6.QtCore import QDate, Qt,QDateTime,QTime,QTimer
 from schedule_view import ScheduleView
-from encoder_utils import list_encoders, send_command, connect_socket
+from encoder_utils import list_encoders, send_command, connect_socket, send_persistent_command
+from capture import take_snapshot_by_encoder
 from datetime import datetime
 import os
 from schedule_runner import ScheduleRunner
@@ -44,8 +46,20 @@ class MainWindow(QMainWindow):
         encoder_layout = QVBoxLayout(encoder_panel)
         encoder_layout.setSpacing(10)
         encoder_panel.setFixedWidth(500)
-        
+        self.encoder_preview_labels = {}
+        preview_dir = os.path.join(self.record_root, "preview")
+        os.makedirs(preview_dir, exist_ok=True)
         for name in self.encoder_names:
+            encoder_box = QVBoxLayout()
+             # 🖼️ 預覽圖
+            preview_label = QLabel(f"🖼️ {name} 預覽載入中...")
+            preview_label.setFixedSize(480, 270)
+            preview_label.setStyleSheet("border: 1px solid gray; background-color: black; color: white;")
+            preview_label.setAlignment(Qt.AlignCenter)
+            self.encoder_preview_labels[name] = preview_label
+            encoder_box.addWidget(preview_label)
+
+            # 🎛️ 控制列
             line = QHBoxLayout()
             label = QLabel(name)
             entry = QLineEdit()
@@ -65,15 +79,18 @@ class MainWindow(QMainWindow):
             line.addWidget(path_btn)
             line.addWidget(status)
 
-            encoder_layout.addLayout(line)
+            encoder_box.addLayout(line)
+            encoder_layout.addLayout(encoder_box)  # 把整組 encoder_box 加進 encoder_layout
 
+            # 📎 功能綁定
             start_btn.clicked.connect(lambda _, n=name, e=entry, s=status: self.encoder_start(n, e, s))
             stop_btn.clicked.connect(lambda _, n=name, s=status: self.encoder_stop(n, s))
             path_btn.clicked.connect(lambda _, n=name, e=entry: self.show_file_path(n, e))
 
+            # 🗂️ 登記
             self.encoder_entries[name] = entry
             self.encoder_status[name] = status
-
+            
         right_panel = QWidget()
         right_panel.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
         right_layout = QVBoxLayout(right_panel)
@@ -123,6 +140,10 @@ class MainWindow(QMainWindow):
         self.view.setContextMenuPolicy(Qt.CustomContextMenu)
         self.view.customContextMenuRequested.connect(self.show_block_context_menu)
         self.view.path_manager = self.path_manager
+        self.update_encoder_status_labels()
+        self.encoder_status_timer = QTimer(self)
+        self.encoder_status_timer.timeout.connect(self.update_encoder_status_labels)
+        self.encoder_status_timer.start(2000)  # 每兩秒更新一次
         # ✅ 一定要在 runner 建立後再指定回去 view
         self.runner = ScheduleRunner(
             schedule_data=self.view.block_data,
@@ -135,7 +156,12 @@ class MainWindow(QMainWindow):
         self.sync_runner_data()  
         right_layout.addWidget(toolbar)
         right_layout.addWidget(self.view)
+       
 
+        self.snapshot_timer = QTimer(self)
+        self.snapshot_timer.timeout.connect(self.update_all_encoder_snapshots)
+        self.snapshot_timer.start(30000)
+        
         main_layout.addWidget(encoder_panel)
         main_layout.addWidget(right_panel)
         self.block_manager = BlockManager(self.view)
@@ -144,6 +170,41 @@ class MainWindow(QMainWindow):
         self.schedule_timer = QTimer(self)
         self.schedule_timer.timeout.connect(self.runner.check_schedule)
         self.schedule_timer.start(1000)  # 每 1000ms (1秒) 檢查一次
+    # 🔽 在 encoder 初始化後（ex: encoder_names 取得後）：
+        for name in self.encoder_names:
+            snapshot_path = take_snapshot_by_encoder(name, snapshot_root=self.record_root)
+            print(f"📸 啟動時補拍 {name} ➜ {snapshot_path}")
+    def update_encoder_status_labels(self):
+        now = QDateTime.currentDateTime()
+        for name, status_label in self.encoder_status.items():
+            related_blocks = [
+                b for b in self.view.block_data if b.get("encoder_name") == name
+            ]
+            current_status = "無排程"
+            for b in related_blocks:
+                start_dt = QDateTime(b["qdate"], QTime(int(b["start_hour"]), int((b["start_hour"] % 1) * 60)))
+                end_dt = start_dt.addSecs(int(b["duration"] * 3600))
+                if now < start_dt:
+                    current_status = "等待中"
+                elif start_dt <= now <= end_dt:
+                    current_status = "錄影中"
+                    break
+                elif now > end_dt:
+                    current_status = "已結束"
+            status_label.setText(f"狀態：{current_status}")
+    def update_all_encoder_snapshots(self):
+        preview_dir = os.path.join(self.record_root, "preview")
+        for name, label in self.encoder_preview_labels.items():
+            take_snapshot_by_encoder(name, snapshot_root=self.record_root)
+            filename = f"{name.replace(' ', '_')}.png"  # 確保一致
+            snapshot_full = os.path.join(preview_dir, filename)
+
+            if os.path.exists(snapshot_full):
+                pixmap = QPixmap(snapshot_full)
+                label.setPixmap(pixmap.scaled(label.width(), label.height(), Qt.KeepAspectRatio))
+            else:
+                label.setText(f"❌ 無法載入 {name} 圖片")
+
     def select_record_root(self):
         folder = QFileDialog.getExistingDirectory(self, "選擇儲存根目錄", self.record_root)
         if folder:

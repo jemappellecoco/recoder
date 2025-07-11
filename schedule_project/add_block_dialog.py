@@ -32,7 +32,7 @@ class AddBlockDialog(QDialog):
 
         self.status_label = QLabel()
         self.status_label.setStyleSheet("color: red")
-
+        
         form = QFormLayout()
         form.addRow("排程日期：", self.date_input)
         form.addRow("節目名稱：", self.name_input)
@@ -51,6 +51,7 @@ class AddBlockDialog(QDialog):
         self.setLayout(layout)
 
     def accept(self):
+        self.time_input.interpretText()
         name = self.name_input.text().strip()
         print(f"🧪 檢查名稱: {name}")
         if not name:

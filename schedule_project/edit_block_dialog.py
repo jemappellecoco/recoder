@@ -16,6 +16,8 @@ class EditBlockDialog(QDialog):
         self.time_input.setTime(QTime(hour, minute))
         self.time_input.setDisplayFormat("HH:mm")
         start_qdate = block_data["qdate"]
+        if isinstance(start_qdate, str):
+            start_qdate = QDate.fromString(start_qdate, "yyyy-MM-dd")
         start_qtime = QTime(hour, minute)
         start_dt = QDateTime(start_qdate, start_qtime)
 
@@ -48,7 +50,7 @@ class EditBlockDialog(QDialog):
 
         layout = QVBoxLayout()
         layout.addLayout(form)
-
+        
         if readonly:
             warning_label = QLabel("⛔ 此排程已開始，僅可修改節目名稱與持續時間（不可早於現在）")
             warning_label.setStyleSheet("color: red; font-weight: bold")
@@ -58,8 +60,36 @@ class EditBlockDialog(QDialog):
             self.date_input.setEnabled(False)
             self.time_input.setEnabled(False)
             self.encoder_selector.setEnabled(False)
+        self.error_label = QLabel("")
+        self.error_label.setStyleSheet("color: red; font-weight: bold")
+        layout.addWidget(self.error_label)
         layout.addWidget(buttons)
         self.setLayout(layout)
+    def accept(self):
+        self.time_input.interpretText()  # 防止手動輸入沒轉換
+
+        name = self.name_input.text().strip()
+        if not name:
+            self.error_label.setText("❌ 節目名稱不能空白")
+            return
+
+        time = self.time_input.time()
+        qdate = self.date_input.date()
+        duration = self.duration_input.value()
+        
+        start_dt = QDateTime(qdate, time)
+        end_dt = start_dt.addSecs(int(duration * 3600))
+        now = QDateTime.currentDateTime()
+
+        if start_dt < now:
+            self.error_label.setText("❌ 開始時間不能早於現在")
+            return
+
+        if end_dt < now:
+            self.error_label.setText("❌ 結束時間不能早於現在")
+            return
+
+        super().accept()
     def get_updated_data(self):
         time = self.time_input.time()
         return {

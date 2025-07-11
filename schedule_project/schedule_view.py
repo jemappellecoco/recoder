@@ -9,6 +9,7 @@ from path_manager import PathManager
 class ScheduleView(QGraphicsView):
     def __init__(self):
         super().__init__()
+        self.encoder_labels = {}
         self.blocks = []
         self.block_data = []
         self.path_manager = None
@@ -27,12 +28,28 @@ class ScheduleView(QGraphicsView):
         self.schedule_timer.start(1000)
         self.load_schedule()
         self.path_manager = PathManager()
+        self.record_root = self.path_manager.record_root  
+       
         self.now_timer = QTimer(self)
         self.now_timer.timeout.connect(self.update_now_line)
         self.now_timer.start(1000)  # 每秒更新
         self.now_line_item = None
         self.now_time_label = None
-        
+        self.global_timer = QTimer()
+        self.global_timer.timeout.connect(self.update_visible_blocks_only)
+        self.global_timer.start(5000)
+    def update_visible_blocks_only(self):
+        visible_rect = self.viewport().rect()
+        visible_scene_rect = self.mapToScene(visible_rect).boundingRect()
+
+        for item in self.scene.items(visible_scene_rect):  # ✅ 限定畫面內
+            if isinstance(item, TimeBlock):
+                item.update_status_by_time()
+                #  ✅ 圖片 lazy load：只載一次
+                if not getattr(item, "preview_item", None):  # 尚未載入過
+                    if hasattr(self, "record_root"):
+                        img_folder = os.path.join(self.record_root, item.start_date.toString("MM.dd.yyyy"), "img")
+                        item.load_preview_images(img_folder)
     def update_now_line(self):
         now = QDateTime.currentDateTime()
         days_from_base = self.base_date.daysTo(now.date())
@@ -82,13 +99,19 @@ class ScheduleView(QGraphicsView):
         self.now_time_label.setDefaultTextColor(Qt.red)
         self.now_time_label.setPos(x - 10, -18)
         self.now_time_label.setZValue(1000)
+        
+    def update_all_blocks(self):
+        for item in self.scene.items():
+            if isinstance(item, TimeBlock):
+                item.update_status_by_time()
+    
 
     def draw_grid(self):
         print("🎯 draw_grid encoder_names:", self.encoder_names)
 
         self.scene.clear()
         self.tracks = len(self.encoder_names)
-    
+        
         for day in range(self.days):
             for hour in range(24):
                 x = day * self.day_width + hour * self.hour_width
@@ -113,7 +136,7 @@ class ScheduleView(QGraphicsView):
                 encoder_name = self.encoder_names[track]
                 status_label = self.encoder_status.get(encoder_name)
                 status_text = status_label.text() if status_label else "未知"
-                full_label = f"{encoder_name}\n狀態：{status_text}"
+                full_label = f"{encoder_name}\n {status_text}"
             else:
                 full_label = f"未指定\n--"
 
@@ -122,7 +145,7 @@ class ScheduleView(QGraphicsView):
             label.setPos(-95, y + 15)
 
         self.draw_blocks()
-        
+       
         self.update_now_line()
 
     def draw_blocks(self):
@@ -170,9 +193,9 @@ class ScheduleView(QGraphicsView):
                         block.image_item.setParentItem(block)
 
                 # 自動載入縮圖
-                if block.block_id and hasattr(self, "record_root"):
-                    img_folder = os.path.join(self.record_root, block.start_date.toString("MM.dd.yyyy"), "img")
-                    block.load_preview_images(img_folder)
+                # if block.block_id and hasattr(self, "record_root"):
+                #     img_folder = os.path.join(self.record_root, block.start_date.toString("MM.dd.yyyy"), "img")
+                #     block.load_preview_images(img_folder)
 
                 self.blocks.append(block)
 
@@ -180,7 +203,7 @@ class ScheduleView(QGraphicsView):
         if hasattr(self, "runner"):
             self.runner.schedule_data = self.block_data
             self.runner.blocks = self.blocks
-            
+            self.runner.refresh_encoder_statuses()
 
 
 
@@ -286,11 +309,10 @@ class ScheduleView(QGraphicsView):
                         "track_index": b["track_index"],
                         "start_hour": b["start_hour"],
                         "duration": b["duration"],
-                        "end_hour": round(b["start_hour"] + b["duration"], 4),
+                        "end_hour": b["end_hour"],
                         "end_qdate": (
-                            b["qdate"].addDays(1).toString("yyyy-MM-dd")
-                            if b["start_hour"] + b["duration"] >= 24
-                            else b["qdate"].toString("yyyy-MM-dd")
+                            b["end_qdate"].toString("yyyy-MM-dd") if isinstance(b["end_qdate"], QDate)
+                            else b["end_qdate"]
                         ),
                         "label": b["label"],
                         "id": b.get("id"),
