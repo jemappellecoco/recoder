@@ -182,6 +182,8 @@ class ScheduleView(QGraphicsView):
                 self.scene.addItem(block)
                 block.update_geometry(self.base_date)
                 block.encoder_names = self.encoder_names
+                block.status = data.get("status", "FAILED")
+                block.update_text_position()
                 # 從舊 block 繼承狀態與圖片
                 old_block = old_block_map.get(data["label"])
                 if old_block:
@@ -192,10 +194,7 @@ class ScheduleView(QGraphicsView):
                         block.image_item = old_block.image_item
                         block.image_item.setParentItem(block)
 
-                # 自動載入縮圖
-                # if block.block_id and hasattr(self, "record_root"):
-                #     img_folder = os.path.join(self.record_root, block.start_date.toString("MM.dd.yyyy"), "img")
-                #     block.load_preview_images(img_folder)
+            
 
                 self.blocks.append(block)
 
