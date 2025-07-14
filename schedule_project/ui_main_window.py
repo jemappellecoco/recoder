@@ -413,6 +413,7 @@ class MainWindow(QMainWindow):
 
             self.runner.refresh_encoder_statuses()
             self.view.draw_grid()
+            self.update_encoder_status_labels()
         # else:
         #     status_label.setText("狀態：❌ 錯誤")
         #     status_label.setStyleSheet("color: red")

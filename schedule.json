@@ -1,96 +1,5 @@
 [
   {
-    "qdate": "2025-07-07",
-    "track_index": 0,
-    "start_hour": 17.07,
-    "duration": 1.0,
-    "end_hour": 18.07,
-    "end_qdate": "2025-07-07",
-    "label": "3",
-    "id": "aa3a67da-650f-4591-83a9-b974d00c0866",
-    "encoder_name": "Bak4-1",
-    "snapshot_path": "",
-    "status": ""
-  },
-  {
-    "qdate": "2025-07-08",
-    "track_index": 0,
-    "start_hour": 17.5,
-    "duration": 4.0,
-    "end_hour": 21.5,
-    "end_qdate": "2025-07-08",
-    "label": "5",
-    "id": "3edf9c0e-f481-47bb-a600-bc8dd080af5f",
-    "encoder_name": "Bak4-1",
-    "snapshot_path": "",
-    "status": ""
-  },
-  {
-    "qdate": "2025-07-09",
-    "track_index": 0,
-    "start_hour": 10.63,
-    "duration": 1.0,
-    "end_hour": 11.63,
-    "end_qdate": "2025-07-09",
-    "label": "4",
-    "id": "73717c78-56c5-49fc-935c-9f759eef3a6a",
-    "encoder_name": "Bak4-1",
-    "snapshot_path": "",
-    "status": ""
-  },
-  {
-    "qdate": "2025-07-09",
-    "track_index": 0,
-    "start_hour": 15.37,
-    "duration": 1.0,
-    "end_hour": 16.37,
-    "end_qdate": "2025-07-09",
-    "label": "5_2",
-    "id": "9791465f-bda1-4327-9db5-b53f42e434a4",
-    "encoder_name": "Bak4-1",
-    "snapshot_path": "",
-    "status": ""
-  },
-  {
-    "qdate": "2025-07-09",
-    "track_index": 0,
-    "start_hour": 21.55,
-    "duration": 7.2,
-    "end_hour": 28.75,
-    "end_qdate": "2025-07-10",
-    "label": "5_3",
-    "id": "c5cb47aa-b720-42d0-9d71-36ada530fff6",
-    "encoder_name": "Bak4-1",
-    "snapshot_path": "",
-    "status": ""
-  },
-  {
-    "qdate": "2025-07-10",
-    "track_index": 0,
-    "start_hour": 11.0,
-    "duration": 1.0,
-    "end_hour": 12.0,
-    "end_qdate": "2025-07-10",
-    "label": "6",
-    "id": "8fcd01f3-c470-439d-83ec-58d634ec50ec",
-    "encoder_name": "Bak4-1",
-    "snapshot_path": "",
-    "status": ""
-  },
-  {
-    "qdate": "2025-07-10",
-    "track_index": 0,
-    "start_hour": 17.08,
-    "duration": 4.0,
-    "end_hour": 21.08,
-    "end_qdate": "2025-07-10",
-    "label": "999",
-    "id": "43cf213b-3c5e-4f0d-8ccc-4675642eb418",
-    "encoder_name": "Bak4-1",
-    "snapshot_path": "",
-    "status": ""
-  },
-  {
     "qdate": "2025-07-11",
     "track_index": 0,
     "start_hour": 9.48,
@@ -101,7 +10,7 @@
     "id": "76bc28e8-5dfd-455e-8d41-f0adc953fa0e",
     "encoder_name": "Bak4-1",
     "snapshot_path": "",
-    "status": ""
+    "status": "狀態：⏹ 已結束"
   },
   {
     "qdate": "2025-07-11",
@@ -114,6 +23,32 @@
     "id": "9330d08f-52a9-4a6e-9848-7ef97200c71c",
     "encoder_name": "Bak4-1",
     "snapshot_path": "",
-    "status": ""
+    "status": "狀態：⏹ 已結束"
+  },
+  {
+    "qdate": "2025-07-14",
+    "track_index": 0,
+    "start_hour": 23.6,
+    "duration": 2.8,
+    "end_hour": 2.4,
+    "end_qdate": "2025-07-15",
+    "label": "444",
+    "id": "d0bc72af-04f0-4aff-a661-157322a083aa",
+    "encoder_name": "Bak4-1",
+    "snapshot_path": "",
+    "status": "狀態：⏳ 等待中"
+  },
+  {
+    "qdate": "2025-07-14",
+    "track_index": 0,
+    "start_hour": 10.75,
+    "duration": 0.11,
+    "end_hour": 10.86,
+    "end_qdate": "2025-07-14",
+    "label": "888",
+    "id": "0ad93e0f-86f3-4f89-8a13-3cd68d5d8097",
+    "encoder_name": "Bak4-1",
+    "snapshot_path": "",
+    "status": "狀態：⏹ 已結束"
   }
 ]

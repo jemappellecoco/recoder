@@ -299,9 +299,21 @@ class ScheduleView(QGraphicsView):
     def set_start_date(self, qdate):
         self.base_date = qdate
         self.draw_grid()
-
     def save_schedule(self, filename="schedule.json"):
         try:
+        # ✅ 用 dict 快速對應 block_id → block_data
+            block_map = {b["id"]: b for b in self.block_data if b.get("id")}
+
+            now = QDateTime.currentDateTime()
+
+            # ✅ 同步畫面上的 TimeBlock 狀態
+            for item in self.scene.items():
+                if isinstance(item, TimeBlock) and item.block_id in block_map:
+                    start_dt = QDateTime(item.start_date, QTime(int(item.start_hour), int((item.start_hour % 1) * 60)))
+                    if start_dt >= now:
+                        block_map[item.block_id]["status"] = item.status  # ✅ 寫入最新狀態
+
+            # ✅ 寫入 JSON 檔
             with open(filename, "w", encoding="utf-8") as f:
                 json.dump([
                     {
@@ -318,12 +330,37 @@ class ScheduleView(QGraphicsView):
                         "id": b.get("id"),
                         "encoder_name": b.get("encoder_name"),
                         "snapshot_path": b.get("snapshot_path", ""),
-                        "status": b.get("status", "")
-                    } for b in self.block_data  # ✅ 修正這行
+                        "status": b.get("status", "")  # ✅ 最終會寫入最新的狀態（等待中、已結束等）
+                    } for b in self.block_data
                 ], f, ensure_ascii=False, indent=2)
             print("✅ 已儲存節目排程 schedule.json")
         except Exception as e:
             print(f"❌ 儲存失敗: {e}")
+
+    # def save_schedule(self, filename="schedule.json"):
+    #     try:
+    #         with open(filename, "w", encoding="utf-8") as f:
+    #             json.dump([
+    #                 {
+    #                     "qdate": b["qdate"].toString("yyyy-MM-dd"),
+    #                     "track_index": b["track_index"],
+    #                     "start_hour": b["start_hour"],
+    #                     "duration": b["duration"],
+    #                     "end_hour": b["end_hour"],
+    #                     "end_qdate": (
+    #                         b["end_qdate"].toString("yyyy-MM-dd") if isinstance(b["end_qdate"], QDate)
+    #                         else b["end_qdate"]
+    #                     ),
+    #                     "label": b["label"],
+    #                     "id": b.get("id"),
+    #                     "encoder_name": b.get("encoder_name"),
+    #                     "snapshot_path": b.get("snapshot_path", ""),
+    #                     "status": b.get("status", "")
+    #                 } for b in self.block_data  # ✅ 修正這行
+    #             ], f, ensure_ascii=False, indent=2)
+    #         print("✅ 已儲存節目排程 schedule.json")
+    #     except Exception as e:
+    #         print(f"❌ 儲存失敗: {e}")
 
 
 
