@@ -77,7 +77,8 @@ class TimeBlock(QGraphicsRectItem):
         self.drag_start_offset = None
         self.setAcceptedMouseButtons(Qt.LeftButton)
         self.setFlag(QGraphicsRectItem.ItemIsFocusable, True)
-
+        self.status = "狀態：等待中"  # 這個從 JSON 來，可儲存
+        self.live_status = ""        # 這個只顯示，不儲存
         self.preview_item = None
         
         for handle in (self.left_handle, self.right_handle):
@@ -96,34 +97,35 @@ class TimeBlock(QGraphicsRectItem):
         self.left_handle.setVisible(False)
         self.right_handle.setVisible(False)
         super().hoverLeaveEvent(event)
-
+    def set_live_status(self, text: str):
+        if self.live_status != text:
+            self.live_status = text
+            self.update_text_position()
     def update_text_position(self):
         try:
-        # ✅ 檢查主文字是否存在且仍屬於場景中
             if self.text is None or self.text.scene() is None:
                 return
+            if self.status_text is None or self.status_text.scene() is None:
+                return
 
-            # ✅ 更新上方主文字（節目名稱＋時間）
+            # ✅ 主文字：節目名稱 + 時間
             self.text.setText(self.format_text())
             self.text.setPos(4, 2)
 
-            # ✅ 檢查狀態文字是否存在且仍屬於場景中
-            if self.status_text is None or self.status_text.scene() is None:
-                return  # 避免已被刪除後仍嘗試操作造成 RuntimeError
+            # ✅ 狀態文字：status + live_status（不寫入 JSON）
+            combined_status = self.status
+            if getattr(self, "live_status", ""):
+                combined_status += "\n" + self.live_status
 
-            # ✅ 根據狀態更新下方狀態文字內容
-            if self.status.startswith("狀態：⏳ 等待中"):
-                self.status_text.setText(self.status)
-            else:
-                if self.status_text.text() != self.status:
-                    self.status_text.setText(self.status)
+            if self.status_text.text() != combined_status:
+                self.status_text.setText(combined_status)
 
-            # ✅ 動態調整狀態文字的位置（在主文字下方）
+            # ✅ 位置調整
             text_rect = self.text.boundingRect()
             self.status_text.setPos(4, text_rect.height() + 6)
 
-        except RuntimeError as e:
-           pass
+        except RuntimeError:
+            pass
 
 
 
@@ -216,9 +218,14 @@ class TimeBlock(QGraphicsRectItem):
             parent_view = self.scene().parent()
             for b in parent_view.block_data:
                 if b.get("id") == self.block_id:
-                    b.update(updates)
+                    has_changed = False
+                    for k, v in updates.items():
+                        if b.get(k) != v:
+                            b[k] = v
+                            has_changed = True
+                    if has_changed:
+                        parent_view.save_schedule()
                     break
-
 
     def mouseMoveEvent(self, event):
         if getattr(self, "prevent_drag", False):
@@ -531,7 +538,7 @@ class TimeBlock(QGraphicsRectItem):
         pixmap = QPixmap(image_path)
 
         if pixmap.isNull():
-            print(f"❌ 無法載入圖片：{image_path}")
+            # print(f"❌ 無法載入圖片：{image_path}")
             return
 
         # ✅ 縮圖尺寸

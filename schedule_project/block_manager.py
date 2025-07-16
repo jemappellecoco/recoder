@@ -50,7 +50,10 @@ class BlockManager:
                 self.view.scene.removeItem(item)
                 self.view.blocks.remove(item)
                 break
-
+         # ✅ 從 scene 中額外刪除可能殘留的圖片（萬一之前沒 bind）
+        for item in list(self.view.scene.items()):
+            if hasattr(item, "block_id") and item.block_id == block_id:
+                self.view.scene.removeItem(item)
         # 找出要刪除的 block 資料
         deleted_block = None
         for b in self.view.block_data:

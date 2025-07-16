@@ -162,13 +162,19 @@ class MainWindow(QMainWindow):
     def show_block_context_menu(self, pos):
         scene_pos = self.view.mapToScene(pos)
         for item in self.view.scene.items():
+            if isinstance(item, PreviewImageItem):
+                continue  
             if hasattr(item, 'label') and item.contains(item.mapFromScene(scene_pos)):
                 menu = QMenu(self)
                 label = item.label
+                 # ➤ 安全取得 encoder 名稱
                 encoder_index = int(item.track_index) if hasattr(item, 'track_index') else 0
                 encoder_name = self.encoder_names[encoder_index] if encoder_index < len(self.encoder_names) else "unknown"
                 path = self.get_full_path(encoder_name, label)
-
+                try:
+                    path = self.path_manager.get_full_path(encoder_name, label)
+                except Exception:
+                    path = ""
                 menu.addAction(f"查看檔案名稱：{label}")
                 open_action = menu.addAction("📂 開啟資料夾")
                 copy_action = menu.addAction("📋 複製路徑")

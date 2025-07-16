@@ -1,5 +1,5 @@
 import os
-from encoder_utils import send_persistent_command
+from encoder_utils import send_encoder_command
 
 import time
 
@@ -30,8 +30,8 @@ def take_snapshot_from_block(block, encoder_names, snapshot_root: str = "E:/"):
     # print(f"📂 目錄：{snapshot_dir}")
     # print(f"🖼️ 檔案：{filename}")
 
-    send_persistent_command(f'SetSnapshotFileName "{encoder_name}" "{snapshot_relative}"')
-    response = send_persistent_command(f'SnapShot "{encoder_name}"')
+    send_encoder_command(encoder_name, f'SetSnapshotFileName "{encoder_name}" "{snapshot_relative}"')
+    response = send_encoder_command(encoder_name, f'SnapShot "{encoder_name}"')
     print(f"📡 SnapShot 指令回應: {response}")
 
     if os.path.exists(snapshot_full):
@@ -60,8 +60,10 @@ def take_snapshot_by_encoder(encoder_name, snapshot_root="E:/"):
                 print(f"⚠️ 無法刪除舊圖片 {f}：{e}")
     time.sleep(0.5)
     print(f"📸 為 {encoder_name} 拍照 ➜ {snapshot_full}")
-    send_persistent_command(f'SetSnapshotFileName "{encoder_name}" "{snapshot_relative}"')
-    res = send_persistent_command(f'SnapShot "{encoder_name}"')
+    send_encoder_command(encoder_name, f'SetSnapshotFileName "{encoder_name}" "{snapshot_relative}"')
+    res = send_encoder_command(encoder_name, f'SnapShot "{encoder_name}"')
     print("📡 Snapshot 回應：", res)
-
+    print(f"[Debug] encoder_name: {encoder_name}")
+    print(f"[Debug] filename: {filename}")
+    print(f"[Debug] snapshot_relative: {snapshot_relative}")
     return snapshot_full if os.path.exists(snapshot_full) else None

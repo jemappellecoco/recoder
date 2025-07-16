@@ -21,7 +21,7 @@ class ScheduleView(QGraphicsView):
         self.base_date = QDate.currentDate()
         self.encoder_names = []
         self.encoder_status = {}
-        self.setSceneRect(-120, -40, self.days * self.day_width + 150, 1000)
+        self.setSceneRect(-120, -20, self.days * self.day_width + 150, 1000)
         
         self.setRenderHint(QPainter.Antialiasing)
         # self.schedule_timer = QTimer()
@@ -38,6 +38,8 @@ class ScheduleView(QGraphicsView):
         self.global_timer = QTimer()
         self.global_timer.timeout.connect(self.update_visible_blocks_only)
         self.global_timer.start(5000)
+        self.setHorizontalScrollBarPolicy(Qt.ScrollBarAsNeeded)
+        self.setVerticalScrollBarPolicy(Qt.ScrollBarAsNeeded)
     def update_visible_blocks_only(self):
         visible_rect = self.viewport().rect()
         visible_scene_rect = self.mapToScene(visible_rect).boundingRect()
@@ -115,18 +117,18 @@ class ScheduleView(QGraphicsView):
         for day in range(self.days):
             for hour in range(24):
                 x = day * self.day_width + hour * self.hour_width
-                label = self.scene.addText(f"{hour:02d}")
-                label.setFont(QFont("Arial", 8))
-                label_rect = label.boundingRect()
-                label.setPos(x - label_rect.width() / 2, -35)       
+                # label = self.scene.addText(f"{hour:02d}")
+                # label.setFont(QFont("Arial", 8))
+                # label_rect = label.boundingRect()
+                # label.setPos(x - label_rect.width() / 2, -35)       
                 self.scene.addLine(x, 0, x, self.tracks * 100, Qt.DotLine)
 
         for day in range(self.days):
             x = day * self.day_width
             self.scene.addRect(x, 0, self.day_width, self.tracks * 100)
-            label = self.scene.addText(self.base_date.addDays(day).toString("MM/dd (ddd)"))
-            label.setFont(QFont("Arial", 10, QFont.Bold))
-            label.setPos(x + 2, -20)
+            # label = self.scene.addText(self.base_date.addDays(day).toString("MM/dd (ddd)"))
+            # label.setFont(QFont("Arial", 10, QFont.Bold))
+            # label.setPos(x + 2, -20)
 
         for track in range(self.tracks):
             y = track * 100
@@ -147,7 +149,7 @@ class ScheduleView(QGraphicsView):
         self.draw_blocks()
         
         self.update_now_line()
-
+        self.centerOn(0, 0)
     def draw_blocks(self):
             # 建立舊 block 映射（label → block）以便繼承狀態
         old_block_map = {block.label: block for block in self.blocks}
@@ -190,9 +192,9 @@ class ScheduleView(QGraphicsView):
                     block.status = old_block.status
                     if hasattr(old_block, "status_text") and old_block.status_text:
                         block.status_text.setText(old_block.status)
-                    if hasattr(old_block, "image_item") and old_block.image_item:
-                        block.image_item = old_block.image_item
-                        block.image_item.setParentItem(block)
+                if block.block_id and hasattr(self, "record_root"):
+                    img_folder = os.path.join(self.record_root, block.start_date.toString("MM.dd.yyyy"), "img")
+                    block.load_preview_images(img_folder)
 
             
 

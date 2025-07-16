@@ -1,7 +1,7 @@
 # schedule_runner.py
 from encoder_controller import EncoderController 
 from PySide6.QtCore import QObject, QTimer, QDateTime, QDate, QTime
-from encoder_utils import connect_socket, send_command,send_persistent_command
+from encoder_utils import connect_socket,send_encoder_command
 import os
 import logging
 from PySide6.QtWidgets import QApplication
@@ -155,15 +155,14 @@ class ScheduleRunner(QObject):
         full_path = os.path.abspath(os.path.join(self.record_root, date_folder, f"{date_prefix}_{filename}"))
         rel_path = os.path.relpath(full_path, start=self.record_root)
         
-        sock = connect_socket()
+        sock = connect_socket(encoder_name)
         if not sock:
             status_label.setText("❌ 無法連線")
             status_label.setStyleSheet("color: red;")
             return
 
-        res1 = send_command(sock, f'Setfile "{encoder_name}" 1 {rel_path}')
-        res2 = send_command(sock, f'Start "{encoder_name}" 1')
-        sock.close()
+        res1 = send_encoder_command(encoder_name, f'Setfile "{encoder_name}" 1 {rel_path}')
+        res2 = send_encoder_command(encoder_name, f'Start "{encoder_name}" 1')
 
         if "OK" in res1 and "OK" in res2:
             status_label.setText("✅ 錄影中")

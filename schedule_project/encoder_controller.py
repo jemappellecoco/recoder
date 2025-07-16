@@ -1,6 +1,6 @@
 # encoder_controller.py
 
-from encoder_utils import connect_socket, send_command
+from encoder_utils import connect_socket, send_command,send_encoder_command
 import os
 from path_manager import PathManager
 from datetime import datetime
@@ -19,27 +19,18 @@ class EncoderController:
 
         print(f"[debug] Setfile target: encoder_name='{encoder_name}', rel_path='{rel_path}'")
 
-        sock = connect_socket()
-        if not sock:
-            return False, "❌ 無法連線"
 
         # 嘗試三參數格式
-        res1 = send_command(sock, f'Setfile "{encoder_name}" 1 "{rel_path}"')
+        res1 = send_encoder_command(encoder_name, f'Setfile "{encoder_name}" 1 "{rel_path}"')
         if "Invalid Parameters" in res1:
             print("⚠️ 三參數格式失敗，改用二參數格式")
-            res1 = send_command(sock, f'Setfile "{encoder_name}" "{rel_path}"')
+            res1 = send_encoder_command(encoder_name, f'Setfile "{encoder_name}" "{rel_path}"')
 
-        res2 = send_command(sock, f'Start "{encoder_name}" 1')
-        sock.close()
+        res2 = send_encoder_command(encoder_name, f'Start "{encoder_name}" 1')
 
         return ("OK" in res1 and "OK" in res2), rel_path
 
-
     def stop_encoder(self, encoder_name):
-        sock = connect_socket()
-        if not sock:
-            return False
-        res = send_command(sock, f'Stop "{encoder_name}" 1')
-        sock.close()
+        res = send_encoder_command(encoder_name, f'Stop "{encoder_name}" 1')
         return "OK" in res
    
