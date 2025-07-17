@@ -17,13 +17,13 @@ class EncoderController:
 
         rel_path = os.path.relpath(full_path, start=self.record_root).replace("\\", "/")
 
-        print(f"[debug] Setfile target: encoder_name='{encoder_name}', rel_path='{rel_path}'")
+        log(f"[debug] Setfile target: encoder_name='{encoder_name}', rel_path='{rel_path}'")
 
 
         # 嘗試三參數格式
         res1 = send_encoder_command(encoder_name, f'Setfile "{encoder_name}" 1 "{rel_path}"')
         if "Invalid Parameters" in res1:
-            print("⚠️ 三參數格式失敗，改用二參數格式")
+            log("⚠️ 三參數格式失敗，改用二參數格式")
             res1 = send_encoder_command(encoder_name, f'Setfile "{encoder_name}" "{rel_path}"')
 
         res2 = send_encoder_command(encoder_name, f'Start "{encoder_name}" 1')

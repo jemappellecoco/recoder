@@ -2,6 +2,7 @@ import uuid
 from PySide6.QtWidgets import QMessageBox
 from collections import deque
 from uuid import uuid4
+from utils import log
 class BlockManager:
     def __init__(self, schedule_view):
         self.view = schedule_view
@@ -21,7 +22,7 @@ class BlockManager:
             block_id = str(uuid4()) 
         end_hour = round(start_hour + duration, 4)
         end_qdate = qdate.addDays(1) if end_hour >= 24 else qdate
-        print("✅ 呼叫 add_time_block")
+        log("✅ 呼叫 add_time_block")
         self.view.add_time_block(
             qdate=qdate,
             track_index=track_index,
@@ -31,8 +32,7 @@ class BlockManager:
             encoder_name=encoder_name,
             block_id=block_id 
         )
-        print("✅ 已加入 block:", label)
-       
+        log(f"✅ 已加入 block: {label}")    
         
         self.view.draw_blocks()
         self.view.save_schedule()
@@ -68,11 +68,11 @@ class BlockManager:
         # 從 block_data 移除
         self.view.block_data = [b for b in self.view.block_data if b.get("id") != block_id]
         self.view.save_schedule()
-        print(f"🗑️ 已刪除 block：{block_id}")
+        log(f"🗑️ 已刪除 block：{block_id}")
 
     def undo_last_delete(self):
         if not self.deleted_stack:
-            print("⚠️ 沒有可復原的排程")
+            log("⚠️ 沒有可復原的排程")
             QMessageBox.information(None, "⚠️ 無法復原", "目前沒有可以復原的排程。")
             return
 
@@ -87,5 +87,5 @@ class BlockManager:
             block_id=b.get("id")
         )
         self.view.save_schedule()
-        print(f"↩️ 已復原 block：{b['label']}")
+        log(f"↩️ 已復原 block：{b['label']}")
         QMessageBox.information(None, "✅ 復原成功", f"已復原節目：{b['label']}")

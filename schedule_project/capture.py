@@ -1,6 +1,6 @@
 import os
 from encoder_utils import send_encoder_command
-
+from utils import log
 import time
 
 def take_snapshot_from_block(block, encoder_names, snapshot_root: str = "E:/"):
@@ -24,20 +24,20 @@ def take_snapshot_from_block(block, encoder_names, snapshot_root: str = "E:/"):
             try:
                 os.remove(os.path.join(snapshot_dir, f))
             except Exception as e:
-                print(f"⚠️ 無法刪除舊圖片 {f}：{e}")
-    print(f"📸 拍照中 - block: {block.label} / encoder: {encoder_name}")
-    print(f"📂 儲存位置: {snapshot_full}")
-    # print(f"📂 目錄：{snapshot_dir}")
-    # print(f"🖼️ 檔案：{filename}")
+                log(f"⚠️ 無法刪除舊圖片 {f}：{e}")
+    log(f"📸 拍照中 - block: {block.label} / encoder: {encoder_name}")
+    log(f"📂 儲存位置: {snapshot_full}")
+    # log(f"📂 目錄：{snapshot_dir}")
+    # log(f"🖼️ 檔案：{filename}")
 
     send_encoder_command(encoder_name, f'SetSnapshotFileName "{encoder_name}" "{snapshot_relative}"')
     response = send_encoder_command(encoder_name, f'SnapShot "{encoder_name}"')
-    print(f"📡 SnapShot 指令回應: {response}")
+    log(f"📡 SnapShot 指令回應: {response}")
 
     if os.path.exists(snapshot_full):
-        print(f"✅ 已儲存：{snapshot_full}")
+        log(f"✅ 已儲存：{snapshot_full}")
     else:
-        print(f"⚠️ 檔案未生成，請檢查路徑或權限：{snapshot_full}")
+        log(f"⚠️ 檔案未生成，請檢查路徑或權限：{snapshot_full}")
 
     return snapshot_full
 def take_snapshot_by_encoder(encoder_name, snapshot_root="E:/"):
@@ -57,13 +57,12 @@ def take_snapshot_by_encoder(encoder_name, snapshot_root="E:/"):
             try:
                 os.remove(os.path.join(snapshot_dir, f))
             except Exception as e:
-                print(f"⚠️ 無法刪除舊圖片 {f}：{e}")
+                log(f"⚠️ 無法刪除舊圖片 {f}：{e}")
     time.sleep(0.5)
-    print(f"📸 為 {encoder_name} 拍照 ➜ {snapshot_full}")
+    log(f"📸 為 {encoder_name} 拍照 ➜ {snapshot_full}")
     send_encoder_command(encoder_name, f'SetSnapshotFileName "{encoder_name}" "{snapshot_relative}"')
     res = send_encoder_command(encoder_name, f'SnapShot "{encoder_name}"')
-    print("📡 Snapshot 回應：", res)
-    print(f"[Debug] encoder_name: {encoder_name}")
-    print(f"[Debug] filename: {filename}")
-    print(f"[Debug] snapshot_relative: {snapshot_relative}")
+    log(f"📡 Snapshot 回應：{res}")
+    log(f"[Debug] encoder_name: {encoder_name}")
+    log(f"[Debug] snapshot_relative: {snapshot_relative}")
     return snapshot_full if os.path.exists(snapshot_full) else None

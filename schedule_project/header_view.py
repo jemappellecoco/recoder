@@ -39,6 +39,6 @@ class HeaderView(QGraphicsView):
     def set_base_date(self, qdate):
         self.base_date = qdate
         self.draw_header()
-
+        self.update() 
     def sync_scroll(self, value):
         self.horizontalScrollBar().setValue(value)

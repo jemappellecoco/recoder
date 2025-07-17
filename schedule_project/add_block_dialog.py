@@ -3,7 +3,7 @@ from PySide6.QtWidgets import (
     QLabel, QTimeEdit, QDoubleSpinBox, QComboBox, QDateEdit,
 )
 from PySide6.QtCore import QTime,QDate,QDateTime
-
+from utils import log
 class AddBlockDialog(QDialog):
     def __init__(self, parent=None, encoder_names=None, overlap_checker=None):
         super().__init__(parent)
@@ -53,7 +53,7 @@ class AddBlockDialog(QDialog):
     def accept(self):
         self.time_input.interpretText()
         name = self.name_input.text().strip()
-        print(f"🧪 檢查名稱: {name}")
+        log(f"🧪 檢查名稱: {name}")
         if not name:
             self.status_label.setText("❌ 節目名稱不能空白")
             return

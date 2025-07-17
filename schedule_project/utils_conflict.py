@@ -1,12 +1,13 @@
 
 from PySide6.QtCore import QDate, QDateTime, QTime
 import json
-
+from utils import resource_path  
 def find_conflict_blocks(file_path, qdate, track_index, start_hour, duration):
     new_start_dt = QDateTime(qdate, QTime(int(start_hour), int((start_hour % 1) * 60)))
     new_end_dt = new_start_dt.addSecs(int(duration * 3600))
     
-    with open(file_path, "r", encoding="utf-8") as f:
+    path = resource_path(file_path)
+    with open(path, "r", encoding="utf-8") as f:
         data = json.load(f)
 
     conflicts = []

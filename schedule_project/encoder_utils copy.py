@@ -2,6 +2,7 @@
 import socket
 import json
 import os
+from main import resource_path  
 # ➤ 設定連線參數
 # HOST = "192.168.30.228"
 # PORT = 32108
@@ -11,10 +12,10 @@ persistent_sock = None
 # ➤ 載入 encoder IP/Port 設定
 def load_encoder_config():
     if not os.path.exists(ENCODER_CONFIG_PATH):
-        print(f"❌ 找不到設定檔 {ENCODER_CONFIG_PATH}")
+        log(f"❌ 找不到設定檔 {ENCODER_CONFIG_PATH}")
         return {}
-    with open(ENCODER_CONFIG_PATH, "r", encoding="utf-8") as f:
-        return json.load(f)
+    with open(resource_path("encoders.json"), "r", encoding="utf-8") as f:
+        data = json.load(f)
 
 encoder_config = load_encoder_config()
 def init_socket():
@@ -49,7 +50,7 @@ def send_persistent_command(cmd):
     try:
         return send_command(persistent_sock, cmd)
     except Exception as e:
-        print("⚠️ 可能連線已失效，重試一次：", e)
+        log("⚠️ 可能連線已失效，重試一次：", e)
         close_socket()
         persistent_sock = connect_socket()
         if persistent_sock:
@@ -61,17 +62,17 @@ def send_persistent_command(cmd):
 def connect_socket(encoder_name):
     info = encoder_config.get(encoder_name)
     if not info:
-        print(f"❌ 無法找到 encoder 設定: {encoder_name}")
+        log(f"❌ 無法找到 encoder 設定: {encoder_name}")
         return None
     host, port = info.get("host"), info.get("port")
     try:
         s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         s.settimeout(3)
         s.connect((host, port))
-        print(f"✅ 連線成功 {encoder_name} ({host}:{port})")
+        log(f"✅ 連線成功 {encoder_name} ({host}:{port})")
         return s
     except Exception as e:
-        print(f"❌ {encoder_name} 連線失敗: {e}")
+        log(f"❌ {encoder_name} 連線失敗: {e}")
         return None
 
 def send_command(sock, cmd):
@@ -92,13 +93,13 @@ def send_command(sock, cmd):
             except socket.timeout:
                 break
         response = data.decode("cp950", errors="replace")
-        print("⬅️ Response:\n", response)
+        log("⬅️ Response:\n", response)
         return response.strip()
     except (ConnectionResetError, BrokenPipeError, OSError) as e:
-        print("❌ 指令傳送失敗（連線中斷）:", e)
+        log("❌ 指令傳送失敗（連線中斷）:", e)
         raise  # ➜ 讓外層 handle 重連
     except Exception as e:
-        print("❌ 指令傳送失敗（其他）:", e)
+        log("❌ 指令傳送失敗（其他）:", e)
         return ""
 
 def list_encoders():
@@ -117,5 +118,5 @@ def list_encoders():
             enc_name = line.split("Mode:")[0].strip()
             encoders.append(enc_name)
     if not encoders:
-        print("⚠️ 沒有從 socket 抓到 encoder")
+        log("⚠️ 沒有從 socket 抓到 encoder")
     return encoders

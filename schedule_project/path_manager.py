@@ -4,6 +4,8 @@ import json
 from datetime import datetime
 from PySide6.QtCore import QDate
 CONFIG_FILE = "config.json"
+from utils import resource_path 
+
 
 class PathManager:
     def __init__(self):
@@ -19,16 +21,17 @@ class PathManager:
             with open(CONFIG_FILE, 'w', encoding='utf-8') as f:
                 json.dump({'record_root': path}, f)
         except Exception as e:
-            print("❌ 無法儲存 config:", e)
+            log("❌ 無法儲存 config:", e)
 
     def load_record_root(self):
         try:
-            if os.path.exists(CONFIG_FILE):
-                with open(CONFIG_FILE, 'r', encoding='utf-8') as f:
+            path = resource_path(CONFIG_FILE)
+            if os.path.exists(path):
+                with open(path, 'r', encoding='utf-8') as f:
                     data = json.load(f)
                     return data.get('record_root', 'E:/')
         except Exception as e:
-            print("❌ 無法讀取 config:", e)
+            log("❌ 無法讀取 config:", e)
         return 'E:/'
     def get_image_path(self, block_id: str, qdate: QDate):
             

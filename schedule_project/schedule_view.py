@@ -5,6 +5,7 @@ from time_block import TimeBlock
 import json
 import os
 import uuid
+from utils import log
 from path_manager import PathManager 
 class ScheduleView(QGraphicsView):
     def __init__(self):
@@ -39,7 +40,7 @@ class ScheduleView(QGraphicsView):
         self.now_time_label = None
         self.global_timer = QTimer()
         self.global_timer.timeout.connect(self.update_visible_blocks_only)
-        self.global_timer.start(5000)
+        self.global_timer.start(30000)
         self.setHorizontalScrollBarPolicy(Qt.ScrollBarAsNeeded)
         self.setVerticalScrollBarPolicy(Qt.ScrollBarAsNeeded)
        
@@ -48,7 +49,7 @@ class ScheduleView(QGraphicsView):
     def update_visible_blocks_only(self):
         visible_rect = self.viewport().rect()
         visible_scene_rect = self.mapToScene(visible_rect).boundingRect()
-
+        
         for item in self.scene.items(visible_scene_rect):  # ✅ 限定畫面內
             if isinstance(item, TimeBlock):
                 
@@ -119,7 +120,7 @@ class ScheduleView(QGraphicsView):
                 item.update_status_by_time()
     
     def draw_grid(self):
-        print("🎯 draw_grid encoder_names:", self.encoder_names)
+        log(f"🎯 draw_grid encoder_names:{self.encoder_names}" )
 
         offset = self.grid_top_offset  # ✅ 統一使用偏移量
         self.scene.clear()
@@ -248,7 +249,7 @@ class ScheduleView(QGraphicsView):
             b_end_dt = QDateTime(b_end_qdate, QTime(int(b_end_hour % 24), int((b_end_hour % 1) * 60)))
 
             if new_start_dt < b_end_dt and new_end_dt > b_start_dt:
-                print(f"🔴 重疊偵測：與 {block['label']} 發生重疊")
+                log(f"🔴 重疊偵測：與 {block['label']} 發生重疊")
                 return True
 
         return False
@@ -292,12 +293,12 @@ class ScheduleView(QGraphicsView):
         block_to_remove = next((b for b in self.block_data if b["label"] == label), None)
 
         if not block_to_remove:
-            print(f"⚠️ 找不到節目：{label}")
+            log(f"⚠️ 找不到節目：{label}")
             return
 
         # ⛔ 判斷是否在過去
         if not self.can_delete_block(block_to_remove):
-            print(f"⛔ 節目 {label} 已在過去，不可刪除")
+            log(f"⛔ 節目 {label} 已在過去，不可刪除")
             return
 
         # ✅ 找出場景中的 block item 並刪除
@@ -314,46 +315,21 @@ class ScheduleView(QGraphicsView):
     def set_start_date(self, qdate):
         self.base_date = qdate
         self.draw_grid()
-    def save_schedule(self, filename="schedule.json"):
-        try:
-        # ✅ 用 dict 快速對應 block_id → block_data
-            block_map = {b["id"]: b for b in self.block_data if b.get("id")}
-
-            now = QDateTime.currentDateTime()
-
-            # ✅ 同步畫面上的 TimeBlock 狀態
-            for item in self.scene.items():
-                if isinstance(item, TimeBlock) and item.block_id in block_map:
-                    start_dt = QDateTime(item.start_date, QTime(int(item.start_hour), int((item.start_hour % 1) * 60)))
-                    if start_dt >= now:
-                        block_map[item.block_id]["status"] = item.status  # ✅ 寫入最新狀態
-
-            # ✅ 寫入 JSON 檔
-            with open(filename, "w", encoding="utf-8") as f:
-                json.dump([
-                    {
-                        "qdate": b["qdate"].toString("yyyy-MM-dd"),
-                        "track_index": b["track_index"],
-                        "start_hour": b["start_hour"],
-                        "duration": b["duration"],
-                        "end_hour": b["end_hour"],
-                        "end_qdate": (
-                            b["end_qdate"].toString("yyyy-MM-dd") if isinstance(b["end_qdate"], QDate)
-                            else b["end_qdate"]
-                        ),
-                        "label": b["label"],
-                        "id": b.get("id"),
-                        "encoder_name": b.get("encoder_name"),
-                        "snapshot_path": b.get("snapshot_path", ""),
-                        "status": b.get("status", "")  # ✅ 最終會寫入最新的狀態（等待中、已結束等）
-                    } for b in self.block_data
-                ], f, ensure_ascii=False, indent=2)
-            print("✅ 已儲存節目排程 schedule.json")
-        except Exception as e:
-            print(f"❌ 儲存失敗: {e}")
-
     # def save_schedule(self, filename="schedule.json"):
     #     try:
+    #     # ✅ 用 dict 快速對應 block_id → block_data
+    #         block_map = {b["id"]: b for b in self.block_data if b.get("id")}
+
+    #         now = QDateTime.currentDateTime()
+
+    #         # ✅ 同步畫面上的 TimeBlock 狀態
+    #         for item in self.scene.items():
+    #             if isinstance(item, TimeBlock) and item.block_id in block_map:
+    #                 start_dt = QDateTime(item.start_date, QTime(int(item.start_hour), int((item.start_hour % 1) * 60)))
+    #                 if start_dt >= now:
+    #                     block_map[item.block_id]["status"] = item.status  # ✅ 寫入最新狀態
+
+    #         # ✅ 寫入 JSON 檔
     #         with open(filename, "w", encoding="utf-8") as f:
     #             json.dump([
     #                 {
@@ -370,16 +346,75 @@ class ScheduleView(QGraphicsView):
     #                     "id": b.get("id"),
     #                     "encoder_name": b.get("encoder_name"),
     #                     "snapshot_path": b.get("snapshot_path", ""),
-    #                     "status": b.get("status", "")
-    #                 } for b in self.block_data  # ✅ 修正這行
+    #                     "status": b.get("status", "")  # ✅ 最終會寫入最新的狀態（等待中、已結束等）
+    #                 } for b in self.block_data
     #             ], f, ensure_ascii=False, indent=2)
-    #         print("✅ 已儲存節目排程 schedule.json")
+    #         log("✅ 已儲存節目排程 schedule.json")
     #     except Exception as e:
-    #         print(f"❌ 儲存失敗: {e}")
+    #         log(f"❌ 儲存失敗: {e}")
+
+    
+    def save_schedule(self, filename=None):
+        try:
+            # ✅ 如果使用者選過排程檔，優先使用該路徑
+            if filename is None and hasattr(self, "schedule_file"):
+                filename = self.schedule_file
+
+            # ✅ fallback：使用 Documents 預設儲存路徑
+            if filename is None:
+                documents_dir = os.path.join(os.path.expanduser("~"), "Documents", "schedule_saved")
+                os.makedirs(documents_dir, exist_ok=True)
+                filename = os.path.join(documents_dir, "schedule.json")
+
+            block_map = {b["id"]: b for b in self.block_data if b.get("id")}
+            now = QDateTime.currentDateTime()
+
+            for item in self.scene.items():
+                if isinstance(item, TimeBlock) and item.block_id in block_map:
+                    start_dt = QDateTime(item.start_date, QTime(int(item.start_hour), int((item.start_hour % 1) * 60)))
+                    if start_dt >= now:
+                        block_map[item.block_id]["status"] = item.status
+
+            with open(filename, "w", encoding="utf-8") as f:
+                json.dump([
+                    {
+                        "qdate": b["qdate"].toString("yyyy-MM-dd"),
+                        "track_index": b["track_index"],
+                        "start_hour": b["start_hour"],
+                        "duration": b["duration"],
+                        "end_hour": b["end_hour"],
+                        "end_qdate": (
+                            b["end_qdate"].toString("yyyy-MM-dd") if isinstance(b["end_qdate"], QDate)
+                            else b["end_qdate"]
+                        ),
+                        "label": b["label"],
+                        "id": b.get("id"),
+                        "encoder_name": b.get("encoder_name"),
+                        "snapshot_path": b.get("snapshot_path", ""),
+                        "status": b.get("status", "")
+                    } for b in self.block_data
+                ], f, ensure_ascii=False, indent=2)
+
+            log(f"✅ 已儲存節目排程：{filename}")
+        except Exception as e:
+            log(f"❌ 儲存失敗: {e}")
 
 
 
-    def load_schedule(self, filename="schedule.json"):
+    def load_schedule(self, filename=None):
+        if filename is None:
+            # 嘗試從 config.json 讀取使用者設定的 schedule 檔案路徑
+            if os.path.exists("config.json"):
+                try:
+                    with open("config.json", "r", encoding="utf-8") as f:
+                        config = json.load(f)
+                        filename = config.get("schedule_file", "schedule.json")
+                except Exception as e:
+                    log(f"⚠️ 無法從 config.json 取得 schedule 檔：{e}")
+                    filename = "schedule.json"
+            else:
+                filename = "schedule.json"
+
         try:
             with open(filename, "r", encoding="utf-8") as f:
                 raw = json.load(f)
@@ -394,12 +429,13 @@ class ScheduleView(QGraphicsView):
                         "label": b["label"],
                         "id": b.get("id"),
                         "encoder_name": b.get("encoder_name"),
-                        "snapshot_path": b.get("snapshot_path", ""),
+                        # "snapshot_path": b.get("snapshot_path", ""),
                         "status": b.get("status", "")
                     } for b in raw
                 ]
-            self.draw_grid()  # ✅ 重點！改成 draw_grid()，不要直接呼叫 draw_blocks()
-            print("📂 已載入節目排程 schedule.json")
+            self.draw_grid()
+            log(f"📂 已載入節目排程 {filename}")
         except FileNotFoundError:
-            print("🕘 無 schedule.json 檔案，自動跳過載入。")
+            log(f"🕘 無 {filename} 檔案，自動跳過載入。")
+
 

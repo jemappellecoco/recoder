@@ -5,6 +5,7 @@ from edit_block_dialog import EditBlockDialog
 import logging
 from path_manager import PathManager
 import os
+from utils import log
 logging.basicConfig(level=logging.INFO)
 class PreviewImageItem(QGraphicsPixmapItem):
     def __init__(self, block_id, start_date, path_manager, label):
@@ -200,7 +201,7 @@ class TimeBlock(QGraphicsRectItem):
          # ✅ 左邊 handle 拖曳
         if self.left_handle.contains(local_pos):
             if self.has_started:
-                print(f"⛔ 已開始：左側不能拖動（{self.label}）")
+                log(f"⛔ 已開始：左側不能拖動（{self.label}）")
                 self.prevent_drag = True
                 return
             self.dragging_handle = 'left'
@@ -258,7 +259,7 @@ class TimeBlock(QGraphicsRectItem):
             new_end_dt = new_end_dt.addSecs(int(new_duration * 3600))
 
             if new_end_dt < now:
-                print(f"⛔ 無法縮到現在時間前結束（{self.label}）")
+                log(f"⛔ 無法縮到現在時間前結束（{self.label}）")
                 self.flash_red()
                 return
 
@@ -285,12 +286,12 @@ class TimeBlock(QGraphicsRectItem):
             new_start_dt = QDateTime(self.start_date, QTime(int(new_start_hour), int((new_start_hour % 1) * 60)))
 
             if new_start_dt < now:
-                print(f"⛔ 無法將開始時間拉到過去（{self.label}）")
+                log(f"⛔ 無法將開始時間拉到過去（{self.label}）")
                 self.flash_red()
                 return
 
             if new_duration < 1:
-                print(f"⛔ 時間太短（{self.label}）")
+                log(f"⛔ 時間太短（{self.label}）")
                 self.flash_red()
                 return
 
@@ -307,7 +308,7 @@ class TimeBlock(QGraphicsRectItem):
                 })
                 parent_view.save_schedule()
             else:
-                print(f"❌ 重疊偵測：{self.label} 移動後會與他人重疊")
+                log(f"❌ 重疊偵測：{self.label} 移動後會與他人重疊")
                 self.flash_red()
 
 
@@ -372,26 +373,26 @@ class TimeBlock(QGraphicsRectItem):
 
         # ✅ 四向邊界限制
         if new_hour < 0 or new_x < 0 or self.x() + self.rect().width() > scene_width or new_track < 0 or new_track >= max_track:
-            print("❌ 拖曳越界，還原")
+            log("❌ 拖曳越界，還原")
             self.update_geometry(parent_view.base_date)
             return
         # ✅ 時間不可在過去
         now = QDateTime.currentDateTime()
         start_dt = QDateTime(new_date, QTime(int(new_hour), int((new_hour % 1) * 60)))
         if start_dt < now:
-            print(f"⛔ 不可移動到過去（{self.label}）")
+            log(f"⛔ 不可移動到過去（{self.label}）")
             self.flash_red()
             self.update_geometry(parent_view.base_date)
             return
         if self.is_start_or_end_in_past(new_date, new_hour, self.duration_hours):
-            print(f"⛔ 不可移動到過去（{self.label}）")
+            log(f"⛔ 不可移動到過去（{self.label}）")
             self.flash_red()
             self.update_geometry(parent_view.base_date)
             parent_view.save_schedule()
             return
         # ✅ 重疊檢查
         if parent_view.is_overlap(new_date, new_track, new_hour, self.duration_hours, exclude_label=self.block_id):
-            print("❌ 拖曳後重疊，還原")
+            log("❌ 拖曳後重疊，還原")
             self.flash_red()
             self.update_geometry(parent_view.base_date)
             return
@@ -476,11 +477,11 @@ class TimeBlock(QGraphicsRectItem):
         start_dt = QDateTime(self.start_date, QTime(int(self.start_hour), int((self.start_hour % 1) * 60)))
         end_dt = start_dt.addSecs(int(self.duration_hours * 3600))
         if now > end_dt:
-            print("⛔ 已結束排程不可編輯")
+            log("⛔ 已結束排程不可編輯")
             return
 
         # ✅ 點到區塊其他地方 → 編輯 Dialog
-        print(f"📝 點擊 block：{self.label}")
+        log(f"📝 點擊 block：{self.label}")
         parent_view = self.scene().parent()
         block_data = None
         for b in parent_view.block_data:
@@ -489,7 +490,7 @@ class TimeBlock(QGraphicsRectItem):
                 break
 
         if not block_data:
-            print("⚠️ 找不到對應 block 資料")
+            log("⚠️ 找不到對應 block 資料")
             return
         
         dialog = EditBlockDialog(block_data, self.encoder_names, readonly=(now > end_dt))
@@ -540,7 +541,7 @@ class TimeBlock(QGraphicsRectItem):
         pixmap = QPixmap(image_path)
 
         if pixmap.isNull():
-            # print(f"❌ 無法載入圖片：{image_path}")
+            # log(f"❌ 無法載入圖片：{image_path}")
             return
 
         # ✅ 縮圖尺寸
@@ -549,8 +550,10 @@ class TimeBlock(QGraphicsRectItem):
 
         # ✅ 建立獨立圖片 item 加到 scene
         scene = self.scene()
+        log(f"🔍 scene item count: {len(scene.items())}")
         if not scene:
-            print("⚠️ 無法取得 scene，取消縮圖建立")
+            log("⚠️ 無法取得 scene，取消縮圖建立")
+            
             return
 
         self.preview_item = PreviewImageItem(self.block_id, self.start_date, self.path_manager, self.label)
@@ -571,8 +574,8 @@ class TimeBlock(QGraphicsRectItem):
 
         # ✅ 標記 block_id（用於點擊判斷）
         self.preview_item.block_id = self.block_id
-
-        print(f"🖼️ 圖片放在右邊：{image_path}")
+       
+        log(f"🖼️ 圖片放在右邊：{image_path}")
 
 
     def safe_delete(self):
