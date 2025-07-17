@@ -167,7 +167,9 @@ class TimeBlock(QGraphicsRectItem):
             block_width = max(min(block_width, max_x - block_x), 20)
 
         self.setRect(0, 0, block_width, self.BLOCK_HEIGHT)
-        self.setPos(block_x, self.track_index * self.BLOCK_HEIGHT)
+        self.setPos(block_x, self.track_index * self.BLOCK_HEIGHT + parent_view.grid_top_offset)
+
+        # self.setPos(block_x, self.track_index * self.BLOCK_HEIGHT)
         self.right_handle.setRect(block_width - self.HANDLE_WIDTH, 0, self.HANDLE_WIDTH, self.BLOCK_HEIGHT)
 
         QTimer.singleShot(0, self.update_text_position)

@@ -21,12 +21,14 @@ class ScheduleView(QGraphicsView):
         self.base_date = QDate.currentDate()
         self.encoder_names = []
         self.encoder_status = {}
-        self.setSceneRect(-120, -20, self.days * self.day_width + 150, 1000)
+        self.tracks = len(self.encoder_names)  # 加這行初始化軌道數
+        # self.setSceneRect(-120, 0, self.days * self.day_width + 150, self.tracks * 100 + 40)
+        # self.setSceneRect(-120, 0, self.days * self.day_width + 150, 1000)
         
         self.setRenderHint(QPainter.Antialiasing)
         # self.schedule_timer = QTimer()
         # self.schedule_timer.start(1000)
-        self.load_schedule()
+        # self.load_schedule()
         self.path_manager = PathManager()
         self.record_root = self.path_manager.record_root  
 
@@ -40,6 +42,9 @@ class ScheduleView(QGraphicsView):
         self.global_timer.start(5000)
         self.setHorizontalScrollBarPolicy(Qt.ScrollBarAsNeeded)
         self.setVerticalScrollBarPolicy(Qt.ScrollBarAsNeeded)
+       
+        self.grid_top_offset = 30
+        self.setAlignment(Qt.AlignLeft | Qt.AlignTop)
     def update_visible_blocks_only(self):
         visible_rect = self.viewport().rect()
         visible_scene_rect = self.mapToScene(visible_rect).boundingRect()
@@ -52,6 +57,55 @@ class ScheduleView(QGraphicsView):
                     if hasattr(self, "record_root"):
                         img_folder = os.path.join(self.record_root, item.start_date.toString("MM.dd.yyyy"), "img")
                         item.load_preview_images(img_folder)
+    # def update_now_line(self):
+    #     now = QDateTime.currentDateTime()
+    #     days_from_base = self.base_date.daysTo(now.date())
+
+    #     # 不在可視範圍內時，移除現在時間線
+    #     if not (0 <= days_from_base < self.days):
+    #         try:
+    #             if self.now_line_item and self.now_line_item.scene():
+    #                 self.scene.removeItem(self.now_line_item)
+    #         except RuntimeError:
+    #             pass
+    #         self.now_line_item = None
+
+    #         try:
+    #             if self.now_time_label and self.now_time_label.scene():
+    #                 self.scene.removeItem(self.now_time_label)
+    #         except RuntimeError:
+    #             pass
+    #         self.now_time_label = None
+    #         return
+
+    #     # ➤ 計算目前時間對應的 X 座標
+    #     time = now.time()
+    #     total_hours = time.hour() + time.minute() / 60 + time.second() / 3600
+    #     x = days_from_base * self.day_width + total_hours * self.hour_width
+
+    #     # ✅ 安全地移除舊紅線
+    #     try:
+    #         if self.now_line_item and self.now_line_item.scene():
+    #             self.scene.removeItem(self.now_line_item)
+    #     except RuntimeError:
+    #         self.now_line_item = None
+    #     self.now_line_item = self.scene.addLine(x, 0, x, self.tracks * 100, QPen(Qt.red, 2))
+    #     self.now_line_item.setZValue(1000)
+
+    #     # ✅ 安全地移除舊時間文字
+    #     try:
+    #         if self.now_time_label and self.now_time_label.scene():
+    #             self.scene.removeItem(self.now_time_label)
+    #     except RuntimeError:
+    #         self.now_time_label = None
+
+    #     # ➤ 新增現在時間文字
+    #     time_str = now.time().toString("HH:mm:ss")
+    #     self.now_time_label = self.scene.addText(f"TIME {time_str}")
+    #     self.now_time_label.setFont(QFont("Arial", 8, QFont.Bold))
+    #     self.now_time_label.setDefaultTextColor(Qt.red)
+    #     self.now_time_label.setPos(x - 10, -18)
+    #     self.now_time_label.setZValue(1000)
     def update_now_line(self):
         now = QDateTime.currentDateTime()
         days_from_base = self.base_date.daysTo(now.date())
@@ -78,13 +132,18 @@ class ScheduleView(QGraphicsView):
         total_hours = time.hour() + time.minute() / 60 + time.second() / 3600
         x = days_from_base * self.day_width + total_hours * self.hour_width
 
+        offset = self.grid_top_offset  # 🔴 新增：向下偏移
+
         # ✅ 安全地移除舊紅線
         try:
             if self.now_line_item and self.now_line_item.scene():
                 self.scene.removeItem(self.now_line_item)
         except RuntimeError:
             self.now_line_item = None
-        self.now_line_item = self.scene.addLine(x, 0, x, self.tracks * 100, QPen(Qt.red, 2))
+
+        self.now_line_item = self.scene.addLine(
+            x, offset, x, offset + self.tracks * 100, QPen(Qt.red, 2)
+        )
         self.now_line_item.setZValue(1000)
 
         # ✅ 安全地移除舊時間文字
@@ -99,39 +158,34 @@ class ScheduleView(QGraphicsView):
         self.now_time_label = self.scene.addText(f"TIME {time_str}")
         self.now_time_label.setFont(QFont("Arial", 8, QFont.Bold))
         self.now_time_label.setDefaultTextColor(Qt.red)
-        self.now_time_label.setPos(x - 10, -18)
+        self.now_time_label.setPos(x - 10, offset - 18)  # 🔴 新位置跟著 offset
         self.now_time_label.setZValue(1000)
-        
+
     def update_all_blocks(self):
         for item in self.scene.items():
             if isinstance(item, TimeBlock):
                 item.update_status_by_time()
     
-
     def draw_grid(self):
         print("🎯 draw_grid encoder_names:", self.encoder_names)
 
+        offset = self.grid_top_offset  # ✅ 統一使用偏移量
         self.scene.clear()
         self.tracks = len(self.encoder_names)
-        
+        self.update_scene_rect()
+        self.verticalScrollBar().setValue(0)
+
         for day in range(self.days):
             for hour in range(24):
                 x = day * self.day_width + hour * self.hour_width
-                # label = self.scene.addText(f"{hour:02d}")
-                # label.setFont(QFont("Arial", 8))
-                # label_rect = label.boundingRect()
-                # label.setPos(x - label_rect.width() / 2, -35)       
-                self.scene.addLine(x, 0, x, self.tracks * 100, Qt.DotLine)
+                self.scene.addLine(x, offset, x, offset + self.tracks * 100, Qt.DotLine)
 
         for day in range(self.days):
             x = day * self.day_width
-            self.scene.addRect(x, 0, self.day_width, self.tracks * 100)
-            # label = self.scene.addText(self.base_date.addDays(day).toString("MM/dd (ddd)"))
-            # label.setFont(QFont("Arial", 10, QFont.Bold))
-            # label.setPos(x + 2, -20)
+            self.scene.addRect(x, offset, self.day_width, self.tracks * 100)
 
         for track in range(self.tracks):
-            y = track * 100
+            y = offset + track * 100  # ✅ 把每條橫線往下移 offset
             self.scene.addLine(0, y, self.days * self.day_width, y)
 
             if track < len(self.encoder_names):
@@ -144,12 +198,62 @@ class ScheduleView(QGraphicsView):
 
             label = self.scene.addText(full_label)
             label.setFont(QFont("Arial", 9))
-            label.setPos(-95, y + 15)
+            label.setPos(-95, y)  # ✅ y 已經包含 offset
 
         self.draw_blocks()
-        
         self.update_now_line()
-        self.centerOn(0, 0)
+        self.verticalScrollBar().setValue(self.verticalScrollBar().minimum())
+
+    # def draw_grid(self):
+    #     print("🎯 draw_grid encoder_names:", self.encoder_names)
+
+    #     self.scene.clear()
+    #     self.tracks = len(self.encoder_names)
+    #     self.update_scene_rect()
+    #     self.verticalScrollBar().setValue(0)
+    #     for day in range(self.days):
+    #         for hour in range(24):
+    #             x = day * self.day_width + hour * self.hour_width
+    #             # label = self.scene.addText(f"{hour:02d}")
+    #             # label.setFont(QFont("Arial", 8))
+    #             # label_rect = label.boundingRect()
+    #             # label.setPos(x - label_rect.width() / 2, -35)       
+    #             self.scene.addLine(x, 0, x, self.tracks * 100, Qt.DotLine)
+
+    #     for day in range(self.days):
+    #         x = day * self.day_width
+    #         self.scene.addRect(x, 0, self.day_width, self.tracks * 100)
+    #         # label = self.scene.addText(self.base_date.addDays(day).toString("MM/dd (ddd)"))
+    #         # label.setFont(QFont("Arial", 10, QFont.Bold))
+    #         # label.setPos(x + 2, -20)
+
+    #     for track in range(self.tracks):
+    #         y = track * 100
+    #         self.scene.addLine(0, y, self.days * self.day_width, y)
+
+    #         if track < len(self.encoder_names):
+    #             encoder_name = self.encoder_names[track]
+    #             status_label = self.encoder_status.get(encoder_name)
+    #             status_text = status_label.text() if status_label else "未知"
+    #             full_label = f"{encoder_name}\n{status_text}"
+    #         else:
+    #             full_label = f"未指定\n--"
+
+    #         label = self.scene.addText(full_label)
+    #         label.setFont(QFont("Arial", 9))
+    #         label.setPos(-95, y + self.grid_top_offset)
+
+    #     self.draw_blocks()
+    #     self.update_now_line()
+    #     self.verticalScrollBar().setValue(0)
+    #     self.verticalScrollBar().setValue(self.verticalScrollBar().minimum())
+
+    def update_scene_rect(self):
+        self.tracks = len(self.encoder_names)
+        # scene_height = self.tracks * 100 + 40
+        scene_height = self.tracks * 100 + self.grid_top_offset
+        scene_width = self.days * self.day_width + 150
+        self.setSceneRect(-120, 0, scene_width, scene_height)
     def draw_blocks(self):
             # 建立舊 block 映射（label → block）以便繼承狀態
         old_block_map = {block.label: block for block in self.blocks}
@@ -384,7 +488,8 @@ class ScheduleView(QGraphicsView):
                         "status": b.get("status", "")
                     } for b in raw
                 ]
-            self.draw_blocks()
+            self.draw_grid()  # ✅ 重點！改成 draw_grid()，不要直接呼叫 draw_blocks()
             print("📂 已載入節目排程 schedule.json")
         except FileNotFoundError:
             print("🕘 無 schedule.json 檔案，自動跳過載入。")
+

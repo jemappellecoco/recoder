@@ -180,12 +180,13 @@ class MainWindow(QMainWindow):
         self.view.encoder_names = self.encoder_names
         self.view.encoder_status = self.encoder_status
         self.view.record_root = self.record_root
+        self.view.load_schedule()
         self.view.draw_grid()
         
         self.view.setContextMenuPolicy(Qt.CustomContextMenu)
         self.view.customContextMenuRequested.connect(self.show_block_context_menu)
         self.view.path_manager = self.path_manager
-        self.view.load_schedule()
+      
         
         self.block_manager = BlockManager(self.view)
         
@@ -217,31 +218,45 @@ class MainWindow(QMainWindow):
         self.view.draw_grid()
 
         right_layout.addWidget(toolbar)
-        # === Header + Schedule 用 QSplitter 合併
-        schedule_splitter = QSplitter(Qt.Vertical)
-        schedule_splitter.setHandleWidth(0)  # 隱藏分隔線
-        schedule_splitter.setChildrenCollapsible(False)  # 禁止拖動收起
-        schedule_splitter.setSizes([self.header.height(), 9999])
-        # ➕ HeaderView
+        # # === Header + Schedule 用 QSplitter 合併
+        # schedule_splitter = QSplitter(Qt.Vertical)
+        # schedule_splitter.setHandleWidth(0)  # 隱藏分隔線
+        # schedule_splitter.setChildrenCollapsible(False)  # 禁止拖動收起
+        # schedule_splitter.setSizes([self.header.height(), 9999])
+        # # ➕ HeaderView
        
-        schedule_splitter.addWidget(self.header)
-        schedule_splitter.setStretchFactor(0, 0)
-        schedule_splitter.setStretchFactor(1, 1)
-        # ➕ ScheduleView
-        schedule_splitter.addWidget(self.view)
+        # schedule_splitter.addWidget(self.header)
+        # schedule_splitter.setStretchFactor(0, 0)
+        # schedule_splitter.setStretchFactor(1, 1)
+        # # ➕ ScheduleView
+        # schedule_splitter.addWidget(self.view)
 
-        # 將 splitter 加入右側 layout
+        # # 將 splitter 加入右側 layout
        
-        right_layout.addWidget(schedule_splitter)
-        # right_layout = QVBoxLayout()
-        right_layout.setContentsMargins(0, 0, 0, 0)
-        right_layout.setSpacing(0)
-        right_layout.setAlignment(Qt.AlignTop)
+        # right_layout.addWidget(schedule_splitter)
+        # # right_layout = QVBoxLayout()
+        # right_layout.setContentsMargins(0, 0, 0, 0)
+        # right_layout.setSpacing(0)
+        # right_layout.setAlignment(Qt.AlignTop)
        
+        # === Header + Schedule 垂直貼齊（改成用 QVBoxLayout 包裝）===
+        header_schedule_wrapper = QWidget()
+        wrapper_layout = QVBoxLayout(header_schedule_wrapper)
+        wrapper_layout.setContentsMargins(0, 0, 0, 0)
+        wrapper_layout.setSpacing(0)
+        wrapper_layout.setAlignment(Qt.AlignTop)
+
+        # ➕ HeaderView（上方時間軸） & ScheduleView（下方時間區塊）
+        wrapper_layout.addWidget(self.header)
+        wrapper_layout.addWidget(self.view)
+
+        # 將 toolbar 和 header+schedule 一起加入右側 layout
+        right_layout.addWidget(toolbar)
+        right_layout.addWidget(header_schedule_wrapper)
+
         
-        
-        right_layout.addWidget(self.header)   # HeaderView 負責畫時間軸
-        right_layout.addWidget(self.view)     # ScheduleView 負責畫節目區
+        # right_layout.addWidget(self.header)   # HeaderView 負責畫時間軸
+        # right_layout.addWidget(self.view)     # ScheduleView 負責畫節目區
        # === 加入 splitter 讓左右可調整寬度
         splitter.addWidget(scroll_area)
         splitter.addWidget(right_panel)

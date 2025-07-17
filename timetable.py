@@ -214,29 +214,64 @@ class ScheduleView(QGraphicsView):
 
    
 
+    # def draw_grid(self):
+    #     self.scene.clear()
+    #     for day in range(self.days):
+    #         for hour in range(24):
+    #             x = day * self.day_width + hour * self.hour_width
+    #             label = self.scene.addText(f"{hour:02d}")
+    #             label.setFont(QFont("Arial", 8))
+    #             label.setPos(x + 2, -35)
+    #             self.scene.addLine(x, 0, x, self.tracks * 100, Qt.DotLine)
+    #     for day in range(self.days):
+    #         x = day * self.day_width
+    #         self.scene.addRect(x, 0, self.day_width, self.tracks * 100)
+    #         label = self.scene.addText(self.base_date.addDays(day).toString("MM/dd (ddd)"))
+    #         label.setFont(QFont("Arial", 10, QFont.Bold))
+    #         label.setPos(x + 2, -20)
+    #     for track in range(self.tracks):
+    #         y = track * 100
+    #         self.scene.addLine(0, y, self.days * self.day_width, y)
+    #         label = self.scene.addText(f"encoder{track + 1}")
+    #         label.setFont(QFont("Arial", 9))
+    #         label.setPos(-60, y + 30)
+    #     self.draw_blocks()
     def draw_grid(self):
         self.scene.clear()
+        track_height = 100
+        top_padding = 0  # 可以保留個 5～10，看你喜好
+
+        # 垂直線 + 小時標籤
         for day in range(self.days):
             for hour in range(24):
                 x = day * self.day_width + hour * self.hour_width
                 label = self.scene.addText(f"{hour:02d}")
                 label.setFont(QFont("Arial", 8))
-                label.setPos(x + 2, -35)
-                self.scene.addLine(x, 0, x, self.tracks * 100, Qt.DotLine)
+                label.setPos(x + 2, -35)  # 放在 header 位置上方
+                self.scene.addLine(x, 0, x, self.tracks * track_height, Qt.DotLine)
+
+        # 日期欄
         for day in range(self.days):
             x = day * self.day_width
-            self.scene.addRect(x, 0, self.day_width, self.tracks * 100)
+            self.scene.addRect(x, 0, self.day_width, self.tracks * track_height)
             label = self.scene.addText(self.base_date.addDays(day).toString("MM/dd (ddd)"))
             label.setFont(QFont("Arial", 10, QFont.Bold))
             label.setPos(x + 2, -20)
+
+        # 水平線 + encoder 名稱
         for track in range(self.tracks):
-            y = track * 100
+            y = top_padding + track * track_height
             self.scene.addLine(0, y, self.days * self.day_width, y)
-            label = self.scene.addText(f"encoder{track + 1}")
+            label = self.scene.addText(f"{self.encoder_names[track]}")
             label.setFont(QFont("Arial", 9))
-            label.setPos(-60, y + 30)
+            label.setPos(-60, y + 5)  # ✅ 貼齊上緣，不要 +30
+
         self.draw_blocks()
 
+        # 更新 scene 大小
+        total_height = top_padding + self.tracks * track_height
+        total_width = self.days * self.day_width
+        self.setSceneRect(0, 0, total_width, total_height)
     
     def draw_blocks(self):
         # 清除畫面上舊的 TimeBlock
