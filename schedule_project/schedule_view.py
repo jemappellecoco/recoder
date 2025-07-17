@@ -57,55 +57,7 @@ class ScheduleView(QGraphicsView):
                     if hasattr(self, "record_root"):
                         img_folder = os.path.join(self.record_root, item.start_date.toString("MM.dd.yyyy"), "img")
                         item.load_preview_images(img_folder)
-    # def update_now_line(self):
-    #     now = QDateTime.currentDateTime()
-    #     days_from_base = self.base_date.daysTo(now.date())
-
-    #     # 不在可視範圍內時，移除現在時間線
-    #     if not (0 <= days_from_base < self.days):
-    #         try:
-    #             if self.now_line_item and self.now_line_item.scene():
-    #                 self.scene.removeItem(self.now_line_item)
-    #         except RuntimeError:
-    #             pass
-    #         self.now_line_item = None
-
-    #         try:
-    #             if self.now_time_label and self.now_time_label.scene():
-    #                 self.scene.removeItem(self.now_time_label)
-    #         except RuntimeError:
-    #             pass
-    #         self.now_time_label = None
-    #         return
-
-    #     # ➤ 計算目前時間對應的 X 座標
-    #     time = now.time()
-    #     total_hours = time.hour() + time.minute() / 60 + time.second() / 3600
-    #     x = days_from_base * self.day_width + total_hours * self.hour_width
-
-    #     # ✅ 安全地移除舊紅線
-    #     try:
-    #         if self.now_line_item and self.now_line_item.scene():
-    #             self.scene.removeItem(self.now_line_item)
-    #     except RuntimeError:
-    #         self.now_line_item = None
-    #     self.now_line_item = self.scene.addLine(x, 0, x, self.tracks * 100, QPen(Qt.red, 2))
-    #     self.now_line_item.setZValue(1000)
-
-    #     # ✅ 安全地移除舊時間文字
-    #     try:
-    #         if self.now_time_label and self.now_time_label.scene():
-    #             self.scene.removeItem(self.now_time_label)
-    #     except RuntimeError:
-    #         self.now_time_label = None
-
-    #     # ➤ 新增現在時間文字
-    #     time_str = now.time().toString("HH:mm:ss")
-    #     self.now_time_label = self.scene.addText(f"TIME {time_str}")
-    #     self.now_time_label.setFont(QFont("Arial", 8, QFont.Bold))
-    #     self.now_time_label.setDefaultTextColor(Qt.red)
-    #     self.now_time_label.setPos(x - 10, -18)
-    #     self.now_time_label.setZValue(1000)
+   
     def update_now_line(self):
         now = QDateTime.currentDateTime()
         days_from_base = self.base_date.daysTo(now.date())
@@ -204,49 +156,7 @@ class ScheduleView(QGraphicsView):
         self.update_now_line()
         self.verticalScrollBar().setValue(self.verticalScrollBar().minimum())
 
-    # def draw_grid(self):
-    #     print("🎯 draw_grid encoder_names:", self.encoder_names)
-
-    #     self.scene.clear()
-    #     self.tracks = len(self.encoder_names)
-    #     self.update_scene_rect()
-    #     self.verticalScrollBar().setValue(0)
-    #     for day in range(self.days):
-    #         for hour in range(24):
-    #             x = day * self.day_width + hour * self.hour_width
-    #             # label = self.scene.addText(f"{hour:02d}")
-    #             # label.setFont(QFont("Arial", 8))
-    #             # label_rect = label.boundingRect()
-    #             # label.setPos(x - label_rect.width() / 2, -35)       
-    #             self.scene.addLine(x, 0, x, self.tracks * 100, Qt.DotLine)
-
-    #     for day in range(self.days):
-    #         x = day * self.day_width
-    #         self.scene.addRect(x, 0, self.day_width, self.tracks * 100)
-    #         # label = self.scene.addText(self.base_date.addDays(day).toString("MM/dd (ddd)"))
-    #         # label.setFont(QFont("Arial", 10, QFont.Bold))
-    #         # label.setPos(x + 2, -20)
-
-    #     for track in range(self.tracks):
-    #         y = track * 100
-    #         self.scene.addLine(0, y, self.days * self.day_width, y)
-
-    #         if track < len(self.encoder_names):
-    #             encoder_name = self.encoder_names[track]
-    #             status_label = self.encoder_status.get(encoder_name)
-    #             status_text = status_label.text() if status_label else "未知"
-    #             full_label = f"{encoder_name}\n{status_text}"
-    #         else:
-    #             full_label = f"未指定\n--"
-
-    #         label = self.scene.addText(full_label)
-    #         label.setFont(QFont("Arial", 9))
-    #         label.setPos(-95, y + self.grid_top_offset)
-
-    #     self.draw_blocks()
-    #     self.update_now_line()
-    #     self.verticalScrollBar().setValue(0)
-    #     self.verticalScrollBar().setValue(self.verticalScrollBar().minimum())
+  
 
     def update_scene_rect(self):
         self.tracks = len(self.encoder_names)
