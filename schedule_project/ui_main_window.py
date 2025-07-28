@@ -224,10 +224,11 @@ class MainWindow(QMainWindow):
         self.encoder_status_timer.timeout.connect(self.update_encoder_status_labels)
         self.encoder_status_timer.start(2000)
 
-        self.snapshot_timer = QTimer(self)
-        self.snapshot_timer.timeout.connect(self.update_all_encoder_snapshots)
-        self.snapshot_timer.start(30000)
+        # self.snapshot_timer = QTimer(self)
+        # self.snapshot_timer.timeout.connect(self.update_all_encoder_snapshots)
+        # self.snapshot_timer.start(30000)
 
+        QTimer.singleShot(3000, self.update_all_encoder_snapshots)
         self.schedule_timer = QTimer(self)
         self.schedule_timer.timeout.connect(self.schedule_manager.check_schedule)
         # self.schedule_timer.timeout.connect(self.safe_check_schedule)
@@ -254,7 +255,7 @@ class MainWindow(QMainWindow):
                         log(f"📂 自動載入之前選的檔案：{schedule_file}")
         except Exception as e:
             log(f"⚠️ config.json 載入失敗：{e}")
-
+    
     def safe_check_schedule(self):
         try:
             self.runner.check_schedule()
@@ -375,9 +376,9 @@ class MainWindow(QMainWindow):
                 log(f"❌ [Timer] 快照更新錯誤（{name}）：{e}")
 
         try:
-            executor = concurrent.futures.ThreadPoolExecutor(max_workers=4)
-            for name, label in self.encoder_preview_labels.items():
-                executor.submit(capture_and_update, name, label)
+             with concurrent.futures.ThreadPoolExecutor(max_workers=4) as executor:
+                for name, label in self.encoder_preview_labels.items():
+                    executor.submit(capture_and_update, name, label)
         except Exception as e:
             log(f"❌ [Timer] update_all_encoder_snapshots 整體錯誤：{e}")
 
@@ -642,4 +643,13 @@ class MainWindow(QMainWindow):
         
         log(f"🔁 [同步] Runner block 數量：{len(self.runner.blocks)}")
 
+    def closeEvent(self, event):
+        log("🛑 MainWindow 關閉，停止所有定時器")
         
+        if hasattr(self, "snapshot_timer"):
+            self.snapshot_timer.stop()
+
+        self.encoder_status_timer.stop()
+        self.schedule_timer.stop()
+        
+        super().closeEvent(event)
