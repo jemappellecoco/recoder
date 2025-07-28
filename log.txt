@@ -453,3 +453,914 @@ OK: Snapshot has been taken.
 [11:03:12] [INFO] 📡 Snapshot 回應：OK: Snapshot has been taken.
 [11:03:12] [INFO] [Debug] encoder_name: Bak4-1
 [11:03:12] [INFO] [Debug] snapshot_relative: preview\Bak4-1
+[11:34:16] [INFO] 📂 嘗試讀取 encoder 設定：C:\Users\coco\recoder\encoders.json
+[11:34:16] [INFO] ✅ 成功載入 encoder 設定，共 2 筆
+[11:34:16] [INFO] 🔧 MainWindow 建立中...
+[11:34:16] [INFO] ✅ Encoder 列表：['Bak4-1', 'Bak4-2']
+[11:34:16] [INFO] 🎯 draw_grid encoder_names:['Bak4-1', 'Bak4-2']
+[11:34:16] [INFO] 📂 已載入節目排程 schedule.json
+[11:34:16] [INFO] 🎯 draw_grid encoder_names:['Bak4-1', 'Bak4-2']
+[11:34:16] [INFO] 🔁 [同步] Runner block 數量：0
+[11:34:16] [INFO] 🎯 draw_grid encoder_names:['Bak4-1', 'Bak4-2']
+[11:34:17] [INFO] 📸 為 Bak4-1 拍照 ➜ E:/preview\Bak4-1.png
+[11:34:17] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[11:34:19] [INFO] ⬅️ Response:
+  
+OK: Snapshot file name has been set.
+
+
+[11:34:19] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[11:34:21] [INFO] ⬅️ Response:
+  
+OK: Snapshot has been taken.
+
+
+[11:34:21] [INFO] 📡 Snapshot 回應：OK: Snapshot has been taken.
+[11:34:21] [INFO] [Debug] encoder_name: Bak4-1
+[11:34:21] [INFO] [Debug] snapshot_relative: preview\Bak4-1
+[11:34:21] [INFO] 📸 啟動時補拍 Bak4-1 ➔ None
+[11:34:21] [INFO] 📸 為 Bak4-2 拍照 ➜ E:/preview\Bak4-2.png
+[11:34:21] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[11:34:23] [INFO] ⬅️ Response:
+  
+OK: Snapshot file name has been set.
+
+
+[11:34:23] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[11:34:26] [INFO] ⬅️ Response:
+  
+OK: Snapshot has been taken.
+
+
+[11:34:26] [INFO] 📡 Snapshot 回應：OK: Snapshot has been taken.
+[11:34:26] [INFO] [Debug] encoder_name: Bak4-2
+[11:34:26] [INFO] [Debug] snapshot_relative: preview\Bak4-2
+[11:34:26] [INFO] 📸 啟動時補拍 Bak4-2 ➔ E:/preview\Bak4-2.png
+[11:34:47] [INFO] 📸 為 Bak4-2 拍照 ➜ E:/preview\Bak4-2.png
+[11:34:47] [INFO] 📸 為 Bak4-1 拍照 ➜ E:/preview\Bak4-1.png
+[11:34:47] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[11:34:47] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[11:34:49] [INFO] ⬅️ Response:
+  
+OK: Snapshot file name has been set.
+
+
+[11:34:49] [INFO] ⬅️ Response:
+  
+OK: Snapshot file name has been set.
+
+
+[11:34:49] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[11:34:49] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[11:34:51] [INFO] ⬅️ Response:
+  
+OK: Snapshot has been taken.
+
+
+[11:34:51] [INFO] 📡 Snapshot 回應：OK: Snapshot has been taken.
+[11:34:51] [INFO] [Debug] encoder_name: Bak4-2
+[11:34:51] [INFO] [Debug] snapshot_relative: preview\Bak4-2
+[11:34:51] [INFO] ⬅️ Response:
+  
+OK: Snapshot has been taken.
+
+
+[11:34:51] [INFO] 📡 Snapshot 回應：OK: Snapshot has been taken.
+[11:34:51] [INFO] [Debug] encoder_name: Bak4-1
+[11:34:51] [INFO] [Debug] snapshot_relative: preview\Bak4-1
+[11:40:16] [INFO] 📂 嘗試讀取 encoder 設定：C:\Users\coco\recoder\encoders.json
+[11:40:16] [INFO] ✅ 成功載入 encoder 設定，共 2 筆
+[11:40:16] [INFO] 🔧 MainWindow 建立中...
+[11:40:16] [INFO] ✅ Encoder 列表：['Bak4-1', 'Bak4-2']
+[11:40:16] [INFO] 🎯 draw_grid encoder_names:['Bak4-1', 'Bak4-2']
+[11:40:16] [INFO] 📂 已載入節目排程 schedule.json
+[11:40:16] [INFO] 🎯 draw_grid encoder_names:['Bak4-1', 'Bak4-2']
+[11:40:16] [INFO] 🔁 [同步] Runner block 數量：0
+[11:40:16] [INFO] 🎯 draw_grid encoder_names:['Bak4-1', 'Bak4-2']
+[11:40:16] [INFO] ⚠️ 無法刪除舊圖片 Bak4-1 0001.png：[WinError 2] 系統找不到指定的檔案。: 'E:/preview\\Bak4-1 0001.png'
+[11:40:17] [INFO] 📸 為 Bak4-1 拍照 ➜ E:/preview\Bak4-1.png
+[11:40:17] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[11:40:19] [INFO] ⬅️ Response:
+  
+OK: Snapshot file name has been set.
+
+
+[11:40:19] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[11:40:21] [INFO] ⬅️ Response:
+  
+OK: Snapshot has been taken.
+
+
+[11:40:21] [INFO] 📡 Snapshot 回應：OK: Snapshot has been taken.
+[11:40:21] [INFO] [Debug] encoder_name: Bak4-1
+[11:40:21] [INFO] [Debug] snapshot_relative: preview\Bak4-1
+[11:40:21] [INFO] 📸 啟動時補拍 Bak4-1 ➔ None
+[11:40:21] [INFO] 📸 為 Bak4-2 拍照 ➜ E:/preview\Bak4-2.png
+[11:40:21] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[11:40:23] [INFO] ⬅️ Response:
+  
+OK: Snapshot file name has been set.
+
+
+[11:40:23] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[11:40:25] [INFO] ⬅️ Response:
+  
+OK: Snapshot has been taken.
+
+
+[11:40:25] [INFO] 📡 Snapshot 回應：OK: Snapshot has been taken.
+[11:40:25] [INFO] [Debug] encoder_name: Bak4-2
+[11:40:25] [INFO] [Debug] snapshot_relative: preview\Bak4-2
+[11:40:25] [INFO] 📸 啟動時補拍 Bak4-2 ➔ None
+[11:40:47] [INFO] 📸 為 Bak4-1 拍照 ➜ E:/preview\Bak4-1.png
+[11:40:47] [INFO] 📸 為 Bak4-2 拍照 ➜ E:/preview\Bak4-2.png
+[11:40:47] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[11:40:47] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[11:40:49] [INFO] ⬅️ Response:
+  
+OK: Snapshot file name has been set.
+
+
+[11:40:49] [INFO] ⬅️ Response:
+  
+OK: Snapshot file name has been set.
+
+
+[11:40:49] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[11:40:49] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[11:40:51] [INFO] ⬅️ Response:
+  
+OK: Snapshot has been taken.
+
+
+[11:40:51] [INFO] 📡 Snapshot 回應：OK: Snapshot has been taken.
+[11:40:51] [INFO] [Debug] encoder_name: Bak4-2
+[11:40:51] [INFO] [Debug] snapshot_relative: preview\Bak4-2
+[11:40:51] [INFO] ⬅️ Response:
+  
+OK: Snapshot has been taken.
+
+
+[11:40:51] [INFO] 📡 Snapshot 回應：OK: Snapshot has been taken.
+[11:40:51] [INFO] [Debug] encoder_name: Bak4-1
+[11:40:51] [INFO] [Debug] snapshot_relative: preview\Bak4-1
+[11:46:13] [INFO] 📂 嘗試讀取 encoder 設定：C:\Users\coco\recoder\encoders.json
+[11:46:13] [INFO] ✅ 成功載入 encoder 設定，共 2 筆
+[11:46:13] [INFO] 🔧 MainWindow 建立中...
+[11:46:13] [INFO] ✅ Encoder 列表：['Bak4-1', 'Bak4-2']
+[11:46:13] [INFO] 🎯 draw_grid encoder_names:['Bak4-1', 'Bak4-2']
+[11:46:13] [INFO] 📂 已載入節目排程 schedule.json
+[11:46:13] [INFO] 🎯 draw_grid encoder_names:['Bak4-1', 'Bak4-2']
+[11:46:13] [INFO] 🔁 [同步] Runner block 數量：0
+[11:46:13] [INFO] 🎯 draw_grid encoder_names:['Bak4-1', 'Bak4-2']
+[11:46:14] [INFO] 📸 為 Bak4-1 拍照 ➜ E:/preview\Bak4-1.png
+[11:46:14] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[11:46:16] [INFO] ⬅️ Response:
+  
+OK: Snapshot file name has been set.
+
+
+[11:46:16] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[11:46:18] [INFO] ⬅️ Response:
+  
+OK: Snapshot has been taken.
+
+
+[11:46:18] [INFO] 📡 Snapshot 回應：OK: Snapshot has been taken.
+[11:46:18] [INFO] [Debug] encoder_name: Bak4-1
+[11:46:18] [INFO] [Debug] snapshot_relative: preview\Bak4-1
+[11:46:18] [INFO] 📸 啟動時補拍 Bak4-1 ➔ None
+[11:46:19] [INFO] 📸 為 Bak4-2 拍照 ➜ E:/preview\Bak4-2.png
+[11:46:19] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[11:46:21] [INFO] ⬅️ Response:
+  
+OK: Snapshot file name has been set.
+
+
+[11:46:21] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[11:46:23] [INFO] ⬅️ Response:
+  
+OK: Snapshot has been taken.
+
+
+[11:46:23] [INFO] 📡 Snapshot 回應：OK: Snapshot has been taken.
+[11:46:23] [INFO] [Debug] encoder_name: Bak4-2
+[11:46:23] [INFO] [Debug] snapshot_relative: preview\Bak4-2
+[11:46:23] [INFO] 📸 啟動時補拍 Bak4-2 ➔ None
+[11:46:44] [INFO] 📸 為 Bak4-1 拍照 ➜ E:/preview\Bak4-1.png
+[11:46:44] [INFO] 📸 為 Bak4-2 拍照 ➜ E:/preview\Bak4-2.png
+[11:46:44] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[11:46:44] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[11:46:46] [INFO] ⬅️ Response:
+  
+OK: Snapshot file name has been set.
+
+
+[11:46:46] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[11:46:46] [INFO] ⬅️ Response:
+  
+OK: Snapshot file name has been set.
+
+
+[11:46:46] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[11:46:48] [INFO] ⬅️ Response:
+  
+OK: Snapshot has been taken.
+
+
+[11:46:48] [INFO] 📡 Snapshot 回應：OK: Snapshot has been taken.
+[11:46:48] [INFO] [Debug] encoder_name: Bak4-1
+[11:46:48] [INFO] [Debug] snapshot_relative: preview\Bak4-1
+[11:46:48] [INFO] ⬅️ Response:
+  
+OK: Snapshot has been taken.
+
+
+[11:46:48] [INFO] 📡 Snapshot 回應：OK: Snapshot has been taken.
+[11:46:48] [INFO] [Debug] encoder_name: Bak4-2
+[11:46:48] [INFO] [Debug] snapshot_relative: preview\Bak4-2
+[11:47:52] [INFO] 👋 MainWindow 已關閉
+[11:48:17] [INFO] 📂 嘗試讀取 encoder 設定：C:\Users\coco\recoder\encoders.json
+[11:48:17] [INFO] ✅ 成功載入 encoder 設定，共 2 筆
+[11:48:17] [INFO] 🔧 MainWindow 建立中...
+[11:48:17] [INFO] ✅ Encoder 列表：['Bak4-1', 'Bak4-2']
+[11:48:17] [INFO] 🎯 draw_grid encoder_names:['Bak4-1', 'Bak4-2']
+[11:48:17] [INFO] 📂 已載入節目排程 schedule.json
+[11:48:17] [INFO] 🎯 draw_grid encoder_names:['Bak4-1', 'Bak4-2']
+[11:48:17] [INFO] 🔁 [同步] Runner block 數量：0
+[11:48:17] [INFO] 🎯 draw_grid encoder_names:['Bak4-1', 'Bak4-2']
+[11:48:17] [INFO] 📸 為 Bak4-1 拍照 ➜ E:/preview\Bak4-1.png
+[11:48:17] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[11:48:19] [INFO] ⬅️ Response:
+  
+OK: Snapshot file name has been set.
+
+
+[11:48:19] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[11:48:22] [INFO] ⬅️ Response:
+  
+OK: Snapshot has been taken.
+
+
+[11:48:22] [INFO] 📡 Snapshot 回應：OK: Snapshot has been taken.
+[11:48:22] [INFO] [Debug] encoder_name: Bak4-1
+[11:48:22] [INFO] [Debug] snapshot_relative: preview\Bak4-1
+[11:48:22] [INFO] 📸 啟動時補拍 Bak4-1 ➔ None
+[11:48:22] [INFO] 📸 為 Bak4-2 拍照 ➜ E:/preview\Bak4-2.png
+[11:48:22] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[11:48:24] [INFO] ⬅️ Response:
+  
+OK: Snapshot file name has been set.
+
+
+[11:48:24] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[11:48:26] [INFO] ⬅️ Response:
+  
+OK: Snapshot has been taken.
+
+
+[11:48:26] [INFO] 📡 Snapshot 回應：OK: Snapshot has been taken.
+[11:48:26] [INFO] [Debug] encoder_name: Bak4-2
+[11:48:26] [INFO] [Debug] snapshot_relative: preview\Bak4-2
+[11:48:26] [INFO] 📸 啟動時補拍 Bak4-2 ➔ None
+[11:48:47] [INFO] 📸 為 Bak4-1 拍照 ➜ E:/preview\Bak4-1.png
+[11:48:47] [INFO] 📸 為 Bak4-2 拍照 ➜ E:/preview\Bak4-2.png
+[11:48:47] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[11:48:47] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[11:48:49] [INFO] ⬅️ Response:
+  
+OK: Snapshot file name has been set.
+
+
+[11:48:49] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[11:48:49] [INFO] ⬅️ Response:
+  
+OK: Snapshot file name has been set.
+
+
+[11:48:49] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[11:48:52] [INFO] ⬅️ Response:
+  
+OK: Snapshot has been taken.
+
+
+[11:48:52] [INFO] 📡 Snapshot 回應：OK: Snapshot has been taken.
+[11:48:52] [INFO] [Debug] encoder_name: Bak4-1
+[11:48:52] [INFO] [Debug] snapshot_relative: preview\Bak4-1
+[11:48:52] [INFO] ⬅️ Response:
+  
+OK: Snapshot has been taken.
+
+
+[11:48:52] [INFO] 📡 Snapshot 回應：OK: Snapshot has been taken.
+[11:48:52] [INFO] [Debug] encoder_name: Bak4-2
+[11:48:52] [INFO] [Debug] snapshot_relative: preview\Bak4-2
+[11:56:17] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[11:56:19] [INFO] ⬅️ Response:
+  
+OK: Bak4-1:Stopped
+
+
+[11:56:19] [INFO] ⬅️ Response: OK: Bak4-1:Stopped
+[11:56:19] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[11:56:21] [INFO] ⬅️ Response:
+  
+OK: Bak4-2:Runned
+
+
+[11:56:21] [INFO] ⬅️ Response: OK: Bak4-2:Runned
+[12:04:17] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[12:04:19] [INFO] ⬅️ Response:
+  
+OK: Bak4-1:Stopped
+
+
+[12:04:19] [INFO] ⬅️ Response: OK: Bak4-1:Stopped
+[12:04:19] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[12:04:21] [INFO] ⬅️ Response:
+  
+OK: Bak4-2:Runned
+
+
+[12:04:21] [INFO] ⬅️ Response: OK: Bak4-2:Runned
+[12:06:08] [INFO] 👋 MainWindow 已關閉
+[12:06:17] [INFO] 📂 嘗試讀取 encoder 設定：C:\Users\coco\recoder\encoders.json
+[12:06:17] [INFO] ✅ 成功載入 encoder 設定，共 2 筆
+[12:06:17] [INFO] 🔧 MainWindow 建立中...
+[12:06:17] [INFO] ✅ Encoder 列表：['Bak4-1', 'Bak4-2']
+[12:06:17] [INFO] 🎯 draw_grid encoder_names:['Bak4-1', 'Bak4-2']
+[12:06:17] [INFO] 📂 已載入節目排程 schedule.json
+[12:06:17] [INFO] 🎯 draw_grid encoder_names:['Bak4-1', 'Bak4-2']
+[12:06:17] [INFO] 🔁 [同步] Runner block 數量：0
+[12:06:17] [INFO] 🎯 draw_grid encoder_names:['Bak4-1', 'Bak4-2']
+[12:06:18] [INFO] 📸 為 Bak4-1 拍照 ➜ E:/preview\Bak4-1.png
+[12:06:18] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[12:06:20] [INFO] ⬅️ Response:
+  
+OK: Snapshot file name has been set.
+
+
+[12:06:20] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[12:06:22] [INFO] ⬅️ Response:
+  
+OK: Snapshot has been taken.
+
+
+[12:06:22] [INFO] 📡 Snapshot 回應：OK: Snapshot has been taken.
+[12:06:22] [INFO] [Debug] encoder_name: Bak4-1
+[12:06:22] [INFO] [Debug] snapshot_relative: preview\Bak4-1
+[12:06:22] [INFO] 📸 拍照指令傳送 by encoder
+[12:06:22] [INFO] 📸 啟動時補拍 Bak4-1 ➔ E:/preview\Bak4-1.png
+[12:06:22] [INFO] 📸 為 Bak4-2 拍照 ➜ E:/preview\Bak4-2.png
+[12:06:22] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[12:06:24] [INFO] ⬅️ Response:
+  
+OK: Snapshot file name has been set.
+
+
+[12:06:24] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[12:06:26] [INFO] ⬅️ Response:
+  
+OK: Snapshot has been taken.
+
+
+[12:06:26] [INFO] 📡 Snapshot 回應：OK: Snapshot has been taken.
+[12:06:26] [INFO] [Debug] encoder_name: Bak4-2
+[12:06:26] [INFO] [Debug] snapshot_relative: preview\Bak4-2
+[12:06:26] [INFO] 📸 拍照指令傳送 by encoder
+[12:06:26] [INFO] 📸 啟動時補拍 Bak4-2 ➔ E:/preview\Bak4-2.png
+[12:06:48] [INFO] 📸 為 Bak4-1 拍照 ➜ E:/preview\Bak4-1.png
+[12:06:48] [INFO] 📸 為 Bak4-2 拍照 ➜ E:/preview\Bak4-2.png
+[12:06:48] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[12:06:48] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[12:06:50] [INFO] ⬅️ Response:
+  
+OK: Snapshot file name has been set.
+
+
+[12:06:50] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[12:06:50] [INFO] ⬅️ Response:
+  
+OK: Snapshot file name has been set.
+
+
+[12:06:50] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[12:06:52] [INFO] ⬅️ Response:
+  
+OK: Snapshot has been taken.
+
+
+[12:06:52] [INFO] 📡 Snapshot 回應：OK: Snapshot has been taken.
+[12:06:52] [INFO] [Debug] encoder_name: Bak4-1
+[12:06:52] [INFO] [Debug] snapshot_relative: preview\Bak4-1
+[12:06:52] [INFO] 📸 拍照指令傳送 by encoder
+[12:06:52] [INFO] ⬅️ Response:
+  
+OK: Snapshot has been taken.
+
+
+[12:06:52] [INFO] 📡 Snapshot 回應：OK: Snapshot has been taken.
+[12:06:52] [INFO] [Debug] encoder_name: Bak4-2
+[12:06:52] [INFO] [Debug] snapshot_relative: preview\Bak4-2
+[12:06:52] [INFO] 📸 拍照指令傳送 by encoder
+[12:08:06] [INFO] 👋 MainWindow 已關閉
+[12:56:24] [INFO] 📂 嘗試讀取 encoder 設定：C:\Users\coco\recoder\encoders.json
+[12:56:24] [INFO] ✅ 成功載入 encoder 設定，共 2 筆
+[12:56:25] [INFO] 🔧 MainWindow 建立中...
+[12:56:25] [INFO] ✅ Encoder 列表：['Bak4-1', 'Bak4-2']
+[12:56:25] [INFO] 🎯 draw_grid encoder_names:['Bak4-1', 'Bak4-2']
+[12:56:25] [INFO] 📂 已載入節目排程 schedule.json
+[12:56:25] [INFO] 🎯 draw_grid encoder_names:['Bak4-1', 'Bak4-2']
+[12:56:25] [INFO] 🔁 [同步] Runner block 數量：0
+[12:56:25] [INFO] 🎯 draw_grid encoder_names:['Bak4-1', 'Bak4-2']
+[12:56:25] [INFO] 📸 為 Bak4-1 拍照 ➜ E:/preview\Bak4-1.png
+[12:56:25] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[12:56:27] [INFO] ⬅️ Response:
+  
+OK: Snapshot file name has been set.
+
+
+[12:56:28] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[12:56:30] [INFO] ⬅️ Response:
+  
+OK: Snapshot has been taken.
+
+
+[12:56:30] [INFO] 📡 Snapshot 回應：OK: Snapshot has been taken.
+[12:56:30] [INFO] [Debug] encoder_name: Bak4-1
+[12:56:30] [INFO] [Debug] snapshot_relative: preview\Bak4-1
+[12:56:30] [INFO] 📸 拍照指令傳送 by encoder
+[12:56:30] [INFO] 📸 啟動時補拍 Bak4-1 ➔ None
+[12:56:30] [INFO] 📸 為 Bak4-2 拍照 ➜ E:/preview\Bak4-2.png
+[12:56:30] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[12:56:32] [INFO] ⬅️ Response:
+  
+OK: Snapshot file name has been set.
+
+
+[12:56:32] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[12:56:34] [INFO] ⬅️ Response:
+  
+OK: Snapshot has been taken.
+
+
+[12:56:34] [INFO] 📡 Snapshot 回應：OK: Snapshot has been taken.
+[12:56:34] [INFO] [Debug] encoder_name: Bak4-2
+[12:56:34] [INFO] [Debug] snapshot_relative: preview\Bak4-2
+[12:56:34] [INFO] 📸 拍照指令傳送 by encoder
+[12:56:34] [INFO] 📸 啟動時補拍 Bak4-2 ➔ None
+[12:56:55] [INFO] 📸 為 Bak4-2 拍照 ➜ E:/preview\Bak4-2.png
+[12:56:55] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[12:56:55] [INFO] 📸 為 Bak4-1 拍照 ➜ E:/preview\Bak4-1.png
+[12:56:55] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[12:56:57] [INFO] ⬅️ Response:
+  
+OK: Snapshot file name has been set.
+
+
+[12:56:57] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[12:56:58] [INFO] ⬅️ Response:
+  
+OK: Snapshot file name has been set.
+
+
+[12:56:58] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[12:57:00] [INFO] ⬅️ Response:
+  
+OK: Snapshot has been taken.
+
+
+[12:57:00] [INFO] 📡 Snapshot 回應：OK: Snapshot has been taken.
+[12:57:00] [INFO] [Debug] encoder_name: Bak4-2
+[12:57:00] [INFO] [Debug] snapshot_relative: preview\Bak4-2
+[12:57:00] [INFO] 📸 拍照指令傳送 by encoder
+[12:57:00] [INFO] ⬅️ Response:
+  
+OK: Snapshot has been taken.
+
+
+[12:57:00] [INFO] 📡 Snapshot 回應：OK: Snapshot has been taken.
+[12:57:00] [INFO] [Debug] encoder_name: Bak4-1
+[12:57:00] [INFO] [Debug] snapshot_relative: preview\Bak4-1
+[12:57:00] [INFO] 📸 拍照指令傳送 by encoder
+[13:04:25] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[13:04:27] [INFO] ⬅️ Response:
+  
+OK: Bak4-1:Stopped
+
+
+[13:04:27] [INFO] ⬅️ Response: OK: Bak4-1:Stopped
+[13:04:27] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[13:04:29] [INFO] ⬅️ Response:
+  
+OK: Bak4-2:Stopped
+
+
+[13:04:29] [INFO] ⬅️ Response: OK: Bak4-2:Stopped
+[13:12:25] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[13:12:27] [INFO] ⬅️ Response:
+  
+OK: Bak4-1:Stopped
+
+
+[13:12:27] [INFO] ⬅️ Response: OK: Bak4-1:Stopped
+[13:12:27] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[13:12:29] [INFO] ⬅️ Response:
+  
+OK: Bak4-2:Stopped
+
+
+[13:12:29] [INFO] ⬅️ Response: OK: Bak4-2:Stopped
+[13:20:25] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[13:20:27] [INFO] ⬅️ Response:
+  
+OK: Bak4-1:Stopped
+
+
+[13:20:27] [INFO] ⬅️ Response: OK: Bak4-1:Stopped
+[13:20:27] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[13:20:29] [INFO] ⬅️ Response:
+  
+OK: Bak4-2:Stopped
+
+
+[13:20:29] [INFO] ⬅️ Response: OK: Bak4-2:Stopped
+[13:28:25] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[13:28:27] [INFO] ⬅️ Response:
+  
+OK: Bak4-1:Stopped
+
+
+[13:28:27] [INFO] ⬅️ Response: OK: Bak4-1:Stopped
+[13:28:27] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[13:28:29] [INFO] ⬅️ Response:
+  
+OK: Bak4-2:Stopped
+
+
+[13:28:29] [INFO] ⬅️ Response: OK: Bak4-2:Stopped
+[13:36:25] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[13:36:27] [INFO] ⬅️ Response:
+  
+OK: Bak4-1:Stopped
+
+
+[13:36:27] [INFO] ⬅️ Response: OK: Bak4-1:Stopped
+[13:36:27] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[13:36:29] [INFO] ⬅️ Response:
+  
+OK: Bak4-2:Stopped
+
+
+[13:36:29] [INFO] ⬅️ Response: OK: Bak4-2:Stopped
+[13:44:25] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[13:44:27] [INFO] ⬅️ Response:
+  
+OK: Bak4-1:Stopped
+
+
+[13:44:27] [INFO] ⬅️ Response: OK: Bak4-1:Stopped
+[13:44:27] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[13:44:29] [INFO] ⬅️ Response:
+  
+OK: Bak4-2:Stopped
+
+
+[13:44:29] [INFO] ⬅️ Response: OK: Bak4-2:Stopped
+[13:52:25] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[13:52:27] [INFO] ⬅️ Response:
+  
+OK: Bak4-1:Stopped
+
+
+[13:52:27] [INFO] ⬅️ Response: OK: Bak4-1:Stopped
+[13:52:27] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[13:52:29] [INFO] ⬅️ Response:
+  
+OK: Bak4-2:Runned
+
+
+[13:52:29] [INFO] ⬅️ Response: OK: Bak4-2:Runned
+[14:00:25] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[14:00:27] [INFO] ⬅️ Response:
+  
+OK: Bak4-1:Stopped
+
+
+[14:00:27] [INFO] ⬅️ Response: OK: Bak4-1:Stopped
+[14:00:27] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[14:00:29] [INFO] ⬅️ Response:
+  
+OK: Bak4-2:Stopped
+
+
+[14:00:29] [INFO] ⬅️ Response: OK: Bak4-2:Stopped
+[14:08:25] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[14:08:27] [INFO] ⬅️ Response:
+  
+OK: Bak4-1:Stopped
+
+
+[14:08:27] [INFO] ⬅️ Response: OK: Bak4-1:Stopped
+[14:08:27] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[14:08:29] [INFO] ⬅️ Response:
+  
+OK: Bak4-2:Stopped
+
+
+[14:08:29] [INFO] ⬅️ Response: OK: Bak4-2:Stopped
+[14:16:25] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[14:16:27] [INFO] ⬅️ Response:
+  
+OK: Bak4-1:Stopped
+
+
+[14:16:27] [INFO] ⬅️ Response: OK: Bak4-1:Stopped
+[14:16:27] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[14:16:29] [INFO] ⬅️ Response:
+  
+OK: Bak4-2:Stopped
+
+
+[14:16:29] [INFO] ⬅️ Response: OK: Bak4-2:Stopped
+[14:24:25] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[14:24:27] [INFO] ⬅️ Response:
+  
+OK: Bak4-1:Stopped
+
+
+[14:24:27] [INFO] ⬅️ Response: OK: Bak4-1:Stopped
+[14:24:27] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[14:24:29] [INFO] ⬅️ Response:
+  
+OK: Bak4-2:Stopped
+
+
+[14:24:29] [INFO] ⬅️ Response: OK: Bak4-2:Stopped
+[14:32:25] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[14:32:27] [INFO] ⬅️ Response:
+  
+OK: Bak4-1:Stopped
+
+
+[14:32:27] [INFO] ⬅️ Response: OK: Bak4-1:Stopped
+[14:32:27] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[14:32:29] [INFO] ⬅️ Response:
+  
+OK: Bak4-2:Stopped
+
+
+[14:32:29] [INFO] ⬅️ Response: OK: Bak4-2:Stopped
+[14:40:25] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[14:40:27] [INFO] ⬅️ Response:
+  
+OK: Bak4-1:Stopped
+
+
+[14:40:27] [INFO] ⬅️ Response: OK: Bak4-1:Stopped
+[14:40:27] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[14:40:29] [INFO] ⬅️ Response:
+  
+OK: Bak4-2:Stopped
+
+
+[14:40:29] [INFO] ⬅️ Response: OK: Bak4-2:Stopped
+[14:48:25] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[14:48:27] [INFO] ⬅️ Response:
+  
+OK: Bak4-1:Stopped
+
+
+[14:48:27] [INFO] ⬅️ Response: OK: Bak4-1:Stopped
+[14:48:27] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[14:48:29] [INFO] ⬅️ Response:
+  
+OK: Bak4-2:Runned
+
+
+[14:48:29] [INFO] ⬅️ Response: OK: Bak4-2:Runned
+[14:56:25] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[14:56:27] [INFO] ⬅️ Response:
+  
+OK: Bak4-1:Stopped
+
+
+[14:56:27] [INFO] ⬅️ Response: OK: Bak4-1:Stopped
+[14:56:27] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[14:56:29] [INFO] ⬅️ Response:
+  
+OK: Bak4-2:Stopped
+
+
+[14:56:29] [INFO] ⬅️ Response: OK: Bak4-2:Stopped
+[15:04:25] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[15:04:27] [INFO] ⬅️ Response:
+  
+OK: Bak4-1:Stopped
+
+
+[15:04:27] [INFO] ⬅️ Response: OK: Bak4-1:Stopped
+[15:04:27] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[15:04:29] [INFO] ⬅️ Response:
+  
+OK: Bak4-2:Stopped
+
+
+[15:04:29] [INFO] ⬅️ Response: OK: Bak4-2:Stopped
+[15:12:25] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[15:12:27] [INFO] ⬅️ Response:
+  
+OK: Bak4-1:Stopped
+
+
+[15:12:27] [INFO] ⬅️ Response: OK: Bak4-1:Stopped
+[15:12:27] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[15:12:29] [INFO] ⬅️ Response:
+  
+OK: Bak4-2:Stopped
+
+
+[15:12:29] [INFO] ⬅️ Response: OK: Bak4-2:Stopped
+[15:20:25] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[15:20:27] [INFO] ⬅️ Response:
+  
+OK: Bak4-1:Stopped
+
+
+[15:20:27] [INFO] ⬅️ Response: OK: Bak4-1:Stopped
+[15:20:27] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[15:20:29] [INFO] ⬅️ Response:
+  
+OK: Bak4-2:Stopped
+
+
+[15:20:29] [INFO] ⬅️ Response: OK: Bak4-2:Stopped
+[15:28:25] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[15:28:27] [INFO] ⬅️ Response:
+  
+OK: Bak4-1:Stopped
+
+
+[15:28:27] [INFO] ⬅️ Response: OK: Bak4-1:Stopped
+[15:28:27] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[15:28:29] [INFO] ⬅️ Response:
+  
+OK: Bak4-2:Stopped
+
+
+[15:28:29] [INFO] ⬅️ Response: OK: Bak4-2:Stopped
+[15:36:25] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[15:36:27] [INFO] ⬅️ Response:
+  
+OK: Bak4-1:Stopped
+
+
+[15:36:27] [INFO] ⬅️ Response: OK: Bak4-1:Stopped
+[15:36:27] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[15:36:29] [INFO] ⬅️ Response:
+  
+OK: Bak4-2:Stopped
+
+
+[15:36:29] [INFO] ⬅️ Response: OK: Bak4-2:Stopped
+[15:44:25] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[15:44:27] [INFO] ⬅️ Response:
+  
+OK: Bak4-1:Stopped
+
+
+[15:44:27] [INFO] ⬅️ Response: OK: Bak4-1:Stopped
+[15:44:27] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[15:44:29] [INFO] ⬅️ Response:
+  
+OK: Bak4-2:Stopped
+
+
+[15:44:29] [INFO] ⬅️ Response: OK: Bak4-2:Stopped
+[15:52:25] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[15:52:27] [INFO] ⬅️ Response:
+  
+OK: Bak4-1:Stopped
+
+
+[15:52:27] [INFO] ⬅️ Response: OK: Bak4-1:Stopped
+[15:52:27] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[15:52:29] [INFO] ⬅️ Response:
+  
+OK: Bak4-2:Stopped
+
+
+[15:52:29] [INFO] ⬅️ Response: OK: Bak4-2:Stopped
+[16:00:25] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[16:00:27] [INFO] ⬅️ Response:
+  
+OK: Bak4-1:Stopped
+
+
+[16:00:27] [INFO] ⬅️ Response: OK: Bak4-1:Stopped
+[16:00:27] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[16:00:29] [INFO] ⬅️ Response:
+  
+OK: Bak4-2:Stopped
+
+
+[16:00:29] [INFO] ⬅️ Response: OK: Bak4-2:Stopped
+[16:08:25] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[16:08:27] [INFO] ⬅️ Response:
+  
+OK: Bak4-1:Stopped
+
+
+[16:08:27] [INFO] ⬅️ Response: OK: Bak4-1:Stopped
+[16:08:27] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[16:08:29] [INFO] ⬅️ Response:
+  
+OK: Bak4-2:Stopped
+
+
+[16:08:29] [INFO] ⬅️ Response: OK: Bak4-2:Stopped
+[16:16:25] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[16:16:27] [INFO] ⬅️ Response:
+  
+OK: Bak4-1:Stopped
+
+
+[16:16:27] [INFO] ⬅️ Response: OK: Bak4-1:Stopped
+[16:16:27] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[16:16:29] [INFO] ⬅️ Response:
+  
+OK: Bak4-2:Stopped
+
+
+[16:16:29] [INFO] ⬅️ Response: OK: Bak4-2:Stopped
+[16:24:25] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[16:24:27] [INFO] ⬅️ Response:
+  
+OK: Bak4-1:Stopped
+
+
+[16:24:27] [INFO] ⬅️ Response: OK: Bak4-1:Stopped
+[16:24:27] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[16:24:29] [INFO] ⬅️ Response:
+  
+OK: Bak4-2:Stopped
+
+
+[16:24:29] [INFO] ⬅️ Response: OK: Bak4-2:Stopped
+[16:32:25] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[16:32:27] [INFO] ⬅️ Response:
+  
+OK: Bak4-1:Stopped
+
+
+[16:32:27] [INFO] ⬅️ Response: OK: Bak4-1:Stopped
+[16:32:27] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[16:32:29] [INFO] ⬅️ Response:
+  
+OK: Bak4-2:Stopped
+
+
+[16:32:29] [INFO] ⬅️ Response: OK: Bak4-2:Stopped
+[16:40:25] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[16:40:27] [INFO] ⬅️ Response:
+  
+OK: Bak4-1:Stopped
+
+
+[16:40:27] [INFO] ⬅️ Response: OK: Bak4-1:Stopped
+[16:40:27] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[16:40:29] [INFO] ⬅️ Response:
+  
+OK: Bak4-2:Stopped
+
+
+[16:40:29] [INFO] ⬅️ Response: OK: Bak4-2:Stopped
+[16:48:25] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[16:48:27] [INFO] ⬅️ Response:
+  
+OK: Bak4-1:Stopped
+
+
+[16:48:27] [INFO] ⬅️ Response: OK: Bak4-1:Stopped
+[16:48:27] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[16:48:29] [INFO] ⬅️ Response:
+  
+OK: Bak4-2:Stopped
+
+
+[16:48:29] [INFO] ⬅️ Response: OK: Bak4-2:Stopped
+[16:56:25] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[16:56:27] [INFO] ⬅️ Response:
+  
+OK: Bak4-1:Stopped
+
+
+[16:56:27] [INFO] ⬅️ Response: OK: Bak4-1:Stopped
+[16:56:27] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[16:56:29] [INFO] ⬅️ Response:
+  
+OK: Bak4-2:Stopped
+
+
+[16:56:29] [INFO] ⬅️ Response: OK: Bak4-2:Stopped
+[17:04:18] [INFO] 👋 MainWindow 已關閉

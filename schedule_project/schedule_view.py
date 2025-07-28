@@ -38,7 +38,7 @@ class ScheduleView(QGraphicsView):
         self.now_timer.start(1000)  # 每秒更新
         self.now_line_item = None
         self.now_time_label = None
-        self.global_timer = QTimer()
+        self.global_timer = QTimer(self)
         self.global_timer.timeout.connect(self.update_visible_blocks_only)
         self.global_timer.start(30000)
         self.setHorizontalScrollBarPolicy(Qt.ScrollBarAsNeeded)
@@ -439,3 +439,8 @@ class ScheduleView(QGraphicsView):
             log(f"🕘 無 {filename} 檔案，自動跳過載入。")
 
 
+    def stop_timers(self):
+            if hasattr(self, "now_timer"):
+                self.now_timer.stop()
+            if hasattr(self, "global_timer"):
+                self.global_timer.stop()

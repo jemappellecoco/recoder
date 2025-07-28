@@ -29,7 +29,7 @@ class MainWindow(QMainWindow):
     def __init__(self):
         log("🔧 MainWindow 建立中...")  # ✅ 放在最上面
         super().__init__()
-
+        self.is_closing = False
         # === 基礎設定 ===
         self.path_manager = PathManager()
         self.record_root = self.path_manager.record_root
@@ -224,11 +224,12 @@ class MainWindow(QMainWindow):
         self.encoder_status_timer.timeout.connect(self.update_encoder_status_labels)
         self.encoder_status_timer.start(2000)
 
-        # self.snapshot_timer = QTimer(self)
-        # self.snapshot_timer.timeout.connect(self.update_all_encoder_snapshots)
-        # self.snapshot_timer.start(30000)
+        self.snapshot_timer = QTimer(self)
+        self.snapshot_timer.setSingleShot(True)
+        self.snapshot_timer.timeout.connect(self.update_all_encoder_snapshots)
+        self.snapshot_timer.start(30000)
 
-        QTimer.singleShot(3000, self.update_all_encoder_snapshots)
+        # QTimer.singleShot(3000, self.update_all_encoder_snapshots)
         self.schedule_timer = QTimer(self)
         self.schedule_timer.timeout.connect(self.schedule_manager.check_schedule)
         # self.schedule_timer.timeout.connect(self.safe_check_schedule)
@@ -358,6 +359,9 @@ class MainWindow(QMainWindow):
             
             
     def update_all_encoder_snapshots(self):
+        if getattr(self, "is_closing", False):
+            log("🛑 UI 正在關閉，取消 snapshot 拍攝")
+            return
         preview_dir = os.path.join(self.record_root, "preview")
 
         def capture_and_update(name, label):
@@ -645,6 +649,7 @@ class MainWindow(QMainWindow):
         log(f"🔁 [同步] Runner block 數量：{len(self.runner.blocks)}")
 
     def closeEvent(self, event):
+        self.is_closing = True
         if hasattr(self, "encoder_status_timer"):
             self.encoder_status_timer.stop()
         if hasattr(self, "snapshot_timer"):
@@ -652,5 +657,8 @@ class MainWindow(QMainWindow):
         if hasattr(self, "schedule_timer"):
             self.schedule_timer.stop()
         if hasattr(self, "runner"):
-            self.runner.stop_timers()
+            self.runner.stop_timers()  # ✅ 要讓 runner 自己停掉自己的 timer
+        if hasattr(self, "view"):
+                self.view.stop_timers()
         super().closeEvent(event)
+        log("👋 MainWindow 已關閉")

@@ -74,7 +74,7 @@ def take_snapshot_by_encoder(encoder_name, snapshot_root="E:/"):
         log(f"📡 Snapshot 回應：{res}")
         log(f"[Debug] encoder_name: {encoder_name}")
         log(f"[Debug] snapshot_relative: {snapshot_relative}")
-
+        log(f"📸 拍照指令傳送 by encoder")
         return snapshot_full if os.path.exists(snapshot_full) else None
 
     except Exception as e:

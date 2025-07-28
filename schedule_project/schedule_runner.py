@@ -151,8 +151,13 @@ class ScheduleRunner(QObject):
         # ✅ 只在第一次啟動時拍照，避免 check_schedule 觸發多次
         if block_id and block_id not in self.already_started:
             self.already_started.add(block_id)
-            take_snapshot_from_block(block, self.encoder_names)
 
+        # ✅ 加這一段，安全地避免 UI 關閉後仍觸發 snapshot
+            window = QApplication.instance().activeWindow()
+            if window and not getattr(window, "is_closing", False):
+                take_snapshot_from_block(block, self.encoder_names)
+            else:
+                log(f"🛑 無視拍照：UI 已關閉或找不到 activeWindow")
         if block:
             img_dir = os.path.join(self.record_root, block.start_date.toString("MM.dd.yyyy"), "img")
             block.load_preview_images(img_dir)     
