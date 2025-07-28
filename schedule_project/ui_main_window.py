@@ -644,12 +644,9 @@ class MainWindow(QMainWindow):
         log(f"🔁 [同步] Runner block 數量：{len(self.runner.blocks)}")
 
     def closeEvent(self, event):
-        log("🛑 MainWindow 關閉，停止所有定時器")
-        
-        if hasattr(self, "snapshot_timer"):
-            self.snapshot_timer.stop()
-
         self.encoder_status_timer.stop()
+        self.snapshot_timer.stop()
         self.schedule_timer.stop()
-        
+        if hasattr(self, "runner"):
+            self.runner.stop_timers()
         super().closeEvent(event)

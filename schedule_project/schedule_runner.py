@@ -245,3 +245,8 @@ class ScheduleRunner(QObject):
             if block.block_id == block_id:
                 return block
         return None
+    
+
+    def stop_timers(self):
+        self.timer.stop()
+        self.status_timer.stop()
