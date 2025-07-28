@@ -616,3 +616,710 @@ OK: Snapshot file name has been set.
 OK: Snapshot file name has been set.
 
 
+[09:14:08] [INFO] 📂 嘗試讀取 encoder 設定：C:\Users\coco\recoder\schedule_project\encoders.json
+[09:14:08] [INFO] ✅ 成功載入 encoder 設定，共 2 筆
+[09:14:08] [INFO] 🔧 MainWindow 建立中...
+[09:14:08] [INFO] ✅ Encoder 列表：['Bak4-1', 'Bak4-2']
+[09:14:08] [INFO] 🎯 draw_grid encoder_names:['Bak4-1', 'Bak4-2']
+[09:14:08] [INFO] 📂 已載入節目排程 C:/Users/coco/Documents/schedule_saved/schedule.json
+[09:14:08] [INFO] 🎯 draw_grid encoder_names:['Bak4-1', 'Bak4-2']
+[09:14:08] [INFO] 🔁 [同步] Runner block 數量：0
+[09:14:08] [INFO] 🎯 draw_grid encoder_names:['Bak4-1', 'Bak4-2']
+[09:14:09] [INFO] 📸 為 Bak4-1 拍照 ➜ E:/preview\Bak4-1.png
+[09:14:09] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[09:14:11] [INFO] ⬅️ Response:
+  
+OK: Snapshot file name has been set.
+
+
+[09:14:11] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[09:14:13] [INFO] ⬅️ Response:
+  
+OK: Snapshot has been taken.
+
+
+[09:14:13] [INFO] 📡 Snapshot 回應：OK: Snapshot has been taken.
+[09:14:13] [INFO] [Debug] encoder_name: Bak4-1
+[09:14:13] [INFO] [Debug] snapshot_relative: preview\Bak4-1
+[09:14:13] [INFO] 📸 啟動時補拍 Bak4-1 ➔ None
+[09:14:13] [INFO] ⚠️ 無法刪除舊圖片 Bak4-2 0003.png：[WinError 2] 系統找不到指定的檔案。: 'E:/preview\\Bak4-2 0003.png'
+[09:14:13] [INFO] 📸 為 Bak4-2 拍照 ➜ E:/preview\Bak4-2.png
+[09:14:13] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[09:14:15] [INFO] ⬅️ Response:
+  
+OK: Snapshot file name has been set.
+
+
+[09:14:15] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[09:14:17] [INFO] ⬅️ Response:
+  
+OK: Snapshot has been taken.
+
+
+[09:14:17] [INFO] 📡 Snapshot 回應：OK: Snapshot has been taken.
+[09:14:17] [INFO] [Debug] encoder_name: Bak4-2
+[09:14:17] [INFO] [Debug] snapshot_relative: preview\Bak4-2
+[09:14:17] [INFO] 📸 啟動時補拍 Bak4-2 ➔ None
+[09:14:17] [INFO] 🎯 draw_grid encoder_names:['Bak4-1', 'Bak4-2']
+[09:14:17] [INFO] 📂 已載入節目排程 C:/Users/coco/Documents/schedule_saved/schedule.json
+[09:14:17] [INFO] 📂 自動載入之前選的檔案：C:/Users/coco/Documents/schedule_saved/schedule.json
+[09:14:39] [INFO] 📸 為 Bak4-2 拍照 ➜ E:/preview\Bak4-2.png
+[09:14:39] [INFO] 📸 為 Bak4-1 拍照 ➜ E:/preview\Bak4-1.png
+[09:14:39] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[09:14:39] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[09:14:41] [INFO] ⬅️ Response:
+  
+OK: Snapshot file name has been set.
+
+
+[09:14:41] [INFO] ⬅️ Response:
+  
+OK: Snapshot file name has been set.
+
+
+[09:14:41] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[09:14:41] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[09:14:43] [INFO] ⬅️ Response:
+  
+OK: Snapshot has been taken.
+
+
+[09:14:43] [INFO] 📡 Snapshot 回應：OK: Snapshot has been taken.
+[09:14:43] [INFO] [Debug] encoder_name: Bak4-2
+[09:14:43] [INFO] [Debug] snapshot_relative: preview\Bak4-2
+[09:14:43] [INFO] ⬅️ Response:
+  
+OK: Snapshot has been taken.
+
+
+[09:14:43] [INFO] 📡 Snapshot 回應：OK: Snapshot has been taken.
+[09:14:43] [INFO] [Debug] encoder_name: Bak4-1
+[09:14:43] [INFO] [Debug] snapshot_relative: preview\Bak4-1
+[09:23:04] [INFO] 📂 嘗試讀取 encoder 設定：C:\Users\coco\recoder\schedule_project\encoders.json
+[09:23:04] [INFO] ✅ 成功載入 encoder 設定，共 2 筆
+[09:23:04] [INFO] 🔧 MainWindow 建立中...
+[09:23:04] [INFO] ✅ Encoder 列表：['Bak4-1', 'Bak4-2']
+[09:23:04] [INFO] 🎯 draw_grid encoder_names:['Bak4-1', 'Bak4-2']
+[09:23:04] [INFO] 📂 已載入節目排程 C:/Users/coco/Documents/schedule_saved/schedule.json
+[09:23:04] [INFO] 🎯 draw_grid encoder_names:['Bak4-1', 'Bak4-2']
+[09:23:04] [INFO] 🔁 [同步] Runner block 數量：0
+[09:23:04] [INFO] 🎯 draw_grid encoder_names:['Bak4-1', 'Bak4-2']
+[09:23:04] [INFO] 📸 為 Bak4-1 拍照 ➜ E:/preview\Bak4-1_092304.png
+[09:23:04] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[09:23:06] [INFO] ⬅️ Response:
+  
+OK: Snapshot file name has been set.
+
+
+[09:23:06] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[09:23:08] [INFO] ⬅️ Response:
+  
+OK: Snapshot has been taken.
+
+
+[09:23:08] [INFO] 📡 Snapshot 回應：OK: Snapshot has been taken.
+[09:23:08] [INFO] [Debug] encoder_name: Bak4-1
+[09:23:08] [INFO] [Debug] snapshot_relative: preview\Bak4-1_092304
+[09:23:08] [INFO] 📸 啟動時補拍 Bak4-1 ➔ None
+[09:23:09] [INFO] 📸 為 Bak4-2 拍照 ➜ E:/preview\Bak4-2_092308.png
+[09:23:09] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[09:23:11] [INFO] ⬅️ Response:
+  
+OK: Snapshot file name has been set.
+
+
+[09:23:11] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[09:23:13] [INFO] ⬅️ Response:
+  
+OK: Snapshot has been taken.
+
+
+[09:23:13] [INFO] 📡 Snapshot 回應：OK: Snapshot has been taken.
+[09:23:13] [INFO] [Debug] encoder_name: Bak4-2
+[09:23:13] [INFO] [Debug] snapshot_relative: preview\Bak4-2_092308
+[09:23:13] [INFO] 📸 啟動時補拍 Bak4-2 ➔ None
+[09:23:13] [INFO] 🎯 draw_grid encoder_names:['Bak4-1', 'Bak4-2']
+[09:23:13] [INFO] 📂 已載入節目排程 C:/Users/coco/Documents/schedule_saved/schedule.json
+[09:23:13] [INFO] 📂 自動載入之前選的檔案：C:/Users/coco/Documents/schedule_saved/schedule.json
+[09:23:34] [INFO] 📸 為 Bak4-2 拍照 ➜ E:/preview\Bak4-2_092334.png
+[09:23:34] [INFO] 📸 為 Bak4-1 拍照 ➜ E:/preview\Bak4-1_092334.png
+[09:23:34] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[09:23:34] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[09:23:36] [INFO] ⬅️ Response:
+  
+OK: Snapshot file name has been set.
+
+
+[09:23:36] [INFO] ⬅️ Response:
+  
+OK: Snapshot file name has been set.
+
+
+[09:23:36] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[09:23:36] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[09:23:38] [INFO] ⬅️ Response:
+  
+OK: Snapshot has been taken.
+
+
+[09:23:38] [INFO] 📡 Snapshot 回應：OK: Snapshot has been taken.
+[09:23:38] [INFO] [Debug] encoder_name: Bak4-1
+[09:23:38] [INFO] [Debug] snapshot_relative: preview\Bak4-1_092334
+[09:23:39] [INFO] ⬅️ Response:
+  
+OK: Snapshot has been taken.
+
+
+[09:23:39] [INFO] 📡 Snapshot 回應：OK: Snapshot has been taken.
+[09:23:39] [INFO] [Debug] encoder_name: Bak4-2
+[09:23:39] [INFO] [Debug] snapshot_relative: preview\Bak4-2_092334
+[09:24:04] [INFO] 📸 為 Bak4-2 拍照 ➜ E:/preview\Bak4-2_092404.png
+[09:24:04] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[09:24:04] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[09:24:07] [INFO] ⬅️ Response:
+  
+OK: Snapshot file name has been set.
+
+
+[09:24:07] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[09:24:07] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[09:24:09] [INFO] ⬅️ Response:
+  
+OK: Snapshot has been taken.
+
+
+[09:24:09] [INFO] 📡 Snapshot 回應：OK: Snapshot has been taken.
+[09:24:09] [INFO] [Debug] encoder_name: Bak4-2
+[09:24:09] [INFO] [Debug] snapshot_relative: preview\Bak4-2_092404
+[09:24:09] [INFO] ⬅️ Response:
+  
+OK: Snapshot has been taken.
+
+
+[09:24:09] [INFO] 📡 Snapshot 回應：OK: Snapshot has been taken.
+[09:24:09] [INFO] [Debug] encoder_name: Bak4-1
+[09:24:09] [INFO] [Debug] snapshot_relative: preview\Bak4-1_092404
+[09:24:34] [INFO] 📸 為 Bak4-2 拍照 ➜ E:/preview\Bak4-2_092434.png
+[09:24:34] [INFO] 📸 為 Bak4-1 拍照 ➜ E:/preview\Bak4-1_092434.png
+[09:24:34] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[09:24:34] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[09:24:36] [INFO] ⬅️ Response:
+  
+OK: Snapshot file name has been set.
+
+
+[09:24:54] [INFO] 📂 嘗試讀取 encoder 設定：C:\Users\coco\recoder\schedule_project\encoders.json
+[09:24:54] [INFO] ✅ 成功載入 encoder 設定，共 2 筆
+[09:24:54] [INFO] 🔧 MainWindow 建立中...
+[09:24:54] [INFO] ✅ Encoder 列表：['Bak4-1', 'Bak4-2']
+[09:24:54] [INFO] 🎯 draw_grid encoder_names:['Bak4-1', 'Bak4-2']
+[09:24:54] [INFO] 📂 已載入節目排程 C:/Users/coco/Documents/schedule_saved/schedule.json
+[09:24:54] [INFO] 🎯 draw_grid encoder_names:['Bak4-1', 'Bak4-2']
+[09:24:54] [INFO] 🔁 [同步] Runner block 數量：0
+[09:24:54] [INFO] 🎯 draw_grid encoder_names:['Bak4-1', 'Bak4-2']
+[09:24:54] [INFO] ⚠️ 無法刪除舊圖片 Bak4-1_092434 0002.png：[WinError 2] 系統找不到指定的檔案。: 'E:/preview\\Bak4-1_092434 0002.png'
+[09:24:54] [INFO] ⚠️ 無法刪除舊圖片 Bak4-1_092434 0003.png：[WinError 2] 系統找不到指定的檔案。: 'E:/preview\\Bak4-1_092434 0003.png'
+[09:24:55] [INFO] 📸 為 Bak4-1 拍照 ➜ E:/preview\Bak4-1.png
+[09:24:55] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[09:24:57] [INFO] ⬅️ Response:
+  
+OK: Snapshot file name has been set.
+
+
+[09:24:57] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[09:24:59] [INFO] ⬅️ Response:
+  
+OK: Snapshot has been taken.
+
+
+[09:24:59] [INFO] 📡 Snapshot 回應：OK: Snapshot has been taken.
+[09:24:59] [INFO] [Debug] encoder_name: Bak4-1
+[09:24:59] [INFO] [Debug] snapshot_relative: preview\Bak4-1
+[09:24:59] [INFO] 📸 啟動時補拍 Bak4-1 ➔ E:/preview\Bak4-1.png
+[09:24:59] [INFO] 📸 為 Bak4-2 拍照 ➜ E:/preview\Bak4-2.png
+[09:24:59] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[09:25:01] [INFO] ⬅️ Response:
+  
+OK: Snapshot file name has been set.
+
+
+[09:25:01] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[09:25:04] [INFO] ⬅️ Response:
+  
+OK: Snapshot has been taken.
+
+
+[09:25:04] [INFO] 📡 Snapshot 回應：OK: Snapshot has been taken.
+[09:25:04] [INFO] [Debug] encoder_name: Bak4-2
+[09:25:04] [INFO] [Debug] snapshot_relative: preview\Bak4-2
+[09:25:04] [INFO] 📸 啟動時補拍 Bak4-2 ➔ None
+[09:25:04] [INFO] 🎯 draw_grid encoder_names:['Bak4-1', 'Bak4-2']
+[09:25:04] [INFO] 📂 已載入節目排程 C:/Users/coco/Documents/schedule_saved/schedule.json
+[09:25:04] [INFO] 📂 自動載入之前選的檔案：C:/Users/coco/Documents/schedule_saved/schedule.json
+[09:25:25] [INFO] 📸 為 Bak4-1 拍照 ➜ E:/preview\Bak4-1.png
+[09:25:25] [INFO] 📸 為 Bak4-2 拍照 ➜ E:/preview\Bak4-2.png
+[09:25:25] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[09:25:25] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[09:25:27] [INFO] ⬅️ Response:
+  
+OK: Snapshot file name has been set.
+
+
+[09:25:27] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[09:25:27] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[09:25:29] [INFO] ✅ 呼叫 add_time_block
+[09:25:29] [INFO] ✅ 已加入 block: 111
+[09:25:29] [INFO] ✅ 已儲存節目排程：C:/Users/coco/Documents/schedule_saved/schedule.json
+[09:25:29] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[09:25:29] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[09:25:29] [INFO] ⬅️ Response:
+  
+OK: Snapshot has been taken.
+
+
+[09:25:29] [INFO] 📡 Snapshot 回應：OK: Snapshot has been taken.
+[09:25:29] [INFO] [Debug] encoder_name: Bak4-1
+[09:25:29] [INFO] [Debug] snapshot_relative: preview\Bak4-1
+[09:25:29] [INFO] ⬅️ Response:
+  
+OK: Snapshot has been taken.
+
+
+[09:25:29] [INFO] 📡 Snapshot 回應：OK: Snapshot has been taken.
+[09:25:29] [INFO] [Debug] encoder_name: Bak4-2
+[09:25:29] [INFO] [Debug] snapshot_relative: preview\Bak4-2
+[09:25:31] [INFO] ⬅️ Response:
+  
+OK: New output file: Z:\07.28.2025\0728_111.mxf
+
+
+[09:25:31] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[09:25:33] [INFO] ⬅️ Response:
+  
+OK: Profile has been started successfully.
+
+
+[09:25:33] [INFO] 📸 拍照中 - block: 111 / encoder: Bak4-1
+[09:25:33] [INFO] 📂 儲存位置: E:/07.28.2025\img\cca035d9-79f9-4bbf-b906-669feb867e24.png
+[09:25:33] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[09:25:35] [INFO] ⬅️ Response:
+  
+OK: Snapshot file name has been set.
+
+
+[09:25:35] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[09:25:37] [INFO] ⬅️ Response:
+  
+OK: Snapshot has been taken.
+
+
+[09:25:37] [INFO] 📡 SnapShot 指令回應: OK: Snapshot has been taken.
+[09:25:37] [INFO] ⚠️ 檔案未生成，請檢查路徑或權限：E:/07.28.2025\img\cca035d9-79f9-4bbf-b906-669feb867e24.png
+[09:25:37] [INFO] 🎯 draw_grid encoder_names:['Bak4-1', 'Bak4-2']
+[09:25:54] [INFO] 🔍 scene item count: 186
+[09:25:54] [INFO] 🖼️ 圖片放在右邊：E:/07.28.2025\img\cca035d9-79f9-4bbf-b906-669feb867e24.png
+[09:25:55] [INFO] 📸 為 Bak4-1 拍照 ➜ E:/preview\Bak4-1.png
+[09:25:55] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[09:25:55] [INFO] 📸 為 Bak4-2 拍照 ➜ E:/preview\Bak4-2.png
+[09:25:55] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[09:25:57] [INFO] ⬅️ Response:
+  
+OK: Snapshot file name has been set.
+
+
+[09:25:57] [INFO] ⬅️ Response:
+  
+OK: Snapshot file name has been set.
+
+
+[09:25:57] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[09:25:57] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[09:25:59] [INFO] ⬅️ Response:
+  
+OK: Snapshot has been taken.
+
+
+[09:25:59] [INFO] 📡 Snapshot 回應：OK: Snapshot has been taken.
+[09:25:59] [INFO] [Debug] encoder_name: Bak4-1
+[09:25:59] [INFO] [Debug] snapshot_relative: preview\Bak4-1
+[09:25:59] [INFO] ⬅️ Response:
+  
+OK: Snapshot has been taken.
+
+
+[09:25:59] [INFO] 📡 Snapshot 回應：OK: Snapshot has been taken.
+[09:25:59] [INFO] [Debug] encoder_name: Bak4-2
+[09:25:59] [INFO] [Debug] snapshot_relative: preview\Bak4-2
+[09:26:25] [INFO] 📸 為 Bak4-1 拍照 ➜ E:/preview\Bak4-1.png
+[09:26:25] [INFO] 📸 為 Bak4-2 拍照 ➜ E:/preview\Bak4-2.png
+[09:26:25] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[09:26:25] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[09:26:27] [INFO] ⬅️ Response:
+  
+OK: Snapshot file name has been set.
+
+
+[09:26:27] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[09:26:27] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[09:26:29] [INFO] ⬅️ Response:
+  
+OK: Snapshot has been taken.
+
+
+[09:26:29] [INFO] 📡 Snapshot 回應：OK: Snapshot has been taken.
+[09:26:29] [INFO] [Debug] encoder_name: Bak4-2
+[09:26:29] [INFO] [Debug] snapshot_relative: preview\Bak4-2
+[09:26:29] [INFO] ⬅️ Response:
+  
+OK: Snapshot has been taken.
+
+
+[09:26:29] [INFO] 📡 Snapshot 回應：OK: Snapshot has been taken.
+[09:26:29] [INFO] [Debug] encoder_name: Bak4-1
+[09:26:29] [INFO] [Debug] snapshot_relative: preview\Bak4-1
+[09:26:55] [INFO] 📸 為 Bak4-1 拍照 ➜ E:/preview\Bak4-1.png
+[09:26:55] [INFO] 📸 為 Bak4-2 拍照 ➜ E:/preview\Bak4-2.png
+[09:26:55] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[09:26:55] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[09:26:57] [INFO] ⬅️ Response:
+  
+OK: Snapshot file name has been set.
+
+
+[09:26:57] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[09:26:57] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[09:26:59] [INFO] ⬅️ Response:
+  
+OK: Snapshot has been taken.
+
+
+[09:26:59] [INFO] 📡 Snapshot 回應：OK: Snapshot has been taken.
+[09:26:59] [INFO] [Debug] encoder_name: Bak4-2
+[09:26:59] [INFO] [Debug] snapshot_relative: preview\Bak4-2
+[09:26:59] [INFO] ⬅️ Response:
+  
+OK: Snapshot has been taken.
+
+
+[09:26:59] [INFO] 📡 Snapshot 回應：OK: Snapshot has been taken.
+[09:26:59] [INFO] [Debug] encoder_name: Bak4-1
+[09:26:59] [INFO] [Debug] snapshot_relative: preview\Bak4-1
+[09:27:15] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[09:27:18] [INFO] ⬅️ Response:
+  
+OK: Profile has been stopped successfully.
+
+
+[09:27:18] [INFO] ✅ 已儲存節目排程：C:/Users/coco/Documents/schedule_saved/schedule.json
+[09:27:18] [INFO] ✅ 已儲存節目排程：C:/Users/coco/Documents/schedule_saved/schedule.json
+[09:27:18] [INFO] 🎯 draw_grid encoder_names:['Bak4-1', 'Bak4-2']
+[09:27:18] [INFO] 🔍 scene item count: 184
+[09:27:18] [INFO] 🖼️ 圖片放在右邊：E:/07.28.2025\img\cca035d9-79f9-4bbf-b906-669feb867e24.png
+[09:27:18] [INFO] 🔁 [同步] Runner block 數量：1
+[09:27:25] [INFO] 📸 為 Bak4-2 拍照 ➜ E:/preview\Bak4-2.png
+[09:27:25] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[09:27:25] [INFO] 📸 為 Bak4-1 拍照 ➜ E:/preview\Bak4-1.png
+[09:27:25] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[09:27:25] [INFO] ⛔ 已開始：左側不能拖動（111）
+[09:27:27] [INFO] ⬅️ Response:
+  
+OK: Snapshot file name has been set.
+
+
+[09:27:27] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[09:27:27] [INFO] ⬅️ Response:
+  
+OK: Snapshot file name has been set.
+
+
+[09:27:27] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[09:27:29] [INFO] ⬅️ Response:
+  
+OK: Snapshot has been taken.
+
+
+[09:27:29] [INFO] 📡 Snapshot 回應：OK: Snapshot has been taken.
+[09:27:29] [INFO] [Debug] encoder_name: Bak4-2
+[09:27:29] [INFO] [Debug] snapshot_relative: preview\Bak4-2
+[09:27:29] [INFO] ⬅️ Response:
+  
+OK: Snapshot has been taken.
+
+
+[09:27:29] [INFO] 📡 Snapshot 回應：OK: Snapshot has been taken.
+[09:27:29] [INFO] [Debug] encoder_name: Bak4-1
+[09:27:29] [INFO] [Debug] snapshot_relative: preview\Bak4-1
+[09:27:54] [INFO] ⚠️ 無法刪除舊圖片 Bak4-2 0003.png：[WinError 32] 程序無法存取檔案，因為檔案正由另一個程序使用。: 'E:/preview\\Bak4-2 0003.png'
+[09:27:54] [INFO] ⚠️ 無法刪除舊圖片 Bak4-1 0003.png：[WinError 32] 程序無法存取檔案，因為檔案正由另一個程序使用。: 'E:/preview\\Bak4-1 0003.png'
+[09:27:55] [INFO] 📸 為 Bak4-2 拍照 ➜ E:/preview\Bak4-2.png
+[09:27:55] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[09:27:55] [INFO] 📸 為 Bak4-1 拍照 ➜ E:/preview\Bak4-1.png
+[09:27:55] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[09:27:57] [INFO] ⬅️ Response:
+  
+OK: Snapshot file name has been set.
+
+
+[09:27:57] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[09:27:57] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[09:27:59] [INFO] ⬅️ Response:
+  
+OK: Snapshot has been taken.
+
+
+[09:27:59] [INFO] 📡 Snapshot 回應：OK: Snapshot has been taken.
+[09:27:59] [INFO] [Debug] encoder_name: Bak4-2
+[09:27:59] [INFO] [Debug] snapshot_relative: preview\Bak4-2
+[09:27:59] [INFO] ⬅️ Response:
+  
+OK: Snapshot has been taken.
+
+
+[09:27:59] [INFO] 📡 Snapshot 回應：OK: Snapshot has been taken.
+[09:27:59] [INFO] [Debug] encoder_name: Bak4-1
+[09:27:59] [INFO] [Debug] snapshot_relative: preview\Bak4-1
+[09:28:25] [INFO] 📸 為 Bak4-1 拍照 ➜ E:/preview\Bak4-1.png
+[09:28:25] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[09:28:25] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[09:28:27] [INFO] ⬅️ Response:
+  
+OK: Snapshot file name has been set.
+
+
+[09:28:27] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[09:28:27] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[09:28:29] [INFO] ⬅️ Response:
+  
+OK: Snapshot has been taken.
+
+
+[09:38:20] [INFO] 📂 嘗試讀取 encoder 設定：C:\Users\coco\recoder\schedule_project\encoders.json
+[09:38:20] [INFO] ✅ 成功載入 encoder 設定，共 2 筆
+[09:39:34] [INFO] 📂 嘗試讀取 encoder 設定：C:\Users\coco\recoder\schedule_project\encoders.json
+[09:39:34] [INFO] ✅ 成功載入 encoder 設定，共 2 筆
+[09:39:34] [INFO] 🔧 MainWindow 建立中...
+[09:39:34] [INFO] ✅ Encoder 列表：['Bak4-1', 'Bak4-2']
+[09:39:34] [INFO] 🎯 draw_grid encoder_names:['Bak4-1', 'Bak4-2']
+[09:39:34] [INFO] 🔍 scene item count: 184
+[09:39:34] [INFO] 🖼️ 圖片放在右邊：E:/07.28.2025\img\cca035d9-79f9-4bbf-b906-669feb867e24.png
+[09:39:34] [INFO] 📂 已載入節目排程 C:/Users/coco/Documents/schedule_saved/schedule.json
+[09:39:34] [INFO] 🎯 draw_grid encoder_names:['Bak4-1', 'Bak4-2']
+[09:39:34] [INFO] 🔍 scene item count: 184
+[09:39:34] [INFO] 🖼️ 圖片放在右邊：E:/07.28.2025\img\cca035d9-79f9-4bbf-b906-669feb867e24.png
+[09:39:34] [INFO] 🔁 [同步] Runner block 數量：1
+[09:39:34] [INFO] 🎯 draw_grid encoder_names:['Bak4-1', 'Bak4-2']
+[09:39:34] [INFO] 🔍 scene item count: 184
+[09:39:34] [INFO] 🖼️ 圖片放在右邊：E:/07.28.2025\img\cca035d9-79f9-4bbf-b906-669feb867e24.png
+[09:39:35] [INFO] 📸 為 Bak4-1 拍照 ➜ E:/preview\Bak4-1_093934.png
+[09:39:35] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[09:39:37] [INFO] ⬅️ Response:
+  
+OK: Snapshot file name has been set.
+
+
+[09:39:37] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[09:39:39] [INFO] ⬅️ Response:
+  
+OK: Snapshot has been taken.
+
+
+[09:39:39] [INFO] 📡 Snapshot 回應：OK: Snapshot has been taken.
+[09:39:39] [INFO] [Debug] encoder_name: Bak4-1
+[09:39:39] [INFO] [Debug] snapshot_relative: preview\Bak4-1_093934
+[09:39:39] [INFO] 📸 啟動時補拍 Bak4-1 ➔ E:/preview\Bak4-1_093934.png
+[09:39:40] [INFO] 📸 為 Bak4-2 拍照 ➜ E:/preview\Bak4-2_093939.png
+[09:39:40] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[09:39:42] [INFO] ⬅️ Response:
+  
+OK: Snapshot file name has been set.
+
+
+[09:39:42] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[09:39:44] [INFO] ⬅️ Response:
+  
+OK: Snapshot has been taken.
+
+
+[09:39:44] [INFO] 📡 Snapshot 回應：OK: Snapshot has been taken.
+[09:39:44] [INFO] [Debug] encoder_name: Bak4-2
+[09:39:44] [INFO] [Debug] snapshot_relative: preview\Bak4-2_093939
+[09:39:44] [INFO] 📸 啟動時補拍 Bak4-2 ➔ None
+[09:39:44] [INFO] 🎯 draw_grid encoder_names:['Bak4-1', 'Bak4-2']
+[09:39:44] [INFO] 🔍 scene item count: 184
+[09:39:44] [INFO] 🖼️ 圖片放在右邊：E:/07.28.2025\img\cca035d9-79f9-4bbf-b906-669feb867e24.png
+[09:39:44] [INFO] 📂 已載入節目排程 C:/Users/coco/Documents/schedule_saved/schedule.json
+[09:39:44] [INFO] 📂 自動載入之前選的檔案：C:/Users/coco/Documents/schedule_saved/schedule.json
+[09:39:44] [INFO] ✅ 已儲存節目排程：C:/Users/coco/Documents/schedule_saved/schedule.json
+[09:40:05] [INFO] 📸 為 Bak4-1 拍照 ➜ E:/preview\Bak4-1_094004.png
+[09:40:05] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[09:40:05] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[09:40:07] [INFO] ⬅️ Response:
+  
+OK: Snapshot file name has been set.
+
+
+[09:40:07] [INFO] ⬅️ Response:
+  
+OK: Snapshot file name has been set.
+
+
+[09:40:07] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[09:40:07] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[09:40:09] [INFO] ⬅️ Response:
+  
+OK: Snapshot has been taken.
+
+
+[09:40:09] [INFO] 📡 Snapshot 回應：OK: Snapshot has been taken.
+[09:40:09] [INFO] [Debug] encoder_name: Bak4-1
+[09:40:09] [INFO] [Debug] snapshot_relative: preview\Bak4-1_094004
+[09:40:09] [INFO] ⬅️ Response:
+  
+OK: Snapshot has been taken.
+
+
+[09:40:09] [INFO] 📡 Snapshot 回應：OK: Snapshot has been taken.
+[09:40:09] [INFO] [Debug] encoder_name: Bak4-2
+[09:40:09] [INFO] [Debug] snapshot_relative: preview\Bak4-2_094004
+[09:40:35] [INFO] 📸 為 Bak4-1 拍照 ➜ E:/preview\Bak4-1_094034.png
+[09:40:35] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[09:40:35] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[09:40:37] [INFO] ⬅️ Response:
+  
+OK: Snapshot file name has been set.
+
+
+[09:40:37] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[09:40:37] [INFO] ⬅️ Response:
+  
+OK: Snapshot file name has been set.
+
+
+[09:40:37] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[09:40:39] [INFO] ⬅️ Response:
+  
+OK: Snapshot has been taken.
+
+
+[09:40:39] [INFO] 📡 Snapshot 回應：OK: Snapshot has been taken.
+[09:40:39] [INFO] [Debug] encoder_name: Bak4-2
+[09:40:39] [INFO] [Debug] snapshot_relative: preview\Bak4-2_094034
+[09:40:39] [INFO] ⬅️ Response:
+  
+OK: Snapshot has been taken.
+
+
+[09:40:39] [INFO] 📡 Snapshot 回應：OK: Snapshot has been taken.
+[09:40:39] [INFO] [Debug] encoder_name: Bak4-1
+[09:40:39] [INFO] [Debug] snapshot_relative: preview\Bak4-1_094034
+[09:41:05] [INFO] 📸 為 Bak4-1 拍照 ➜ E:/preview\Bak4-1_094104.png
+[09:41:05] [INFO] 📸 為 Bak4-2 拍照 ➜ E:/preview\Bak4-2_094104.png
+[09:41:05] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[09:41:05] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[09:41:07] [INFO] ⬅️ Response:
+  
+OK: Snapshot file name has been set.
+
+
+[09:41:07] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[09:41:07] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[09:41:09] [INFO] ⬅️ Response:
+  
+OK: Snapshot has been taken.
+
+
+[09:41:09] [INFO] 📡 Snapshot 回應：OK: Snapshot has been taken.
+[09:41:09] [INFO] [Debug] encoder_name: Bak4-2
+[09:41:09] [INFO] [Debug] snapshot_relative: preview\Bak4-2_094104
+[09:41:09] [INFO] ⬅️ Response:
+  
+OK: Snapshot has been taken.
+
+
+[09:41:09] [INFO] 📡 Snapshot 回應：OK: Snapshot has been taken.
+[09:41:09] [INFO] [Debug] encoder_name: Bak4-1
+[09:41:09] [INFO] [Debug] snapshot_relative: preview\Bak4-1_094104
+[09:41:35] [INFO] 📸 為 Bak4-1 拍照 ➜ E:/preview\Bak4-1_094134.png
+[09:41:35] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[09:41:35] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[09:41:37] [INFO] ⬅️ Response:
+  
+OK: Snapshot file name has been set.
+
+
+[09:41:37] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[09:49:32] [INFO] 📂 嘗試讀取 encoder 設定：C:\Users\coco\recoder\schedule_project\encoders.json
+[09:49:32] [INFO] ✅ 成功載入 encoder 設定，共 2 筆
+[09:49:32] [INFO] 🔧 MainWindow 建立中...
+[09:49:32] [INFO] ✅ Encoder 列表：['Bak4-1', 'Bak4-2']
+[09:49:32] [INFO] 🎯 draw_grid encoder_names:['Bak4-1', 'Bak4-2']
+[09:49:33] [INFO] 🔍 scene item count: 184
+[09:49:33] [INFO] 🖼️ 圖片放在右邊：E:/07.28.2025\img\cca035d9-79f9-4bbf-b906-669feb867e24.png
+[09:49:33] [INFO] 📂 已載入節目排程 C:/Users/coco/Documents/schedule_saved/schedule.json
+[09:49:33] [INFO] 🎯 draw_grid encoder_names:['Bak4-1', 'Bak4-2']
+[09:49:33] [INFO] 🔍 scene item count: 184
+[09:49:33] [INFO] 🖼️ 圖片放在右邊：E:/07.28.2025\img\cca035d9-79f9-4bbf-b906-669feb867e24.png
+[09:49:33] [INFO] 🔁 [同步] Runner block 數量：1
+[09:49:33] [INFO] 🎯 draw_grid encoder_names:['Bak4-1', 'Bak4-2']
+[09:49:33] [INFO] 🔍 scene item count: 184
+[09:49:33] [INFO] 🖼️ 圖片放在右邊：E:/07.28.2025\img\cca035d9-79f9-4bbf-b906-669feb867e24.png
+[09:49:33] [INFO] 📸 為 Bak4-1 拍照 ➜ E:/preview\Bak4-1_094933.png
+[09:49:33] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[09:49:35] [INFO] ⬅️ Response:
+  
+OK: Snapshot file name has been set.
+
+
+[09:49:35] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[09:49:37] [INFO] ⬅️ Response:
+  
+OK: Snapshot has been taken.
+
+
+[09:49:37] [INFO] 📡 Snapshot 回應：OK: Snapshot has been taken.
+[09:49:37] [INFO] [Debug] encoder_name: Bak4-1
+[09:49:37] [INFO] [Debug] snapshot_relative: preview\Bak4-1_094933
+[09:49:37] [INFO] 📸 啟動時補拍 Bak4-1 ➔ None
+[09:49:38] [INFO] 📸 為 Bak4-2 拍照 ➜ E:/preview\Bak4-2_094937.png
+[09:49:38] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[09:49:40] [INFO] ⬅️ Response:
+  
+OK: Snapshot file name has been set.
+
+
+[09:49:40] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[09:49:42] [INFO] ⬅️ Response:
+  
+OK: Snapshot has been taken.
+
+
+[09:49:42] [INFO] 📡 Snapshot 回應：OK: Snapshot has been taken.
+[09:49:42] [INFO] [Debug] encoder_name: Bak4-2
+[09:49:42] [INFO] [Debug] snapshot_relative: preview\Bak4-2_094937
+[09:49:42] [INFO] 📸 啟動時補拍 Bak4-2 ➔ None
+[09:49:42] [INFO] 🎯 draw_grid encoder_names:['Bak4-1', 'Bak4-2']
+[09:49:42] [INFO] 🔍 scene item count: 184
+[09:49:42] [INFO] 🖼️ 圖片放在右邊：E:/07.28.2025\img\cca035d9-79f9-4bbf-b906-669feb867e24.png
+[09:49:42] [INFO] 📂 已載入節目排程 C:/Users/coco/Documents/schedule_saved/schedule.json
+[09:49:42] [INFO] 📂 自動載入之前選的檔案：C:/Users/coco/Documents/schedule_saved/schedule.json
+[09:49:42] [INFO] ✅ 已儲存節目排程：C:/Users/coco/Documents/schedule_saved/schedule.json
+[09:50:03] [INFO] 📸 為 Bak4-1 拍照 ➜ E:/preview\Bak4-1_095003.png
+[09:50:03] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[09:50:03] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[09:50:05] [INFO] ⬅️ Response:
+  
+OK: Snapshot file name has been set.
+
+
+[09:50:05] [INFO] ⬅️ Response:
+  
+OK: Snapshot file name has been set.
+
+
+[09:50:05] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[09:50:05] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[09:50:07] [INFO] ⬅️ Response:
+  
+OK: Snapshot has been taken.
+
+

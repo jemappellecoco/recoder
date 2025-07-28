@@ -1,7 +1,7 @@
 # schedule_runner.py
 from encoder_controller import EncoderController 
 from PySide6.QtCore import QObject, QTimer, QDateTime, QDate, QTime
-from encoder_utils import connect_socket,send_encoder_command
+from encoder_utils import connect_socket, send_encoder_command, send_persistent_command
 import os
 import logging
 from PySide6.QtWidgets import QApplication
@@ -193,7 +193,7 @@ class ScheduleRunner(QObject):
     def refresh_encoder_statuses(self):
         for encoder_name in self.encoder_names:
             try:
-                res = send_persistent_command(f'EncStatus "{encoder_name}"')
+                res = send_encoder_command(f'EncStatus "{encoder_name}"')
                 log(f"⬅️ Response: {res}")
             except Exception as e:
                 res = f"FAILED: {e}"
@@ -234,11 +234,6 @@ class ScheduleRunner(QObject):
                 self.encoder_status[encoder_name].setText(f"狀態：{status_text}")
                 self.encoder_status[encoder_name].setStyleSheet(f"color: {color}")
             logging.debug(f"🌀 已更新 {encoder_name} 狀態為 {status_text}")
-    def format_remaining_time(self, seconds):
-        h = int(seconds) // 3600
-        m = (int(seconds) % 3600) // 60
-        s = int(seconds) % 60
-        return f"{h:02d}:{m:02d}:{s:02d}"
 
     def find_block_by_label(self, label):
         for block in self.blocks:

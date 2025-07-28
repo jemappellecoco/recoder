@@ -5,6 +5,7 @@ import os
 from path_manager import PathManager
 from datetime import datetime
 import base64
+from utils import log
 class EncoderController:
     def __init__(self, record_root):
         self.record_root = record_root
