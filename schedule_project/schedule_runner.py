@@ -193,7 +193,7 @@ class ScheduleRunner(QObject):
     def refresh_encoder_statuses(self):
         for encoder_name in self.encoder_names:
             try:
-                res = send_encoder_command(f'EncStatus "{encoder_name}"')
+                res = send_encoder_command(encoder_name,f'EncStatus "{encoder_name}"')
                 log(f"⬅️ Response: {res}")
             except Exception as e:
                 res = f"FAILED: {e}"

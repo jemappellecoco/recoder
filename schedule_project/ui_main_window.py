@@ -640,13 +640,17 @@ class MainWindow(QMainWindow):
     def sync_runner_data(self):
         self.runner.schedule_data = self.view.block_data
         self.runner.blocks = self.view.blocks  # ✅ 這行很重要！
-        
+        self.schedule_manager.schedule_data = self.view.block_data
+        self.schedule_manager.blocks = self.view.blocks
         log(f"🔁 [同步] Runner block 數量：{len(self.runner.blocks)}")
 
     def closeEvent(self, event):
-        self.encoder_status_timer.stop()
-        self.snapshot_timer.stop()
-        self.schedule_timer.stop()
+        if hasattr(self, "encoder_status_timer"):
+            self.encoder_status_timer.stop()
+        if hasattr(self, "snapshot_timer"):
+            self.snapshot_timer.stop()
+        if hasattr(self, "schedule_timer"):
+            self.schedule_timer.stop()
         if hasattr(self, "runner"):
             self.runner.stop_timers()
         super().closeEvent(event)
