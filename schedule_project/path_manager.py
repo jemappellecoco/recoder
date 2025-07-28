@@ -5,7 +5,7 @@ from datetime import datetime
 from PySide6.QtCore import QDate
 CONFIG_FILE = "config.json"
 from utils import resource_path 
-
+from utils import log
 
 class PathManager:
     def __init__(self):

@@ -433,3 +433,186 @@ OK: Snapshot has been taken.
 [17:51:13] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
 [17:51:13] [INFO] 📸 為 Bak4-2 拍照 ➜ E:/preview\Bak4-2.png
 [17:51:13] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[09:03:27] [INFO] 📂 嘗試讀取 encoder 設定：C:\Users\coco\recoder\schedule_project\encoders.json
+[09:03:27] [INFO] ✅ 成功載入 encoder 設定，共 2 筆
+[09:03:27] [INFO] 🔧 MainWindow 建立中...
+[09:03:27] [INFO] ✅ Encoder 列表：['Bak4-1', 'Bak4-2']
+[09:03:28] [INFO] 🎯 draw_grid encoder_names:['Bak4-1', 'Bak4-2']
+[09:03:29] [INFO] 📂 已載入節目排程 C:/Users/coco/Documents/schedule_saved/schedule.json
+[09:03:29] [INFO] 🎯 draw_grid encoder_names:['Bak4-1', 'Bak4-2']
+[09:03:29] [INFO] 🔁 [同步] Runner block 數量：0
+[09:03:29] [INFO] 🎯 draw_grid encoder_names:['Bak4-1', 'Bak4-2']
+[09:03:29] [INFO] 📸 為 Bak4-1 拍照 ➜ E:/preview\Bak4-1.png
+[09:03:30] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[09:03:32] [INFO] ⬅️ Response:
+  
+OK: Snapshot file name has been set.
+
+
+[09:03:32] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[09:03:34] [INFO] ⬅️ Response:
+  
+OK: Snapshot has been taken.
+
+
+[09:03:34] [INFO] 📡 Snapshot 回應：OK: Snapshot has been taken.
+[09:03:34] [INFO] [Debug] encoder_name: Bak4-1
+[09:03:34] [INFO] [Debug] snapshot_relative: preview\Bak4-1
+[09:03:34] [INFO] 📸 啟動時補拍 Bak4-1 ➔ None
+[09:03:34] [INFO] 📸 為 Bak4-2 拍照 ➜ E:/preview\Bak4-2.png
+[09:03:34] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[09:03:36] [INFO] ⬅️ Response:
+  
+OK: Snapshot file name has been set.
+
+
+[09:03:36] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[09:03:38] [INFO] ⬅️ Response:
+  
+OK: Snapshot has been taken.
+
+
+[09:03:38] [INFO] 📡 Snapshot 回應：OK: Snapshot has been taken.
+[09:03:38] [INFO] [Debug] encoder_name: Bak4-2
+[09:03:38] [INFO] [Debug] snapshot_relative: preview\Bak4-2
+[09:03:38] [INFO] 📸 啟動時補拍 Bak4-2 ➔ None
+[09:03:38] [INFO] 🎯 draw_grid encoder_names:['Bak4-1', 'Bak4-2']
+[09:03:38] [INFO] 📂 已載入節目排程 C:/Users/coco/Documents/schedule_saved/schedule.json
+[09:03:38] [INFO] 📂 自動載入之前選的檔案：C:/Users/coco/Documents/schedule_saved/schedule.json
+[09:04:00] [INFO] 📸 為 Bak4-2 拍照 ➜ E:/preview\Bak4-2.png
+[09:04:00] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[09:04:00] [INFO] 📸 為 Bak4-1 拍照 ➜ E:/preview\Bak4-1.png
+[09:04:00] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[09:04:02] [INFO] ⬅️ Response:
+  
+OK: Snapshot file name has been set.
+
+
+[09:04:02] [INFO] ⬅️ Response:
+  
+OK: Snapshot file name has been set.
+
+
+[09:04:02] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[09:04:02] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[09:04:04] [INFO] ⬅️ Response:
+  
+OK: Snapshot has been taken.
+
+
+[09:04:04] [INFO] 📡 Snapshot 回應：OK: Snapshot has been taken.
+[09:04:04] [INFO] [Debug] encoder_name: Bak4-2
+[09:04:04] [INFO] [Debug] snapshot_relative: preview\Bak4-2
+[09:04:04] [INFO] ⬅️ Response:
+  
+OK: Snapshot has been taken.
+
+
+[09:04:04] [INFO] 📡 Snapshot 回應：OK: Snapshot has been taken.
+[09:04:04] [INFO] [Debug] encoder_name: Bak4-1
+[09:04:04] [INFO] [Debug] snapshot_relative: preview\Bak4-1
+[09:04:29] [INFO] 📸 為 Bak4-2 拍照 ➜ E:/preview\Bak4-2.png
+[09:04:29] [INFO] 📸 為 Bak4-1 拍照 ➜ E:/preview\Bak4-1.png
+[09:04:29] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[09:04:29] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[09:04:31] [INFO] ⬅️ Response:
+  
+OK: Snapshot file name has been set.
+
+
+[09:04:31] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[09:04:32] [INFO] ⬅️ Response:
+  
+OK: Snapshot file name has been set.
+
+
+[09:04:32] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[09:04:34] [INFO] ⬅️ Response:
+  
+OK: Snapshot has been taken.
+
+
+[09:04:34] [INFO] 📡 Snapshot 回應：OK: Snapshot has been taken.
+[09:04:34] [INFO] [Debug] encoder_name: Bak4-2
+[09:04:34] [INFO] [Debug] snapshot_relative: preview\Bak4-2
+[09:04:34] [INFO] ⬅️ Response:
+  
+OK: Snapshot has been taken.
+
+
+[09:04:34] [INFO] 📡 Snapshot 回應：OK: Snapshot has been taken.
+[09:04:34] [INFO] [Debug] encoder_name: Bak4-1
+[09:04:34] [INFO] [Debug] snapshot_relative: preview\Bak4-1
+[09:04:59] [INFO] 📸 為 Bak4-1 拍照 ➜ E:/preview\Bak4-1.png
+[09:04:59] [INFO] 📸 為 Bak4-2 拍照 ➜ E:/preview\Bak4-2.png
+[09:04:59] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[09:04:59] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[09:05:01] [INFO] ⬅️ Response:
+  
+OK: Snapshot file name has been set.
+
+
+[09:05:01] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[09:05:02] [INFO] ⬅️ Response:
+  
+OK: Snapshot file name has been set.
+
+
+[09:05:02] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[09:05:04] [INFO] ⬅️ Response:
+  
+OK: Snapshot has been taken.
+
+
+[09:05:04] [INFO] 📡 Snapshot 回應：OK: Snapshot has been taken.
+[09:05:04] [INFO] [Debug] encoder_name: Bak4-1
+[09:05:04] [INFO] [Debug] snapshot_relative: preview\Bak4-1
+[09:05:04] [INFO] ⬅️ Response:
+  
+OK: Snapshot has been taken.
+
+
+[09:05:04] [INFO] 📡 Snapshot 回應：OK: Snapshot has been taken.
+[09:05:04] [INFO] [Debug] encoder_name: Bak4-2
+[09:05:04] [INFO] [Debug] snapshot_relative: preview\Bak4-2
+[09:05:29] [INFO] 📸 為 Bak4-2 拍照 ➜ E:/preview\Bak4-2.png
+[09:05:29] [INFO] 📸 為 Bak4-1 拍照 ➜ E:/preview\Bak4-1.png
+[09:05:29] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[09:05:29] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[09:05:31] [INFO] ⬅️ Response:
+  
+OK: Snapshot file name has been set.
+
+
+[09:05:31] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[09:05:31] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[09:05:34] [INFO] ⬅️ Response:
+  
+OK: Snapshot has been taken.
+
+
+[09:05:34] [INFO] 📡 Snapshot 回應：OK: Snapshot has been taken.
+[09:05:34] [INFO] [Debug] encoder_name: Bak4-2
+[09:05:34] [INFO] [Debug] snapshot_relative: preview\Bak4-2
+[09:05:34] [INFO] ⬅️ Response:
+  
+OK: Snapshot has been taken.
+
+
+[09:05:34] [INFO] 📡 Snapshot 回應：OK: Snapshot has been taken.
+[09:05:34] [INFO] [Debug] encoder_name: Bak4-1
+[09:05:34] [INFO] [Debug] snapshot_relative: preview\Bak4-1
+[09:05:59] [INFO] 📸 為 Bak4-1 拍照 ➜ E:/preview\Bak4-1.png
+[09:05:59] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[09:05:59] [INFO] 📸 為 Bak4-2 拍照 ➜ E:/preview\Bak4-2.png
+[09:05:59] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[09:06:02] [INFO] ⬅️ Response:
+  
+OK: Snapshot file name has been set.
+
+
+[09:06:02] [INFO] ⬅️ Response:
+  
+OK: Snapshot file name has been set.
+
+
