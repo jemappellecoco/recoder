@@ -48,7 +48,7 @@ def connect_socket(encoder_name):
 # ➤ 傳送命令並接收回應
 def send_command(sock, cmd):
     try:
-        encoded = (cmd + "\r\n").encode("cp950")
+        encoded = (cmd + "\r\n").encode("utf-8")
         sock.sendall(encoded)
         sock.settimeout(2)
         data = b""
@@ -60,7 +60,7 @@ def send_command(sock, cmd):
                 data += chunk
             except socket.timeout:
                 break
-        response = data.decode("cp950", errors="replace")
+        response = data.decode("utf-8", errors="replace")
         log(f"⬅️ Response:\n {response}")
         return response.strip()
     except Exception as e:

@@ -151,7 +151,7 @@ class ScheduleRunner(QObject):
         # ✅ 只在第一次啟動時拍照，避免 check_schedule 觸發多次
         if block_id and block_id not in self.already_started:
             self.already_started.add(block_id)
-
+            log(f"📸 update_all_encoder_snapshots triggered at {QDateTime.currentDateTime().toString('HH:mm:ss.zzz')}")
         # ✅ 加這一段，安全地避免 UI 關閉後仍觸發 snapshot
             window = QApplication.instance().activeWindow()
             if window and not getattr(window, "is_closing", False):
@@ -201,7 +201,7 @@ class ScheduleRunner(QObject):
                 res = send_encoder_command(encoder_name,f'EncStatus "{encoder_name}"')
                 log(f"⬅️ Response: {res}")
             except Exception as e:
-                res = f"FAILED: {e}"
+                res = f"{e}"
 
             # 比對是否有改變
             if self.encoder_last_state.get(encoder_name) == res:

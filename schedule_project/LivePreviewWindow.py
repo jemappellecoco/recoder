@@ -24,7 +24,7 @@ class LivePreviewWindow(QWidget):
         # 每 60 秒更新一次
         self.timer = QTimer(self)
         self.timer.timeout.connect(self.update_image)
-        self.timer.start(60000)
+        self.timer.start(30000)
         self.update_image()
 
     def update_image(self):

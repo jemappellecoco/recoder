@@ -225,7 +225,6 @@ class MainWindow(QMainWindow):
         self.encoder_status_timer.start(2000)
 
         self.snapshot_timer = QTimer(self)
-        self.snapshot_timer.setSingleShot(True)
         self.snapshot_timer.timeout.connect(self.update_all_encoder_snapshots)
         self.snapshot_timer.start(30000)
 
@@ -648,17 +647,17 @@ class MainWindow(QMainWindow):
         self.schedule_manager.blocks = self.view.blocks
         log(f"🔁 [同步] Runner block 數量：{len(self.runner.blocks)}")
 
-    def closeEvent(self, event):
-        self.is_closing = True
-        if hasattr(self, "encoder_status_timer"):
-            self.encoder_status_timer.stop()
-        if hasattr(self, "snapshot_timer"):
-            self.snapshot_timer.stop()
-        if hasattr(self, "schedule_timer"):
-            self.schedule_timer.stop()
-        if hasattr(self, "runner"):
-            self.runner.stop_timers()  # ✅ 要讓 runner 自己停掉自己的 timer
-        if hasattr(self, "view"):
-                self.view.stop_timers()
-        super().closeEvent(event)
-        log("👋 MainWindow 已關閉")
+    # def closeEvent(self, event):
+    #     self.is_closing = True
+    #     if hasattr(self, "encoder_status_timer"):
+    #         self.encoder_status_timer.stop()
+    #     if hasattr(self, "snapshot_timer"):
+    #         self.snapshot_timer.stop()
+    #     if hasattr(self, "schedule_timer"):
+    #         self.schedule_timer.stop()
+    #     if hasattr(self, "runner"):
+    #         self.runner.stop_timers()  # ✅ 要讓 runner 自己停掉自己的 timer
+    #     if hasattr(self, "view"):
+    #             self.view.stop_timers()
+    #     super().closeEvent(event)
+    #     log("👋 MainWindow 已關閉")

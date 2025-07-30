@@ -1527,3 +1527,1398 @@ OK: Snapshot has been taken.
 [16:55:13] [INFO] [Debug] snapshot_relative: preview\Bak4-1
 [16:55:13] [INFO] 📸 拍照指令傳送 by encoder
 [16:55:38] [INFO] 👋 MainWindow 已關閉
+[10:19:43] [INFO] 📂 嘗試讀取 encoder 設定：C:\Users\coco\recoder\encoders.json
+[10:19:43] [INFO] ✅ 成功載入 encoder 設定，共 2 筆
+[10:19:43] [INFO] 🔧 MainWindow 建立中...
+[10:19:43] [INFO] ✅ Encoder 列表：['Bak4-1', 'Bak4-2']
+[10:19:44] [INFO] 🎯 draw_grid encoder_names:['Bak4-1', 'Bak4-2']
+[10:19:44] [INFO] 📂 已載入節目排程 schedule.json
+[10:19:44] [INFO] 🎯 draw_grid encoder_names:['Bak4-1', 'Bak4-2']
+[10:19:44] [INFO] 🔁 [同步] Runner block 數量：0
+[10:19:44] [INFO] 🎯 draw_grid encoder_names:['Bak4-1', 'Bak4-2']
+[10:19:45] [INFO] 📸 為 Bak4-1 拍照 ➜ E:/preview\Bak4-1.png
+[10:19:45] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[10:19:47] [INFO] ⬅️ Response:
+  
+OK: Snapshot file name has been set.
+
+
+[10:19:47] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[10:19:49] [INFO] ⬅️ Response:
+  
+
+[10:19:49] [INFO] 📡 Snapshot 回應：
+[10:19:49] [INFO] [Debug] encoder_name: Bak4-1
+[10:19:49] [INFO] [Debug] snapshot_relative: preview\Bak4-1
+[10:19:49] [INFO] 📸 拍照指令傳送 by encoder
+[10:19:49] [INFO] 📸 啟動時補拍 Bak4-1 ➔ E:/preview\Bak4-1.png
+[10:19:50] [INFO] 📸 為 Bak4-2 拍照 ➜ E:/preview\Bak4-2.png
+[10:19:50] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[10:19:52] [INFO] ⬅️ Response:
+  
+
+[10:19:52] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[10:19:54] [INFO] ⬅️ Response:
+  
+
+[10:19:54] [INFO] 📡 Snapshot 回應：
+[10:19:54] [INFO] [Debug] encoder_name: Bak4-2
+[10:19:54] [INFO] [Debug] snapshot_relative: preview\Bak4-2
+[10:19:54] [INFO] 📸 拍照指令傳送 by encoder
+[10:19:54] [INFO] 📸 啟動時補拍 Bak4-2 ➔ E:/preview\Bak4-2.png
+[10:20:15] [INFO] 📸 為 Bak4-1 拍照 ➜ E:/preview\Bak4-1.png
+[10:20:15] [INFO] 📸 為 Bak4-2 拍照 ➜ E:/preview\Bak4-2.png
+[10:20:15] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[10:20:15] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[10:20:17] [INFO] ⬅️ Response:
+  
+OK: Snapshot file name has been set.
+
+
+[10:20:17] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[10:20:17] [INFO] ⬅️ Response:
+  
+OK: Snapshot file name has been set.
+
+
+[10:20:17] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[10:20:19] [INFO] ⬅️ Response:
+  
+OK: Snapshot has been taken.
+
+
+[10:20:19] [INFO] 📡 Snapshot 回應：OK: Snapshot has been taken.
+[10:20:19] [INFO] [Debug] encoder_name: Bak4-1
+[10:20:19] [INFO] [Debug] snapshot_relative: preview\Bak4-1
+[10:20:19] [INFO] 📸 拍照指令傳送 by encoder
+[10:20:19] [INFO] ⬅️ Response:
+  
+OK: Snapshot has been taken.
+
+
+[10:20:19] [INFO] 📡 Snapshot 回應：OK: Snapshot has been taken.
+[10:20:19] [INFO] [Debug] encoder_name: Bak4-2
+[10:20:19] [INFO] [Debug] snapshot_relative: preview\Bak4-2
+[10:20:19] [INFO] 📸 拍照指令傳送 by encoder
+[10:20:26] [INFO] 🧪 檢查名稱: 你好
+[10:20:26] [INFO] ✅ 呼叫 add_time_block
+[10:20:26] [INFO] ✅ 已加入 block: 你好
+[10:20:26] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[10:20:26] [INFO] 🔁 [同步] Runner block 數量：1
+[10:20:27] [INFO] 🚀 啟動錄影: 你好 (3bcfb69a-654c-4487-aacd-a89d26a2b1d1)
+[10:20:27] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[10:20:27] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[10:20:29] [INFO] ⬅️ Response:
+  
+OK: New output file: Z:\07.30.2025\0730_嚙璀嚙緯.mxf
+
+
+[10:20:29] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[10:20:31] [INFO] ⬅️ Response:
+  
+OK: Profile has been started successfully.
+
+
+[10:20:31] [INFO] 📸 拍照中 - block: 你好 / encoder: Bak4-1
+[10:20:31] [INFO] 📂 儲存位置: E:/07.30.2025\img\3bcfb69a-654c-4487-aacd-a89d26a2b1d1.png
+[10:20:31] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[10:20:33] [INFO] ⬅️ Response:
+  
+OK: Snapshot file name has been set.
+
+
+[10:20:33] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[10:20:35] [INFO] ⬅️ Response:
+  
+OK: Snapshot has been taken.
+
+
+[10:20:35] [INFO] 📡 SnapShot 指令回應: OK: Snapshot has been taken.
+[10:20:35] [INFO] ⚠️ 檔案未生成，請檢查路徑或權限：E:/07.30.2025\img\3bcfb69a-654c-4487-aacd-a89d26a2b1d1.png
+[10:20:35] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[10:20:44] [INFO] 🔍 scene item count: 186
+[10:20:44] [INFO] 🖼️ 圖片放在右邊：E:/07.30.2025\img\3bcfb69a-654c-4487-aacd-a89d26a2b1d1.png
+[10:27:44] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[10:27:46] [INFO] ⬅️ Response:
+  
+OK: Bak4-1:Runned
+
+
+[10:27:46] [INFO] ⬅️ Response: OK: Bak4-1:Runned
+[10:27:46] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[10:27:48] [INFO] ⬅️ Response:
+  
+OK: Bak4-2:Stopped
+
+
+[10:27:48] [INFO] ⬅️ Response: OK: Bak4-2:Stopped
+[10:35:44] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[10:35:46] [INFO] ⬅️ Response:
+  
+OK: Bak4-1:Runned
+
+
+[10:35:46] [INFO] ⬅️ Response: OK: Bak4-1:Runned
+[10:35:46] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[10:35:48] [INFO] ⬅️ Response:
+  
+OK: Bak4-2:Stopped
+
+
+[10:35:48] [INFO] ⬅️ Response: OK: Bak4-2:Stopped
+[10:43:44] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[10:43:47] [INFO] ⬅️ Response:
+  
+OK: Bak4-1:Runned
+
+
+[10:43:47] [INFO] ⬅️ Response: OK: Bak4-1:Runned
+[10:43:47] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[10:43:50] [INFO] ⬅️ Response:
+  
+OK: Bak4-2:Stopped
+
+
+[10:43:50] [INFO] ⬅️ Response: OK: Bak4-2:Stopped
+[10:51:44] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[10:51:46] [INFO] ⬅️ Response:
+  
+OK: Bak4-1:Runned
+
+
+[10:51:46] [INFO] ⬅️ Response: OK: Bak4-1:Runned
+[10:51:46] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[10:51:48] [INFO] ⬅️ Response:
+  
+OK: Bak4-2:Stopped
+
+
+[10:51:48] [INFO] ⬅️ Response: OK: Bak4-2:Stopped
+[10:59:44] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[10:59:46] [INFO] ⬅️ Response:
+  
+OK: Bak4-1:Runned
+
+
+[10:59:46] [INFO] ⬅️ Response: OK: Bak4-1:Runned
+[10:59:46] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[10:59:48] [INFO] ⬅️ Response:
+  
+OK: Bak4-2:Stopped
+
+
+[10:59:48] [INFO] ⬅️ Response: OK: Bak4-2:Stopped
+[11:07:43] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[11:07:45] [INFO] ⬅️ Response:
+  
+OK: Bak4-1:Runned
+
+
+[11:07:45] [INFO] ⬅️ Response: OK: Bak4-1:Runned
+[11:07:45] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[11:07:47] [INFO] ⬅️ Response:
+  
+OK: Bak4-2:Runned
+
+
+[11:07:47] [INFO] ⬅️ Response: OK: Bak4-2:Runned
+[11:15:43] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[11:15:45] [INFO] ⬅️ Response:
+  
+OK: Bak4-1:Runned
+
+
+[11:15:45] [INFO] ⬅️ Response: OK: Bak4-1:Runned
+[11:15:45] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[11:15:47] [INFO] ⬅️ Response:
+  
+OK: Bak4-2:Stopped
+
+
+[11:15:47] [INFO] ⬅️ Response: OK: Bak4-2:Stopped
+[11:20:00] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[11:23:43] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[11:23:45] [INFO] ⬅️ Response:
+  
+OK: Bak4-1:Runned
+
+
+[11:23:45] [INFO] ⬅️ Response: OK: Bak4-1:Runned
+[11:23:45] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[11:23:47] [INFO] ⬅️ Response:
+  
+OK: Bak4-2:Stopped
+
+
+[11:23:47] [INFO] ⬅️ Response: OK: Bak4-2:Stopped
+[11:31:43] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[11:31:45] [INFO] ⬅️ Response:
+  
+OK: Bak4-1:Runned
+
+
+[11:31:45] [INFO] ⬅️ Response: OK: Bak4-1:Runned
+[11:31:45] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[11:31:47] [INFO] ⬅️ Response:
+  
+OK: Bak4-2:Runned
+
+
+[11:31:47] [INFO] ⬅️ Response: OK: Bak4-2:Runned
+[11:39:43] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[11:39:45] [INFO] ⬅️ Response:
+  
+OK: Bak4-1:Runned
+
+
+[11:39:45] [INFO] ⬅️ Response: OK: Bak4-1:Runned
+[11:39:45] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[11:39:47] [INFO] ⬅️ Response:
+  
+OK: Bak4-2:Runned
+
+
+[11:39:47] [INFO] ⬅️ Response: OK: Bak4-2:Runned
+[11:47:43] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[11:47:45] [INFO] ⬅️ Response:
+  
+OK: Bak4-1:Runned
+
+
+[11:47:45] [INFO] ⬅️ Response: OK: Bak4-1:Runned
+[11:47:45] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[11:47:47] [INFO] ⬅️ Response:
+  
+OK: Bak4-2:Stopped
+
+
+[11:47:47] [INFO] ⬅️ Response: OK: Bak4-2:Stopped
+[11:47:55] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[11:47:57] [INFO] ⬅️ Response:
+  
+OK: Profile has been stopped successfully.
+
+
+[11:47:57] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[11:47:59] [INFO] ⬅️ Response:
+  
+OK: Bak4-1:Stopped
+
+
+[11:47:59] [INFO] ⬅️ Response: OK: Bak4-1:Stopped
+[11:47:59] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[11:48:01] [INFO] ⬅️ Response:
+  
+OK: Bak4-2:Stopped
+
+
+[11:48:01] [INFO] ⬅️ Response: OK: Bak4-2:Stopped
+[11:48:01] [INFO] 🎯 draw_grid encoder_names:['Bak4-1', 'Bak4-2']
+[11:48:01] [INFO] 🔍 scene item count: 184
+[11:48:01] [INFO] 🖼️ 圖片放在右邊：E:/07.30.2025\img\3bcfb69a-654c-4487-aacd-a89d26a2b1d1.png
+[11:48:01] [INFO] 🔁 [同步] Runner block 數量：1
+[11:51:04] [INFO] 👋 MainWindow 已關閉
+[11:51:08] [INFO] 📂 嘗試讀取 encoder 設定：C:\Users\coco\recoder\encoders.json
+[11:51:08] [INFO] ✅ 成功載入 encoder 設定，共 2 筆
+[11:51:08] [INFO] 🔧 MainWindow 建立中...
+[11:51:08] [INFO] ✅ Encoder 列表：['Bak4-1', 'Bak4-2']
+[11:51:08] [INFO] 🎯 draw_grid encoder_names:['Bak4-1', 'Bak4-2']
+[11:51:08] [INFO] 📂 已載入節目排程 schedule.json
+[11:51:08] [INFO] 🎯 draw_grid encoder_names:['Bak4-1', 'Bak4-2']
+[11:51:08] [INFO] 🔁 [同步] Runner block 數量：0
+[11:51:08] [INFO] 🎯 draw_grid encoder_names:['Bak4-1', 'Bak4-2']
+[11:51:09] [INFO] 📸 為 Bak4-1 拍照 ➜ E:/preview\Bak4-1.png
+[11:51:09] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[11:51:11] [INFO] ⬅️ Response:
+  
+OK: Snapshot file name has been set.
+
+
+[11:51:11] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[11:51:13] [INFO] ⬅️ Response:
+  
+OK: Snapshot has been taken.
+
+
+[11:51:13] [INFO] 📡 Snapshot 回應：OK: Snapshot has been taken.
+[11:51:13] [INFO] [Debug] encoder_name: Bak4-1
+[11:51:13] [INFO] [Debug] snapshot_relative: preview\Bak4-1
+[11:51:13] [INFO] 📸 拍照指令傳送 by encoder
+[11:51:13] [INFO] 📸 啟動時補拍 Bak4-1 ➔ None
+[11:51:14] [INFO] 📸 為 Bak4-2 拍照 ➜ E:/preview\Bak4-2.png
+[11:51:14] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[11:51:16] [INFO] ⬅️ Response:
+  
+OK: Snapshot file name has been set.
+
+
+[11:51:16] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[11:51:18] [INFO] ⬅️ Response:
+  
+OK: Snapshot has been taken.
+
+
+[11:51:18] [INFO] 📡 Snapshot 回應：OK: Snapshot has been taken.
+[11:51:18] [INFO] [Debug] encoder_name: Bak4-2
+[11:51:18] [INFO] [Debug] snapshot_relative: preview\Bak4-2
+[11:51:18] [INFO] 📸 拍照指令傳送 by encoder
+[11:51:18] [INFO] 📸 啟動時補拍 Bak4-2 ➔ None
+[11:51:31] [INFO] 🎯 draw_grid encoder_names:['Bak4-1', 'Bak4-2']
+[11:51:31] [INFO] 📂 已載入節目排程 schedule.json
+[11:51:31] [INFO] 🔁 [同步] Runner block 數量：0
+[11:51:34] [INFO] ✅ 呼叫 add_time_block
+[11:51:34] [INFO] ✅ 已加入 block: 你好222
+[11:51:34] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[11:51:34] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[11:51:34] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[11:51:36] [INFO] ⬅️ Response:
+  
+OK: New output file: Z:\07.30.2025\0730_你好222.mxf
+
+
+[11:51:36] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[11:51:38] [INFO] ⬅️ Response:
+  
+OK: Profile has been started successfully.
+
+
+[11:51:38] [INFO] 📸 拍照中 - block: 你好222 / encoder: Bak4-1
+[11:51:38] [INFO] 📂 儲存位置: E:/07.30.2025\img\518532c2-1b56-4e7f-9b93-662fb8223726.png
+[11:51:38] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[11:51:41] [INFO] ⬅️ Response:
+  
+OK: Snapshot file name has been set.
+
+
+[11:51:41] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[11:51:43] [INFO] ⬅️ Response:
+  
+OK: Snapshot has been taken.
+
+
+[11:51:43] [INFO] 📡 SnapShot 指令回應: OK: Snapshot has been taken.
+[11:51:43] [INFO] ⚠️ 檔案未生成，請檢查路徑或權限：E:/07.30.2025\img\518532c2-1b56-4e7f-9b93-662fb8223726.png
+[11:51:43] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[11:51:45] [INFO] ⬅️ Response:
+  
+OK: Bak4-1:Runned
+
+
+[11:51:45] [INFO] ⬅️ Response: OK: Bak4-1:Runned
+[11:51:45] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[11:51:47] [INFO] ⬅️ Response:
+  
+OK: Bak4-2:Stopped
+
+
+[11:51:47] [INFO] ⬅️ Response: OK: Bak4-2:Stopped
+[11:51:47] [INFO] 🎯 draw_grid encoder_names:['Bak4-1', 'Bak4-2']
+[11:51:47] [INFO] 🚀 啟動錄影: 你好222 (518532c2-1b56-4e7f-9b93-662fb8223726)
+[11:51:47] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[11:51:47] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[11:51:49] [INFO] ⬅️ Response:
+  
+OK: New output file: Z:\07.30.2025\0730_你好222 0001.mxf
+
+
+[11:51:49] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[11:51:51] [INFO] ⬅️ Response:
+  
+OK: Profile has been splitted successfully.
+
+
+[11:51:51] [INFO] 🔍 scene item count: 186
+[11:51:51] [INFO] 🖼️ 圖片放在右邊：E:/07.30.2025\img\518532c2-1b56-4e7f-9b93-662fb8223726.png
+[11:51:52] [INFO] 📸 為 Bak4-2 拍照 ➜ E:/preview\Bak4-2.png
+[11:51:52] [INFO] 📸 為 Bak4-1 拍照 ➜ E:/preview\Bak4-1.png
+[11:51:52] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[11:51:52] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[11:51:54] [INFO] ⬅️ Response:
+  
+OK: Snapshot file name has been set.
+
+
+[11:51:54] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[11:51:54] [INFO] ⬅️ Response:
+  
+OK: Snapshot file name has been set.
+
+
+[11:51:54] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[11:51:56] [INFO] ⬅️ Response:
+  
+OK: Snapshot has been taken.
+
+
+[11:51:56] [INFO] 📡 Snapshot 回應：OK: Snapshot has been taken.
+[11:51:56] [INFO] [Debug] encoder_name: Bak4-2
+[11:51:56] [INFO] [Debug] snapshot_relative: preview\Bak4-2
+[11:51:56] [INFO] 📸 拍照指令傳送 by encoder
+[11:51:56] [INFO] ⬅️ Response:
+  
+OK: Snapshot has been taken.
+
+
+[11:51:56] [INFO] 📡 Snapshot 回應：OK: Snapshot has been taken.
+[11:51:56] [INFO] [Debug] encoder_name: Bak4-1
+[11:51:56] [INFO] [Debug] snapshot_relative: preview\Bak4-1
+[11:51:56] [INFO] 📸 拍照指令傳送 by encoder
+[11:51:56] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[11:51:58] [INFO] ⬅️ Response:
+  
+OK: Profile has been stopped successfully.
+
+
+[11:51:58] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[11:51:58] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[11:51:58] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[11:52:00] [INFO] ⬅️ Response:
+  
+OK: Bak4-1:Stopped
+
+
+[11:52:00] [INFO] ⬅️ Response: OK: Bak4-1:Stopped
+[11:52:00] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[11:52:02] [INFO] ⬅️ Response:
+  
+OK: Bak4-2:Stopped
+
+
+[11:52:02] [INFO] ⬅️ Response: OK: Bak4-2:Stopped
+[11:52:02] [INFO] 🎯 draw_grid encoder_names:['Bak4-1', 'Bak4-2']
+[11:52:02] [INFO] 🔍 scene item count: 184
+[11:52:02] [INFO] 🖼️ 圖片放在右邊：E:/07.30.2025\img\518532c2-1b56-4e7f-9b93-662fb8223726.png
+[11:52:02] [INFO] 🔁 [同步] Runner block 數量：1
+[11:52:02] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[11:52:02] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[11:52:04] [INFO] ⬅️ Response:
+  
+OK: Profile has been stopped successfully.
+
+
+[11:52:04] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[11:52:06] [INFO] ⬅️ Response:
+  
+OK: Bak4-1:Stopped
+
+
+[11:52:06] [INFO] ⬅️ Response: OK: Bak4-1:Stopped
+[11:52:06] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[11:52:08] [INFO] ⬅️ Response:
+  
+OK: Bak4-2:Stopped
+
+
+[11:52:08] [INFO] ⬅️ Response: OK: Bak4-2:Stopped
+[11:52:08] [INFO] 🎯 draw_grid encoder_names:['Bak4-1', 'Bak4-2']
+[11:52:08] [INFO] 🔍 scene item count: 184
+[11:52:08] [INFO] 🖼️ 圖片放在右邊：E:/07.30.2025\img\518532c2-1b56-4e7f-9b93-662fb8223726.png
+[11:52:08] [INFO] 🔁 [同步] Runner block 數量：1
+[11:52:12] [INFO] ⛔ 已開始：左側不能拖動（你好222）
+[11:53:02] [INFO] 🎯 draw_grid encoder_names:['Bak4-1', 'Bak4-2']
+[11:53:02] [INFO] 🔍 scene item count: 184
+[11:53:02] [INFO] 🖼️ 圖片放在右邊：E:/07.30.2025\img\518532c2-1b56-4e7f-9b93-662fb8223726.png
+[11:53:02] [INFO] 🎯 draw_grid encoder_names:['Bak4-1', 'Bak4-2']
+[11:53:02] [INFO] 🔍 scene item count: 184
+[11:53:02] [INFO] 🖼️ 圖片放在右邊：E:/07.30.2025\img\518532c2-1b56-4e7f-9b93-662fb8223726.png
+[11:53:03] [INFO] 🎯 draw_grid encoder_names:['Bak4-1', 'Bak4-2']
+[11:53:03] [INFO] 🔍 scene item count: 184
+[11:53:03] [INFO] 🖼️ 圖片放在右邊：E:/07.16.2025\img\0a02b084-0190-4ea5-ae29-626c5c6fd4bc.png
+[11:53:03] [INFO] 🔍 scene item count: 190
+[11:53:03] [INFO] 🖼️ 圖片放在右邊：E:/07.16.2025\img\90d09dd3-b3e6-4b26-95fa-ab3ef6b34768.png
+[11:53:03] [INFO] 🎯 draw_grid encoder_names:['Bak4-1', 'Bak4-2']
+[11:53:03] [INFO] 🔍 scene item count: 184
+[11:53:03] [INFO] 🖼️ 圖片放在右邊：E:/07.16.2025\img\0a02b084-0190-4ea5-ae29-626c5c6fd4bc.png
+[11:53:03] [INFO] 🔍 scene item count: 190
+[11:53:03] [INFO] 🖼️ 圖片放在右邊：E:/07.16.2025\img\90d09dd3-b3e6-4b26-95fa-ab3ef6b34768.png
+[11:53:05] [INFO] 🎯 draw_grid encoder_names:['Bak4-1', 'Bak4-2']
+[11:53:05] [INFO] 🔍 scene item count: 184
+[11:53:05] [INFO] 🖼️ 圖片放在右邊：E:/07.11.2025\img\76bc28e8-5dfd-455e-8d41-f0adc953fa0e.png
+[11:53:05] [INFO] 🔍 scene item count: 195
+[11:53:05] [INFO] 🖼️ 圖片放在右邊：E:/07.14.2025\img\a2a7006a-704c-49fe-a591-2e7fd0c7c60e.png
+[11:53:05] [INFO] 🔍 scene item count: 201
+[11:53:05] [INFO] 🖼️ 圖片放在右邊：E:/07.15.2025\img\bff8768e-43ea-443e-b873-25b1300c7d36.png
+[11:53:05] [INFO] 🔍 scene item count: 212
+[11:53:05] [INFO] 🖼️ 圖片放在右邊：E:/07.11.2025\img\9330d08f-52a9-4a6e-9848-7ef97200c71c.png
+[11:53:05] [INFO] 🔍 scene item count: 218
+[11:53:05] [INFO] 🖼️ 圖片放在右邊：E:/07.15.2025\img\4451617e-02b7-41c1-abe7-900d0d20bb22.png
+[11:53:05] [INFO] 🔍 scene item count: 224
+[11:53:05] [INFO] 🖼️ 圖片放在右邊：E:/07.15.2025\img\e8d586f4-9a78-4d52-9dcd-c3073a84da51.png
+[11:53:05] [INFO] 🔍 scene item count: 230
+[11:53:05] [INFO] 🖼️ 圖片放在右邊：E:/07.15.2025\img\e2acfbd6-d195-4aa7-8c0e-6382236829b7.png
+[11:53:05] [INFO] 🔍 scene item count: 236
+[11:53:05] [INFO] 🖼️ 圖片放在右邊：E:/07.15.2025\img\f904be15-78bd-409a-95a3-d75fa6dfdf9e.png
+[11:53:05] [INFO] 🔍 scene item count: 242
+[11:53:05] [INFO] 🖼️ 圖片放在右邊：E:/07.16.2025\img\0a02b084-0190-4ea5-ae29-626c5c6fd4bc.png
+[11:53:06] [INFO] 🔍 scene item count: 248
+[11:53:06] [INFO] 🖼️ 圖片放在右邊：E:/07.16.2025\img\90d09dd3-b3e6-4b26-95fa-ab3ef6b34768.png
+[11:53:06] [INFO] 🎯 draw_grid encoder_names:['Bak4-1', 'Bak4-2']
+[11:53:06] [INFO] 🔍 scene item count: 184
+[11:53:06] [INFO] 🖼️ 圖片放在右邊：E:/07.11.2025\img\76bc28e8-5dfd-455e-8d41-f0adc953fa0e.png
+[11:53:06] [INFO] 🔍 scene item count: 195
+[11:53:06] [INFO] 🖼️ 圖片放在右邊：E:/07.14.2025\img\a2a7006a-704c-49fe-a591-2e7fd0c7c60e.png
+[11:53:06] [INFO] 🔍 scene item count: 201
+[11:53:06] [INFO] 🖼️ 圖片放在右邊：E:/07.15.2025\img\bff8768e-43ea-443e-b873-25b1300c7d36.png
+[11:53:06] [INFO] 🔍 scene item count: 212
+[11:53:06] [INFO] 🖼️ 圖片放在右邊：E:/07.11.2025\img\9330d08f-52a9-4a6e-9848-7ef97200c71c.png
+[11:53:06] [INFO] 🔍 scene item count: 218
+[11:53:06] [INFO] 🖼️ 圖片放在右邊：E:/07.15.2025\img\4451617e-02b7-41c1-abe7-900d0d20bb22.png
+[11:53:06] [INFO] 🔍 scene item count: 224
+[11:53:06] [INFO] 🖼️ 圖片放在右邊：E:/07.15.2025\img\e8d586f4-9a78-4d52-9dcd-c3073a84da51.png
+[11:53:06] [INFO] 🔍 scene item count: 230
+[11:53:06] [INFO] 🖼️ 圖片放在右邊：E:/07.15.2025\img\e2acfbd6-d195-4aa7-8c0e-6382236829b7.png
+[11:53:06] [INFO] 🔍 scene item count: 236
+[11:53:06] [INFO] 🖼️ 圖片放在右邊：E:/07.15.2025\img\f904be15-78bd-409a-95a3-d75fa6dfdf9e.png
+[11:53:06] [INFO] 🔍 scene item count: 242
+[11:53:06] [INFO] 🖼️ 圖片放在右邊：E:/07.16.2025\img\0a02b084-0190-4ea5-ae29-626c5c6fd4bc.png
+[11:53:06] [INFO] 🔍 scene item count: 248
+[11:53:06] [INFO] 🖼️ 圖片放在右邊：E:/07.16.2025\img\90d09dd3-b3e6-4b26-95fa-ab3ef6b34768.png
+[11:53:07] [INFO] 🎯 draw_grid encoder_names:['Bak4-1', 'Bak4-2']
+[11:53:07] [INFO] 🔍 scene item count: 184
+[11:53:07] [INFO] 🖼️ 圖片放在右邊：E:/07.16.2025\img\0a02b084-0190-4ea5-ae29-626c5c6fd4bc.png
+[11:53:07] [INFO] 🔍 scene item count: 190
+[11:53:07] [INFO] 🖼️ 圖片放在右邊：E:/07.16.2025\img\90d09dd3-b3e6-4b26-95fa-ab3ef6b34768.png
+[11:53:07] [INFO] 🎯 draw_grid encoder_names:['Bak4-1', 'Bak4-2']
+[11:53:07] [INFO] 🔍 scene item count: 184
+[11:53:07] [INFO] 🖼️ 圖片放在右邊：E:/07.16.2025\img\0a02b084-0190-4ea5-ae29-626c5c6fd4bc.png
+[11:53:07] [INFO] 🔍 scene item count: 190
+[11:53:07] [INFO] 🖼️ 圖片放在右邊：E:/07.16.2025\img\90d09dd3-b3e6-4b26-95fa-ab3ef6b34768.png
+[11:53:07] [INFO] 🎯 draw_grid encoder_names:['Bak4-1', 'Bak4-2']
+[11:53:07] [INFO] 🔍 scene item count: 184
+[11:53:07] [INFO] 🖼️ 圖片放在右邊：E:/07.30.2025\img\518532c2-1b56-4e7f-9b93-662fb8223726.png
+[11:53:07] [INFO] 🎯 draw_grid encoder_names:['Bak4-1', 'Bak4-2']
+[11:53:07] [INFO] 🔍 scene item count: 184
+[11:53:07] [INFO] 🖼️ 圖片放在右邊：E:/07.30.2025\img\518532c2-1b56-4e7f-9b93-662fb8223726.png
+[11:53:08] [INFO] 🎯 draw_grid encoder_names:['Bak4-1', 'Bak4-2']
+[11:53:08] [INFO] 🔍 scene item count: 184
+[11:53:08] [INFO] 🖼️ 圖片放在右邊：E:/07.30.2025\img\518532c2-1b56-4e7f-9b93-662fb8223726.png
+[11:53:08] [INFO] 🎯 draw_grid encoder_names:['Bak4-1', 'Bak4-2']
+[11:53:08] [INFO] 🔍 scene item count: 184
+[11:53:08] [INFO] 🖼️ 圖片放在右邊：E:/07.30.2025\img\518532c2-1b56-4e7f-9b93-662fb8223726.png
+[11:53:10] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[11:53:41] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[11:59:08] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[11:59:11] [INFO] ⬅️ Response:
+  
+OK: Bak4-1:Stopped
+
+
+[11:59:11] [INFO] ⬅️ Response: OK: Bak4-1:Stopped
+[11:59:11] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[11:59:13] [INFO] ⬅️ Response:
+  
+OK: Bak4-2:Stopped
+
+
+[11:59:13] [INFO] ⬅️ Response: OK: Bak4-2:Stopped
+[12:07:08] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[12:07:11] [INFO] ⬅️ Response:
+  
+OK: Bak4-1:Stopped
+
+
+[12:07:11] [INFO] ⬅️ Response: OK: Bak4-1:Stopped
+[12:07:11] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[12:07:13] [INFO] ⬅️ Response:
+  
+OK: Bak4-2:Stopped
+
+
+[12:07:13] [INFO] ⬅️ Response: OK: Bak4-2:Stopped
+[12:15:08] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[12:15:10] [INFO] ⬅️ Response:
+  
+OK: Bak4-1:Stopped
+
+
+[12:15:10] [INFO] ⬅️ Response: OK: Bak4-1:Stopped
+[12:15:10] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[12:15:12] [INFO] ⬅️ Response:
+  
+OK: Bak4-2:Stopped
+
+
+[12:15:12] [INFO] ⬅️ Response: OK: Bak4-2:Stopped
+[12:23:08] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[12:23:10] [INFO] ⬅️ Response:
+  
+OK: Bak4-1:Stopped
+
+
+[12:23:10] [INFO] ⬅️ Response: OK: Bak4-1:Stopped
+[12:23:10] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[12:23:12] [INFO] ⬅️ Response:
+  
+OK: Bak4-2:Stopped
+
+
+[12:23:12] [INFO] ⬅️ Response: OK: Bak4-2:Stopped
+[12:31:08] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[12:31:11] [INFO] ⬅️ Response:
+  
+OK: Bak4-1:Stopped
+
+
+[12:31:11] [INFO] ⬅️ Response: OK: Bak4-1:Stopped
+[12:31:11] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[12:31:13] [INFO] ⬅️ Response:
+  
+OK: Bak4-2:Stopped
+
+
+[12:31:13] [INFO] ⬅️ Response: OK: Bak4-2:Stopped
+[12:39:08] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[12:39:10] [INFO] ⬅️ Response:
+  
+OK: Bak4-1:Stopped
+
+
+[12:39:10] [INFO] ⬅️ Response: OK: Bak4-1:Stopped
+[12:39:10] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[12:39:13] [INFO] ⬅️ Response:
+  
+OK: Bak4-2:Stopped
+
+
+[12:39:13] [INFO] ⬅️ Response: OK: Bak4-2:Stopped
+[12:47:08] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[12:47:10] [INFO] ⬅️ Response:
+  
+OK: Bak4-1:Stopped
+
+
+[12:47:10] [INFO] ⬅️ Response: OK: Bak4-1:Stopped
+[12:47:10] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[12:47:13] [INFO] ⬅️ Response:
+  
+OK: Bak4-2:Stopped
+
+
+[12:47:13] [INFO] ⬅️ Response: OK: Bak4-2:Stopped
+[12:55:08] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[12:55:10] [INFO] ⬅️ Response:
+  
+OK: Bak4-1:Stopped
+
+
+[12:55:10] [INFO] ⬅️ Response: OK: Bak4-1:Stopped
+[12:55:10] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[12:55:12] [INFO] ⬅️ Response:
+  
+OK: Bak4-2:Stopped
+
+
+[12:55:12] [INFO] ⬅️ Response: OK: Bak4-2:Stopped
+[13:03:08] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[13:03:10] [INFO] ⬅️ Response:
+  
+OK: Bak4-1:Stopped
+
+
+[13:03:10] [INFO] ⬅️ Response: OK: Bak4-1:Stopped
+[13:03:10] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[13:03:12] [INFO] ⬅️ Response:
+  
+OK: Bak4-2:Stopped
+
+
+[13:03:13] [INFO] ⬅️ Response: OK: Bak4-2:Stopped
+[13:11:08] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[13:11:10] [INFO] ⬅️ Response:
+  
+OK: Bak4-1:Stopped
+
+
+[13:11:10] [INFO] ⬅️ Response: OK: Bak4-1:Stopped
+[13:11:10] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[13:11:12] [INFO] ⬅️ Response:
+  
+OK: Bak4-2:Stopped
+
+
+[13:11:12] [INFO] ⬅️ Response: OK: Bak4-2:Stopped
+[13:19:08] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[13:19:10] [INFO] ⬅️ Response:
+  
+OK: Bak4-1:Stopped
+
+
+[13:19:10] [INFO] ⬅️ Response: OK: Bak4-1:Stopped
+[13:19:10] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[13:19:13] [INFO] ⬅️ Response:
+  
+OK: Bak4-2:Stopped
+
+
+[13:19:13] [INFO] ⬅️ Response: OK: Bak4-2:Stopped
+[13:27:08] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[13:27:10] [INFO] ⬅️ Response:
+  
+OK: Bak4-1:Stopped
+
+
+[13:27:10] [INFO] ⬅️ Response: OK: Bak4-1:Stopped
+[13:27:10] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[13:27:12] [INFO] ⬅️ Response:
+  
+OK: Bak4-2:Stopped
+
+
+[13:27:12] [INFO] ⬅️ Response: OK: Bak4-2:Stopped
+[13:35:08] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[13:35:10] [INFO] ⬅️ Response:
+  
+OK: Bak4-1:Stopped
+
+
+[13:35:10] [INFO] ⬅️ Response: OK: Bak4-1:Stopped
+[13:35:10] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[13:35:12] [INFO] ⬅️ Response:
+  
+OK: Bak4-2:Stopped
+
+
+[13:35:12] [INFO] ⬅️ Response: OK: Bak4-2:Stopped
+[13:43:08] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[13:43:10] [INFO] ⬅️ Response:
+  
+OK: Bak4-1:Stopped
+
+
+[13:43:10] [INFO] ⬅️ Response: OK: Bak4-1:Stopped
+[13:43:10] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[13:43:12] [INFO] ⬅️ Response:
+  
+OK: Bak4-2:Stopped
+
+
+[13:43:12] [INFO] ⬅️ Response: OK: Bak4-2:Stopped
+[13:51:08] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[13:51:10] [INFO] ⬅️ Response:
+  
+OK: Bak4-1:Stopped
+
+
+[13:51:10] [INFO] ⬅️ Response: OK: Bak4-1:Stopped
+[13:51:10] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[13:51:13] [INFO] ⬅️ Response:
+  
+OK: Bak4-2:Stopped
+
+
+[13:51:13] [INFO] ⬅️ Response: OK: Bak4-2:Stopped
+[13:59:08] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[13:59:10] [INFO] ⬅️ Response:
+  
+OK: Bak4-1:Stopped
+
+
+[13:59:10] [INFO] ⬅️ Response: OK: Bak4-1:Stopped
+[13:59:10] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[13:59:12] [INFO] ⬅️ Response:
+  
+OK: Bak4-2:Stopped
+
+
+[13:59:12] [INFO] ⬅️ Response: OK: Bak4-2:Stopped
+[14:07:08] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[14:07:10] [INFO] ⬅️ Response:
+  
+OK: Bak4-1:Stopped
+
+
+[14:07:10] [INFO] ❌ 指令傳送失敗: 'PySide6.QtGui.QTextDocument' object has no attribute 'removeBlock'
+[14:07:10] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[14:07:10] [INFO] ❌ Bak4-2 連線失敗: 'PySide6.QtGui.QTextDocument' object has no attribute 'removeBlock'
+[14:15:08] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[14:15:08] [INFO] ❌ Bak4-1 連線失敗: 'PySide6.QtGui.QTextDocument' object has no attribute 'removeBlock'
+[14:15:08] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[14:15:08] [INFO] ❌ Bak4-2 連線失敗: 'PySide6.QtGui.QTextDocument' object has no attribute 'removeBlock'
+[14:23:08] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[14:23:08] [INFO] ❌ Bak4-1 連線失敗: 'PySide6.QtGui.QTextDocument' object has no attribute 'removeBlock'
+[14:23:08] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[14:23:08] [INFO] ❌ Bak4-2 連線失敗: 'PySide6.QtGui.QTextDocument' object has no attribute 'removeBlock'
+[14:31:08] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[14:31:08] [INFO] ❌ Bak4-1 連線失敗: 'PySide6.QtGui.QTextDocument' object has no attribute 'removeBlock'
+[14:31:08] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[14:31:08] [INFO] ❌ Bak4-2 連線失敗: 'PySide6.QtGui.QTextDocument' object has no attribute 'removeBlock'
+[14:39:08] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[14:39:08] [INFO] ❌ Bak4-1 連線失敗: 'PySide6.QtGui.QTextDocument' object has no attribute 'removeBlock'
+[14:39:08] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[14:39:08] [INFO] ❌ Bak4-2 連線失敗: 'PySide6.QtGui.QTextDocument' object has no attribute 'removeBlock'
+[14:39:50] [INFO] ✅ 呼叫 add_time_block
+[14:40:30] [INFO] 👋 MainWindow 已關閉
+[14:41:18] [INFO] 📂 嘗試讀取 encoder 設定：C:\Users\coco\recoder\encoders.json
+[14:41:18] [INFO] ✅ 成功載入 encoder 設定，共 2 筆
+[14:41:18] [INFO] 🔧 MainWindow 建立中...
+[14:41:18] [INFO] ✅ Encoder 列表：['Bak4-1', 'Bak4-2']
+[14:41:18] [INFO] 🎯 draw_grid encoder_names:['Bak4-1', 'Bak4-2']
+[14:41:19] [INFO] 📂 已載入節目排程 schedule.json
+[14:41:19] [INFO] 🎯 draw_grid encoder_names:['Bak4-1', 'Bak4-2']
+[14:41:19] [INFO] 🔁 [同步] Runner block 數量：0
+[14:41:19] [INFO] 🎯 draw_grid encoder_names:['Bak4-1', 'Bak4-2']
+[14:41:19] [INFO] 📸 為 Bak4-1 拍照 ➜ E:/preview\Bak4-1.png
+[14:41:19] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[14:41:22] [INFO] ⬅️ Response:
+  
+OK: Snapshot file name has been set.
+
+
+[14:41:22] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[14:41:24] [INFO] ⬅️ Response:
+  
+
+[14:41:24] [INFO] 📡 Snapshot 回應：
+[14:41:24] [INFO] [Debug] encoder_name: Bak4-1
+[14:41:24] [INFO] [Debug] snapshot_relative: preview\Bak4-1
+[14:41:24] [INFO] 📸 拍照指令傳送 by encoder
+[14:41:24] [INFO] 📸 啟動時補拍 Bak4-1 ➔ None
+[14:41:24] [INFO] 📸 為 Bak4-2 拍照 ➜ E:/preview\Bak4-2.png
+[14:41:24] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[14:41:26] [INFO] ⬅️ Response:
+  
+
+[14:41:26] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[14:41:28] [INFO] ⬅️ Response:
+  
+
+[14:41:28] [INFO] 📡 Snapshot 回應：
+[14:41:28] [INFO] [Debug] encoder_name: Bak4-2
+[14:41:28] [INFO] [Debug] snapshot_relative: preview\Bak4-2
+[14:41:28] [INFO] 📸 拍照指令傳送 by encoder
+[14:41:28] [INFO] 📸 啟動時補拍 Bak4-2 ➔ None
+[14:41:39] [INFO] ✅ 呼叫 add_time_block
+[14:41:39] [INFO] ✅ 已加入 block: 測試123452
+[14:41:39] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[14:41:39] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[14:41:39] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[14:41:43] [INFO] ⬅️ Response:
+  
+OK: New output file: Z:\07.30.2025\0730_測試123452.mxf
+
+
+[14:41:43] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[14:41:45] [INFO] ⬅️ Response:
+  
+OK: Profile has been started successfully.
+
+
+[14:41:45] [INFO] 📸 拍照中 - block: 測試123452 / encoder: Bak4-1
+[14:41:45] [INFO] 📂 儲存位置: E:/07.30.2025\img\fafe4183-a45e-41dd-a7f7-bd46e60270fd.png
+[14:41:45] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[14:41:47] [INFO] ⬅️ Response:
+  
+OK: Snapshot file name has been set.
+
+
+[14:41:47] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[14:41:50] [INFO] ⬅️ Response:
+  
+OK: Snapshot has been taken.
+
+
+[14:41:50] [INFO] 📡 SnapShot 指令回應: OK: Snapshot has been taken.
+[14:41:50] [INFO] ⚠️ 檔案未生成，請檢查路徑或權限：E:/07.30.2025\img\fafe4183-a45e-41dd-a7f7-bd46e60270fd.png
+[14:41:50] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[14:41:54] [INFO] ⬅️ Response:
+  
+OK: Bak4-1:Runned
+
+
+[14:41:54] [INFO] ⬅️ Response: OK: Bak4-1:Runned
+[14:41:54] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[14:41:56] [INFO] ⬅️ Response:
+  
+OK: Bak4-2:Stopped
+
+
+[14:41:56] [INFO] ⬅️ Response: OK: Bak4-2:Stopped
+[14:41:56] [INFO] 🎯 draw_grid encoder_names:['Bak4-1', 'Bak4-2']
+[14:41:56] [INFO] 🔍 scene item count: 184
+[14:41:56] [INFO] 🖼️ 圖片放在右邊：E:/07.30.2025\img\fafe4183-a45e-41dd-a7f7-bd46e60270fd.png
+[14:41:56] [INFO] 🚀 啟動錄影: 測試123452 (fafe4183-a45e-41dd-a7f7-bd46e60270fd)
+[14:41:56] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[14:41:56] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[14:41:59] [INFO] ⬅️ Response:
+  
+OK: New output file: Z:\07.30.2025\0730_測試123452 0001.mxf
+
+
+[14:41:59] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[14:42:02] [INFO] ⬅️ Response:
+  
+OK: Profile has been splitted successfully.
+
+
+[14:42:02] [INFO] 🔍 scene item count: 187
+[14:42:02] [INFO] 🖼️ 圖片放在右邊：E:/07.30.2025\img\fafe4183-a45e-41dd-a7f7-bd46e60270fd.png
+[14:42:02] [INFO] 📸 為 Bak4-1 拍照 ➜ E:/preview\Bak4-1.png
+[14:42:02] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[14:42:02] [INFO] 📸 為 Bak4-2 拍照 ➜ E:/preview\Bak4-2.png
+[14:42:02] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[14:42:05] [INFO] ⬅️ Response:
+  
+OK: Snapshot file name has been set.
+
+
+[14:42:05] [INFO] ⬅️ Response:
+  
+OK: Snapshot file name has been set.
+
+
+[14:42:05] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[14:42:05] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[14:42:07] [INFO] ⬅️ Response:
+  
+
+[14:42:07] [INFO] 📡 Snapshot 回應：
+[14:42:07] [INFO] [Debug] encoder_name: Bak4-2
+[14:42:07] [INFO] 📡 Snapshot 回應：
+[14:42:07] [INFO] [Debug] snapshot_relative: preview\Bak4-2
+[14:42:07] [INFO] [Debug] encoder_name: Bak4-1
+[14:42:07] [INFO] 📸 拍照指令傳送 by encoder
+[14:42:07] [INFO] [Debug] snapshot_relative: preview\Bak4-1
+[14:42:07] [INFO] 📸 拍照指令傳送 by encoder
+[14:42:24] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[14:42:24] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[14:42:24] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[14:42:24] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[14:42:24] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[14:42:24] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[14:42:24] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[14:42:24] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[14:42:24] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[14:42:24] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[14:42:24] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[14:42:24] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[14:42:24] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[14:42:24] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[14:42:24] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[14:42:24] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[14:42:24] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[14:42:24] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[14:42:24] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[14:42:24] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[14:42:24] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[14:42:24] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[14:42:24] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[14:42:24] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[14:42:24] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[14:42:24] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[14:42:24] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[14:42:24] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[14:42:24] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[14:42:24] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[14:42:24] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[14:42:24] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[14:42:24] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[14:42:24] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[14:42:24] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[14:42:24] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[14:42:24] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[14:42:24] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[14:42:24] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[14:42:24] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[14:42:24] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[14:42:24] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[14:42:25] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[14:42:25] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[14:42:25] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[14:42:25] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[14:42:25] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[14:42:25] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[14:42:25] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[14:42:25] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[14:42:35] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[14:42:35] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[14:42:35] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[14:42:35] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[14:42:35] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[14:42:35] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[14:42:35] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[14:42:35] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[14:42:35] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[14:42:35] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[14:42:35] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[14:42:35] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[14:42:35] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[14:42:36] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[14:42:36] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[14:43:26] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[14:43:26] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[14:43:26] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[14:43:26] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[14:43:26] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[14:43:27] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[14:43:27] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[14:43:27] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[14:43:27] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[14:43:27] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[14:43:27] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[14:43:27] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[14:43:27] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[14:43:27] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[14:43:27] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[14:43:27] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[14:43:27] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[14:49:19] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[14:49:21] [INFO] ⬅️ Response:
+  
+
+[14:49:21] [INFO] ⬅️ Response: 
+[14:49:21] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[14:49:23] [INFO] ⬅️ Response:
+  
+OK: Bak4-2:Stopped
+
+
+[14:49:23] [INFO] ⬅️ Response: OK: Bak4-2:Stopped
+[14:57:19] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[14:57:21] [INFO] ⬅️ Response:
+  
+OK: Bak4-1:Runned
+
+
+[14:57:21] [INFO] ⬅️ Response: OK: Bak4-1:Runned
+[14:57:21] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[14:57:23] [INFO] ⬅️ Response:
+  
+OK: Bak4-2:Stopped
+
+
+[14:57:23] [INFO] ⬅️ Response: OK: Bak4-2:Stopped
+[15:05:19] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[15:05:21] [INFO] ⬅️ Response:
+  
+OK: Bak4-1:Runned
+
+
+[15:05:21] [INFO] ⬅️ Response: OK: Bak4-1:Runned
+[15:05:21] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[15:05:23] [INFO] ⬅️ Response:
+  
+OK: Bak4-2:Stopped
+
+
+[15:05:23] [INFO] ⬅️ Response: OK: Bak4-2:Stopped
+[15:13:19] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[15:13:21] [INFO] ⬅️ Response:
+  
+OK: Bak4-1:Runned
+
+
+[15:13:21] [INFO] ⬅️ Response: OK: Bak4-1:Runned
+[15:13:21] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[15:13:23] [INFO] ⬅️ Response:
+  
+OK: Bak4-2:Stopped
+
+
+[15:13:23] [INFO] ⬅️ Response: OK: Bak4-2:Stopped
+[15:21:19] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[15:21:21] [INFO] ⬅️ Response:
+  
+OK: Bak4-1:Runned
+
+
+[15:21:21] [INFO] ⬅️ Response: OK: Bak4-1:Runned
+[15:21:21] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[15:21:23] [INFO] ⬅️ Response:
+  
+OK: Bak4-2:Stopped
+
+
+[15:21:23] [INFO] ⬅️ Response: OK: Bak4-2:Stopped
+[15:29:19] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[15:29:21] [INFO] ⬅️ Response:
+  
+OK: Bak4-1:Runned
+
+
+[15:29:21] [INFO] ⬅️ Response: OK: Bak4-1:Runned
+[15:29:21] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[15:29:23] [INFO] ⬅️ Response:
+  
+OK: Bak4-2:Stopped
+
+
+[15:29:23] [INFO] ⬅️ Response: OK: Bak4-2:Stopped
+[15:36:14] [INFO] 🧪 檢查名稱: 
+[15:36:28] [INFO] 🧪 檢查名稱: 明天的
+[15:36:28] [INFO] ✅ 呼叫 add_time_block
+[15:36:28] [INFO] 🔍 scene item count: 187
+[15:36:28] [INFO] 🖼️ 圖片放在右邊：E:/07.30.2025\img\fafe4183-a45e-41dd-a7f7-bd46e60270fd.png
+[15:36:28] [INFO] ✅ 已加入 block: 明天的
+[15:36:28] [INFO] 🔍 scene item count: 187
+[15:36:28] [INFO] 🖼️ 圖片放在右邊：E:/07.30.2025\img\fafe4183-a45e-41dd-a7f7-bd46e60270fd.png
+[15:36:28] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[15:36:28] [INFO] 🔁 [同步] Runner block 數量：2
+[15:36:29] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[15:36:32] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[15:36:32] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[15:36:32] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[15:36:32] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[15:36:32] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[15:36:32] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[15:36:32] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[15:36:32] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[15:36:32] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[15:36:32] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[15:36:32] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[15:36:32] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[15:36:32] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[15:36:32] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[15:36:32] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[15:36:32] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[15:36:32] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[15:36:32] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[15:36:32] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[15:36:32] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[15:36:32] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[15:36:32] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[15:36:32] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[15:36:32] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[15:36:32] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[15:36:32] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[15:36:32] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[15:36:32] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[15:36:32] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[15:36:32] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[15:36:32] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[15:36:32] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[15:36:32] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[15:36:32] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[15:36:32] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[15:36:32] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[15:36:35] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[15:36:36] [INFO] ⛔ 不可移動到過去（明天的）
+[15:36:38] [INFO] ⛔ 不可移動到過去（明天的）
+[15:36:41] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[15:36:41] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[15:36:41] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[15:36:41] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[15:36:41] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[15:36:41] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[15:36:41] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[15:36:41] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[15:36:41] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[15:36:41] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[15:36:41] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[15:36:41] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[15:36:41] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[15:36:41] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[15:36:41] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[15:36:41] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[15:36:41] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[15:36:41] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[15:36:41] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[15:36:41] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[15:36:41] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[15:36:41] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[15:36:41] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[15:36:41] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[15:36:41] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[15:36:41] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[15:36:41] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[15:36:41] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[15:36:41] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[15:36:41] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[15:36:41] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[15:36:41] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[15:36:41] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[15:36:41] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[15:36:41] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[15:36:41] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[15:36:41] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[15:36:41] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[15:36:41] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[15:36:41] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[15:36:41] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[15:36:41] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[15:36:41] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[15:36:41] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[15:36:41] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[15:36:41] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[15:36:41] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[15:36:41] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[15:36:41] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[15:36:41] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[15:36:41] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[15:36:41] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[15:36:41] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[15:36:41] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[15:36:41] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[15:36:41] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[15:36:41] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[15:36:41] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[15:36:41] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[15:36:41] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[15:36:41] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[15:36:41] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[15:36:41] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[15:36:41] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[15:36:41] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[15:36:41] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[15:36:42] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[15:36:42] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[15:36:42] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[15:36:42] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[15:36:42] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[15:36:42] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[15:36:42] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[15:36:42] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[15:36:42] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[15:36:42] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[15:36:42] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[15:36:42] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[15:36:42] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[15:36:42] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[15:36:42] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[15:36:42] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[15:36:42] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[15:36:42] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[15:36:42] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[15:36:42] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[15:36:42] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[15:36:42] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[15:36:42] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[15:36:42] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[15:36:42] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[15:36:42] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[15:36:43] [INFO] ⛔ 不可移動到過去（明天的）
+[15:36:46] [INFO] ⛔ 不可移動到過去（明天的）
+[15:36:49] [INFO] ⛔ 不可移動到過去（明天的）
+[15:36:53] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[15:36:53] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[15:36:53] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[15:36:53] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[15:36:53] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[15:36:53] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[15:36:53] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[15:36:53] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[15:36:53] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[15:36:53] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[15:36:53] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[15:36:53] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[15:36:53] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[15:36:53] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[15:36:53] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[15:36:53] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[15:36:53] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[15:36:53] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[15:36:53] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[15:36:53] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[15:36:53] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[15:36:53] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[15:36:54] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[15:36:54] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[15:36:54] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[15:36:54] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[15:36:54] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[15:36:54] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[15:36:54] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[15:36:54] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[15:36:54] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[15:36:54] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[15:36:54] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[15:36:54] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[15:36:54] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[15:36:54] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[15:36:54] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[15:36:54] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[15:36:54] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[15:36:54] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[15:36:54] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[15:36:54] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[15:36:54] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[15:36:54] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[15:36:54] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[15:36:54] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[15:36:54] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[15:36:54] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[15:36:54] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[15:36:54] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[15:36:54] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[15:36:54] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[15:36:54] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[15:36:54] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[15:36:54] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[15:36:54] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[15:36:54] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[15:36:54] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[15:36:54] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[15:36:54] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[15:36:54] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[15:36:54] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[15:36:54] [INFO] ❌ 儲存失敗: 'PySide6.QtGui.QTextDocument' object has no attribute 'removeBlock'
+[15:36:54] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[15:36:54] [INFO] ❌ 儲存失敗: 'PySide6.QtGui.QTextDocument' object has no attribute 'removeBlock'
+[15:36:54] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[15:36:54] [INFO] ❌ 儲存失敗: 'PySide6.QtGui.QTextDocument' object has no attribute 'removeBlock'
+[15:36:54] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[15:36:54] [INFO] ❌ 儲存失敗: 'PySide6.QtGui.QTextDocument' object has no attribute 'removeBlock'
+[15:36:54] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[15:36:54] [INFO] ❌ 儲存失敗: 'PySide6.QtGui.QTextDocument' object has no attribute 'removeBlock'
+[15:36:54] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[15:36:54] [INFO] ❌ 儲存失敗: 'PySide6.QtGui.QTextDocument' object has no attribute 'removeBlock'
+[15:36:54] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[15:36:54] [INFO] ❌ 儲存失敗: 'PySide6.QtGui.QTextDocument' object has no attribute 'removeBlock'
+[15:36:54] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[15:36:54] [INFO] ❌ 儲存失敗: 'PySide6.QtGui.QTextDocument' object has no attribute 'removeBlock'
+[15:36:54] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[15:36:54] [INFO] ❌ 儲存失敗: 'PySide6.QtGui.QTextDocument' object has no attribute 'removeBlock'
+[15:36:54] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[15:36:54] [INFO] ❌ 儲存失敗: 'PySide6.QtGui.QTextDocument' object has no attribute 'removeBlock'
+[15:36:54] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[15:36:54] [INFO] ❌ 儲存失敗: 'PySide6.QtGui.QTextDocument' object has no attribute 'removeBlock'
+[15:36:54] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[15:36:54] [INFO] ❌ 儲存失敗: 'PySide6.QtGui.QTextDocument' object has no attribute 'removeBlock'
+[15:36:54] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[15:36:54] [INFO] ❌ 儲存失敗: 'PySide6.QtGui.QTextDocument' object has no attribute 'removeBlock'
+[15:36:54] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[15:36:54] [INFO] ❌ 儲存失敗: 'PySide6.QtGui.QTextDocument' object has no attribute 'removeBlock'
+[15:36:54] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[15:36:54] [INFO] ❌ 儲存失敗: 'PySide6.QtGui.QTextDocument' object has no attribute 'removeBlock'
+[15:36:54] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[15:36:54] [INFO] ❌ 儲存失敗: 'PySide6.QtGui.QTextDocument' object has no attribute 'removeBlock'
+[15:36:54] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[15:36:54] [INFO] ❌ 儲存失敗: 'PySide6.QtGui.QTextDocument' object has no attribute 'removeBlock'
+[15:36:54] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[15:36:54] [INFO] ❌ 儲存失敗: 'PySide6.QtGui.QTextDocument' object has no attribute 'removeBlock'
+[15:36:54] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[15:36:54] [INFO] ❌ 儲存失敗: 'PySide6.QtGui.QTextDocument' object has no attribute 'removeBlock'
+[15:37:00] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[15:37:00] [INFO] ❌ 儲存失敗: 'PySide6.QtGui.QTextDocument' object has no attribute 'removeBlock'
+[15:37:00] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[15:37:00] [INFO] ❌ 儲存失敗: 'PySide6.QtGui.QTextDocument' object has no attribute 'removeBlock'
+[15:37:00] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[15:37:00] [INFO] ❌ 儲存失敗: 'PySide6.QtGui.QTextDocument' object has no attribute 'removeBlock'
+[15:37:00] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[15:37:00] [INFO] ❌ 儲存失敗: 'PySide6.QtGui.QTextDocument' object has no attribute 'removeBlock'
+[15:37:00] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[15:37:00] [INFO] ❌ 儲存失敗: 'PySide6.QtGui.QTextDocument' object has no attribute 'removeBlock'
+[15:37:00] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[15:37:00] [INFO] ❌ 儲存失敗: 'PySide6.QtGui.QTextDocument' object has no attribute 'removeBlock'
+[15:37:00] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[15:37:00] [INFO] ❌ 儲存失敗: 'PySide6.QtGui.QTextDocument' object has no attribute 'removeBlock'
+[15:37:00] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[15:37:00] [INFO] ❌ 儲存失敗: 'PySide6.QtGui.QTextDocument' object has no attribute 'removeBlock'
+[15:37:00] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[15:37:00] [INFO] ❌ 儲存失敗: 'PySide6.QtGui.QTextDocument' object has no attribute 'removeBlock'
+[15:37:00] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[15:37:00] [INFO] ❌ 儲存失敗: 'PySide6.QtGui.QTextDocument' object has no attribute 'removeBlock'
+[15:37:00] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[15:37:00] [INFO] ❌ 儲存失敗: 'PySide6.QtGui.QTextDocument' object has no attribute 'removeBlock'
+[15:37:14] [INFO] ✅ 已儲存節目排程：C:\Users\coco\Documents\schedule_saved\schedule.json
+[15:37:14] [INFO] ❌ 儲存失敗: 'PySide6.QtGui.QTextDocument' object has no attribute 'removeBlock'
+[15:37:19] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[15:37:19] [INFO] ❌ Bak4-1 連線失敗: 'PySide6.QtGui.QTextDocument' object has no attribute 'removeBlock'
+[15:37:19] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[15:37:19] [INFO] ❌ Bak4-2 連線失敗: 'PySide6.QtGui.QTextDocument' object has no attribute 'removeBlock'
+[15:37:25] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[15:37:25] [INFO] ❌ Bak4-1 連線失敗: 'PySide6.QtGui.QTextDocument' object has no attribute 'removeBlock'
+[15:37:26] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[15:37:26] [INFO] ❌ Bak4-1 連線失敗: 'PySide6.QtGui.QTextDocument' object has no attribute 'removeBlock'
+[15:37:27] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[15:37:27] [INFO] ❌ Bak4-1 連線失敗: 'PySide6.QtGui.QTextDocument' object has no attribute 'removeBlock'
+[15:37:29] [INFO] 👋 MainWindow 已關閉
