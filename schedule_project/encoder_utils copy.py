@@ -2,8 +2,7 @@
 import socket
 import json
 import os
-from main import resource_path  
-from utils import log
+from utils import resource_path,log
 # ➤ 設定連線參數
 # HOST = "192.168.30.228"
 # PORT = 32108

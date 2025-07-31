@@ -1,14 +1,22 @@
-
+import os 
 from PySide6.QtCore import QDate, QDateTime, QTime
 import json
-from utils import resource_path  
+from utils import resource_path  ,log
 def find_conflict_blocks(file_path, qdate, track_index, start_hour, duration):
     new_start_dt = QDateTime(qdate, QTime(int(start_hour), int((start_hour % 1) * 60)))
     new_end_dt = new_start_dt.addSecs(int(duration * 3600))
     
     path = resource_path(file_path)
-    with open(path, "r", encoding="utf-8") as f:
-        data = json.load(f)
+    if not os.path.exists(path):
+        log(f"⚠️ 無法找到排程檔 {file_path}，視為無衝突")
+        return []
+
+    try:
+        with open(path, "r", encoding="utf-8") as f:
+            data = json.load(f)
+    except Exception as e:
+        log(f"❌ 無法讀取排程檔 {file_path}：{e}")
+        return []
 
     conflicts = []
     for block in data:

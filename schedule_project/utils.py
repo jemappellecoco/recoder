@@ -3,6 +3,8 @@ import sys
 import os
 from PySide6.QtCore import QDateTime
 from PySide6.QtGui import QTextCursor
+from PySide6.QtCore import QTimer
+
 _log_box = None
 _buffered_logs = []
 MAX_LOG_LINES = 500
@@ -11,15 +13,32 @@ def set_log_box(widget):
     global _log_box
     _log_box = widget
 
-    # ✅ 把之前的 log 全部補上
     for text in _buffered_logs:
         _log_box.append(text)
     _buffered_logs.clear()
-    _log_box.moveCursor(QTextCursor.End)
+
+    try:
+        _log_box.moveCursor(QTextCursor.End)
+    except Exception as e:
+        print(f"[log set_cursor error] {e}")
 
 
 def is_frozen():
     return getattr(sys, 'frozen', False)
+
+def _append_log_safely(text):
+    if _log_box:
+        lines = _log_box.toPlainText().splitlines()
+        lines.append(text)
+
+        # ✅ 限制最大行數，重新設定文字
+        if len(lines) > MAX_LOG_LINES:
+            lines = lines[-MAX_LOG_LINES:]
+            _log_box.setPlainText("\n".join(lines))
+        else:
+            _log_box.append(text)
+
+        _log_box.moveCursor(QTextCursor.End)
 
 def log(text: str, level="INFO"):
     timestamp = QDateTime.currentDateTime().toString("HH:mm:ss")
@@ -34,11 +53,9 @@ def log(text: str, level="INFO"):
             pass
 
     if _log_box and (DEBUG_MODE or level in ("ERROR", "WARNING")):
-        _log_box.append(full_text)
-        _log_box.moveCursor(QTextCursor.End)
-        doc = _log_box.document()
-        while doc.blockCount() > MAX_LOG_LINES:
-            doc.removeBlock(doc.firstBlock())
+        # ✅ 安全地轉到主執行緒
+        QTimer.singleShot(0, lambda: _append_log_safely(full_text))
+
 
 def resource_path(relative_path):
     """讓開發時與 PyInstaller 打包後都能正確抓到資源檔案"""

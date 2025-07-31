@@ -177,6 +177,10 @@ class TimeBlock(QGraphicsRectItem):
         
 
     def mousePressEvent(self, event):
+        if "已結束" in self.status:
+            log(f"⛔ 已結束 block 不可拖動（{self.label}）")
+            self.prevent_drag = True
+            return
         self.has_moved = False
         self.drag_start_offset = event.scenePos()
         self.prevent_drag = False  # 每次按下都先重置

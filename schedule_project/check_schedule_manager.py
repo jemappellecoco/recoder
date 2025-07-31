@@ -57,7 +57,7 @@ class CheckScheduleManager:
             status_label = self.encoder_status.get(encoder_name)
             block = self.find_block_by_id(block_id)
 
-            if start_dt <= now < end_dt and block_id not in self.already_started:
+            if (start_dt <= now < end_dt and block_id not in self.already_started and (not block or "已結束" not in block.status)):
                 log(f"🚀 啟動錄影: {b['label']} ({block_id})")
                 self.runner.start_encoder(encoder_name, b["label"], status_label, block_id)
                 self.already_started.add(block_id)

@@ -130,7 +130,7 @@ class ScheduleRunner(QObject):
         date_folder = now.toString("MM.dd.yyyy")
         date_prefix = now.toString("MMdd")
         
-      
+        block = self.find_block_by_id(block_id) if block_id else None
         
         full_path = os.path.abspath(os.path.join(self.record_root, date_folder, f"{date_prefix}_{filename}"))
         rel_path = os.path.relpath(full_path, start=self.record_root)
@@ -147,7 +147,6 @@ class ScheduleRunner(QObject):
         if "OK" in res1 and "OK" in res2:
             status_label.setText("✅ 錄影中")
             status_label.setStyleSheet("color: green;")
-            block = self.find_block_by_id(block_id) if block_id else None
         # ✅ 只在第一次啟動時拍照，避免 check_schedule 觸發多次
         if block_id and block_id not in self.already_started:
             self.already_started.add(block_id)

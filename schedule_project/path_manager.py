@@ -22,17 +22,37 @@ class PathManager:
                 json.dump({'record_root': path}, f)
         except Exception as e:
             log("❌ 無法儲存 config:", e)
-
     def load_record_root(self):
         try:
+        # 優先使用外部寫入的 config.json
+            if os.path.exists(CONFIG_FILE):
+                with open(CONFIG_FILE, 'r', encoding='utf-8') as f:
+                    data = json.load(f)
+                    return data.get('record_root', self.default_record_root())
+
+            # fallback: 使用打包進 exe 的 config.json（只讀）
             path = resource_path(CONFIG_FILE)
             if os.path.exists(path):
                 with open(path, 'r', encoding='utf-8') as f:
                     data = json.load(f)
-                    return data.get('record_root', 'E:/')
+                    return data.get('record_root', self.default_record_root())
+
         except Exception as e:
-            log("❌ 無法讀取 config:", e)
-        return 'E:/'
+            log(f"❌ 無法讀取 config: {e}")
+        return self.default_record_root()
+
+    def default_record_root(self):
+        return os.path.join(os.getcwd(), "Recordings") 
+    # def load_record_root(self):
+    #     try:
+    #         path = resource_path(CONFIG_FILE)
+    #         if os.path.exists(path):
+    #             with open(path, 'r', encoding='utf-8') as f:
+    #                 data = json.load(f)
+    #                 return data.get('record_root', 'E:/')
+    #     except Exception as e:
+    #         log("❌ 無法讀取 config:", e)
+    #     return 'E:/'
     def get_image_path(self, block_id: str, qdate: QDate):
             
         if not isinstance(block_id, str):

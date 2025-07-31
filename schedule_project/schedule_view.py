@@ -199,7 +199,8 @@ class ScheduleView(QGraphicsView):
                 self.scene.addItem(block)
                 block.update_geometry(self.base_date)
                 block.encoder_names = self.encoder_names
-                block.status = data.get("status", "FAILED")
+                block.status = data.get("status") or "狀態：⏳ 等待中"
+
                 block.update_text_position()
                 # 從舊 block 繼承狀態與圖片
                 old_block = old_block_map.get(data["label"])

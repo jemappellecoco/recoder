@@ -2,6 +2,7 @@ import os
 from encoder_utils import send_encoder_command
 from utils import log
 import time
+import threading
 def take_snapshot_from_block(block, encoder_names, snapshot_root: str = "E:/"):
     try:
         if not block.block_id:
@@ -80,3 +81,24 @@ def take_snapshot_by_encoder(encoder_name, snapshot_root="E:/"):
     except Exception as e:
         log(f"❌ take_snapshot_by_encoder 錯誤：{e}")
         return None
+# capture.py
+def start_cleanup_timer(snapshot_root, interval=300):
+    def cleanup():
+        preview_dir = os.path.join(snapshot_root, "preview")
+        now = time.time()
+        deleted = 0
+        try:
+            if os.path.exists(preview_dir):
+                for f in os.listdir(preview_dir):
+                    if f.endswith(".png"):
+                        fpath = os.path.join(preview_dir, f)
+                        if os.path.isfile(fpath) and now - os.path.getmtime(fpath) > interval:
+                            os.remove(fpath)
+                            deleted += 1
+            log(f"🧹 自動清理 preview，已刪除 {deleted} 張舊圖片")
+        except Exception as e:
+            log(f"❌ 清理 preview 圖片失敗：{e}")
+        finally:
+            threading.Timer(interval, cleanup).start()
+
+    cleanup()  # 啟動第一次
