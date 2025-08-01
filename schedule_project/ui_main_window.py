@@ -325,8 +325,11 @@ class MainWindow(QMainWindow):
         self.view.encoder_names = self.encoder_names
         self.view.encoder_status = self.encoder_status
         self.header.set_encoder_names(self.encoder_names)
+
+        # ✅ 修正 block 對應 encoder track
         self.view.remap_block_tracks()
         self.view.rebuild_tracks()
+        self.view.draw_grid()  # ←❗別漏這個
         self.view.save_schedule()
         self.sync_runner_data()
         self.update_encoder_status_labels()

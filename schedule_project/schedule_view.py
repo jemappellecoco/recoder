@@ -434,6 +434,7 @@ class ScheduleView(QGraphicsView):
                         "status": b.get("status", "")
                     } for b in raw
                 ]
+            self.remap_block_tracks()
             self.draw_grid()
             log(f"📂 已載入節目排程 {filename}")
         except FileNotFoundError:
