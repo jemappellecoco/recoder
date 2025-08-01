@@ -448,3 +448,8 @@ class ScheduleView(QGraphicsView):
     def set_encoder_names(self, names):
         self.encoder_names = names
         self.update()
+    def rebuild_tracks(self):
+        """Rebuild grid and blocks after encoder list is updated."""
+        self.tracks = len(self.encoder_names)
+        self.update_scene_rect()
+        self.draw_grid()

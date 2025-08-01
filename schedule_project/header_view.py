@@ -42,3 +42,8 @@ class HeaderView(QGraphicsView):
         self.update() 
     def sync_scroll(self, value):
         self.horizontalScrollBar().setValue(value)
+    def set_encoder_names(self, names):
+        """Update stored encoder names and redraw header."""
+        self.encoder_names = names
+        self.draw_header()
+        self.update()

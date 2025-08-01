@@ -4,7 +4,7 @@ from PySide6.QtWidgets import (
     QDialog, QVBoxLayout, QHBoxLayout, QLabel, QLineEdit,
     QPushButton, QScrollArea, QWidget, QMessageBox
 )
-from encoder_utils import encoder_config  # 全域設定
+from encoder_utils import encoder_config, scan_encoders_by_ip  # 全域設定及掃描功能
 from utils import log  # 你現有的 log 工具
 
 class EncoderManagerDialog(QDialog):
@@ -28,7 +28,8 @@ class EncoderManagerDialog(QDialog):
         self.ip_input.setPlaceholderText("IP 位址")
         self.port_input = QLineEdit()
         self.port_input.setPlaceholderText("Port")
-
+        self.ip_input.editingFinished.connect(self.auto_fill_name)
+        self.port_input.editingFinished.connect(self.auto_fill_name)
         self.add_button = QPushButton("➕ 新增")
         self.add_button.clicked.connect(self.add_encoder)
 
@@ -133,3 +134,24 @@ class EncoderManagerDialog(QDialog):
 
     def get_result(self):
         return self.encoder_data
+    def auto_fill_name(self):
+        ip = self.ip_input.text().strip()
+        port_text = self.port_input.text().strip()
+        if not ip or not port_text:
+            return
+        try:
+            port = int(port_text)
+        except ValueError:
+            return
+        if self.name_input.text().strip():
+            return
+        names = scan_encoders_by_ip(ip, port)
+        if names:
+            proposed = names[0]
+            if proposed in self.encoder_data:
+                base = proposed
+                idx = 1
+                while f"{base}-{idx}" in self.encoder_data:
+                    idx += 1
+                proposed = f"{base}-{idx}"
+            self.name_input.setText(proposed)
