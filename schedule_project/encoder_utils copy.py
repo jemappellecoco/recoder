@@ -60,6 +60,7 @@ def send_persistent_command(cmd):
     
 # ➤ 建立 socket 連線（依 encoder_name 找 IP/Port）
 def connect_socket(encoder_name):
+    encoder_config = load_encoder_config()
     info = encoder_config.get(encoder_name)
     if not info:
         log(f"❌ 無法找到 encoder 設定: {encoder_name}")

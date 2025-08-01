@@ -108,5 +108,7 @@ def send_persistent_command(cmd, encoder_name=None):
         else:
             return "❌ 無法重新建立連線"
 # ➤ Encoder 列表（直接從設定檔讀取）
+# def list_encoders():
+#     return list(encoder_config.keys())
 def list_encoders():
-    return list(encoder_config.keys())
+    return list(load_encoder_config().keys())

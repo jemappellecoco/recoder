@@ -3,6 +3,7 @@ from encoder_utils import send_encoder_command
 from utils import log
 import time
 import threading
+cleanup_running = True
 def take_snapshot_from_block(block, encoder_names, snapshot_root: str = "E:/"):
     try:
         if not block.block_id:

@@ -23120,3 +23120,37 @@ Video Signal: Exists
 
 
 [15:44:26] [INFO] ✅ 已將 2 個 encoder 寫入 c:\Users\coco\recoder\schedule_project\encoders.json
+[15:53:51] [INFO] ❌ 無法連線 192.168.101.47:32108 - timed out
+[15:54:10] [INFO] ✅ 已建立 socket 連線：192.168.30.228:32108
+[15:54:12] [INFO] ⬅️ Response:
+ 
+OK: 
+Bak4-1      Mode: Quick
+State: Prepared
+Start Time: 
+   1920x1080 29.97 fps,      8 Ch. 48000 Hz
+   Streaming enabled
+Video Signal: Exists
+Bak4-2      Mode: Quick
+State: Prepared
+Start Time: 
+   1920x1080 29.97 fps,      8 Ch. 48000 Hz
+   No stream
+Video Signal: Exists
+
+
+[15:54:12] [INFO] ✅ 已將 2 個 encoder 寫入 c:\Users\coco\recoder\schedule_project\encoders.json
+[16:20:48] [INFO] 📂 嘗試讀取 encoder 設定：c:\Users\coco\recoder\schedule_project\encoders.json
+[16:20:48] [INFO] ✅ 成功載入 encoder 設定，共 2 筆
+[16:21:12] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[16:21:14] [INFO] ⬅️ Response:
+  
+OK: Bak4-1:Prepared
+
+
+[16:21:14] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[16:21:16] [INFO] ⬅️ Response:
+  
+OK: Bak4-2:Prepared
+
+

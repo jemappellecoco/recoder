@@ -51,7 +51,7 @@ class MainWindow(QMainWindow):
             self.encoder_names = ["encoder1", "encoder2"]
         log(f"✅ Encoder 列表：{self.encoder_names}")
 
-        self.setWindowTitle("橫向錄影時間表（跨日）")
+        self.setWindowTitle("錄影時間表")
         self.setGeometry(100, 100, 1600, 900)
 
         # === UI 主體 ===
@@ -155,9 +155,14 @@ class MainWindow(QMainWindow):
         self.prev_button.clicked.connect(lambda: self.shift_date(-7))
         self.next_button = QPushButton("➡️ 下一週")
         self.next_button.clicked.connect(lambda: self.shift_date(+7))
+        self.today_button = QPushButton("📅 今天")
+        self.today_button.clicked.connect(self.jump_to_today)
+        
+
         toolbar_layout.addWidget(self.date_label)
         toolbar_layout.addWidget(self.date_picker)
         toolbar_layout.addStretch()
+        toolbar_layout.addWidget(self.today_button)
         toolbar_layout.addWidget(self.select_schedule_button)
         toolbar_layout.addWidget(self.root_button)
         toolbar_layout.addWidget(self.prev_button)
@@ -192,6 +197,19 @@ class MainWindow(QMainWindow):
         self.view.record_root = self.record_root
         self.view.load_schedule()
         self.view.draw_grid()
+        # 自動對齊畫面到「現在時間」
+        now = QDateTime.currentDateTime()
+        self.base_date = QDate.currentDate()
+        self.view.set_start_date(self.base_date)
+        self.header.set_base_date(self.base_date)
+        self.date_picker.setDate(self.base_date)  # ➤ UI 同步更新日期選擇器
+        days_from_base = self.base_date.daysTo(now.date())
+
+        if 0 <= days_from_base < self.view.days:
+            total_hours = now.time().hour() + now.time().minute() / 60
+            x_pos = int(days_from_base * self.view.day_width + total_hours * self.view.hour_width)
+            self.view.horizontalScrollBar().setValue(x_pos)
+            log(f"🧭 自動捲動畫面至今天時間：X = {x_pos}")
         self.view.setContextMenuPolicy(Qt.CustomContextMenu)
         self.view.customContextMenuRequested.connect(self.show_block_context_menu)
         self.view.path_manager = self.path_manager
@@ -210,6 +228,8 @@ class MainWindow(QMainWindow):
             runner=self.runner,
             parent_view_getter=lambda: self.view
         )
+        self.schedule_manager.schedule_data = self.view.block_data
+        self.schedule_manager.blocks = self.view.blocks
         self.check_timer = QTimer(self)
         self.check_timer.timeout.connect(self.safe_check_schedule)
         self.check_timer.start(1000)
@@ -266,7 +286,11 @@ class MainWindow(QMainWindow):
                         log(f"📂 自動載入之前選的檔案：{schedule_file}")
         except Exception as e:
             log(f"⚠️ config.json 載入失敗：{e}")
-    
+    def jump_to_today(self):
+        today = QDate.currentDate()
+        self.view.set_start_date(today)
+        self.header.set_base_date(today)
+        self.date_picker.setDate(today)
     def safe_check_schedule(self):
         try:
             self.schedule_manager.check_schedule()
@@ -403,10 +427,18 @@ class MainWindow(QMainWindow):
         #     except Exception as e:
         #         log(f"❌ [Timer] 快照更新錯誤（{name}）：{e}")
 
+        # try:
+        #      with concurrent.futures.ThreadPoolExecutor(max_workers=4) as executor:
+        #         for name, label in self.encoder_preview_labels.items():
+        #             executor.submit(capture_and_update, name, label)
+        # except Exception as e:
+        #     log(f"❌ [Timer] update_all_encoder_snapshots 整體錯誤：{e}")
         try:
-             with concurrent.futures.ThreadPoolExecutor(max_workers=4) as executor:
-                for name, label in self.encoder_preview_labels.items():
-                    executor.submit(capture_and_update, name, label)
+            names = list(self.encoder_preview_labels.keys())
+
+            for i, name in enumerate(names):
+                label = self.encoder_preview_labels[name]
+                QTimer.singleShot(i * 700, lambda n=name, l=label: capture_and_update(n, l))
         except Exception as e:
             log(f"❌ [Timer] update_all_encoder_snapshots 整體錯誤：{e}")
 
@@ -691,21 +723,20 @@ class MainWindow(QMainWindow):
     def closeEvent(self, event):
         self.is_closing = True
 
+        import capture
+        capture.cleanup_running = False  # ✅ 停止清理 timer
+
         if hasattr(self, "encoder_status_timer"):
             self.encoder_status_timer.stop()
-
         if hasattr(self, "snapshot_timer"):
             self.snapshot_timer.stop()
-
-        if hasattr(self, "check_timer"):  # ✅ 新的排程自動控制 timer
+        if hasattr(self, "check_timer"):
             self.check_timer.stop()
-
         if hasattr(self, "runner"):
-            self.runner.stop_timers()  # ✅ 若你有設置額外內部 timer
-
+            self.runner.stop_timers()
         if hasattr(self, "view"):
-            self.view.stop_timers()  # ✅ 若 ScheduleView 有內部 timer 也要停
+            self.view.stop_timers()
 
-        super().closeEvent(event)
         log("👋 MainWindow 已關閉")
-        QApplication.quit()
+        super().closeEvent(event)
+        os._exit(0)

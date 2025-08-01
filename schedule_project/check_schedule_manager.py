@@ -30,15 +30,20 @@ class CheckScheduleManager:
 
     def check_schedule(self):
         now = QDateTime.currentDateTime()
-
+        # log(f"🕵️‍♀️ check_schedule 開始執行：現在時間 {now.toString('yyyy-MM-dd HH:mm:ss')}")
         for b in self.schedule_data:
+            
             block_id = b.get("id")
-            if block_id in self.already_stopped:
+            if not block_id:
                 continue
 
             qdate = b["qdate"]
             if isinstance(qdate, str):
                 qdate = QDate.fromString(qdate, "yyyy-MM-dd")
+            
+             # ✅ 只處理今天的排程
+            if qdate != QDate.currentDate():
+                continue
             end_qdate = b.get("end_qdate", qdate)
             if isinstance(end_qdate, str):
                 end_qdate = QDate.fromString(end_qdate, "yyyy-MM-dd")
@@ -49,20 +54,20 @@ class CheckScheduleManager:
             start_dt = QDateTime(qdate, QTime(int(start_hour), int((start_hour % 1) * 60)))
             end_dt = QDateTime(end_qdate, QTime(int(end_hour), int((end_hour % 1) * 60)))
 
-            if now > end_dt:
-                continue
-
-            track_index = b["track_index"]
-            encoder_name = self.encoder_names[track_index]
+            encoder_name = self.encoder_names[b["track_index"]]
             status_label = self.encoder_status.get(encoder_name)
             block = self.find_block_by_id(block_id)
+            
+            # ➤ 自動開始錄影
+            if start_dt <= now < end_dt and block_id not in self.already_started:
+                if not block or "已結束" not in block.status:
+                    log(f"🚀 啟動錄影: {b['label']} ({block_id})")
+                    self.runner.start_encoder(encoder_name, b["label"], status_label, block_id)
+                    self.already_started.add(block_id)
 
-            if (start_dt <= now < end_dt and block_id not in self.already_started and (not block or "已結束" not in block.status)):
-                log(f"🚀 啟動錄影: {b['label']} ({block_id})")
-                self.runner.start_encoder(encoder_name, b["label"], status_label, block_id)
-                self.already_started.add(block_id)
-
-            elif now >= end_dt and block_id not in self.already_stopped:
+            # ➤ 自動停止錄影
+            if now >= end_dt and block_id not in self.already_stopped:
+                log(f"🛑 時間到 ➜ 停止錄影: {b['label']} ({block_id})")
                 self.runner.stop_encoder(encoder_name, status_label)
                 self.already_stopped.add(block_id)
                 if block:
@@ -81,6 +86,8 @@ class CheckScheduleManager:
                 if isinstance(qdate, str):
                     qdate = QDate.fromString(qdate, "yyyy-MM-dd")
                 end_qdate = b.get("end_qdate", qdate)
+                if qdate != QDate.currentDate():
+                    continue
                 if isinstance(end_qdate, str):
                     end_qdate = QDate.fromString(end_qdate, "yyyy-MM-dd")
                 start_dt = QDateTime(qdate, QTime(int(b["start_hour"]), int((b["start_hour"] % 1) * 60)))
