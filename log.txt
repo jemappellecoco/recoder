@@ -81903,3 +81903,360 @@ OK: Snapshot has been taken.
 [16:52:13] [INFO] [Debug] snapshot_relative: preview\Bak4-2
 [16:52:13] [INFO] 📸 拍照指令傳送 by encoder
 [16:52:16] [INFO] 👋 MainWindow 已關閉
+[17:33:23] [INFO] 📂 嘗試讀取 encoder 設定：C:\Users\coco\recoder\encoders.json
+[17:33:23] [INFO] ✅ 成功載入 encoder 設定，共 1 筆
+[17:33:23] [INFO] 🔧 MainWindow 建立中...
+[17:33:23] [INFO] 📂 嘗試讀取 encoder 設定：C:\Users\coco\recoder\encoders.json
+[17:33:23] [INFO] ✅ 成功載入 encoder 設定，共 1 筆
+[17:33:23] [INFO] ✅ Encoder 列表：['Bak4-2']
+[17:33:23] [INFO] ⚠️ 無效的 track: Bak4-1，已忽略
+[17:33:23] [INFO] ⚠️ 無效的 track: Bak4-1，已忽略
+[17:33:23] [INFO] ⚠️ 無效的 track: Bak4-1，已忽略
+[17:33:23] [INFO] ⚠️ 無效的 track: Bak4-1，已忽略
+[17:33:23] [INFO] ⚠️ 無效的 track: Bak4-1，已忽略
+[17:33:23] [INFO] ⚠️ 無效的 track: Bak4-1，已忽略
+[17:33:23] [INFO] ⚠️ 無效的 track: Bak4-1，已忽略
+[17:33:23] [INFO] ⚠️ 無效的 track: Bak4-1，已忽略
+[17:33:23] [INFO] ⚠️ 無效的 track: Bak4-1，已忽略
+[17:33:23] [INFO] ⚠️ 無效的 track: Bak4-1，已忽略
+[17:33:23] [INFO] ⚠️ 無效的 track: Bak4-1，已忽略
+[17:33:23] [INFO] ⚠️ 無效的 track: Bak4-1，已忽略
+[17:33:23] [INFO] 🎯 draw_grid encoder_names:['Bak4-2']
+[17:33:23] [INFO] 📂 已載入節目排程 C:/Users/coco/Documents/schedule_saved/schedule.json
+[17:33:23] [INFO] 🎯 draw_grid encoder_names:['Bak4-2']
+[17:33:23] [INFO] 🎯 draw_grid encoder_names:['Bak4-2']
+[17:33:23] [INFO] 🧭 自動捲動畫面至今天時間：X = 351
+[17:33:24] [INFO] 🔁 [同步] Runner block 數量：0
+[17:33:24] [INFO] 🎯 draw_grid encoder_names:['Bak4-2']
+[17:33:24] [INFO] 🧹 自動清理 preview，已刪除 0 張舊圖片
+[17:33:24] [INFO] ⚠️ 無效的 track: Bak4-1，已忽略
+[17:33:24] [INFO] ⚠️ 無效的 track: Bak4-1，已忽略
+[17:33:24] [INFO] ⚠️ 無效的 track: Bak4-1，已忽略
+[17:33:24] [INFO] ⚠️ 無效的 track: Bak4-1，已忽略
+[17:33:24] [INFO] ⚠️ 無效的 track: Bak4-1，已忽略
+[17:33:24] [INFO] ⚠️ 無效的 track: Bak4-1，已忽略
+[17:33:24] [INFO] ⚠️ 無效的 track: Bak4-1，已忽略
+[17:33:24] [INFO] ⚠️ 無效的 track: Bak4-1，已忽略
+[17:33:24] [INFO] ⚠️ 無效的 track: Bak4-1，已忽略
+[17:33:24] [INFO] ⚠️ 無效的 track: Bak4-1，已忽略
+[17:33:24] [INFO] ⚠️ 無效的 track: Bak4-1，已忽略
+[17:33:24] [INFO] ⚠️ 無效的 track: Bak4-1，已忽略
+[17:33:24] [INFO] 🎯 draw_grid encoder_names:['Bak4-2']
+[17:33:24] [INFO] 📂 已載入節目排程 C:/Users/coco/Documents/schedule_saved/schedule.json
+[17:33:24] [INFO] 📂 自動載入之前選的檔案：C:/Users/coco/Documents/schedule_saved/schedule.json
+[17:33:27] [INFO] 📸 為 Bak4-2 拍照 ➜ E:/preview\Bak4-2.png
+[17:33:27] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[17:33:29] [INFO] ⬅️ Response:
+  
+OK: Snapshot file name has been set.
+
+
+[17:33:29] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[17:33:31] [INFO] ⬅️ Response:
+  
+
+[17:33:31] [INFO] 📡 Snapshot 回應：
+[17:33:31] [INFO] [Debug] encoder_name: Bak4-2
+[17:33:31] [INFO] [Debug] snapshot_relative: preview\Bak4-2
+[17:33:31] [INFO] 📸 拍照指令傳送 by encoder
+[17:33:41] [INFO] ✅ 已建立 socket 連線：192.168.30.228:32108
+[17:33:44] [INFO] ⬅️ Response:
+  
+OK: 
+Bak4-1      Mode: Quick
+State: Stopped
+Start Time: 
+   1920x1080 29.97 fps,      8 Ch. 48000 Hz
+   Streaming enabled
+Video Signal: Exists
+Bak4-2      Mode: Quick
+State: Stopped
+Start Time: 
+   1920x1080 29.97 fps,      8 Ch. 48000 Hz
+   No stream
+Video Signal: Exists
+
+
+[17:33:44] [INFO] ✅ 已將 2 個 encoder 寫入 encoders.json
+[17:33:52] [INFO] ➕ 已新增 encoder：Bak4-1 ➜ 192.168.30.228:32108
+[17:33:54] [INFO] 📸 為 Bak4-2 拍照 ➜ E:/preview\Bak4-2.png
+[17:33:54] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[17:33:57] [INFO] ⬅️ Response:
+  
+OK: Snapshot file name has been set.
+
+
+[17:33:57] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[17:33:59] [INFO] ⬅️ Response:
+  
+
+[17:33:59] [INFO] 📡 Snapshot 回應：
+[17:33:59] [INFO] [Debug] encoder_name: Bak4-2
+[17:33:59] [INFO] [Debug] snapshot_relative: preview\Bak4-2
+[17:33:59] [INFO] 📸 拍照指令傳送 by encoder
+[17:33:59] [INFO] 📂 嘗試讀取 encoder 設定：C:\Users\coco\recoder\encoders.json
+[17:33:59] [INFO] ✅ 成功載入 encoder 設定，共 2 筆
+[17:33:59] [INFO] 🔄 重新載入 Encoder 列表
+[17:33:59] [INFO] 📂 嘗試讀取 encoder 設定：C:\Users\coco\recoder\encoders.json
+[17:33:59] [INFO] ✅ 成功載入 encoder 設定，共 2 筆
+[17:33:59] [INFO] 🎯 draw_grid encoder_names:['Bak4-2', 'Bak4-1']
+[17:33:59] [INFO] 🎯 draw_grid encoder_names:['Bak4-2', 'Bak4-1']
+[17:33:59] [INFO] ✅ 已儲存節目排程：C:/Users/coco/Documents/schedule_saved/schedule.json
+[17:33:59] [INFO] 🔁 [同步] Runner block 數量：0
+[17:34:01] [INFO] 🎯 draw_grid encoder_names:['Bak4-2', 'Bak4-1']
+[17:34:01] [INFO] 🎯 draw_grid encoder_names:['Bak4-2', 'Bak4-1']
+[17:34:02] [INFO] 🎯 draw_grid encoder_names:['Bak4-2', 'Bak4-1']
+[17:34:02] [INFO] 🎯 draw_grid encoder_names:['Bak4-2', 'Bak4-1']
+[17:34:05] [INFO] 🎯 draw_grid encoder_names:['Bak4-2', 'Bak4-1']
+[17:34:05] [INFO] 🎯 draw_grid encoder_names:['Bak4-2', 'Bak4-1']
+[17:34:05] [INFO] 🎯 draw_grid encoder_names:['Bak4-2', 'Bak4-1']
+[17:34:05] [INFO] 🎯 draw_grid encoder_names:['Bak4-2', 'Bak4-1']
+[17:34:12] [INFO] 🎯 draw_grid encoder_names:['Bak4-2', 'Bak4-1']
+[17:34:12] [INFO] 📂 已載入節目排程 E:/schedule_project/schedule.json
+[17:34:12] [INFO] 📂 使用者選擇排程檔案：E:/schedule_project/schedule.json
+[17:34:21] [INFO] 🎯 draw_grid encoder_names:['Bak4-2', 'Bak4-1']
+[17:34:21] [INFO] 📂 已載入節目排程 C:/Users/coco/Documents/schedule_saved/schedule.json
+[17:34:21] [INFO] 📂 使用者選擇排程檔案：C:/Users/coco/Documents/schedule_saved/schedule.json
+[17:34:24] [INFO] 📸 為 Bak4-2 拍照 ➜ E:/preview\Bak4-2.png
+[17:34:24] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[17:34:26] [INFO] ⬅️ Response:
+  
+
+[17:34:26] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[17:34:28] [INFO] ⬅️ Response:
+  
+
+[17:34:28] [INFO] 📡 Snapshot 回應：
+[17:34:28] [INFO] [Debug] encoder_name: Bak4-2
+[17:34:28] [INFO] [Debug] snapshot_relative: preview\Bak4-2
+[17:34:28] [INFO] 📸 拍照指令傳送 by encoder
+[17:34:29] [INFO] 📸 為 Bak4-1 拍照 ➜ E:/preview\Bak4-1.png
+[17:34:29] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[17:34:31] [INFO] ⬅️ Response:
+  
+
+[17:34:31] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[17:34:33] [INFO] ⬅️ Response:
+  
+
+[17:34:33] [INFO] 📡 Snapshot 回應：
+[17:34:33] [INFO] [Debug] encoder_name: Bak4-1
+[17:34:33] [INFO] [Debug] snapshot_relative: preview\Bak4-1
+[17:34:33] [INFO] 📸 拍照指令傳送 by encoder
+[17:34:33] [INFO] 🎯 draw_grid encoder_names:['Bak4-2', 'Bak4-1']
+[17:34:33] [INFO] 🎯 draw_grid encoder_names:['Bak4-2', 'Bak4-1']
+[17:34:33] [INFO] 🎯 draw_grid encoder_names:['Bak4-2', 'Bak4-1']
+[17:34:54] [INFO] 📸 為 Bak4-2 拍照 ➜ E:/preview\Bak4-2.png
+[17:34:54] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[17:34:56] [INFO] ⬅️ Response:
+  
+
+[17:34:56] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[17:34:58] [INFO] ⬅️ Response:
+  
+
+[17:34:58] [INFO] 📡 Snapshot 回應：
+[17:34:58] [INFO] [Debug] encoder_name: Bak4-2
+[17:34:58] [INFO] [Debug] snapshot_relative: preview\Bak4-2
+[17:34:58] [INFO] 📸 拍照指令傳送 by encoder
+[17:34:59] [INFO] 📸 為 Bak4-1 拍照 ➜ E:/preview\Bak4-1.png
+[17:34:59] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[17:35:01] [INFO] ⬅️ Response:
+  
+
+[17:35:01] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[17:35:03] [INFO] ⬅️ Response:
+  
+
+[17:35:03] [INFO] 📡 Snapshot 回應：
+[17:35:03] [INFO] [Debug] encoder_name: Bak4-1
+[17:35:03] [INFO] [Debug] snapshot_relative: preview\Bak4-1
+[17:35:03] [INFO] 📸 拍照指令傳送 by encoder
+[17:35:10] [INFO] 🎯 draw_grid encoder_names:['Bak4-2', 'Bak4-1']
+[17:35:11] [INFO] 🔍 scene item count: 189
+[17:35:11] [INFO] 🖼️ 圖片放在右邊：E:/08.01.2025\img\ac1b8340-43ae-455d-b5e3-5d8b1dc41512.png
+[17:35:11] [INFO] 📂 已載入節目排程 C:/Users/coco/Documents/schedule_saved/schedule.json
+[17:35:11] [INFO] 🔁 [同步] Runner block 數量：2
+[17:35:11] [INFO] ❌ [Timer] check_schedule 錯誤：list index out of range
+[17:35:12] [INFO] ❌ [Timer] check_schedule 錯誤：list index out of range
+[17:35:13] [INFO] ❌ [Timer] check_schedule 錯誤：list index out of range
+[17:35:14] [INFO] ❌ [Timer] check_schedule 錯誤：list index out of range
+[17:35:15] [INFO] ❌ [Timer] check_schedule 錯誤：list index out of range
+[17:35:16] [INFO] ❌ [Timer] check_schedule 錯誤：list index out of range
+[17:35:17] [INFO] ❌ [Timer] check_schedule 錯誤：list index out of range
+[17:35:18] [INFO] ❌ [Timer] check_schedule 錯誤：list index out of range
+[17:35:19] [INFO] ❌ [Timer] check_schedule 錯誤：list index out of range
+[17:35:20] [INFO] ❌ [Timer] check_schedule 錯誤：list index out of range
+[17:35:21] [INFO] ❌ [Timer] check_schedule 錯誤：list index out of range
+[17:35:22] [INFO] ❌ [Timer] check_schedule 錯誤：list index out of range
+[17:35:23] [INFO] ❌ [Timer] check_schedule 錯誤：list index out of range
+[17:35:24] [INFO] 📸 為 Bak4-2 拍照 ➜ E:/preview\Bak4-2.png
+[17:35:24] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[17:35:26] [INFO] ⬅️ Response:
+  
+
+[17:35:26] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[17:35:28] [INFO] ⬅️ Response:
+  
+
+[17:35:28] [INFO] 📡 Snapshot 回應：
+[17:35:28] [INFO] [Debug] encoder_name: Bak4-2
+[17:35:28] [INFO] [Debug] snapshot_relative: preview\Bak4-2
+[17:35:28] [INFO] 📸 拍照指令傳送 by encoder
+[17:35:29] [INFO] 📸 為 Bak4-1 拍照 ➜ E:/preview\Bak4-1.png
+[17:35:29] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[17:35:32] [INFO] ⬅️ Response:
+  
+OK: Snapshot file name has been set.
+
+
+[17:35:32] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[17:35:36] [INFO] ⬅️ Response:
+  
+OK: Snapshot has been taken.
+
+
+[17:35:36] [INFO] 📡 Snapshot 回應：OK: Snapshot has been taken.
+[17:35:36] [INFO] [Debug] encoder_name: Bak4-1
+[17:35:36] [INFO] [Debug] snapshot_relative: preview\Bak4-1
+[17:35:36] [INFO] 📸 拍照指令傳送 by encoder
+[17:35:36] [INFO] ❌ [Timer] check_schedule 錯誤：list index out of range
+[17:35:36] [INFO] 🎯 draw_grid encoder_names:['Bak4-2', 'Bak4-1']
+[17:35:37] [INFO] 🔍 scene item count: 189
+[17:35:37] [INFO] 🖼️ 圖片放在右邊：E:/08.01.2025\img\ac1b8340-43ae-455d-b5e3-5d8b1dc41512.png
+[17:35:37] [INFO] 📂 已載入節目排程 C:/Users/coco/Documents/schedule_saved/schedule.json
+[17:35:37] [INFO] 🔁 [同步] Runner block 數量：2
+[17:35:37] [INFO] 🎯 draw_grid encoder_names:['Bak4-2', 'Bak4-1']
+[17:35:37] [INFO] 🔍 scene item count: 189
+[17:35:37] [INFO] 🖼️ 圖片放在右邊：E:/08.01.2025\img\ac1b8340-43ae-455d-b5e3-5d8b1dc41512.png
+[17:35:37] [INFO] 📂 已載入節目排程 C:/Users/coco/Documents/schedule_saved/schedule.json
+[17:35:37] [INFO] 🔁 [同步] Runner block 數量：2
+[17:35:37] [INFO] ❌ [Timer] check_schedule 錯誤：list index out of range
+[17:35:38] [INFO] ❌ [Timer] check_schedule 錯誤：list index out of range
+[17:35:39] [INFO] ❌ [Timer] check_schedule 錯誤：list index out of range
+[17:35:40] [INFO] ❌ [Timer] check_schedule 錯誤：list index out of range
+[17:35:41] [INFO] ❌ [Timer] check_schedule 錯誤：list index out of range
+[17:35:42] [INFO] ❌ [Timer] check_schedule 錯誤：list index out of range
+[17:35:43] [INFO] ❌ [Timer] check_schedule 錯誤：list index out of range
+[17:35:44] [INFO] ❌ [Timer] check_schedule 錯誤：list index out of range
+[17:35:45] [INFO] ❌ [Timer] check_schedule 錯誤：list index out of range
+[17:35:45] [INFO] ⛔ 已結束排程不可編輯
+[17:35:46] [INFO] ❌ [Timer] check_schedule 錯誤：list index out of range
+[17:35:47] [INFO] ❌ [Timer] check_schedule 錯誤：list index out of range
+[17:35:48] [INFO] ❌ [Timer] check_schedule 錯誤：list index out of range
+[17:35:49] [INFO] ❌ [Timer] check_schedule 錯誤：list index out of range
+[17:35:50] [INFO] ❌ [Timer] check_schedule 錯誤：list index out of range
+[17:35:51] [INFO] ❌ [Timer] check_schedule 錯誤：list index out of range
+[17:35:52] [INFO] ❌ [Timer] check_schedule 錯誤：list index out of range
+[17:35:53] [INFO] ❌ [Timer] check_schedule 錯誤：list index out of range
+[17:35:54] [INFO] 📸 為 Bak4-2 拍照 ➜ E:/preview\Bak4-2.png
+[17:35:54] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[17:35:57] [INFO] ⬅️ Response:
+  
+OK: Snapshot file name has been set.
+
+
+[17:35:57] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[17:35:59] [INFO] ⬅️ Response:
+  
+
+[17:35:59] [INFO] 📡 Snapshot 回應：
+[17:35:59] [INFO] [Debug] encoder_name: Bak4-2
+[17:35:59] [INFO] [Debug] snapshot_relative: preview\Bak4-2
+[17:35:59] [INFO] 📸 拍照指令傳送 by encoder
+[17:36:00] [INFO] 📸 為 Bak4-1 拍照 ➜ E:/preview\Bak4-1.png
+[17:36:00] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[17:36:04] [INFO] ⬅️ Response:
+  
+OK: Snapshot file name has been set.
+
+
+[17:36:04] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[17:36:06] [INFO] ⬅️ Response:
+  
+
+[17:36:06] [INFO] 📡 Snapshot 回應：
+[17:36:06] [INFO] [Debug] encoder_name: Bak4-1
+[17:36:06] [INFO] [Debug] snapshot_relative: preview\Bak4-1
+[17:36:06] [INFO] 📸 拍照指令傳送 by encoder
+[17:36:06] [INFO] ❌ [Timer] check_schedule 錯誤：list index out of range
+[17:36:06] [INFO] 🎯 draw_grid encoder_names:['Bak4-2', 'Bak4-1']
+[17:36:06] [INFO] 🔍 scene item count: 189
+[17:36:06] [INFO] 🖼️ 圖片放在右邊：E:/08.01.2025\img\ac1b8340-43ae-455d-b5e3-5d8b1dc41512.png
+[17:36:06] [INFO] 📂 已載入節目排程 C:/Users/coco/Documents/schedule_saved/schedule.json
+[17:36:06] [INFO] 🔁 [同步] Runner block 數量：2
+[17:36:06] [INFO] 🎯 draw_grid encoder_names:['Bak4-2', 'Bak4-1']
+[17:36:06] [INFO] 🔍 scene item count: 189
+[17:36:06] [INFO] 🖼️ 圖片放在右邊：E:/08.01.2025\img\ac1b8340-43ae-455d-b5e3-5d8b1dc41512.png
+[17:36:06] [INFO] 📂 已載入節目排程 C:/Users/coco/Documents/schedule_saved/schedule.json
+[17:36:06] [INFO] 🔁 [同步] Runner block 數量：2
+[17:36:06] [INFO] 🎯 draw_grid encoder_names:['Bak4-2', 'Bak4-1']
+[17:36:06] [INFO] 🔍 scene item count: 189
+[17:36:06] [INFO] 🖼️ 圖片放在右邊：E:/08.01.2025\img\ac1b8340-43ae-455d-b5e3-5d8b1dc41512.png
+[17:36:06] [INFO] 📂 已載入節目排程 C:/Users/coco/Documents/schedule_saved/schedule.json
+[17:36:06] [INFO] 🔁 [同步] Runner block 數量：2
+[17:36:06] [INFO] 🎯 draw_grid encoder_names:['Bak4-2', 'Bak4-1']
+[17:36:06] [INFO] 🔍 scene item count: 189
+[17:36:06] [INFO] 🖼️ 圖片放在右邊：E:/08.01.2025\img\ac1b8340-43ae-455d-b5e3-5d8b1dc41512.png
+[17:36:06] [INFO] 📂 已載入節目排程 C:/Users/coco/Documents/schedule_saved/schedule.json
+[17:36:06] [INFO] 🔁 [同步] Runner block 數量：2
+[17:36:06] [INFO] 🎯 draw_grid encoder_names:['Bak4-2', 'Bak4-1']
+[17:36:06] [INFO] 🔍 scene item count: 189
+[17:36:06] [INFO] 🖼️ 圖片放在右邊：E:/08.01.2025\img\ac1b8340-43ae-455d-b5e3-5d8b1dc41512.png
+[17:36:06] [INFO] 📂 已載入節目排程 C:/Users/coco/Documents/schedule_saved/schedule.json
+[17:36:06] [INFO] 🔁 [同步] Runner block 數量：2
+[17:36:07] [INFO] 🎯 draw_grid encoder_names:['Bak4-2', 'Bak4-1']
+[17:36:07] [INFO] 🔍 scene item count: 189
+[17:36:07] [INFO] 🖼️ 圖片放在右邊：E:/08.01.2025\img\ac1b8340-43ae-455d-b5e3-5d8b1dc41512.png
+[17:36:07] [INFO] 📂 已載入節目排程 C:/Users/coco/Documents/schedule_saved/schedule.json
+[17:36:07] [INFO] 🔁 [同步] Runner block 數量：2
+[17:36:07] [INFO] 🎯 draw_grid encoder_names:['Bak4-2', 'Bak4-1']
+[17:36:07] [INFO] 🔍 scene item count: 189
+[17:36:07] [INFO] 🖼️ 圖片放在右邊：E:/08.01.2025\img\ac1b8340-43ae-455d-b5e3-5d8b1dc41512.png
+[17:36:07] [INFO] 📂 已載入節目排程 C:/Users/coco/Documents/schedule_saved/schedule.json
+[17:36:07] [INFO] 🔁 [同步] Runner block 數量：2
+[17:36:07] [INFO] 🎯 draw_grid encoder_names:['Bak4-2', 'Bak4-1']
+[17:36:07] [INFO] 🔍 scene item count: 189
+[17:36:07] [INFO] 🖼️ 圖片放在右邊：E:/08.01.2025\img\ac1b8340-43ae-455d-b5e3-5d8b1dc41512.png
+[17:36:07] [INFO] 📂 已載入節目排程 C:/Users/coco/Documents/schedule_saved/schedule.json
+[17:36:07] [INFO] 🔁 [同步] Runner block 數量：2
+[17:36:07] [INFO] 🎯 draw_grid encoder_names:['Bak4-2', 'Bak4-1']
+[17:36:07] [INFO] 🔍 scene item count: 189
+[17:36:07] [INFO] 🖼️ 圖片放在右邊：E:/08.01.2025\img\ac1b8340-43ae-455d-b5e3-5d8b1dc41512.png
+[17:36:07] [INFO] 📂 已載入節目排程 C:/Users/coco/Documents/schedule_saved/schedule.json
+[17:36:07] [INFO] 🔁 [同步] Runner block 數量：2
+[17:36:07] [INFO] 🎯 draw_grid encoder_names:['Bak4-2', 'Bak4-1']
+[17:36:07] [INFO] 🔍 scene item count: 189
+[17:36:07] [INFO] 🖼️ 圖片放在右邊：E:/08.01.2025\img\ac1b8340-43ae-455d-b5e3-5d8b1dc41512.png
+[17:36:07] [INFO] 📂 已載入節目排程 C:/Users/coco/Documents/schedule_saved/schedule.json
+[17:36:07] [INFO] 🔁 [同步] Runner block 數量：2
+[17:36:07] [INFO] 🎯 draw_grid encoder_names:['Bak4-2', 'Bak4-1']
+[17:36:07] [INFO] 🔍 scene item count: 189
+[17:36:07] [INFO] 🖼️ 圖片放在右邊：E:/08.01.2025\img\ac1b8340-43ae-455d-b5e3-5d8b1dc41512.png
+[17:36:07] [INFO] 📂 已載入節目排程 C:/Users/coco/Documents/schedule_saved/schedule.json
+[17:36:07] [INFO] 🔁 [同步] Runner block 數量：2
+[17:36:07] [INFO] 🎯 draw_grid encoder_names:['Bak4-2', 'Bak4-1']
+[17:36:07] [INFO] 🔍 scene item count: 189
+[17:36:07] [INFO] 🖼️ 圖片放在右邊：E:/08.01.2025\img\ac1b8340-43ae-455d-b5e3-5d8b1dc41512.png
+[17:36:07] [INFO] 📂 已載入節目排程 C:/Users/coco/Documents/schedule_saved/schedule.json
+[17:36:07] [INFO] 🔁 [同步] Runner block 數量：2
+[17:36:07] [INFO] 🎯 draw_grid encoder_names:['Bak4-2', 'Bak4-1']
+[17:36:07] [INFO] 🔍 scene item count: 189
+[17:36:07] [INFO] 🖼️ 圖片放在右邊：E:/08.01.2025\img\ac1b8340-43ae-455d-b5e3-5d8b1dc41512.png
+[17:36:07] [INFO] 📂 已載入節目排程 C:/Users/coco/Documents/schedule_saved/schedule.json
+[17:36:07] [INFO] 🔁 [同步] Runner block 數量：2
+[17:36:07] [INFO] 🎯 draw_grid encoder_names:['Bak4-2', 'Bak4-1']
+[17:36:07] [INFO] 🔍 scene item count: 189
+[17:36:07] [INFO] 🖼️ 圖片放在右邊：E:/08.01.2025\img\ac1b8340-43ae-455d-b5e3-5d8b1dc41512.png
+[17:36:07] [INFO] 📂 已載入節目排程 C:/Users/coco/Documents/schedule_saved/schedule.json
+[17:36:07] [INFO] 🔁 [同步] Runner block 數量：2
+[17:36:07] [INFO] ❌ [Timer] check_schedule 錯誤：list index out of range
+[17:36:08] [INFO] ⛔ 已開始：左側不能拖動（係現在）
+[17:36:08] [INFO] ❌ [Timer] check_schedule 錯誤：list index out of range
+[17:36:09] [INFO] ❌ [Timer] check_schedule 錯誤：list index out of range
+[17:36:10] [INFO] ❌ [Timer] check_schedule 錯誤：list index out of range
+[17:36:11] [INFO] ❌ [Timer] check_schedule 錯誤：list index out of range
+[17:36:12] [INFO] ❌ [Timer] check_schedule 錯誤：list index out of range
+[17:36:13] [INFO] ❌ [Timer] check_schedule 錯誤：list index out of range
+[17:36:14] [INFO] ❌ [Timer] check_schedule 錯誤：list index out of range
+[17:36:15] [INFO] 👋 MainWindow 已關閉

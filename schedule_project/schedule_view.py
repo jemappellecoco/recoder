@@ -456,7 +456,12 @@ class ScheduleView(QGraphicsView):
         self.draw_grid()
     def remap_block_tracks(self):
         """Remap block track indices to match current encoder order."""
+        valid_blocks = []
         for block in self.block_data:
             name = block.get("encoder_name")
             if name in self.encoder_names:
                 block["track_index"] = self.encoder_names.index(name)
+                valid_blocks.append(block)
+            else:
+                log(f"⚠️ 無效的 track: {name}，已忽略")
+        self.block_data = valid_blocks
