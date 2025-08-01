@@ -453,3 +453,9 @@ class ScheduleView(QGraphicsView):
         self.tracks = len(self.encoder_names)
         self.update_scene_rect()
         self.draw_grid()
+    def remap_block_tracks(self):
+        """Remap block track indices to match current encoder order."""
+        for block in self.block_data:
+            name = block.get("encoder_name")
+            if name in self.encoder_names:
+                block["track_index"] = self.encoder_names.index(name)

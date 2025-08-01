@@ -325,8 +325,9 @@ class MainWindow(QMainWindow):
         self.view.encoder_names = self.encoder_names
         self.view.encoder_status = self.encoder_status
         self.header.set_encoder_names(self.encoder_names)
-        self.view.rebuild_tracks()     # ⭐️ 顯示 Bak4-1 / Bak4-2
-        self.view.draw_grid()         # ⭐️ 重畫時間格線與 block
+        self.view.remap_block_tracks()
+        self.view.rebuild_tracks()
+        self.view.save_schedule()
         self.sync_runner_data()
         self.update_encoder_status_labels()
 
