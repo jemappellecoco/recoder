@@ -302,13 +302,11 @@ class MainWindow(QMainWindow):
     def reload_encoder_list(self):
         log("🔄 重新載入 Encoder 列表")
         self.encoder_names = list_encoders()
-        self.view.encoder_names = self.encoder_names
         self.encoder_status = {}
         self.encoder_entries = {}
         self.encoder_preview_labels = {}
 
-        # ✅ 清空舊 encoder panel
-        preview_dir = os.path.join(self.record_root, "preview")
+        # ✅ 清空 encoder_panel UI 區塊
         encoder_panel = self.findChild(QWidget, "encoder_panel")
         if encoder_panel:
             layout = encoder_panel.layout()
@@ -319,18 +317,19 @@ class MainWindow(QMainWindow):
                     if widget:
                         widget.setParent(None)
 
-            # ✅ 重新建所有 encoder 控制列
-            for name in self.encoder_names:
-                widget = self.build_encoder_widget(name)
-                layout.addWidget(widget)
+                for name in self.encoder_names:
+                    widget = self.build_encoder_widget(name)
+                    layout.addWidget(widget)
 
-        self.view.draw_grid()
+        # ✅ 更新 Header & View 需要的 encoder info
+        self.view.encoder_names = self.encoder_names
+        self.view.encoder_status = self.encoder_status
+        self.header.set_encoder_names(self.encoder_names)
+        self.view.rebuild_tracks()     # ⭐️ 顯示 Bak4-1 / Bak4-2
+        self.view.draw_grid()         # ⭐️ 重畫時間格線與 block
         self.sync_runner_data()
         self.update_encoder_status_labels()
-        self.header.set_encoder_names(self.encoder_names)
-        self.view.set_encoder_names(self.encoder_names)
-        self.view.rebuild_tracks()
-        self.view.draw_grid()
+
     def jump_to_today(self):
         today = QDate.currentDate()
         self.view.set_start_date(today)
@@ -368,9 +367,9 @@ class MainWindow(QMainWindow):
         entry.setFixedHeight(32)
         entry.setMaximumWidth(100)
         
-        stop_btn.setFixedHeight(32)
-        path_btn.setFixedHeight(32)
-        status.setFixedHeight(32)
+        # stop_btn.setFixedHeight(32)
+        # path_btn.setFixedHeight(32)
+        # status.setFixedHeight(32)
 
         
 
@@ -379,12 +378,13 @@ class MainWindow(QMainWindow):
         start_btn = QPushButton("▶️")
         stop_btn = QPushButton("⏹")
         path_btn = QPushButton("📁")
+        status = QLabel("狀態：+++")
         for btn in [start_btn, stop_btn, path_btn]:
             btn.setSizePolicy(QSizePolicy.MinimumExpanding, QSizePolicy.Fixed)
             btn.setMinimumWidth(15)
             btn.setMaximumWidth(60)
             btn.setFixedHeight(28)
-        status = QLabel("狀態：+++")
+        
         status.setFixedWidth(100)
         status.setAlignment(Qt.AlignVCenter)
 
