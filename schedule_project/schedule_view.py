@@ -445,3 +445,5 @@ class ScheduleView(QGraphicsView):
                 self.now_timer.stop()
             if hasattr(self, "global_timer"):
                 self.global_timer.stop()
+    def set_encoder_names(self, names):
+        self.encoder_names = names

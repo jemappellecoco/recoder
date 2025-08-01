@@ -112,3 +112,11 @@ def send_persistent_command(cmd, encoder_name=None):
 #     return list(encoder_config.keys())
 def list_encoders():
     return list(load_encoder_config().keys())
+def save_encoder_config(data: dict):
+    path = resource_path("encoders.json")
+    with open(path, "w", encoding="utf-8") as f:
+        json.dump(data, f, indent=2, ensure_ascii=False)
+
+def reload_encoder_config():
+    global encoder_config
+    encoder_config = load_encoder_config()

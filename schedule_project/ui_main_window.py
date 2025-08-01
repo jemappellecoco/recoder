@@ -5,7 +5,6 @@ from PySide6.QtWidgets import (
     QVBoxLayout, QHBoxLayout, QLineEdit, QApplication, QSizePolicy, QMessageBox, QMenu, QFileDialog
 )
 from time_block import PreviewImageItem
-import concurrent.futures
 from PySide6.QtGui import QPixmap,QBrush ,QColor    
 from PySide6.QtCore import QDate, Qt,QDateTime,QTime,QTimer
 from schedule_view import ScheduleView
@@ -28,7 +27,8 @@ from utils import set_log_box ,log
 import glob
 from capture import start_cleanup_timer
 import time
-import sys
+from EncoderManagerDialog import EncoderManagerDialog
+from encoder_utils import save_encoder_config, reload_encoder_config
 def find_latest_snapshot_by_prefix(preview_dir, encoder_name):
     pattern = os.path.join(preview_dir, f"{encoder_name}*.png")
     matched_files = glob.glob(pattern)
@@ -67,9 +67,12 @@ class MainWindow(QMainWindow):
         encoder_scroll_content = QWidget()
         encoder_scroll_layout = QVBoxLayout(encoder_scroll_content)
         scroll_area.setWidget(encoder_scroll_content)
-        encoder_panel = QWidget()
-        encoder_panel.setSizePolicy(QSizePolicy.MinimumExpanding, QSizePolicy.Preferred)
-        encoder_layout = QVBoxLayout(encoder_panel)
+        self.encoder_panel = QWidget()
+        self.encoder_panel.setObjectName("encoder_panel")
+        encoder_layout = QVBoxLayout(self.encoder_panel)
+        # encoder_panel = QWidget()
+        # encoder_panel.setSizePolicy(QSizePolicy.MinimumExpanding, QSizePolicy.Preferred)
+        # encoder_layout = QVBoxLayout(encoder_panel)
 
         self.encoder_preview_labels = {}
         self.encoder_pixmaps = {}
@@ -124,7 +127,8 @@ class MainWindow(QMainWindow):
             self.encoder_entries[name] = entry
             self.encoder_status[name] = status
 
-        encoder_scroll_layout.addWidget(encoder_panel)
+        # encoder_scroll_layout.addWidget(encoder_panel)
+        encoder_scroll_layout.addWidget(self.encoder_panel)
 
         # === 右側 排程 Panel ===
         right_panel = QWidget()
@@ -157,7 +161,9 @@ class MainWindow(QMainWindow):
         self.next_button.clicked.connect(lambda: self.shift_date(+7))
         self.today_button = QPushButton("📅 今天")
         self.today_button.clicked.connect(self.jump_to_today)
-        
+        self.manage_encoder_button = QPushButton("⚙️ 管理 Encoder")
+        self.manage_encoder_button.clicked.connect(self.open_encoder_manager)
+        toolbar_layout.addWidget(self.manage_encoder_button)
 
         toolbar_layout.addWidget(self.date_label)
         toolbar_layout.addWidget(self.date_picker)
@@ -286,6 +292,45 @@ class MainWindow(QMainWindow):
                         log(f"📂 自動載入之前選的檔案：{schedule_file}")
         except Exception as e:
             log(f"⚠️ config.json 載入失敗：{e}")
+    def open_encoder_manager(self):
+        dialog = EncoderManagerDialog(self)
+        if dialog.exec():  # 如果點了儲存
+            new_config = dialog.get_result()
+            save_encoder_config(new_config)
+            reload_encoder_config()
+            self.reload_encoder_list()
+    def reload_encoder_list(self):
+        log("🔄 重新載入 Encoder 列表")
+        self.encoder_names = list_encoders()
+        self.view.encoder_names = self.encoder_names
+        self.encoder_status = {}
+        self.encoder_entries = {}
+        self.encoder_preview_labels = {}
+
+        # ✅ 清空舊 encoder panel
+        preview_dir = os.path.join(self.record_root, "preview")
+        encoder_panel = self.findChild(QWidget, "encoder_panel")
+        if encoder_panel:
+            layout = encoder_panel.layout()
+            if layout:
+                while layout.count():
+                    item = layout.takeAt(0)
+                    widget = item.widget()
+                    if widget:
+                        widget.setParent(None)
+
+            # ✅ 重新建所有 encoder 控制列
+            for name in self.encoder_names:
+                widget = self.build_encoder_widget(name)
+                layout.addWidget(widget)
+
+        self.view.draw_grid()
+        self.sync_runner_data()
+        self.update_encoder_status_labels()
+        self.header.set_encoder_names(self.encoder_names)
+        self.view.set_encoder_names(self.encoder_names)
+        self.view.rebuild_tracks()
+        self.view.draw_grid()
     def jump_to_today(self):
         today = QDate.currentDate()
         self.view.set_start_date(today)
@@ -317,16 +362,19 @@ class MainWindow(QMainWindow):
         label = QLabel(name)
         label.setFixedWidth(60)
         label.setMinimumHeight(32)
+        label.setAlignment(Qt.AlignRight | Qt.AlignVCenter)
+        
+        entry = QLineEdit()
         entry.setFixedHeight(32)
-        start_btn.setFixedHeight(32)
+        entry.setMaximumWidth(100)
+        
         stop_btn.setFixedHeight(32)
         path_btn.setFixedHeight(32)
         status.setFixedHeight(32)
 
-        label.setAlignment(Qt.AlignRight | Qt.AlignVCenter)
+        
 
-        entry = QLineEdit()
-        entry.setMaximumWidth(100)
+        
 
         start_btn = QPushButton("▶️")
         stop_btn = QPushButton("⏹")
