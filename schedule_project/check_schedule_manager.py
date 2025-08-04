@@ -53,8 +53,13 @@ class CheckScheduleManager:
 
             start_dt = QDateTime(qdate, QTime(int(start_hour), int((start_hour % 1) * 60)))
             end_dt = QDateTime(end_qdate, QTime(int(end_hour), int((end_hour % 1) * 60)))
-
-            encoder_name = self.encoder_names[b["track_index"]]
+            track_idx = b["track_index"]
+            if 0 <= track_idx < len(self.encoder_names):
+                encoder_name = self.encoder_names[track_idx]
+            else:
+                log(f"⚠️ 無效的 track_index: {track_idx}")
+                continue
+            # encoder_name = self.encoder_names[b["track_index"]]
             status_label = self.encoder_status.get(encoder_name)
             block = self.find_block_by_id(block_id)
             
