@@ -13,7 +13,7 @@ class ScheduleView(QGraphicsView):
         self.encoder_labels = {}
         self.blocks = []
         self.block_data = []
-        self.orphan_blocks = []  # 存放暫時無對應 encoder 的節目
+        self.orphan_blocks = []
         self.path_manager = None
         self.scene = QGraphicsScene(self)
         self.setScene(self.scene)
@@ -459,22 +459,31 @@ class ScheduleView(QGraphicsView):
         """Remap block track indices and collect blocks without encoder."""
         valid_blocks = []
         orphans = list(self.orphan_blocks)
+
         for block in self.block_data:
             name = block.get("encoder_name")
             track = block.get("track_index")
 
-            if not name:  # None or empty
+            if name:  # ➤ 若有 encoder_name
+                if name in self.encoder_names:
+                    # ✅ encoder_name 合法，依名稱設定 track_index
+                    block["track_index"] = self.encoder_names.index(name)
+                    valid_blocks.append(block)
+                else:
+                    # ⚠️ 名稱不存在於 encoder 名單
+                    log(f"⚠️ 無效的 encoder_name: {name}，暫存為孤兒")
+                    orphans.append(block)
+            else:  # ➤ 無 encoder_name
                 if isinstance(track, int) and 0 <= track < len(self.encoder_names):
+                    # ✅ 根據 track_index 回填 encoder_name
                     block["encoder_name"] = self.encoder_names[track]
                     valid_blocks.append(block)
                 else:
+                    # ⚠️ 無效資訊，忽略此區塊
                     log(f"⚠️ 無效的 track_index: {track}，已忽略")
-            else:
-                log(f"⚠️ 無效的 track: {name}，暫存為孤兒")
-                orphans.append(block)
+
         self.block_data = valid_blocks
         self.orphan_blocks = orphans
-
     def restore_orphan_blocks(self):
         """Try to reattach orphan blocks to block_data when encoder returns."""
         if not self.orphan_blocks:
