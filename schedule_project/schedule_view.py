@@ -455,13 +455,29 @@ class ScheduleView(QGraphicsView):
         self.update_scene_rect()
         self.draw_grid()
     def remap_block_tracks(self):
-        """Remap block track indices to match current encoder order."""
+        """Remap block track indices to match current encoder order.
+
+        如果 block 沒有 `encoder_name`（舊資料或空字串），會依照原本的
+        `track_index` 重新對應到新的 `encoder_names`，並補上 encoder_name。
+        只有在 `track_index` 超出範圍時才會將 block 移除。
+        """
+
         valid_blocks = []
         for block in self.block_data:
             name = block.get("encoder_name")
-            if name in self.encoder_names:
-                block["track_index"] = self.encoder_names.index(name)
-                valid_blocks.append(block)
+            track = block.get("track_index")
+
+            if not name:  # None or empty
+                if isinstance(track, int) and 0 <= track < len(self.encoder_names):
+                    block["encoder_name"] = self.encoder_names[track]
+                    valid_blocks.append(block)
+                else:
+                    log(f"⚠️ 無效的 track_index: {track}，已忽略")
             else:
-                log(f"⚠️ 無效的 track: {name}，已忽略")
+                if name in self.encoder_names:
+                    block["track_index"] = self.encoder_names.index(name)
+                    valid_blocks.append(block)
+                else:
+                    log(f"⚠️ 無效的 track: {name}，已忽略")
+
         self.block_data = valid_blocks

@@ -293,6 +293,7 @@ class MainWindow(QMainWindow):
         except Exception as e:
             log(f"⚠️ config.json 載入失敗：{e}")
     def open_encoder_manager(self):
+        reload_encoder_config()
         dialog = EncoderManagerDialog(self)
         if dialog.exec():  # 如果點了儲存
             new_config = dialog.get_result()
@@ -332,7 +333,7 @@ class MainWindow(QMainWindow):
         self.view.draw_grid()  # ←❗別漏這個
         self.view.save_schedule()
         self.sync_runner_data()
-        self.update_encoder_status_labels()
+        QTimer.singleShot(0, self.update_encoder_status_labels)
 
     def jump_to_today(self):
         today = QDate.currentDate()

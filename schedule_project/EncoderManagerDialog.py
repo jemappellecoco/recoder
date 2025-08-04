@@ -7,7 +7,7 @@ from PySide6.QtWidgets import (
 from PySide6.QtCore import Qt
 from encoder_utils import encoder_config, discover_encoders, save_selected_encoders  # 新掃描與儲存 API
 from utils import log  # 你現有的 log 工具
-
+import encoder_utils as eu
 
 class EncoderSelectionDialog(QDialog):
     """提供多選功能以加入掃描到的裝置"""
@@ -45,10 +45,11 @@ class EncoderSelectionDialog(QDialog):
 class EncoderManagerDialog(QDialog):
     def __init__(self, parent=None):
         super().__init__(parent)
+        eu.reload_encoder_config()
         self.setWindowTitle("⚙️ 管理 Encoder 裝置")
         self.resize(480, 400)
 
-        self.encoder_data = encoder_config.copy()  # 深複製目前設定
+        self.encoder_data = eu.encoder_config.copy()  # 深複製目前設定
         self.encoder_rows = {}  # 儲存每列元件
         self.init_ui()
 
@@ -168,7 +169,27 @@ class EncoderManagerDialog(QDialog):
 
     def get_result(self):
         return self.encoder_data
-
+    def auto_fill_name(self):
+        ip = self.ip_input.text().strip()
+        port_text = self.port_input.text().strip()
+        if not ip or not port_text:
+            return
+        try:
+            port = int(port_text)
+        except ValueError:
+            return
+        if self.name_input.text().strip():
+            return
+        names = eu.scan_encoders_by_ip(ip, port)
+        if names:
+            proposed = names[0]
+            if proposed in self.encoder_data:
+                base = proposed
+                idx = 1
+                while f"{base}-{idx}" in self.encoder_data:
+                    idx += 1
+                proposed = f"{base}-{idx}"
+            self.name_input.setText(proposed)
     def search_encoders(self):
         ip = self.ip_input.text().strip()
         port_text = self.port_input.text().strip()
