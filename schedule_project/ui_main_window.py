@@ -293,6 +293,7 @@ class MainWindow(QMainWindow):
         except Exception as e:
             log(f"⚠️ config.json 載入失敗：{e}")
     def open_encoder_manager(self):
+        reload_encoder_config()
         dialog = EncoderManagerDialog(self)
         if dialog.exec():  # 如果點了儲存
             new_config = dialog.get_result()

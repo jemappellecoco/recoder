@@ -4,16 +4,17 @@ from PySide6.QtWidgets import (
     QDialog, QVBoxLayout, QHBoxLayout, QLabel, QLineEdit,
     QPushButton, QScrollArea, QWidget, QMessageBox
 )
-from encoder_utils import encoder_config, scan_encoders_by_ip  # 全域設定及掃描功能
+import encoder_utils as eu  # 全域設定及掃描功能
 from utils import log  # 你現有的 log 工具
 
 class EncoderManagerDialog(QDialog):
     def __init__(self, parent=None):
         super().__init__(parent)
+        eu.reload_encoder_config()
         self.setWindowTitle("⚙️ 管理 Encoder 裝置")
         self.resize(480, 400)
 
-        self.encoder_data = encoder_config.copy()  # 深複製目前設定
+        self.encoder_data = eu.encoder_config.copy()  # 深複製目前設定
         self.encoder_rows = {}  # 儲存每列元件
         self.init_ui()
 
@@ -145,7 +146,7 @@ class EncoderManagerDialog(QDialog):
             return
         if self.name_input.text().strip():
             return
-        names = scan_encoders_by_ip(ip, port)
+        names = eu.scan_encoders_by_ip(ip, port)
         if names:
             proposed = names[0]
             if proposed in self.encoder_data:
