@@ -456,17 +456,7 @@ class ScheduleView(QGraphicsView):
         self.update_scene_rect()
         self.draw_grid()
     def remap_block_tracks(self):
-<<<<<<< HEAD
-        """Remap block track indices to match current encoder order.
-
-        如果 block 沒有 `encoder_name`（舊資料或空字串），會依照原本的
-        `track_index` 重新對應到新的 `encoder_names`，並補上 encoder_name。
-        只有在 `track_index` 超出範圍時才會將 block 移除。
-        """
-
-=======
         """Remap block track indices and collect blocks without encoder."""
->>>>>>> orphan-block-fix
         valid_blocks = []
         orphans = list(self.orphan_blocks)
         for block in self.block_data:
@@ -480,15 +470,6 @@ class ScheduleView(QGraphicsView):
                 else:
                     log(f"⚠️ 無效的 track_index: {track}，已忽略")
             else:
-<<<<<<< HEAD
-                if name in self.encoder_names:
-                    block["track_index"] = self.encoder_names.index(name)
-                    valid_blocks.append(block)
-                else:
-                    log(f"⚠️ 無效的 track: {name}，已忽略")
-
-        self.block_data = valid_blocks
-=======
                 log(f"⚠️ 無效的 track: {name}，暫存為孤兒")
                 orphans.append(block)
         self.block_data = valid_blocks
@@ -514,4 +495,3 @@ class ScheduleView(QGraphicsView):
         count = len(self.orphan_blocks)
         self.orphan_blocks = []
         log(f"🗑️ 已清除 {count} 個孤兒節目")
->>>>>>> orphan-block-fix
