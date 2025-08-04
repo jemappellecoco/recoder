@@ -13,6 +13,7 @@ class ScheduleView(QGraphicsView):
         self.encoder_labels = {}
         self.blocks = []
         self.block_data = []
+        self.orphan_blocks = []  # 存放暫時無對應 encoder 的節目
         self.path_manager = None
         self.scene = QGraphicsScene(self)
         self.setScene(self.scene)
@@ -455,13 +456,37 @@ class ScheduleView(QGraphicsView):
         self.update_scene_rect()
         self.draw_grid()
     def remap_block_tracks(self):
-        """Remap block track indices to match current encoder order."""
+        """Remap block track indices and collect blocks without encoder."""
         valid_blocks = []
+        orphans = list(self.orphan_blocks)
         for block in self.block_data:
             name = block.get("encoder_name")
             if name in self.encoder_names:
                 block["track_index"] = self.encoder_names.index(name)
                 valid_blocks.append(block)
             else:
-                log(f"⚠️ 無效的 track: {name}，已忽略")
+                log(f"⚠️ 無效的 track: {name}，暫存為孤兒")
+                orphans.append(block)
         self.block_data = valid_blocks
+        self.orphan_blocks = orphans
+
+    def restore_orphan_blocks(self):
+        """Try to reattach orphan blocks to block_data when encoder returns."""
+        if not self.orphan_blocks:
+            return
+        remaining = []
+        for block in self.orphan_blocks:
+            name = block.get("encoder_name")
+            if name in self.encoder_names:
+                block["track_index"] = self.encoder_names.index(name)
+                self.block_data.append(block)
+                log(f"🔄 恢復孤兒節目：{block['label']}")
+            else:
+                remaining.append(block)
+        self.orphan_blocks = remaining
+
+    def purge_orphan_blocks(self):
+        """Permanently delete all orphan blocks."""
+        count = len(self.orphan_blocks)
+        self.orphan_blocks = []
+        log(f"🗑️ 已清除 {count} 個孤兒節目")
