@@ -132,7 +132,7 @@ def connect_socket_direct(ip: str, port: int):
         return None
 
 
-def scan_encoders_by_ip(ip: str, port: int):
+def discover_encoders(ip: str, port: int):
     """掃描指定 IP/Port 並回傳偵測到的 encoder 名稱列表"""
     sock = connect_socket_direct(ip, port)
     if not sock:
@@ -149,11 +149,15 @@ def scan_encoders_by_ip(ip: str, port: int):
 
     if not names:
         log("⚠️ 沒有找到任何 encoder 名稱")
-        return []
+    return names
 
+
+def save_selected_encoders(names, ip, port):
+    """合併選取的裝置並保存到設定檔"""
+    path = resource_path(ENCODER_CONFIG_PATH)
     try:
-        if os.path.exists(ENCODER_CONFIG_PATH):
-            with open(resource_path(ENCODER_CONFIG_PATH), "r", encoding="utf-8") as f:
+        if os.path.exists(path):
+            with open(path, "r", encoding="utf-8") as f:
                 try:
                     config = json.load(f)
                 except json.JSONDecodeError:
@@ -169,13 +173,11 @@ def scan_encoders_by_ip(ip: str, port: int):
         config[name] = {"host": ip, "port": port}
 
     try:
-        with open(resource_path(ENCODER_CONFIG_PATH), "w", encoding="utf-8") as f:
+        with open(path, "w", encoding="utf-8") as f:
             json.dump(config, f, indent=2, ensure_ascii=False)
         log(f"✅ 已將 {len(names)} 個 encoder 寫入 {ENCODER_CONFIG_PATH}")
         global encoder_config
         encoder_config = config
     except Exception as e:
         log(f"❌ 寫入 config 失敗: {e}")
-        return []
 
-    return names

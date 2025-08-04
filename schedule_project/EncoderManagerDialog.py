@@ -2,10 +2,45 @@
 
 from PySide6.QtWidgets import (
     QDialog, QVBoxLayout, QHBoxLayout, QLabel, QLineEdit,
-    QPushButton, QScrollArea, QWidget, QMessageBox
+    QPushButton, QScrollArea, QWidget, QMessageBox, QListWidget, QListWidgetItem
 )
-from encoder_utils import encoder_config, scan_encoders_by_ip  # 全域設定及掃描功能
+from PySide6.QtCore import Qt
+from encoder_utils import encoder_config, discover_encoders, save_selected_encoders  # 新掃描與儲存 API
 from utils import log  # 你現有的 log 工具
+
+
+class EncoderSelectionDialog(QDialog):
+    """提供多選功能以加入掃描到的裝置"""
+
+    def __init__(self, names, parent=None):
+        super().__init__(parent)
+        self.setWindowTitle("選擇 Encoder")
+        layout = QVBoxLayout(self)
+        self.list_widget = QListWidget()
+        for name in names:
+            item = QListWidgetItem(name)
+            item.setFlags(item.flags() | Qt.ItemIsUserCheckable)
+            item.setCheckState(Qt.Checked)
+            self.list_widget.addItem(item)
+        layout.addWidget(self.list_widget)
+
+        btn_layout = QHBoxLayout()
+        ok_btn = QPushButton("新增")
+        cancel_btn = QPushButton("取消")
+        ok_btn.clicked.connect(self.accept)
+        cancel_btn.clicked.connect(self.reject)
+        btn_layout.addStretch()
+        btn_layout.addWidget(ok_btn)
+        btn_layout.addWidget(cancel_btn)
+        layout.addLayout(btn_layout)
+
+    def selected(self):
+        result = []
+        for i in range(self.list_widget.count()):
+            item = self.list_widget.item(i)
+            if item.checkState() == Qt.Checked:
+                result.append(item.text())
+        return result
 
 class EncoderManagerDialog(QDialog):
     def __init__(self, parent=None):
@@ -28,14 +63,15 @@ class EncoderManagerDialog(QDialog):
         self.ip_input.setPlaceholderText("IP 位址")
         self.port_input = QLineEdit()
         self.port_input.setPlaceholderText("Port")
-        self.ip_input.editingFinished.connect(self.auto_fill_name)
-        self.port_input.editingFinished.connect(self.auto_fill_name)
+        self.search_button = QPushButton("🔍 搜尋")
+        self.search_button.clicked.connect(self.search_encoders)
         self.add_button = QPushButton("➕ 新增")
         self.add_button.clicked.connect(self.add_encoder)
 
         add_layout.addWidget(self.name_input)
         add_layout.addWidget(self.ip_input)
         add_layout.addWidget(self.port_input)
+        add_layout.addWidget(self.search_button)
         add_layout.addWidget(self.add_button)
         layout.addLayout(add_layout)
 
@@ -109,10 +145,8 @@ class EncoderManagerDialog(QDialog):
             QMessageBox.warning(self, "名稱重複", f"已經有一個叫 {name} 的裝置")
             return
 
-        self.encoder_data[name] = {
-            "host": ip,
-            "port": port
-        }
+        self.encoder_data[name] = {"host": ip, "port": port}
+        save_selected_encoders([name], ip, port)
         self.name_input.clear()
         self.ip_input.clear()
         self.port_input.clear()
@@ -134,24 +168,38 @@ class EncoderManagerDialog(QDialog):
 
     def get_result(self):
         return self.encoder_data
-    def auto_fill_name(self):
+
+    def search_encoders(self):
         ip = self.ip_input.text().strip()
         port_text = self.port_input.text().strip()
         if not ip or not port_text:
+            QMessageBox.warning(self, "欄位不完整", "請填寫 IP 與 Port")
             return
         try:
             port = int(port_text)
         except ValueError:
+            QMessageBox.warning(self, "Port 格式錯誤", "請輸入數字的 Port")
             return
-        if self.name_input.text().strip():
+        names = discover_encoders(ip, port)
+        if not names:
+            QMessageBox.information(self, "搜尋結果", "未找到任何裝置")
             return
-        names = scan_encoders_by_ip(ip, port)
-        if names:
-            proposed = names[0]
-            if proposed in self.encoder_data:
-                base = proposed
+        dialog = EncoderSelectionDialog(names, self)
+        if dialog.exec() != QDialog.Accepted:
+            return
+        selected = dialog.selected()
+        if not selected:
+            return
+        final_names = []
+        for name in selected:
+            final_name = name
+            if final_name in self.encoder_data:
+                base = final_name
                 idx = 1
                 while f"{base}-{idx}" in self.encoder_data:
                     idx += 1
-                proposed = f"{base}-{idx}"
-            self.name_input.setText(proposed)
+                final_name = f"{base}-{idx}"
+            self.encoder_data[final_name] = {"host": ip, "port": port}
+            final_names.append(final_name)
+        save_selected_encoders(final_names, ip, port)
+        self.refresh_encoder_list()
