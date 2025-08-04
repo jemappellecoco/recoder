@@ -81,7 +81,16 @@ class EditBlockDialog(QDialog):
         end_dt = start_dt.addSecs(int(duration * 3600))
         now = QDateTime.currentDateTime()
 
-        if start_dt < now:
+        # 原始 start_dt 計算
+        old_qdate = self.block_data["qdate"]
+        if isinstance(old_qdate, str):
+            old_qdate = QDate.fromString(old_qdate, "yyyy-MM-dd")
+        old_hour = int(self.block_data["start_hour"])
+        old_min = int((self.block_data["start_hour"] % 1) * 60)
+        original_start_dt = QDateTime(old_qdate, QTime(old_hour, old_min))
+
+        # ⛔ 只有當使用者手動把開始時間調到更早，才拒絕
+        if start_dt < now and start_dt != original_start_dt:
             self.error_label.setText("❌ 開始時間不能早於現在")
             return
 
