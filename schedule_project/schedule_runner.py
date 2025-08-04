@@ -132,7 +132,10 @@ class ScheduleRunner(QObject):
     #                 self.last_saved_ts = now_ts
 
     def start_encoder(self, encoder_name, filename, status_label, block_id=None):
-        
+        if status_label and not isValid(status_label):
+            log(f"⚠️ QLabel for {encoder_name} no longer exists; skipping label update")
+            status_label = None
+
         now = QDateTime.currentDateTime()
         date_folder = now.toString("MM.dd.yyyy")
         date_prefix = now.toString("MMdd")
@@ -170,8 +173,11 @@ class ScheduleRunner(QObject):
             safe_set_label(status_label, "❌ 錯誤", "color: red;")
 
     def stop_encoder(self, encoder_name, status_label):
-        status_label.setText("狀態：🔁 停止中...")
-        status_label.setStyleSheet("color: blue")
+        if status_label and not isValid(status_label):
+            log(f"⚠️ QLabel for {encoder_name} no longer exists; skipping label update")
+            status_label = None
+
+        safe_set_label(status_label, "狀態：🔁 停止中...", "color: blue")
         QApplication.processEvents()
 
         ok = self.encoder_controller.stop_encoder(encoder_name)

@@ -61,8 +61,11 @@ class CheckScheduleManager:
                 continue
             # encoder_name = self.encoder_names[b["track_index"]]
             status_label = self.encoder_status.get(encoder_name)
+            if status_label and not isValid(status_label):
+                log(f"⚠️ status label for {encoder_name}已失效，略過 UI 更新")
+                self.encoder_status.pop(encoder_name, None)
+                status_label = None
             block = self.find_block_by_id(block_id)
-            label_valid = isValid(status_label) if status_label else False
 
             # ➤ 自動開始錄影
             if start_dt <= now < end_dt and block_id not in self.already_started:
@@ -76,7 +79,7 @@ class CheckScheduleManager:
                 log(f"🛑 時間到 ➜ 停止錄影: {b['label']} ({block_id})")
                 self.runner.stop_encoder(encoder_name, status_label)
                 self.already_stopped.add(block_id)
-                if label_valid and block:
+                if block:
                     block.status = self.compute_status(now, start_dt, end_dt)
                     block.update_text_position()
 
