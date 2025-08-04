@@ -19,7 +19,8 @@ class AddBlockDialog(QDialog):
         self.duration_input = QDoubleSpinBox()
         self.duration_input.setRange(0.25, 24.0)
         self.duration_input.setSingleStep(0.25)
-        self.duration_input.setValue(1.0)
+        # self.duration_input.setValue(1.0) 
+        self.duration_input.setValue(0.25) 
 
         self.encoder_selector = QComboBox()
         self.date_input = QDateEdit()

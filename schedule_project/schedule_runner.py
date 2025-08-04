@@ -1,14 +1,21 @@
 # schedule_runner.py
+
 from encoder_controller import EncoderController 
 from PySide6.QtCore import QObject, QTimer, QDateTime, QDate, QTime
 from encoder_utils import connect_socket, send_encoder_command, send_persistent_command
 import os
 import logging
 from PySide6.QtWidgets import QApplication
+from shiboken6 import isValid
 # from check_schedule_manager import CheckScheduleManager
 from capture import take_snapshot_from_block 
 from utils import log   
 REFRESH_INTERVAL_MS = 8 * 60 * 1000
+def safe_set_label(label, text, style):
+    if not label or not isValid(label):
+        return
+    label.setText(text)
+    label.setStyleSheet(style)
 class ScheduleRunner(QObject):
     def __init__(self, schedule_data, encoder_status, record_root, encoder_names, blocks):
         super().__init__()
@@ -137,16 +144,15 @@ class ScheduleRunner(QObject):
         
         sock = connect_socket(encoder_name)
         if not sock:
-            status_label.setText("❌ 無法連線")
-            status_label.setStyleSheet("color: red;")
-            return
+            safe_set_label(status_label, "❌ 無法連線", "color: red;")
+        else:
+            sock.close()
 
         res1 = send_encoder_command(encoder_name, f'Setfile "{encoder_name}" 1 {rel_path}')
         res2 = send_encoder_command(encoder_name, f'Start "{encoder_name}" 1')
 
         if "OK" in res1 and "OK" in res2:
-            status_label.setText("✅ 錄影中")
-            status_label.setStyleSheet("color: green;")
+            safe_set_label(status_label, "✅ 錄影中", "color: green;")
         # ✅ 只在第一次啟動時拍照，避免 check_schedule 觸發多次
         if block_id and block_id not in self.already_started:
             self.already_started.add(block_id)
@@ -161,8 +167,7 @@ class ScheduleRunner(QObject):
             img_dir = os.path.join(self.record_root, block.start_date.toString("MM.dd.yyyy"), "img")
             block.load_preview_images(img_dir)     
         else:
-            status_label.setText("❌ 錯誤")
-            status_label.setStyleSheet("color: red;")
+            safe_set_label(status_label, "❌ 錯誤", "color: red;")
 
     def stop_encoder(self, encoder_name, status_label):
         status_label.setText("狀態：🔁 停止中...")
@@ -186,11 +191,9 @@ class ScheduleRunner(QObject):
                         for b in self.schedule_data:
                             if b.get("id") == block.block_id:
                                 b["status"] = block.status  # ⬅️ 儲存下來
-            status_label.setText("狀態：⏹ 停止中")
-            status_label.setStyleSheet("color: gray")
+            safe_set_label(status_label, "狀態：⏹ 停止中", "color: gray")
         else:
-            status_label.setText("狀態：❌ 停止失敗")
-            status_label.setStyleSheet("color: red")
+            safe_set_label(status_label, "狀態：❌ 停止失敗", "color: red")
 
         self.refresh_encoder_statuses()
 

@@ -1,5 +1,5 @@
 from PySide6.QtCore import QDateTime, QDate, QTime
-
+from shiboken6 import isValid
 from utils import log  # 你之前的 log 函數
 
 class CheckScheduleManager:
@@ -62,7 +62,8 @@ class CheckScheduleManager:
             # encoder_name = self.encoder_names[b["track_index"]]
             status_label = self.encoder_status.get(encoder_name)
             block = self.find_block_by_id(block_id)
-            
+            label_valid = isValid(status_label) if status_label else False
+
             # ➤ 自動開始錄影
             if start_dt <= now < end_dt and block_id not in self.already_started:
                 if not block or "已結束" not in block.status:
@@ -75,7 +76,7 @@ class CheckScheduleManager:
                 log(f"🛑 時間到 ➜ 停止錄影: {b['label']} ({block_id})")
                 self.runner.stop_encoder(encoder_name, status_label)
                 self.already_stopped.add(block_id)
-                if block:
+                if label_valid and block:
                     block.status = self.compute_status(now, start_dt, end_dt)
                     block.update_text_position()
 
