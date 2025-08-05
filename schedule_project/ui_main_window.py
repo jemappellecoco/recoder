@@ -8,7 +8,7 @@ from time_block import PreviewImageItem
 from PySide6.QtGui import QPixmap,QBrush ,QColor    
 from PySide6.QtCore import QDate, Qt,QDateTime,QTime,QTimer
 from schedule_view import ScheduleView
-from encoder_utils import list_encoders,send_encoder_command
+from encoder_utils import list_encoders_with_alias, send_encoder_command
 from capture import take_snapshot_by_encoder
 from datetime import datetime
 import os
@@ -44,11 +44,14 @@ class MainWindow(QMainWindow):
         # === 基礎設定 ===
         self.path_manager = PathManager()
         self.record_root = self.path_manager.record_root
-        self.encoder_names = list_encoders()
+        encoders = list_encoders_with_alias()
+        self.encoder_names = [name for name, _ in encoders]
+        self.encoder_aliases = {name: alias for name, alias in encoders}
         self.encoder_controller = EncoderController(self.record_root)
         if not self.encoder_names:
             log("⚠️ 沒有從 socket 抓到 encoder，使用預設值")
             self.encoder_names = ["encoder1", "encoder2"]
+            self.encoder_aliases = {n: n for n in self.encoder_names}
         log(f"✅ Encoder 列表：{self.encoder_names}")
 
         self.setWindowTitle("錄影時間表")
@@ -82,12 +85,13 @@ class MainWindow(QMainWindow):
         os.makedirs(preview_dir, exist_ok=True)
 
         for name in self.encoder_names:
+            display = self.encoder_aliases.get(name, name)
             encoder_widget = QWidget()
             encoder_widget.setSizePolicy(QSizePolicy.Preferred, QSizePolicy.Fixed)
             encoder_box = QVBoxLayout(encoder_widget)
             encoder_box.setContentsMargins(0, 0, 0, 0)
 
-            preview_label = QLabel(f"🖼️ {name} 預覽載入中...")
+            preview_label = QLabel(f"🖼️ {display} 預覽載入中...")
             preview_label.setMinimumHeight(180)
             preview_label.setMinimumWidth(0)
             preview_label.setSizePolicy(QSizePolicy.Preferred, QSizePolicy.Preferred)
@@ -97,7 +101,7 @@ class MainWindow(QMainWindow):
             encoder_box.addWidget(preview_label)
 
             line = QHBoxLayout()
-            label = QLabel(name)
+            label = QLabel(display)
             entry = QLineEdit()
             entry.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
             entry.setMaximumWidth(80)
@@ -302,7 +306,9 @@ class MainWindow(QMainWindow):
             self.reload_encoder_list()
     def reload_encoder_list(self):
         log("🔄 重新載入 Encoder 列表")
-        self.encoder_names = list_encoders()
+        encoders = list_encoders_with_alias()
+        self.encoder_names = [name for name, _ in encoders]
+        self.encoder_aliases = {name: alias for name, alias in encoders}
         # self.encoder_status = {}
         self.encoder_status.clear()
         self.encoder_entries = {}
@@ -355,13 +361,14 @@ class MainWindow(QMainWindow):
             log(f"❌ [Timer] check_schedule 錯誤：{e}")
         
     def build_encoder_widget(self, name):
+        display = self.encoder_aliases.get(name, name)
         encoder_widget = QWidget()
         encoder_widget.setSizePolicy(QSizePolicy.Preferred, QSizePolicy.Fixed)
         encoder_box = QVBoxLayout(encoder_widget)
         encoder_box.setContentsMargins(0, 0, 0, 0)
 
         # 🖼️ 預覽圖
-        preview_label = QLabel(f"🖼️ {name} 預覽載入中...")
+        preview_label = QLabel(f"🖼️ {display} 預覽載入中...")
         preview_label.setMinimumHeight(160)
         preview_label.setStyleSheet("border: 1px solid gray; background-color: black; color: white;")
         preview_label.setAlignment(Qt.AlignCenter)
@@ -371,7 +378,7 @@ class MainWindow(QMainWindow):
         # 📏 控制列（整排）
         control_row = QHBoxLayout()
 
-        label = QLabel(name)
+        label = QLabel(display)
         label.setFixedWidth(60)
         label.setMinimumHeight(32)
         label.setAlignment(Qt.AlignRight | Qt.AlignVCenter)

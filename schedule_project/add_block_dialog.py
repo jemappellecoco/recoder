@@ -4,6 +4,7 @@ from PySide6.QtWidgets import (
 )
 from PySide6.QtCore import QTime,QDate,QDateTime
 from utils import log
+from encoder_utils import get_encoder_display_name
 class AddBlockDialog(QDialog):
     def __init__(self, parent=None, encoder_names=None, overlap_checker=None):
         super().__init__(parent)
@@ -29,7 +30,8 @@ class AddBlockDialog(QDialog):
 
         
         for name in self.encoder_names:
-            self.encoder_selector.addItem(name)
+            display = get_encoder_display_name(name)
+            self.encoder_selector.addItem(display, userData=name)
 
         self.status_label = QLabel()
         self.status_label.setStyleSheet("color: red")
@@ -62,7 +64,7 @@ class AddBlockDialog(QDialog):
         time = self.time_input.time()
         start_hour = round(self.time_input.time().hour() + self.time_input.time().minute() / 60, 2)
         duration = self.duration_input.value()
-        encoder_name = self.encoder_selector.currentText()
+        encoder_name = self.encoder_selector.currentData()
         track_index = self.encoder_names.index(encoder_name)
         qdate = self.date_input.date()
         
@@ -88,10 +90,11 @@ class AddBlockDialog(QDialog):
 
     def get_values(self):
         return (
-        self.name_input.text().strip(),
-        self.date_input.date(),         
-        self.time_input.time(),
-        self.duration_input.value(),
-        self.encoder_selector.currentText()
-    )
+            self.name_input.text().strip(),
+            self.date_input.date(),
+            self.time_input.time(),
+            self.duration_input.value(),
+            self.encoder_selector.currentData(),
+        )
+
 

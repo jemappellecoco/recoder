@@ -112,6 +112,28 @@ def send_persistent_command(cmd, encoder_name=None):
 #     return list(encoder_config.keys())
 def list_encoders():
     return list(load_encoder_config().keys())
+
+
+def list_encoders_with_alias():
+    """Return list of (key, display_name) tuples."""
+    config = load_encoder_config()
+    return [(name, info.get("display_name", name)) for name, info in config.items()]
+
+
+def get_encoder_display_name(name: str) -> str:
+    """Return display name (alias) for the given encoder key."""
+    info = encoder_config.get(name, {})
+    return info.get("display_name", name)
+
+
+def set_encoder_display_name(name: str, display_name: str):
+    """Update display name for an encoder and persist the change."""
+    config = load_encoder_config()
+    if name in config:
+        config[name]["display_name"] = display_name
+        save_encoder_config(config)
+        reload_encoder_config()
+
 def save_encoder_config(data: dict):
     path = resource_path("encoders.json")
     with open(path, "w", encoding="utf-8") as f:
@@ -165,7 +187,7 @@ def save_selected_encoders(names, ip, port):
             # 若名稱已存在則跳過並記錄
             log(f"⚠️ 裝置 {name} 已存在，跳過新增")
             continue
-        config[name] = {"host": ip, "port": port}
+        config[name] = {"host": ip, "port": port, "display_name": name}
         added_names.append(name)
 
     if not added_names:

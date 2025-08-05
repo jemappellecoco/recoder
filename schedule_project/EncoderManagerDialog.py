@@ -112,7 +112,8 @@ class EncoderManagerDialog(QDialog):
         self.encoder_rows = {}
         for name, info in self.encoder_data.items():
             row = QHBoxLayout()
-            name_label = QLabel(name)
+            display_name = info.get("display_name", name)
+            name_label = QLabel(display_name)
             ip_label = QLabel(info.get("host", ""))
             port_label = QLabel(str(info.get("port", "")))
             delete_btn = QPushButton("🗑️")

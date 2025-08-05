@@ -6,6 +6,7 @@ import json
 import os
 import uuid
 from utils import log
+from encoder_utils import get_encoder_display_name
 from path_manager import PathManager 
 class ScheduleView(QGraphicsView):
     def __init__(self):
@@ -146,7 +147,8 @@ class ScheduleView(QGraphicsView):
                 encoder_name = self.encoder_names[track]
                 status_label = self.encoder_status.get(encoder_name)
                 status_text = status_label.text() if status_label else "未知"
-                full_label = f"{encoder_name}\n{status_text}"
+                alias = get_encoder_display_name(encoder_name)
+                full_label = f"{alias}\n{status_text}"
             else:
                 full_label = f"未指定\n--"
 
