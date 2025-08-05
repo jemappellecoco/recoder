@@ -1,6 +1,7 @@
 from PySide6.QtCore import QDateTime, QDate, QTime
 from shiboken6 import isValid
 from utils import log  # 你之前的 log 函數
+from encoder_utils import get_encoder_display_name
 
 class CheckScheduleManager:
     def __init__(self, encoder_names, encoder_status_dict, runner, parent_view_getter):
@@ -62,7 +63,8 @@ class CheckScheduleManager:
             # encoder_name = self.encoder_names[b["track_index"]]
             status_label = self.encoder_status.get(encoder_name)
             if status_label and not isValid(status_label):
-                log(f"⚠️ status label for {encoder_name}已失效，略過 UI 更新")
+                alias = get_encoder_display_name(encoder_name)
+                log(f"⚠️ status label for {alias}已失效，略過 UI 更新")
                 self.encoder_status.pop(encoder_name, None)
                 status_label = None
             block = self.find_block_by_id(block_id)

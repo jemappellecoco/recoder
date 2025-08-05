@@ -1,6 +1,7 @@
 # edit_block_dialog.py
 from PySide6.QtWidgets import QDialog, QFormLayout, QLineEdit, QDialogButtonBox, QLabel, QTimeEdit, QDoubleSpinBox, QComboBox, QDateEdit, QVBoxLayout
 from PySide6.QtCore import QTime, QDate,QDateTime
+from encoder_utils import get_encoder_display_name
 
 class EditBlockDialog(QDialog):
     def __init__(self, block_data, encoder_names,readonly=False):
@@ -29,9 +30,12 @@ class EditBlockDialog(QDialog):
         self.duration_input.setValue(block_data["duration"])
 
         self.encoder_selector = QComboBox()
-        self.encoder_selector.addItems(encoder_names)
+        for name in encoder_names:
+            display = get_encoder_display_name(name)
+            self.encoder_selector.addItem(display, userData=name)
         if block_data.get("encoder_name") in encoder_names:
-            self.encoder_selector.setCurrentText(block_data["encoder_name"])
+            idx = encoder_names.index(block_data["encoder_name"])
+            self.encoder_selector.setCurrentIndex(idx)
 
         self.date_input = QDateEdit()
         self.date_input.setDate(block_data["qdate"])
@@ -106,5 +110,5 @@ class EditBlockDialog(QDialog):
             "label": self.name_input.text().strip(),
             "start_hour": round(time.hour() + time.minute() / 60, 2),
             "duration": self.duration_input.value(),
-            "encoder_name": self.encoder_selector.currentText()
+            "encoder_name": self.encoder_selector.currentData()
         }
