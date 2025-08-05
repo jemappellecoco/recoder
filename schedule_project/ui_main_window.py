@@ -25,9 +25,15 @@ CONFIG_FILE = "config.json"
 from uuid import uuid4
 from utils import set_log_box ,log
 from capture import start_cleanup_timer
+from snapshot_worker import SnapshotWorker
 from EncoderManagerDialog import EncoderManagerDialog
 from encoder_utils import save_encoder_config, reload_encoder_config
-
+def find_latest_snapshot_by_prefix(preview_dir, encoder_name):
+    pattern = os.path.join(preview_dir, f"{encoder_name}*.png")
+    matched_files = glob.glob(pattern)
+    if not matched_files:
+        return None
+    return max(matched_files, key=os.path.getmtime)
 class MainWindow(QMainWindow):
     def __init__(self):
         log("🔧 MainWindow 建立中...")  # ✅ 放在最上面
@@ -466,63 +472,31 @@ class MainWindow(QMainWindow):
                         fut.cancel_event.set()
             return
 
-        if not hasattr(self, "snapshot_futures"):
-            self.snapshot_futures = {}
+        def on_finished(name, label):
+            def load_image():
+                try:
+                    preview_dir = os.path.join(self.record_root, "preview")
+                    latest_path = find_latest_snapshot_by_prefix(preview_dir, name)
+                    if latest_path and os.path.exists(latest_path):
+                        pixmap = QPixmap(latest_path)
+                        self.encoder_pixmaps[name] = pixmap
+                        self.update_preview_scaled(name)
+                    else:
+                        label.setText(f"❌ 無法載入 {name} 圖片")
+                except Exception as e:
+                    log(f"❌ [Timer] 快照更新錯誤（{name}）：{e}")
+            QTimer.singleShot(300, load_image)
 
-        for fut in self.snapshot_futures.values():
-            if hasattr(fut, "cancel_event"):
-                fut.cancel_event.set()
-        self.snapshot_futures.clear()
-
-        def capture_and_update(name, label):
-            try:
-                future = take_snapshot_by_encoder(name, snapshot_root=self.record_root)
-                self.snapshot_futures[name] = future
-
-                def on_done(fut):
-                    snapshot_path = fut.result()
-
-                    def update_ui():
-                        if snapshot_path and os.path.exists(snapshot_path):
-                            pixmap = QPixmap(snapshot_path)
-                            self.encoder_pixmaps[name] = pixmap
-                            self.update_preview_scaled(name)
-                        else:
-                            label.setText(f"❌ 無法載入 {name} 圖片")
-
-                    QTimer.singleShot(0, update_ui)
-
-                future.add_done_callback(on_done)
-            except Exception as e:
-                log(f"❌ [Timer] 快照更新錯誤（{name}）：{e}")
-
-        # def capture_and_update(name, label):
-        #     try:
-        #         take_snapshot_by_encoder(name, snapshot_root=self.record_root)
-        #         filename = f"{name.replace(' ', '_')}.png"
-        #         snapshot_full = os.path.join(preview_dir, filename)
-            
-        #         if os.path.exists(snapshot_full):
-        #             pixmap = QPixmap(snapshot_full)
-        #             self.encoder_pixmaps[name] = pixmap
-        #             self.update_preview_scaled(name)
-        #         else:
-        #             label.setText(f"❌ 無法載入 {name} 圖片")
-        #     except Exception as e:
-        #         log(f"❌ [Timer] 快照更新錯誤（{name}）：{e}")
-
-        # try:
-        #      with concurrent.futures.ThreadPoolExecutor(max_workers=4) as executor:
-        #         for name, label in self.encoder_preview_labels.items():
-        #             executor.submit(capture_and_update, name, label)
-        # except Exception as e:
-        #     log(f"❌ [Timer] update_all_encoder_snapshots 整體錯誤：{e}")
+        if not hasattr(self, "snapshot_workers"):
+            self.snapshot_workers = []
         try:
-            names = list(self.encoder_preview_labels.keys())
-
-            for i, name in enumerate(names):
-                label = self.encoder_preview_labels[name]
-                QTimer.singleShot(i * 700, lambda n=name, l=label: capture_and_update(n, l))
+            for name, label in self.encoder_preview_labels.items():
+                worker = SnapshotWorker(name, self.record_root)
+                worker.finished.connect(lambda n, l=label: on_finished(n, l))
+                worker.finished.connect(lambda _, w=worker: self.snapshot_workers.remove(w))
+                worker.finished.connect(worker.deleteLater)
+                self.snapshot_workers.append(worker)
+                worker.start()
         except Exception as e:
             log(f"❌ [Timer] update_all_encoder_snapshots 整體錯誤：{e}")
 
