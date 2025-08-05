@@ -25,7 +25,7 @@ CONFIG_FILE = "config.json"
 from uuid import uuid4
 from utils import set_log_box ,log
 import glob
-from capture import start_cleanup_timer
+from capture import start_cleanup_timer, stop_cleanup_timer
 import time
 from EncoderManagerDialog import EncoderManagerDialog
 from encoder_utils import save_encoder_config, reload_encoder_config
@@ -278,7 +278,7 @@ class MainWindow(QMainWindow):
         self.view.horizontalScrollBar().valueChanged.connect(self.header.sync_scroll)
         self.update_encoder_status_labels()
         self.view.draw_grid()
-        start_cleanup_timer(self.record_root)
+        self.cleanup_timer = start_cleanup_timer(self.record_root)
         QTimer.singleShot(3000, self.update_all_encoder_snapshots)
         # === 初始復原狀態 ===
         # for name in self.encoder_names:
@@ -796,8 +796,9 @@ class MainWindow(QMainWindow):
     def closeEvent(self, event):
         self.is_closing = True
 
-        import capture
-        capture.cleanup_running = False  # ✅ 停止清理 timer
+        if hasattr(self, "cleanup_timer") and self.cleanup_timer:
+            self.cleanup_timer.cancel()
+        stop_cleanup_timer()
 
         if hasattr(self, "encoder_status_timer"):
             self.encoder_status_timer.stop()

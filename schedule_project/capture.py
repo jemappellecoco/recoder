@@ -3,7 +3,10 @@ from encoder_utils import send_encoder_command
 from utils import log
 import time
 import threading
+
+# 控制清理計時器的執行與引用
 cleanup_running = True
+cleanup_timer = None
 def take_snapshot_from_block(block, encoder_names, snapshot_root: str = "E:/"):
     try:
         if not block.block_id:
@@ -84,7 +87,16 @@ def take_snapshot_by_encoder(encoder_name, snapshot_root="E:/"):
         return None
 # capture.py
 def start_cleanup_timer(snapshot_root, interval=300):
+    """啟動自動清理 preview 圖片的計時器並回傳 Timer 參考。"""
+    global cleanup_timer, cleanup_running
+    cleanup_running = True
+
     def cleanup():
+        """實際執行清理，並根據旗標決定是否排程下一次。"""
+        global cleanup_timer
+        if not cleanup_running:
+            return
+
         preview_dir = os.path.join(snapshot_root, "preview")
         now = time.time()
         deleted = 0
@@ -100,6 +112,19 @@ def start_cleanup_timer(snapshot_root, interval=300):
         except Exception as e:
             log(f"❌ 清理 preview 圖片失敗：{e}")
         finally:
-            threading.Timer(interval, cleanup).start()
+            if cleanup_running:
+                cleanup_timer = threading.Timer(interval, cleanup)
+                cleanup_timer.daemon = True
+                cleanup_timer.start()
 
-    cleanup()  # 啟動第一次
+    cleanup()  # 立即清理並排程下一次
+    return cleanup_timer
+
+
+def stop_cleanup_timer():
+    """停止自動清理計時器。"""
+    global cleanup_running, cleanup_timer
+    cleanup_running = False
+    if cleanup_timer:
+        cleanup_timer.cancel()
+        cleanup_timer = None
