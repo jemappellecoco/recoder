@@ -303,10 +303,15 @@ class MainWindow(QMainWindow):
     def reload_encoder_list(self):
         log("🔄 重新載入 Encoder 列表")
         self.encoder_names = list_encoders()
-        self.encoder_status = {}
+        # self.encoder_status = {}
+        self.encoder_status.clear()
         self.encoder_entries = {}
         self.encoder_preview_labels = {}
 
+        self.runner.encoder_names = self.encoder_names
+        self.schedule_manager.encoder_names = self.encoder_names
+        self.runner.encoder_status = self.encoder_status
+        self.schedule_manager.encoder_status = self.encoder_status
         # ✅ 清空 encoder_panel UI 區塊
         encoder_panel = self.findChild(QWidget, "encoder_panel")
         if encoder_panel:
@@ -332,20 +337,12 @@ class MainWindow(QMainWindow):
         self.view.remap_block_tracks()
         self.view.rebuild_tracks()
         self.view.draw_grid()  # ←❗別漏這個
-        self.view.save_schedule()
-        if self.view.orphan_blocks:
-            reply = QMessageBox.question(
-                self,
-                "孤兒節目",
-                f"共有 {len(self.view.orphan_blocks)} 個節目沒有對應的 encoder，是否永久刪除？",
-                QMessageBox.Yes | QMessageBox.No,
-                QMessageBox.No,
-            )
-            if reply == QMessageBox.Yes:
-                self.view.purge_orphan_blocks()
-                self.view.save_schedule()
+        orphan_count = len(self.view.orphan_blocks)
+        if orphan_count:
+            log(f"⚠️ {orphan_count} 個節目沒有對應的 encoder")
         self.sync_runner_data()
-        QTimer.singleShot(0, self.update_encoder_status_labels)
+        self.runner.refresh_encoder_statuses()
+        self.update_encoder_status_labels()
 
     def jump_to_today(self):
         today = QDate.currentDate()
