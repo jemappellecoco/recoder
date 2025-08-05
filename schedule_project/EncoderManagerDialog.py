@@ -53,7 +53,11 @@ class EncoderManagerDialog(QDialog):
         eu.reload_encoder_config()
         self.setWindowTitle("⚙️ 管理 Encoder 裝置")
         self.resize(480, 400)
-
+         # 深複製目前設定並確保每個 encoder 都有 display_name
+        self.encoder_data = {
+            name: {**info, "display_name": info.get("display_name", name)}
+            for name, info in eu.encoder_config.items()
+        }
         self.encoder_data = eu.encoder_config.copy()  # 深複製目前設定
         self.encoder_rows = {}  # 儲存每列元件
         self.init_ui()
@@ -172,6 +176,9 @@ class EncoderManagerDialog(QDialog):
             self.refresh_encoder_list()
 
     def get_result(self):
+         # 儲存前確保每個 encoder 都含有 display_name
+        for name, info in self.encoder_data.items():
+            info.setdefault("display_name", name)
         return self.encoder_data
     # def auto_fill_name(self):
     #     ip = self.ip_input.text().strip()
@@ -226,7 +233,12 @@ class EncoderManagerDialog(QDialog):
                 while f"{base}-{idx}" in self.encoder_data:
                     idx += 1
                 final_name = f"{base}-{idx}"
-            self.encoder_data[final_name] = {"host": ip, "port": port}
+            self.encoder_data[final_name] = {
+                "host": ip,
+                "port": port,
+                "display_name": final_name,
+            }
             final_names.append(final_name)
         save_selected_encoders(final_names, ip, port)
+        eu.reload_encoder_config()
         self.refresh_encoder_list()
