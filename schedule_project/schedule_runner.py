@@ -1,10 +1,11 @@
 # schedule_runner.py
 
 from encoder_controller import EncoderController 
-from PySide6.QtCore import QObject, QTimer, QDateTime, QDate, QTime
+from PySide6.QtCore import QObject, QTimer, QDateTime, QDate, QTime, Signal
 from encoder_utils import connect_socket, send_encoder_command, send_persistent_command
 import os
 import logging
+import threading
 from PySide6.QtWidgets import QApplication
 from shiboken6 import isValid
 # from check_schedule_manager import CheckScheduleManager
@@ -17,6 +18,8 @@ def safe_set_label(label, text, style):
     label.setText(text)
     label.setStyleSheet(style)
 class ScheduleRunner(QObject):
+    snapshot_result = Signal(str, str)  # block_id, snapshot path
+
     def __init__(self, schedule_data, encoder_status, record_root, encoder_names, blocks):
         super().__init__()
         self.schedule_data = schedule_data
@@ -34,8 +37,10 @@ class ScheduleRunner(QObject):
         self.encoder_last_state = {}
         self.status_timer = QTimer(self)
         self.status_timer.timeout.connect(self.refresh_encoder_statuses)
-        
-        self.status_timer.start(REFRESH_INTERVAL_MS)  
+
+        self.status_timer.start(REFRESH_INTERVAL_MS)
+
+        self.snapshot_result.connect(self._handle_snapshot_result)
     def format_remaining_time(self, seconds):
         h = int(seconds) // 3600
         m = (int(seconds) % 3600) // 60
@@ -50,6 +55,18 @@ class ScheduleRunner(QObject):
         else:
             remaining = end_dt.toSecsSinceEpoch() - now.toSecsSinceEpoch()
             return f"狀態：✅ 錄影中\n剩餘 {self.format_remaining_time(remaining)}"
+
+    def _handle_snapshot_result(self, block_id: str, snapshot_path: str):
+        """Update UI when snapshot is finished in background thread."""
+        try:
+            block = self.find_block_by_id(block_id)
+            if block and snapshot_path:
+                img_dir = os.path.dirname(snapshot_path)
+                block.load_preview_images(img_dir)
+            else:
+                log(f"⚠️ 拍照失敗或找不到 block：{block_id}")
+        except Exception as e:
+            log(f"❌ 更新預覽圖錯誤：{e}")
 
     # def check_schedule(self):
     #     now = QDateTime.currentDateTime()
@@ -160,16 +177,20 @@ class ScheduleRunner(QObject):
         if block_id and block_id not in self.already_started:
             self.already_started.add(block_id)
             log(f"📸 update_all_encoder_snapshots triggered at {QDateTime.currentDateTime().toString('HH:mm:ss.zzz')}")
-        # ✅ 加這一段，安全地避免 UI 關閉後仍觸發 snapshot
+            # ✅ 安全地在背景執行 snapshot
             window = QApplication.instance().activeWindow()
-            if window and not getattr(window, "is_closing", False):
-                take_snapshot_from_block(block, self.encoder_names)
+            if window and not getattr(window, "is_closing", False) and block:
+                def worker():
+                    try:
+                        snapshot_path = take_snapshot_from_block(block, self.encoder_names)
+                        self.snapshot_result.emit(block.block_id, snapshot_path)
+                    except Exception as e:
+                        log(f"❌ snapshot thread error：{e}")
+                        self.snapshot_result.emit(block.block_id if block else "", None)
+                threading.Thread(target=worker, daemon=True).start()
             else:
                 log(f"🛑 無視拍照：UI 已關閉或找不到 activeWindow")
-        if block:
-            img_dir = os.path.join(self.record_root, block.start_date.toString("MM.dd.yyyy"), "img")
-            block.load_preview_images(img_dir)     
-        else:
+        if not block:
             safe_set_label(status_label, "❌ 錯誤", "color: red;")
 
     def stop_encoder(self, encoder_name, status_label):
