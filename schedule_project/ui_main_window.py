@@ -26,7 +26,7 @@ from uuid import uuid4
 from utils import set_log_box ,log
 import glob
 from capture import start_cleanup_timer
-import time
+from snapshot_worker import SnapshotWorker
 from EncoderManagerDialog import EncoderManagerDialog
 from encoder_utils import save_encoder_config, reload_encoder_config
 def find_latest_snapshot_by_prefix(preview_dir, encoder_name):
@@ -469,49 +469,32 @@ class MainWindow(QMainWindow):
         if getattr(self, "is_closing", False):
             log("🛑 UI 正在關閉，取消 snapshot 拍攝")
             return
-        preview_dir = os.path.join(self.record_root, "preview")
-        def capture_and_update(name, label):
-            try:
-                take_snapshot_by_encoder(name, snapshot_root=self.record_root)
-                preview_dir = os.path.join(self.record_root, "preview")
-                latest_path = find_latest_snapshot_by_prefix(preview_dir, name)
-                time.sleep(0.3)
-                if latest_path and os.path.exists(latest_path):
-                    pixmap = QPixmap(latest_path)
-                    self.encoder_pixmaps[name] = pixmap
-                    self.update_preview_scaled(name)
-                else:
-                    label.setText(f"❌ 無法載入 {name} 圖片")
-            except Exception as e:
-                log(f"❌ [Timer] 快照更新錯誤（{name}）：{e}")
 
-        # def capture_and_update(name, label):
-        #     try:
-        #         take_snapshot_by_encoder(name, snapshot_root=self.record_root)
-        #         filename = f"{name.replace(' ', '_')}.png"
-        #         snapshot_full = os.path.join(preview_dir, filename)
-            
-        #         if os.path.exists(snapshot_full):
-        #             pixmap = QPixmap(snapshot_full)
-        #             self.encoder_pixmaps[name] = pixmap
-        #             self.update_preview_scaled(name)
-        #         else:
-        #             label.setText(f"❌ 無法載入 {name} 圖片")
-        #     except Exception as e:
-        #         log(f"❌ [Timer] 快照更新錯誤（{name}）：{e}")
+        def on_finished(name, label):
+            def load_image():
+                try:
+                    preview_dir = os.path.join(self.record_root, "preview")
+                    latest_path = find_latest_snapshot_by_prefix(preview_dir, name)
+                    if latest_path and os.path.exists(latest_path):
+                        pixmap = QPixmap(latest_path)
+                        self.encoder_pixmaps[name] = pixmap
+                        self.update_preview_scaled(name)
+                    else:
+                        label.setText(f"❌ 無法載入 {name} 圖片")
+                except Exception as e:
+                    log(f"❌ [Timer] 快照更新錯誤（{name}）：{e}")
+            QTimer.singleShot(300, load_image)
 
-        # try:
-        #      with concurrent.futures.ThreadPoolExecutor(max_workers=4) as executor:
-        #         for name, label in self.encoder_preview_labels.items():
-        #             executor.submit(capture_and_update, name, label)
-        # except Exception as e:
-        #     log(f"❌ [Timer] update_all_encoder_snapshots 整體錯誤：{e}")
+        if not hasattr(self, "snapshot_workers"):
+            self.snapshot_workers = []
         try:
-            names = list(self.encoder_preview_labels.keys())
-
-            for i, name in enumerate(names):
-                label = self.encoder_preview_labels[name]
-                QTimer.singleShot(i * 700, lambda n=name, l=label: capture_and_update(n, l))
+            for name, label in self.encoder_preview_labels.items():
+                worker = SnapshotWorker(name, self.record_root)
+                worker.finished.connect(lambda n, l=label: on_finished(n, l))
+                worker.finished.connect(lambda _, w=worker: self.snapshot_workers.remove(w))
+                worker.finished.connect(worker.deleteLater)
+                self.snapshot_workers.append(worker)
+                worker.start()
         except Exception as e:
             log(f"❌ [Timer] update_all_encoder_snapshots 整體錯誤：{e}")
 
