@@ -69,7 +69,6 @@ def take_snapshot_by_encoder(encoder_name, snapshot_root="E:/"):
             log(f"❌ 無法讀取 {snapshot_dir}：{e}")
             return None
 
-        time.sleep(0.5)
         log(f"📸 為 {encoder_name} 拍照 ➜ {snapshot_full}")
         send_encoder_command(encoder_name, f'SetSnapshotFileName "{encoder_name}" "{snapshot_relative}"')
         res = send_encoder_command(encoder_name, f'SnapShot "{encoder_name}"')
