@@ -160,16 +160,25 @@ class ScheduleRunner(QObject):
         if block_id and block_id not in self.already_started:
             self.already_started.add(block_id)
             log(f"📸 update_all_encoder_snapshots triggered at {QDateTime.currentDateTime().toString('HH:mm:ss.zzz')}")
-        # ✅ 加這一段，安全地避免 UI 關閉後仍觸發 snapshot
+            # ✅ 加這一段，安全地避免 UI 關閉後仍觸發 snapshot
             window = QApplication.instance().activeWindow()
             if window and not getattr(window, "is_closing", False):
-                take_snapshot_from_block(block, self.encoder_names)
+                future = take_snapshot_from_block(block, self.encoder_names)
+
+                def on_done(fut):
+                    snapshot_path = fut.result()
+                    if snapshot_path:
+                        img_dir = os.path.join(self.record_root, block.start_date.toString("MM.dd.yyyy"), "img")
+
+                        def update_ui():
+                            block.load_preview_images(img_dir)
+
+                        QTimer.singleShot(0, update_ui)
+
+                future.add_done_callback(on_done)
             else:
                 log(f"🛑 無視拍照：UI 已關閉或找不到 activeWindow")
-        if block:
-            img_dir = os.path.join(self.record_root, block.start_date.toString("MM.dd.yyyy"), "img")
-            block.load_preview_images(img_dir)     
-        else:
+        if not block:
             safe_set_label(status_label, "❌ 錯誤", "color: red;")
 
     def stop_encoder(self, encoder_name, status_label):
