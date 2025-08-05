@@ -155,29 +155,28 @@ def discover_encoders(ip: str, port: int):
 def save_selected_encoders(names, ip, port):
     """合併選取的裝置並保存到設定檔"""
     path = resource_path(ENCODER_CONFIG_PATH)
-    try:
-        if os.path.exists(path):
-            with open(path, "r", encoding="utf-8") as f:
-                try:
-                    config = json.load(f)
-                except json.JSONDecodeError:
-                    log("⚠️ encoders.json 無效，重新建立新設定")
-                    config = {}
-        else:
-            config = {}
-    except Exception as e:
-        log(f"❌ 無法讀取 {ENCODER_CONFIG_PATH}: {e}")
-        config = {}
 
+    # 讀取現有設定，若不存在則回傳空 dict
+    config = load_encoder_config()
+
+    added_names = []
     for name in names:
+        if name in config:
+            # 若名稱已存在則跳過並記錄
+            log(f"⚠️ 裝置 {name} 已存在，跳過新增")
+            continue
         config[name] = {"host": ip, "port": port}
+        added_names.append(name)
+
+    if not added_names:
+        log("ℹ️ 沒有新的 encoder 需要新增")
+        return
 
     try:
         with open(path, "w", encoding="utf-8") as f:
             json.dump(config, f, indent=2, ensure_ascii=False)
-        log(f"✅ 已將 {len(names)} 個 encoder 寫入 {ENCODER_CONFIG_PATH}")
+        log(f"✅ 已將 {len(added_names)} 個 encoder 寫入 {ENCODER_CONFIG_PATH}")
         global encoder_config
         encoder_config = config
     except Exception as e:
         log(f"❌ 寫入 config 失敗: {e}")
-

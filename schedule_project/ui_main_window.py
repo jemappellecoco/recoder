@@ -341,8 +341,7 @@ class MainWindow(QMainWindow):
         if orphan_count:
             log(f"⚠️ {orphan_count} 個節目沒有對應的 encoder")
         self.sync_runner_data()
-        self.runner.refresh_encoder_statuses()
-        self.update_encoder_status_labels()
+        QTimer.singleShot(0, self.update_encoder_status_labels)
 
     def jump_to_today(self):
         today = QDate.currentDate()
@@ -418,7 +417,7 @@ class MainWindow(QMainWindow):
 
         self.encoder_entries[name] = entry
         self.encoder_status[name] = status
-
+        status.setText(f"狀態：{self.get_encoder_status(name)}")
         return encoder_widget
     def update_preview_scaled(self, name):
         label = self.encoder_preview_labels.get(name)
@@ -431,24 +430,29 @@ class MainWindow(QMainWindow):
         for name in self.encoder_names:
             self.update_preview_scaled(name)
         super().resizeEvent(event)
+    def get_encoder_status(self, name):
+        now = QDateTime.currentDateTime()
+        related_blocks = [b for b in self.view.block_data if b.get("encoder_name") == name]
+        current_status = "無排程"
+        for b in related_blocks:
+            start_dt = QDateTime(
+                b["qdate"],
+                QTime(int(b["start_hour"]), int((b["start_hour"] % 1) * 60)),
+            )
+            end_dt = start_dt.addSecs(int(b["duration"] * 3600))
+            if now < start_dt:
+                current_status = "等待中"
+            elif start_dt <= now <= end_dt:
+                current_status = "錄影中"
+                break
+            elif now > end_dt:
+                current_status = "已結束"
+        return current_status
+
     def update_encoder_status_labels(self):
         try:
-            now = QDateTime.currentDateTime()
             for name, status_label in self.encoder_status.items():
-                related_blocks = [
-                    b for b in self.view.block_data if b.get("encoder_name") == name
-                ]
-                current_status = "無排程"
-                for b in related_blocks:
-                    start_dt = QDateTime(b["qdate"], QTime(int(b["start_hour"]), int((b["start_hour"] % 1) * 60)))
-                    end_dt = start_dt.addSecs(int(b["duration"] * 3600))
-                    if now < start_dt:
-                        current_status = "等待中"
-                    elif start_dt <= now <= end_dt:
-                        current_status = "錄影中"
-                        break
-                    elif now > end_dt:
-                        current_status = "已結束"
+                current_status = self.get_encoder_status(name)
                 status_label.setText(f"狀態：{current_status}")
         except Exception as e:
             log(f"❌ [Timer] update_encoder_status_labels 發生錯誤：{e}")
