@@ -8,7 +8,7 @@ from time_block import PreviewImageItem
 from PySide6.QtGui import QPixmap,QBrush ,QColor    
 from PySide6.QtCore import QDate, Qt,QDateTime,QTime,QTimer
 from schedule_view import ScheduleView
-from encoder_utils import list_encoders_with_alias, send_encoder_command
+from encoder_utils import list_encoders_with_alias
 from capture import take_snapshot_by_encoder
 from datetime import datetime
 import os
@@ -24,9 +24,8 @@ from check_schedule_manager import CheckScheduleManager
 CONFIG_FILE = "config.json"
 from uuid import uuid4
 from utils import set_log_box ,log
-import glob
-from capture import start_cleanup_timer, stop_cleanup_timer
-import time
+from capture import start_cleanup_timer
+from snapshot_worker import SnapshotWorker
 from EncoderManagerDialog import EncoderManagerDialog
 from encoder_utils import save_encoder_config, reload_encoder_config
 def find_latest_snapshot_by_prefix(preview_dir, encoder_name):
@@ -34,8 +33,7 @@ def find_latest_snapshot_by_prefix(preview_dir, encoder_name):
     matched_files = glob.glob(pattern)
     if not matched_files:
         return None
-    return max(matched_files, key=os.path.getmtime)  # 找出修改時間最新的
-
+    return max(matched_files, key=os.path.getmtime)
 class MainWindow(QMainWindow):
     def __init__(self):
         log("🔧 MainWindow 建立中...")  # ✅ 放在最上面
@@ -468,50 +466,37 @@ class MainWindow(QMainWindow):
     def update_all_encoder_snapshots(self):
         if getattr(self, "is_closing", False):
             log("🛑 UI 正在關閉，取消 snapshot 拍攝")
+            if hasattr(self, "snapshot_futures"):
+                for fut in self.snapshot_futures.values():
+                    if hasattr(fut, "cancel_event"):
+                        fut.cancel_event.set()
             return
-        preview_dir = os.path.join(self.record_root, "preview")
-        def capture_and_update(name, label):
-            try:
-                take_snapshot_by_encoder(name, snapshot_root=self.record_root)
-                preview_dir = os.path.join(self.record_root, "preview")
-                latest_path = find_latest_snapshot_by_prefix(preview_dir, name)
-                time.sleep(0.3)
-                if latest_path and os.path.exists(latest_path):
-                    pixmap = QPixmap(latest_path)
-                    self.encoder_pixmaps[name] = pixmap
-                    self.update_preview_scaled(name)
-                else:
-                    label.setText(f"❌ 無法載入 {name} 圖片")
-            except Exception as e:
-                log(f"❌ [Timer] 快照更新錯誤（{name}）：{e}")
 
-        # def capture_and_update(name, label):
-        #     try:
-        #         take_snapshot_by_encoder(name, snapshot_root=self.record_root)
-        #         filename = f"{name.replace(' ', '_')}.png"
-        #         snapshot_full = os.path.join(preview_dir, filename)
-            
-        #         if os.path.exists(snapshot_full):
-        #             pixmap = QPixmap(snapshot_full)
-        #             self.encoder_pixmaps[name] = pixmap
-        #             self.update_preview_scaled(name)
-        #         else:
-        #             label.setText(f"❌ 無法載入 {name} 圖片")
-        #     except Exception as e:
-        #         log(f"❌ [Timer] 快照更新錯誤（{name}）：{e}")
+        def on_finished(name, label):
+            def load_image():
+                try:
+                    preview_dir = os.path.join(self.record_root, "preview")
+                    latest_path = find_latest_snapshot_by_prefix(preview_dir, name)
+                    if latest_path and os.path.exists(latest_path):
+                        pixmap = QPixmap(latest_path)
+                        self.encoder_pixmaps[name] = pixmap
+                        self.update_preview_scaled(name)
+                    else:
+                        label.setText(f"❌ 無法載入 {name} 圖片")
+                except Exception as e:
+                    log(f"❌ [Timer] 快照更新錯誤（{name}）：{e}")
+            QTimer.singleShot(300, load_image)
 
-        # try:
-        #      with concurrent.futures.ThreadPoolExecutor(max_workers=4) as executor:
-        #         for name, label in self.encoder_preview_labels.items():
-        #             executor.submit(capture_and_update, name, label)
-        # except Exception as e:
-        #     log(f"❌ [Timer] update_all_encoder_snapshots 整體錯誤：{e}")
+        if not hasattr(self, "snapshot_workers"):
+            self.snapshot_workers = []
         try:
-            names = list(self.encoder_preview_labels.keys())
-
-            for i, name in enumerate(names):
-                label = self.encoder_preview_labels[name]
-                QTimer.singleShot(i * 700, lambda n=name, l=label: capture_and_update(n, l))
+            for name, label in self.encoder_preview_labels.items():
+                worker = SnapshotWorker(name, self.record_root)
+                worker.finished.connect(lambda n, l=label: on_finished(n, l))
+                worker.finished.connect(lambda _, w=worker: self.snapshot_workers.remove(w))
+                worker.finished.connect(worker.deleteLater)
+                self.snapshot_workers.append(worker)
+                worker.start()
         except Exception as e:
             log(f"❌ [Timer] update_all_encoder_snapshots 整體錯誤：{e}")
 
@@ -758,14 +743,23 @@ class MainWindow(QMainWindow):
         block = next((blk for blk in self.view.blocks if blk.block_id == block_id), None)
         if block:
             try:
-                snapshot_path = take_snapshot_from_block(block, self.encoder_names)
-                if snapshot_path and os.path.exists(snapshot_path):
-                    encoder_name = self.encoder_names[block.track_index]
-                    self.encoder_pixmaps[encoder_name] = QPixmap(snapshot_path)
-                    self.update_preview_scaled(encoder_name)
-                    log(f"📸 手動啟動拍照成功 ➜ {snapshot_path}")
-                else:
-                    log(f"⚠️ 手動啟動拍照失敗 ➜ {snapshot_path}")
+                future = take_snapshot_from_block(block, self.encoder_names)
+
+                def on_done(fut):
+                    snapshot_path = fut.result()
+
+                    def update_ui():
+                        if snapshot_path and os.path.exists(snapshot_path):
+                            encoder_name = self.encoder_names[block.track_index]
+                            self.encoder_pixmaps[encoder_name] = QPixmap(snapshot_path)
+                            self.update_preview_scaled(encoder_name)
+                            log(f"📸 手動啟動拍照成功 ➜ {snapshot_path}")
+                        else:
+                            log(f"⚠️ 手動啟動拍照失敗 ➜ {snapshot_path}")
+
+                    QTimer.singleShot(0, update_ui)
+
+                future.add_done_callback(on_done)
             except Exception as e:
                 log(f"❌ 手動啟動拍照錯誤：{e}")
         # if block:
@@ -810,6 +804,11 @@ class MainWindow(QMainWindow):
             self.runner.stop_timers()
         if hasattr(self, "view"):
             self.view.stop_timers()
+        if hasattr(self, "snapshot_futures"):
+            for fut in self.snapshot_futures.values():
+                if hasattr(fut, "cancel_event"):
+                    fut.cancel_event.set()
+            self.snapshot_futures.clear()
 
         log("👋 MainWindow 已關閉")
         super().closeEvent(event)

@@ -1,12 +1,27 @@
 import os
-from encoder_utils import send_encoder_command
-from utils import log
 import time
 import threading
+from concurrent.futures import ThreadPoolExecutor
 
-# 控制清理計時器的執行與引用
+from encoder_utils import send_encoder_command
+from utils import log
 cleanup_running = True
-cleanup_timer = None
+
+_snapshot_executor = ThreadPoolExecutor(max_workers=4)
+
+
+def _wait_for_file(path, cancel_event, timeout=5):
+    start = time.time()
+    while time.time() - start < timeout:
+        if cancel_event.is_set():
+            log("🛑 拍照已取消")
+            return None
+        if os.path.exists(path):
+            log(f"✅ 已儲存：{path}")
+            return path
+        time.sleep(0.1)
+    log(f"⚠️ 檔案未生成，請檢查路徑或權限：{path}")
+    return None
 def take_snapshot_from_block(block, encoder_names, snapshot_root: str = "E:/"):
     try:
         if not block.block_id:
@@ -19,7 +34,7 @@ def take_snapshot_from_block(block, encoder_names, snapshot_root: str = "E:/"):
         filename = f"{block_id}"
         snapshot_dir = os.path.join(snapshot_root, date_str, "img")
         snapshot_relative = os.path.relpath(os.path.join(date_str, "img", filename))
-        snapshot_full = os.path.join(snapshot_dir, f"{filename}.png") 
+        snapshot_full = os.path.join(snapshot_dir, f"{filename}.png")
 
         os.makedirs(snapshot_dir, exist_ok=True)
 
@@ -41,12 +56,14 @@ def take_snapshot_from_block(block, encoder_names, snapshot_root: str = "E:/"):
         response = send_encoder_command(encoder_name, f'SnapShot "{encoder_name}"')
         log(f"📡 SnapShot 指令回應: {response}")
 
-        if os.path.exists(snapshot_full):
-            log(f"✅ 已儲存：{snapshot_full}")
-            return snapshot_full
-        else:
-            log(f"⚠️ 檔案未生成，請檢查路徑或權限：{snapshot_full}")
-            return None
+        cancel_event = threading.Event()
+
+        def check_file():
+            return _wait_for_file(snapshot_full, cancel_event)
+
+        future = _snapshot_executor.submit(check_file)
+        future.cancel_event = cancel_event
+        return future
 
     except Exception as e:
         log(f"❌ take_snapshot_from_block 錯誤：{e}")
@@ -72,15 +89,20 @@ def take_snapshot_by_encoder(encoder_name, snapshot_root="E:/"):
             log(f"❌ 無法讀取 {snapshot_dir}：{e}")
             return None
 
-        time.sleep(0.5)
         log(f"📸 為 {encoder_name} 拍照 ➜ {snapshot_full}")
         send_encoder_command(encoder_name, f'SetSnapshotFileName "{encoder_name}" "{snapshot_relative}"')
         res = send_encoder_command(encoder_name, f'SnapShot "{encoder_name}"')
         log(f"📡 Snapshot 回應：{res}")
-        log(f"[Debug] encoder_name: {encoder_name}")
-        log(f"[Debug] snapshot_relative: {snapshot_relative}")
         log(f"📸 拍照指令傳送 by encoder")
-        return snapshot_full if os.path.exists(snapshot_full) else None
+
+        cancel_event = threading.Event()
+
+        def check_file():
+            return _wait_for_file(snapshot_full, cancel_event)
+
+        future = _snapshot_executor.submit(check_file)
+        future.cancel_event = cancel_event
+        return future
 
     except Exception as e:
         log(f"❌ take_snapshot_by_encoder 錯誤：{e}")
