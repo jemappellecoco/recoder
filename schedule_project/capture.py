@@ -22,7 +22,9 @@ def _wait_for_file(path, cancel_event, timeout=5):
         time.sleep(0.1)
     log(f"⚠️ 檔案未生成，請檢查路徑或權限：{path}")
     return None
-def take_snapshot_from_block(block, encoder_names, snapshot_root: str = "E:/"):
+def take_snapshot_from_block(block, encoder_names, snapshot_root: str = None):
+    if snapshot_root is None:
+        snapshot_root = os.getcwd()  # 使用目前的工作目錄
     try:
         if not block.block_id:
             log("❌ 無效 block_id，取消拍照")
