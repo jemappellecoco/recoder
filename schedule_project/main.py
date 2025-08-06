@@ -13,7 +13,12 @@ if __name__ == "__main__":
             log("📄 已建立預設排程檔案 schedule.json")
         except Exception as e:
             log(f"❌ 建立預設 schedule.json 失敗：{e}")
-
+    if not os.path.exists("config.json"):
+        try:
+            shutil.copy(resource_path("config.json"), "config.json")
+            log("📄 已建立預設設定檔 config.json")
+        except Exception as e:
+            log(f"❌ 建立預設 config.json 失敗：{e}")
     app = QApplication(sys.argv)
     win = MainWindow()
     win.show()
