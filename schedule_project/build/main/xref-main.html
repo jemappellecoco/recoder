@@ -171,6 +171,7 @@ imports:
  &#8226;   <a href="#re._constants">re._constants</a>
  &#8226;   <a href="#re._parser">re._parser</a>
  &#8226;   <a href="#reprlib">reprlib</a>
+ &#8226;   <a href="#shutil">shutil</a>
  &#8226;   <a href="#sre_compile">sre_compile</a>
  &#8226;   <a href="#sre_constants">sre_constants</a>
  &#8226;   <a href="#sre_parse">sre_parse</a>
@@ -179,6 +180,7 @@ imports:
  &#8226;   <a href="#traceback">traceback</a>
  &#8226;   <a href="#types">types</a>
  &#8226;   <a href="#ui_main_window">ui_main_window</a>
+ &#8226;   <a href="#utils">utils</a>
  &#8226;   <a href="#warnings">warnings</a>
  &#8226;   <a href="#weakref">weakref</a>
 
@@ -294,6 +296,25 @@ imported by:
 </div>
 
 <div class="node">
+  <a name="EncoderManagerDialog"></a>
+  <a target="code" href="///C:/Users/coco/recoder/schedule_project/EncoderManagerDialog.py" type="text/plain"><tt>EncoderManagerDialog</tt></a>
+<span class="moduletype">SourceModule</span>  <div class="import">
+imports:
+    <a href="#PySide6.QtCore">PySide6.QtCore</a>
+ &#8226;   <a href="#PySide6.QtWidgets">PySide6.QtWidgets</a>
+ &#8226;   <a href="#encoder_utils">encoder_utils</a>
+ &#8226;   <a href="#utils">utils</a>
+
+  </div>
+  <div class="import">
+imported by:
+    <a href="#ui_main_window">ui_main_window</a>
+
+  </div>
+
+</div>
+
+<div class="node">
   <a name="PySide6"></a>
   <a target="code" href="///C:/Users/coco/AppData/Local/Programs/Python/Python313/Lib/site-packages/PySide6/__init__.py" type="text/plain"><tt>PySide6</tt></a>
 <span class="moduletype">Package</span>  <div class="import">
@@ -340,7 +361,8 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#PySide6.QtCore">PySide6.QtCore</a>
+    <a href="#EncoderManagerDialog">EncoderManagerDialog</a>
+ &#8226;   <a href="#PySide6.QtCore">PySide6.QtCore</a>
  &#8226;   <a href="#PySide6.QtGui">PySide6.QtGui</a>
  &#8226;   <a href="#PySide6.QtNetwork">PySide6.QtNetwork</a>
  &#8226;   <a href="#PySide6.QtWidgets">PySide6.QtWidgets</a>
@@ -352,6 +374,7 @@ imported by:
  &#8226;   <a href="#path_manager">path_manager</a>
  &#8226;   <a href="#schedule_runner">schedule_runner</a>
  &#8226;   <a href="#schedule_view">schedule_view</a>
+ &#8226;   <a href="#snapshot_worker">snapshot_worker</a>
  &#8226;   <a href="#time_block">time_block</a>
  &#8226;   <a href="#ui_main_window">ui_main_window</a>
  &#8226;   <a href="#utils">utils</a>
@@ -436,7 +459,8 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#PySide6.QtWidgets">PySide6.QtWidgets</a>
+    <a href="#EncoderManagerDialog">EncoderManagerDialog</a>
+ &#8226;   <a href="#PySide6.QtWidgets">PySide6.QtWidgets</a>
  &#8226;   <a href="#add_block_dialog">add_block_dialog</a>
  &#8226;   <a href="#block_manager">block_manager</a>
  &#8226;   <a href="#edit_block_dialog">edit_block_dialog</a>
@@ -1541,6 +1565,7 @@ imported by:
 imports:
     <a href="#PySide6.QtCore">PySide6.QtCore</a>
  &#8226;   <a href="#PySide6.QtWidgets">PySide6.QtWidgets</a>
+ &#8226;   <a href="#encoder_utils">encoder_utils</a>
  &#8226;   <a href="#utils">utils</a>
 
   </div>
@@ -1800,8 +1825,10 @@ imported by:
   <a target="code" href="///C:/Users/coco/recoder/schedule_project/capture.py" type="text/plain"><tt>capture</tt></a>
 <span class="moduletype">SourceModule</span>  <div class="import">
 imports:
-    <a href="#encoder_utils">encoder_utils</a>
+    <a href="#concurrent.futures">concurrent.futures</a>
+ &#8226;   <a href="#encoder_utils">encoder_utils</a>
  &#8226;   <a href="#os">os</a>
+ &#8226;   <a href="#threading">threading</a>
  &#8226;   <a href="#time">time</a>
  &#8226;   <a href="#utils">utils</a>
 
@@ -1809,6 +1836,7 @@ imports:
   <div class="import">
 imported by:
     <a href="#schedule_runner">schedule_runner</a>
+ &#8226;   <a href="#snapshot_worker">snapshot_worker</a>
  &#8226;   <a href="#ui_main_window">ui_main_window</a>
 
   </div>
@@ -1821,6 +1849,8 @@ imported by:
 <span class="moduletype">SourceModule</span>  <div class="import">
 imports:
     <a href="#PySide6.QtCore">PySide6.QtCore</a>
+ &#8226;   <a href="#encoder_utils">encoder_utils</a>
+ &#8226;   <a href="#shiboken6">shiboken6</a>
  &#8226;   <a href="#utils">utils</a>
 
   </div>
@@ -2054,10 +2084,10 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#concurrent.futures._base">concurrent.futures._base</a>
+    <a href="#capture">capture</a>
+ &#8226;   <a href="#concurrent.futures._base">concurrent.futures._base</a>
  &#8226;   <a href="#concurrent.futures.process">concurrent.futures.process</a>
  &#8226;   <a href="#concurrent.futures.thread">concurrent.futures.thread</a>
- &#8226;   <a href="#ui_main_window">ui_main_window</a>
 
   </div>
 
@@ -2522,6 +2552,7 @@ imported by:
 imports:
     <a href="#PySide6.QtCore">PySide6.QtCore</a>
  &#8226;   <a href="#PySide6.QtWidgets">PySide6.QtWidgets</a>
+ &#8226;   <a href="#encoder_utils">encoder_utils</a>
 
   </div>
   <div class="import">
@@ -3039,9 +3070,14 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#capture">capture</a>
+    <a href="#EncoderManagerDialog">EncoderManagerDialog</a>
+ &#8226;   <a href="#add_block_dialog">add_block_dialog</a>
+ &#8226;   <a href="#capture">capture</a>
+ &#8226;   <a href="#check_schedule_manager">check_schedule_manager</a>
+ &#8226;   <a href="#edit_block_dialog">edit_block_dialog</a>
  &#8226;   <a href="#encoder_controller">encoder_controller</a>
  &#8226;   <a href="#schedule_runner">schedule_runner</a>
+ &#8226;   <a href="#schedule_view">schedule_view</a>
  &#8226;   <a href="#ui_main_window">ui_main_window</a>
 
   </div>
@@ -5867,6 +5903,7 @@ imports:
 imported by:
     <a href="#pathlib._abc">pathlib._abc</a>
  &#8226;   <a href="#pathlib._local">pathlib._local</a>
+ &#8226;   <a href="#ui_main_window">ui_main_window</a>
 
   </div>
 
@@ -8765,6 +8802,8 @@ imports:
  &#8226;   <a href="#encoder_utils">encoder_utils</a>
  &#8226;   <a href="#logging">logging</a>
  &#8226;   <a href="#os">os</a>
+ &#8226;   <a href="#shiboken6">shiboken6</a>
+ &#8226;   <a href="#threading">threading</a>
  &#8226;   <a href="#utils">utils</a>
 
   </div>
@@ -8784,6 +8823,7 @@ imports:
     <a href="#PySide6.QtCore">PySide6.QtCore</a>
  &#8226;   <a href="#PySide6.QtGui">PySide6.QtGui</a>
  &#8226;   <a href="#PySide6.QtWidgets">PySide6.QtWidgets</a>
+ &#8226;   <a href="#encoder_utils">encoder_utils</a>
  &#8226;   <a href="#json">json</a>
  &#8226;   <a href="#os">os</a>
  &#8226;   <a href="#path_manager">path_manager</a>
@@ -8884,6 +8924,8 @@ imported by:
  &#8226;   <a href="#PySide6.QtGui">PySide6.QtGui</a>
  &#8226;   <a href="#PySide6.QtNetwork">PySide6.QtNetwork</a>
  &#8226;   <a href="#PySide6.QtWidgets">PySide6.QtWidgets</a>
+ &#8226;   <a href="#check_schedule_manager">check_schedule_manager</a>
+ &#8226;   <a href="#schedule_runner">schedule_runner</a>
  &#8226;   <a href="#shiboken6.Shiboken">shiboken6.Shiboken</a>
 
   </div>
@@ -8941,6 +8983,7 @@ imports:
 imported by:
     <a href="#argparse">argparse</a>
  &#8226;   <a href="#ctypes.util">ctypes.util</a>
+ &#8226;   <a href="#main.py">main.py</a>
  &#8226;   <a href="#multiprocessing.util">multiprocessing.util</a>
  &#8226;   <a href="#tarfile">tarfile</a>
  &#8226;   <a href="#tempfile">tempfile</a>
@@ -8970,6 +9013,23 @@ imported by:
  &#8226;   <a href="#multiprocessing.resource_sharer">multiprocessing.resource_sharer</a>
  &#8226;   <a href="#multiprocessing.resource_tracker">multiprocessing.resource_tracker</a>
  &#8226;   <a href="#subprocess">subprocess</a>
+
+  </div>
+
+</div>
+
+<div class="node">
+  <a name="snapshot_worker"></a>
+  <a target="code" href="///C:/Users/coco/recoder/schedule_project/snapshot_worker.py" type="text/plain"><tt>snapshot_worker</tt></a>
+<span class="moduletype">SourceModule</span>  <div class="import">
+imports:
+    <a href="#PySide6.QtCore">PySide6.QtCore</a>
+ &#8226;   <a href="#capture">capture</a>
+
+  </div>
+  <div class="import">
+imported by:
+    <a href="#ui_main_window">ui_main_window</a>
 
   </div>
 
@@ -9492,6 +9552,7 @@ imports:
   <div class="import">
 imported by:
     <a href="#_threading_local">_threading_local</a>
+ &#8226;   <a href="#capture">capture</a>
  &#8226;   <a href="#concurrent.futures._base">concurrent.futures._base</a>
  &#8226;   <a href="#concurrent.futures.process">concurrent.futures.process</a>
  &#8226;   <a href="#concurrent.futures.thread">concurrent.futures.thread</a>
@@ -9511,6 +9572,7 @@ imported by:
  &#8226;   <a href="#multiprocessing.synchronize">multiprocessing.synchronize</a>
  &#8226;   <a href="#multiprocessing.util">multiprocessing.util</a>
  &#8226;   <a href="#queue">queue</a>
+ &#8226;   <a href="#schedule_runner">schedule_runner</a>
  &#8226;   <a href="#subprocess">subprocess</a>
  &#8226;   <a href="#zipfile">zipfile</a>
 
@@ -9781,23 +9843,25 @@ imported by:
   <a target="code" href="///C:/Users/coco/recoder/schedule_project/ui_main_window.py" type="text/plain"><tt>ui_main_window</tt></a>
 <span class="moduletype">SourceModule</span>  <div class="import">
 imports:
-    <a href="#PySide6.QtCore">PySide6.QtCore</a>
+    <a href="#EncoderManagerDialog">EncoderManagerDialog</a>
+ &#8226;   <a href="#PySide6.QtCore">PySide6.QtCore</a>
  &#8226;   <a href="#PySide6.QtGui">PySide6.QtGui</a>
  &#8226;   <a href="#PySide6.QtWidgets">PySide6.QtWidgets</a>
  &#8226;   <a href="#add_block_dialog">add_block_dialog</a>
  &#8226;   <a href="#block_manager">block_manager</a>
  &#8226;   <a href="#capture">capture</a>
  &#8226;   <a href="#check_schedule_manager">check_schedule_manager</a>
- &#8226;   <a href="#concurrent.futures">concurrent.futures</a>
  &#8226;   <a href="#datetime">datetime</a>
  &#8226;   <a href="#encoder_controller">encoder_controller</a>
  &#8226;   <a href="#encoder_utils">encoder_utils</a>
+ &#8226;   <a href="#glob">glob</a>
  &#8226;   <a href="#header_view">header_view</a>
  &#8226;   <a href="#json">json</a>
  &#8226;   <a href="#os">os</a>
  &#8226;   <a href="#path_manager">path_manager</a>
  &#8226;   <a href="#schedule_runner">schedule_runner</a>
  &#8226;   <a href="#schedule_view">schedule_view</a>
+ &#8226;   <a href="#snapshot_worker">snapshot_worker</a>
  &#8226;   <a href="#time_block">time_block</a>
  &#8226;   <a href="#utils">utils</a>
  &#8226;   <a href="#utils_conflict">utils_conflict</a>
@@ -9968,12 +10032,14 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#add_block_dialog">add_block_dialog</a>
+    <a href="#EncoderManagerDialog">EncoderManagerDialog</a>
+ &#8226;   <a href="#add_block_dialog">add_block_dialog</a>
  &#8226;   <a href="#block_manager">block_manager</a>
  &#8226;   <a href="#capture">capture</a>
  &#8226;   <a href="#check_schedule_manager">check_schedule_manager</a>
  &#8226;   <a href="#encoder_controller">encoder_controller</a>
  &#8226;   <a href="#encoder_utils">encoder_utils</a>
+ &#8226;   <a href="#main.py">main.py</a>
  &#8226;   <a href="#path_manager">path_manager</a>
  &#8226;   <a href="#schedule_runner">schedule_runner</a>
  &#8226;   <a href="#schedule_view">schedule_view</a>
