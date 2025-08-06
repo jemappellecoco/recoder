@@ -12,6 +12,7 @@ from encoder_utils import list_encoders_with_alias
 from capture import take_snapshot_by_encoder
 from datetime import datetime
 import os
+import glob
 from schedule_runner import ScheduleRunner
 import json
 from block_manager import BlockManager
@@ -24,7 +25,7 @@ from check_schedule_manager import CheckScheduleManager
 CONFIG_FILE = "config.json"
 from uuid import uuid4
 from utils import set_log_box ,log
-from capture import start_cleanup_timer
+from capture import start_cleanup_timer, stop_cleanup_timer
 from snapshot_worker import SnapshotWorker
 from EncoderManagerDialog import EncoderManagerDialog
 from encoder_utils import save_encoder_config, reload_encoder_config
@@ -151,8 +152,8 @@ class MainWindow(QMainWindow):
         self.select_schedule_button.clicked.connect(self.select_schedule_json)
         self.add_button = QPushButton("➕ 新增排程")
         self.add_button.clicked.connect(self.add_new_block)
-        self.root_button = QPushButton("📁 設定影片儲存路徑")
-        self.root_button.clicked.connect(self.select_record_root)
+        # self.root_button = QPushButton("📁 設定影片儲存路徑")
+        # self.root_button.clicked.connect(self.select_record_root)
         self.save_button = QPushButton("💾 儲存")
         self.save_button.clicked.connect(lambda: self.view.save_schedule())
         self.load_button = QPushButton("📂 載入")
@@ -172,7 +173,7 @@ class MainWindow(QMainWindow):
         toolbar_layout.addStretch()
         toolbar_layout.addWidget(self.today_button)
         toolbar_layout.addWidget(self.select_schedule_button)
-        toolbar_layout.addWidget(self.root_button)
+        # toolbar_layout.addWidget(self.root_button)
         toolbar_layout.addWidget(self.prev_button)
         toolbar_layout.addWidget(self.next_button)
         toolbar_layout.addWidget(self.add_button)
