@@ -5,7 +5,6 @@ from concurrent.futures import ThreadPoolExecutor
 
 from encoder_utils import send_encoder_command
 from utils import log
-from path_manager import PathManager
 cleanup_running = True
 
 _snapshot_executor = ThreadPoolExecutor(max_workers=4)
@@ -23,9 +22,9 @@ def _wait_for_file(path, cancel_event, timeout=5):
         time.sleep(0.1)
     log(f"⚠️ 檔案未生成，請檢查路徑或權限：{path}")
     return None
-def take_snapshot_from_block(block, encoder_names, snapshot_root: str | None = None):
+def take_snapshot_from_block(block, encoder_names, snapshot_root: str = None):
     if snapshot_root is None:
-        snapshot_root = PathManager().snapshot_root
+        snapshot_root = os.getcwd()  # 使用目前的工作目錄
     try:
         if not block.block_id:
             log("❌ 無效 block_id，取消拍照")
@@ -71,10 +70,8 @@ def take_snapshot_from_block(block, encoder_names, snapshot_root: str | None = N
     except Exception as e:
         log(f"❌ take_snapshot_from_block 錯誤：{e}")
         return None
-def take_snapshot_by_encoder(encoder_name, snapshot_root: str | None = None):
+def take_snapshot_by_encoder(encoder_name, snapshot_root="E:/"):
     try:
-        if snapshot_root is None:
-            snapshot_root = PathManager().snapshot_root
         subdir = "preview"
         filename = encoder_name.replace(" ", "_")
         snapshot_dir = os.path.join(snapshot_root, subdir)

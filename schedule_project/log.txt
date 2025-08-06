@@ -24567,3 +24567,282 @@ OK: Snapshot has been taken.
 [15:55:38] [INFO] 📸 拍照指令傳送 by encoder
 [15:55:38] [INFO] ✅ 已儲存：//192.168.30.110/vlcode\preview\Bak4-2.png
 [15:55:42] [INFO] 👋 MainWindow 已關閉
+[16:27:37] [INFO] 📂 嘗試讀取 encoder 設定：C:\Users\coco\recoder\schedule_project\encoders.json
+[16:27:37] [INFO] ✅ 成功載入 encoder 設定，共 2 筆
+[16:27:37] [INFO] 🔧 MainWindow 建立中...
+[16:27:37] [INFO] 📂 嘗試讀取 encoder 設定：C:\Users\coco\recoder\schedule_project\encoders.json
+[16:27:37] [INFO] ✅ 成功載入 encoder 設定，共 2 筆
+[16:27:37] [INFO] ✅ Encoder 列表：['Bak4-2', 'Bak4-1']
+[16:27:37] [INFO] 🎯 draw_grid encoder_names:['Bak4-2', 'Bak4-1']
+[16:27:38] [INFO] 📂 已載入節目排程 C:/Users/coco/Documents/schedule_saved/schedule.json
+[16:27:38] [INFO] 🎯 draw_grid encoder_names:['Bak4-2', 'Bak4-1']
+[16:27:38] [INFO] 🎯 draw_grid encoder_names:['Bak4-2', 'Bak4-1']
+[16:27:38] [INFO] 🧭 自動捲動畫面至今天時間：X = 329
+[16:27:38] [INFO] 🔁 [同步] Runner block 數量：4
+[16:27:38] [INFO] 🎯 draw_grid encoder_names:['Bak4-2', 'Bak4-1']
+[16:27:38] [INFO] 🧹 自動清理 preview，已刪除 0 張舊圖片
+[16:27:38] [INFO] 🎯 draw_grid encoder_names:['Bak4-2', 'Bak4-1']
+[16:27:38] [INFO] 📂 已載入節目排程 C:/Users/coco/Documents/schedule_saved/schedule.json
+[16:27:38] [INFO] 📂 自動載入之前選的檔案：C:/Users/coco/Documents/schedule_saved/schedule.json
+[16:27:39] [INFO] 🛑 時間到 ➜ 停止錄影: APP 測試 (e3f3cd24-5ec6-449e-aaa7-28c2797d5458)
+[16:27:39] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[16:27:41] [INFO] ⬅️ Response:
+  
+OK: Profile has been stopped successfully.
+
+
+[16:27:41] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[16:27:43] [INFO] ⬅️ Response:
+  
+OK: Bak4-2:Stopped
+
+
+[16:27:43] [INFO] ⬅️ Response: OK: Bak4-2:Stopped
+[16:27:43] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[16:27:45] [INFO] ⬅️ Response:
+  
+OK: Bak4-1:Stopped
+
+
+[16:27:45] [INFO] ⬅️ Response: OK: Bak4-1:Stopped
+[16:27:45] [INFO] 🛑 時間到 ➜ 停止錄影: APP 命名 (d8858741-e546-4e3d-a582-d75d1c0108bc)
+[16:27:45] [INFO] 📸 為 Bak4-2 拍照 ➜ preview\Bak4-2.png
+[16:27:45] [INFO] 📸 為 Bak4-1 拍照 ➜ preview\Bak4-1.png
+[16:27:45] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[16:27:45] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[16:27:45] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[16:27:47] [INFO] ⬅️ Response:
+  
+OK: Snapshot file name has been set.
+
+
+[16:27:47] [INFO] ⬅️ Response:
+  
+OK: Snapshot file name has been set.
+
+
+[16:27:47] [INFO] ⬅️ Response:
+  
+OK: Profile has been stopped successfully.
+
+
+[16:27:47] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[16:27:47] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[16:27:47] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[16:27:49] [INFO] ⬅️ Response:
+  
+OK: Snapshot has been taken.
+
+
+[16:27:49] [INFO] 📡 Snapshot 回應：OK: Snapshot has been taken.
+[16:27:49] [INFO] 📸 拍照指令傳送 by encoder
+[16:27:49] [INFO] ⬅️ Response:
+  
+OK: Bak4-2:Stopped
+
+
+n.
+
+
+[16:27:49] [INFO] ⬅️ Response: OK: Bak4-2:Stopped
+[16:27:49] [INFO] 📡 Snapshot 回應：OK: Snapshot has been taken.
+[16:27:49] [INFO] 📸 拍照指令傳送 by encoder
+[16:27:49] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[16:27:51] [INFO] ⬅️ Response:
+  
+OK: Bak4-1:Stopped
+
+
+[16:27:51] [INFO] ⬅️ Response: OK: Bak4-1:Stopped
+[16:27:51] [INFO] 🛑 時間到 ➜ 停止錄影: 名稱TEST (7083db80-5fa4-4a25-9099-c546745e4b17)
+[16:27:51] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[16:27:53] [INFO] ⬅️ Response:
+  
+OK: Profile has been stopped successfully.
+
+
+[16:27:53] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[16:27:54] [INFO] ⚠️ 檔案未生成，請檢查路徑或權限：preview\Bak4-2.png
+[16:27:54] [INFO] ⚠️ 檔案未生成，請檢查路徑或權限：preview\Bak4-1.png
+[16:27:55] [INFO] ⬅️ Response:
+  
+OK: Bak4-2:Stopped
+
+
+[16:27:55] [INFO] ⬅️ Response: OK: Bak4-2:Stopped
+[16:27:55] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[16:27:57] [INFO] ⬅️ Response:
+  
+OK: Bak4-1:Stopped
+
+
+[16:27:57] [INFO] ⬅️ Response: OK: Bak4-1:Stopped
+[16:27:57] [INFO] 🛑 時間到 ➜ 停止錄影: 寧 (40d8f121-b23f-42f2-a564-3b53f8617bff)
+[16:27:57] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[16:27:59] [INFO] ⬅️ Response:
+  
+OK: Profile has been stopped successfully.
+
+
+[16:27:59] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[16:28:01] [INFO] ⬅️ Response:
+  
+OK: Bak4-2:Stopped
+
+
+[16:28:01] [INFO] ⬅️ Response: OK: Bak4-2:Stopped
+[16:28:01] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[16:28:03] [INFO] ⬅️ Response:
+  
+OK: Bak4-1:Stopped
+
+
+[16:28:03] [INFO] ⬅️ Response: OK: Bak4-1:Stopped
+[16:28:08] [INFO] 📸 為 Bak4-1 拍照 ➜ preview\Bak4-1.png
+[16:28:08] [INFO] 📸 為 Bak4-2 拍照 ➜ preview\Bak4-2.png
+[16:28:08] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[16:28:08] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[16:28:10] [INFO] ⬅️ Response:
+  
+OK: Snapshot file name has been set.
+
+
+[16:28:10] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[16:28:10] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[16:28:12] [INFO] ⬅️ Response:
+  
+OK: Snapshot has been taken.
+
+
+[16:28:12] [INFO] 📡 Snapshot 回應：OK: Snapshot has been taken.
+[16:28:12] [INFO] 📸 拍照指令傳送 by encoder
+[16:28:12] [INFO] ⬅️ Response:
+  
+OK: Snapshot has been taken.
+
+
+[16:28:12] [INFO] 📡 Snapshot 回應：OK: Snapshot has been taken.
+[16:28:12] [INFO] 📸 拍照指令傳送 by encoder
+[16:28:17] [INFO] ⚠️ 檔案未生成，請檢查路徑或權限：preview\Bak4-2.png
+[16:28:17] [INFO] ⚠️ 檔案未生成，請檢查路徑或權限：preview\Bak4-1.png
+[16:28:23] [INFO] ✅ 呼叫 add_time_block
+[16:28:23] [INFO] ✅ 已加入 block: 2356
+[16:28:23] [INFO] ✅ 已儲存節目排程：C:/Users/coco/Documents/schedule_saved/schedule.json
+[16:28:23] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[16:28:23] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[16:28:25] [INFO] ⬅️ Response:
+  
+OK: New output file: Z:\08.06.2025\0806_2356.mxf
+
+
+[16:28:25] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[16:28:27] [INFO] ⬅️ Response:
+  
+OK: Profile has been started successfully.
+
+
+[16:28:27] [INFO] ✅ 已儲存節目排程：C:/Users/coco/Documents/schedule_saved/schedule.json
+[16:28:27] [INFO] 📸 拍照中 - block: 2356 / encoder: Bak4-1
+[16:28:27] [INFO] 📂 儲存位置: C:\Users\coco\recoder\schedule_project\08.06.2025\img\f466e8dc-dbaa-41d6-a399-535b9ff6bcc6.png
+[16:28:27] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[16:28:29] [INFO] ⬅️ Response:
+  
+OK: Snapshot file name has been set.
+
+
+[16:28:29] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[16:28:31] [INFO] ⬅️ Response:
+  
+OK: Snapshot has been taken.
+
+
+[16:28:31] [INFO] 📡 SnapShot 指令回應: OK: Snapshot has been taken.
+[16:28:31] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[16:28:33] [INFO] ⬅️ Response:
+  
+OK: Bak4-2:Stopped
+
+
+[16:28:33] [INFO] ⬅️ Response: OK: Bak4-2:Stopped
+[16:28:33] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[16:28:35] [INFO] ⬅️ Response:
+  
+OK: Bak4-1:Runned
+
+
+[16:28:35] [INFO] ⬅️ Response: OK: Bak4-1:Runned
+[16:28:35] [INFO] 🎯 draw_grid encoder_names:['Bak4-2', 'Bak4-1']
+[16:28:36] [INFO] ⚠️ 檔案未生成，請檢查路徑或權限：C:\Users\coco\recoder\schedule_project\08.06.2025\img\f466e8dc-dbaa-41d6-a399-535b9ff6bcc6.png
+[16:28:38] [INFO] 📸 為 Bak4-2 拍照 ➜ preview\Bak4-2.png
+[16:28:38] [INFO] 📸 為 Bak4-1 拍照 ➜ preview\Bak4-1.png
+[16:28:38] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[16:28:38] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[16:28:39] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[16:28:40] [INFO] ⬅️ Response:
+  
+OK: Snapshot file name has been set.
+
+
+[16:28:40] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[16:28:41] [INFO] ⬅️ Response:
+  
+OK: Profile has been stopped successfully.
+
+
+[16:28:42] [INFO] ✅ 已儲存節目排程：C:/Users/coco/Documents/schedule_saved/schedule.json
+[16:28:42] [INFO] ✅ 已儲存節目排程：C:/Users/coco/Documents/schedule_saved/schedule.json
+[16:28:42] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[16:28:42] [INFO] ⬅️ Response:
+  
+OK: Snapshot has been taken.
+
+
+[16:28:42] [INFO] 📡 Snapshot 回應：OK: Snapshot has been taken.
+[16:28:42] [INFO] 📸 拍照指令傳送 by encoder
+[16:28:42] [INFO] ⬅️ Response:
+  
+OK: Snapshot has been taken.
+
+
+[16:28:42] [INFO] 📡 Snapshot 回應：OK: Snapshot has been taken.
+[16:28:42] [INFO] 📸 拍照指令傳送 by encoder
+[16:28:44] [INFO] ⬅️ Response:
+  
+OK: Bak4-2:Stopped
+
+
+[16:28:44] [INFO] ⬅️ Response: OK: Bak4-2:Stopped
+[16:28:44] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[16:28:46] [INFO] ⬅️ Response:
+  
+OK: Bak4-1:Stopped
+
+
+[16:28:46] [INFO] ⬅️ Response: OK: Bak4-1:Stopped
+[16:28:46] [INFO] 🎯 draw_grid encoder_names:['Bak4-2', 'Bak4-1']
+[16:28:46] [INFO] 🔁 [同步] Runner block 數量：5
+[16:28:46] [INFO] 🛑 時間到 ➜ 停止錄影: 2356 (f466e8dc-dbaa-41d6-a399-535b9ff6bcc6)
+[16:28:46] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[16:28:47] [INFO] ⚠️ 檔案未生成，請檢查路徑或權限：preview\Bak4-2.png
+[16:28:47] [INFO] ⚠️ 檔案未生成，請檢查路徑或權限：preview\Bak4-1.png
+[16:28:48] [INFO] ⬅️ Response:
+  
+OK: Profile has been stopped successfully.
+
+
+[16:28:48] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[16:28:50] [INFO] ⬅️ Response:
+  
+OK: Bak4-2:Stopped
+
+
+[16:28:50] [INFO] ⬅️ Response: OK: Bak4-2:Stopped
+[16:28:50] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[16:28:52] [INFO] ⬅️ Response:
+  
+OK: Bak4-1:Stopped
+
+
+[16:28:52] [INFO] ⬅️ Response: OK: Bak4-1:Stopped
+[16:28:52] [INFO] ✅ 已儲存節目排程：C:/Users/coco/Documents/schedule_saved/schedule.json
+[16:29:04] [INFO] 👋 MainWindow 已關閉

@@ -4,7 +4,7 @@ from capture import take_snapshot_by_encoder
 class SnapshotWorker(QThread):
     finished = Signal(str)
 
-    def __init__(self, encoder_name, snapshot_root: str | None = None):
+    def __init__(self, encoder_name, snapshot_root):
         super().__init__()
         self.encoder_name = encoder_name
         self.snapshot_root = snapshot_root

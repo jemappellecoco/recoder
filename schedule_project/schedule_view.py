@@ -33,8 +33,7 @@ class ScheduleView(QGraphicsView):
         # self.schedule_timer.start(1000)
         # self.load_schedule()
         self.path_manager = PathManager()
-        self.record_root = self.path_manager.record_root
-        self.snapshot_root = self.path_manager.snapshot_root
+        self.record_root = self.path_manager.record_root  
 
         self.now_timer = QTimer(self)
         self.now_timer.timeout.connect(self.update_now_line)

@@ -9,8 +9,8 @@ import threading
 from PySide6.QtWidgets import QApplication
 from shiboken6 import isValid
 # from check_schedule_manager import CheckScheduleManager
-from capture import take_snapshot_from_block
-from utils import log
+from capture import take_snapshot_from_block 
+from utils import log   
 REFRESH_INTERVAL_MS = 8 * 60 * 1000
 def safe_set_label(label, text, style):
     if not label or not isValid(label):
@@ -20,12 +20,11 @@ def safe_set_label(label, text, style):
 class ScheduleRunner(QObject):
     snapshot_result = Signal(str, str)  # block_id, snapshot path
 
-    def __init__(self, schedule_data, encoder_status, record_root, encoder_names, blocks, snapshot_root=None):
+    def __init__(self, schedule_data, encoder_status, record_root, encoder_names, blocks):
         super().__init__()
         self.schedule_data = schedule_data
         self.encoder_status = encoder_status
         self.record_root = record_root
-        self.snapshot_root = snapshot_root or record_root
         self.encoder_names = encoder_names
         self.blocks = blocks  # 傳入 TimeBlock 實例列表
         self.encoder_controller = EncoderController(self.record_root)
@@ -183,7 +182,7 @@ class ScheduleRunner(QObject):
             if window and not getattr(window, "is_closing", False) and block:
                 def worker():
                     try:
-                        snapshot_path = take_snapshot_from_block(block, self.encoder_names, self.snapshot_root)
+                        snapshot_path = take_snapshot_from_block(block, self.encoder_names)
                         self.snapshot_result.emit(block.block_id, snapshot_path)
                     except Exception as e:
                         log(f"❌ snapshot thread error：{e}")
