@@ -24060,3 +24060,510 @@ OK: Snapshot has been taken.
 [13:51:04] [INFO] ⚠️ 檔案未生成，請檢查路徑或權限：//192.168.30.110/vlcode\preview\Bak4-2.png
 [13:51:05] [INFO] ✅ 已儲存：//192.168.30.110/vlcode\preview\Bak4-1.png
 [13:51:08] [INFO] 👋 MainWindow 已關閉
+[15:38:13] [INFO] 📂 嘗試讀取 encoder 設定：C:\Users\coco\recoder\schedule_project\encoders.json
+[15:38:13] [INFO] ✅ 成功載入 encoder 設定，共 2 筆
+[15:38:13] [INFO] 🔧 MainWindow 建立中...
+[15:38:13] [INFO] 📂 嘗試讀取 encoder 設定：C:\Users\coco\recoder\schedule_project\encoders.json
+[15:38:13] [INFO] ✅ 成功載入 encoder 設定，共 2 筆
+[15:38:13] [INFO] ✅ Encoder 列表：['Bak4-2', 'Bak4-1']
+[15:38:13] [INFO] 🎯 draw_grid encoder_names:['Bak4-2', 'Bak4-1']
+[15:38:14] [INFO] 🔍 scene item count: 184
+[15:38:14] [INFO] 🖼️ 圖片放在右邊：//192.168.30.110/vlcode\08.06.2025\img\e3f3cd24-5ec6-449e-aaa7-28c2797d5458.png
+[15:38:14] [INFO] 🔍 scene item count: 190
+[15:38:14] [INFO] 🖼️ 圖片放在右邊：//192.168.30.110/vlcode\08.06.2025\img\d8858741-e546-4e3d-a582-d75d1c0108bc.png
+[15:38:14] [INFO] 🔍 scene item count: 196
+[15:38:14] [INFO] 🖼️ 圖片放在右邊：//192.168.30.110/vlcode\08.06.2025\img\7083db80-5fa4-4a25-9099-c546745e4b17.png
+[15:38:14] [INFO] 🔍 scene item count: 202
+[15:38:14] [INFO] 🖼️ 圖片放在右邊：//192.168.30.110/vlcode\08.06.2025\img\40d8f121-b23f-42f2-a564-3b53f8617bff.png
+[15:38:14] [INFO] 📂 已載入節目排程 C:/Users/coco/Documents/schedule_saved/schedule.json
+[15:38:14] [INFO] 🎯 draw_grid encoder_names:['Bak4-2', 'Bak4-1']
+[15:38:14] [INFO] 🔍 scene item count: 184
+[15:38:14] [INFO] 🖼️ 圖片放在右邊：//192.168.30.110/vlcode\08.06.2025\img\e3f3cd24-5ec6-449e-aaa7-28c2797d5458.png
+[15:38:14] [INFO] 🔍 scene item count: 190
+[15:38:14] [INFO] 🖼️ 圖片放在右邊：//192.168.30.110/vlcode\08.06.2025\img\d8858741-e546-4e3d-a582-d75d1c0108bc.png
+[15:38:14] [INFO] 🔍 scene item count: 196
+[15:38:14] [INFO] 🖼️ 圖片放在右邊：//192.168.30.110/vlcode\08.06.2025\img\7083db80-5fa4-4a25-9099-c546745e4b17.png
+[15:38:15] [INFO] 🔍 scene item count: 202
+[15:38:15] [INFO] 🖼️ 圖片放在右邊：//192.168.30.110/vlcode\08.06.2025\img\40d8f121-b23f-42f2-a564-3b53f8617bff.png
+[15:38:15] [INFO] 🎯 draw_grid encoder_names:['Bak4-2', 'Bak4-1']
+[15:38:15] [INFO] 🔍 scene item count: 184
+[15:38:15] [INFO] 🖼️ 圖片放在右邊：//192.168.30.110/vlcode\08.06.2025\img\e3f3cd24-5ec6-449e-aaa7-28c2797d5458.png
+[15:38:15] [INFO] 🔍 scene item count: 190
+[15:38:15] [INFO] 🖼️ 圖片放在右邊：//192.168.30.110/vlcode\08.06.2025\img\d8858741-e546-4e3d-a582-d75d1c0108bc.png
+[15:38:15] [INFO] 🔍 scene item count: 196
+[15:38:15] [INFO] 🖼️ 圖片放在右邊：//192.168.30.110/vlcode\08.06.2025\img\7083db80-5fa4-4a25-9099-c546745e4b17.png
+[15:38:15] [INFO] 🔍 scene item count: 202
+[15:38:15] [INFO] 🖼️ 圖片放在右邊：//192.168.30.110/vlcode\08.06.2025\img\40d8f121-b23f-42f2-a564-3b53f8617bff.png
+[15:38:15] [INFO] 🧭 自動捲動畫面至今天時間：X = 312
+[15:38:15] [INFO] 🔁 [同步] Runner block 數量：4
+[15:38:15] [INFO] 🎯 draw_grid encoder_names:['Bak4-2', 'Bak4-1']
+[15:38:15] [INFO] 🔍 scene item count: 184
+[15:38:15] [INFO] 🖼️ 圖片放在右邊：//192.168.30.110/vlcode\08.06.2025\img\e3f3cd24-5ec6-449e-aaa7-28c2797d5458.png
+[15:38:15] [INFO] 🔍 scene item count: 190
+[15:38:15] [INFO] 🖼️ 圖片放在右邊：//192.168.30.110/vlcode\08.06.2025\img\d8858741-e546-4e3d-a582-d75d1c0108bc.png
+[15:38:15] [INFO] 🔍 scene item count: 196
+[15:38:15] [INFO] 🖼️ 圖片放在右邊：//192.168.30.110/vlcode\08.06.2025\img\7083db80-5fa4-4a25-9099-c546745e4b17.png
+[15:38:15] [INFO] 🔍 scene item count: 202
+[15:38:15] [INFO] 🖼️ 圖片放在右邊：//192.168.30.110/vlcode\08.06.2025\img\40d8f121-b23f-42f2-a564-3b53f8617bff.png
+[15:38:15] [INFO] 🧹 自動清理 preview，已刪除 0 張舊圖片
+[15:38:15] [INFO] 🎯 draw_grid encoder_names:['Bak4-2', 'Bak4-1']
+[15:38:15] [INFO] 🔍 scene item count: 184
+[15:38:15] [INFO] 🖼️ 圖片放在右邊：//192.168.30.110/vlcode\08.06.2025\img\e3f3cd24-5ec6-449e-aaa7-28c2797d5458.png
+[15:38:15] [INFO] 🔍 scene item count: 190
+[15:38:15] [INFO] 🖼️ 圖片放在右邊：//192.168.30.110/vlcode\08.06.2025\img\d8858741-e546-4e3d-a582-d75d1c0108bc.png
+[15:38:15] [INFO] 🔍 scene item count: 196
+[15:38:15] [INFO] 🖼️ 圖片放在右邊：//192.168.30.110/vlcode\08.06.2025\img\7083db80-5fa4-4a25-9099-c546745e4b17.png
+[15:38:15] [INFO] 🔍 scene item count: 202
+[15:38:15] [INFO] 🖼️ 圖片放在右邊：//192.168.30.110/vlcode\08.06.2025\img\40d8f121-b23f-42f2-a564-3b53f8617bff.png
+[15:38:15] [INFO] 📂 已載入節目排程 C:/Users/coco/Documents/schedule_saved/schedule.json
+[15:38:15] [INFO] 📂 自動載入之前選的檔案：C:/Users/coco/Documents/schedule_saved/schedule.json
+[15:38:16] [INFO] 🛑 時間到 ➜ 停止錄影: APP 測試 (e3f3cd24-5ec6-449e-aaa7-28c2797d5458)
+[15:38:16] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[15:38:18] [INFO] ⬅️ Response:
+  
+OK: Profile has been stopped successfully.
+
+
+[15:38:18] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[15:38:20] [INFO] ⬅️ Response:
+  
+OK: Bak4-2:Stopped
+
+
+[15:38:20] [INFO] ⬅️ Response: OK: Bak4-2:Stopped
+[15:38:20] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[15:38:22] [INFO] ⬅️ Response:
+  
+OK: Bak4-1:Stopped
+
+
+[15:38:22] [INFO] ⬅️ Response: OK: Bak4-1:Stopped
+[15:38:22] [INFO] 🛑 時間到 ➜ 停止錄影: APP 命名 (d8858741-e546-4e3d-a582-d75d1c0108bc)
+[15:38:22] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[15:38:22] [INFO] 📸 為 Bak4-1 拍照 ➜ //192.168.30.110/vlcode\preview\Bak4-1.png
+[15:38:22] [INFO] 📸 為 Bak4-2 拍照 ➜ //192.168.30.110/vlcode\preview\Bak4-2.png
+[15:38:22] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[15:38:22] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[15:38:24] [INFO] ⬅️ Response:
+  
+OK: Profile has been stopped successfully.
+
+
+[15:38:24] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[15:38:24] [INFO] ⬅️ Response:
+  
+OK: Snapshot file name has been set.
+
+
+[15:38:24] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[15:38:24] [INFO] ⬅️ Response:
+  
+OK: Snapshot file name has been set.
+
+
+[15:38:24] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[15:38:26] [INFO] ⬅️ Response:
+  
+OK: Bak4-2:Stopped
+
+
+[15:38:26] [INFO] ⬅️ Response: OK: Bak4-2:Stopped
+[15:38:26] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[15:38:26] [INFO] ⬅️ Response:
+  
+OK: Snapshot has been taken.
+
+
+[15:38:26] [INFO] 📡 Snapshot 回應：OK: Snapshot has been taken.
+[15:38:26] [INFO] 📸 拍照指令傳送 by encoder
+[15:38:26] [INFO] ✅ 已儲存：//192.168.30.110/vlcode\preview\Bak4-2.png
+[15:38:26] [INFO] ⬅️ Response:
+  
+OK: Snapshot has been taken.
+
+
+[15:38:26] [INFO] 📡 Snapshot 回應：OK: Snapshot has been taken.
+[15:38:26] [INFO] 📸 拍照指令傳送 by encoder
+[15:38:26] [INFO] ✅ 已儲存：//192.168.30.110/vlcode\preview\Bak4-1.png
+[15:38:28] [INFO] ⬅️ Response:
+  
+OK: Bak4-1:Stopped
+
+
+[15:38:28] [INFO] ⬅️ Response: OK: Bak4-1:Stopped
+[15:38:28] [INFO] 🛑 時間到 ➜ 停止錄影: 名稱TEST (7083db80-5fa4-4a25-9099-c546745e4b17)
+[15:38:28] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[15:38:30] [INFO] ⬅️ Response:
+  
+OK: Profile has been stopped successfully.
+
+
+[15:38:30] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[15:38:32] [INFO] ⬅️ Response:
+  
+OK: Bak4-2:Stopped
+
+
+[15:38:32] [INFO] ⬅️ Response: OK: Bak4-2:Stopped
+[15:38:32] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[15:38:34] [INFO] ⬅️ Response:
+  
+OK: Bak4-1:Stopped
+
+
+[15:38:34] [INFO] ⬅️ Response: OK: Bak4-1:Stopped
+[15:38:34] [INFO] 🛑 時間到 ➜ 停止錄影: 寧 (40d8f121-b23f-42f2-a564-3b53f8617bff)
+[15:38:34] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[15:38:36] [INFO] ⬅️ Response:
+  
+OK: Profile has been stopped successfully.
+
+
+[15:38:36] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[15:38:38] [INFO] ⬅️ Response:
+  
+OK: Bak4-2:Stopped
+
+
+[15:38:38] [INFO] ⬅️ Response: OK: Bak4-2:Stopped
+[15:38:38] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[15:38:40] [INFO] ⬅️ Response:
+  
+OK: Bak4-1:Stopped
+
+
+[15:38:40] [INFO] ⬅️ Response: OK: Bak4-1:Stopped
+[15:38:45] [INFO] 📸 為 Bak4-1 拍照 ➜ //192.168.30.110/vlcode\preview\Bak4-1.png
+[15:38:45] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[15:38:45] [INFO] 📸 為 Bak4-2 拍照 ➜ //192.168.30.110/vlcode\preview\Bak4-2.png
+[15:38:45] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[15:38:47] [INFO] ⬅️ Response:
+  
+OK: Snapshot file name has been set.
+
+
+[15:38:47] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[15:38:47] [INFO] ⬅️ Response:
+  
+OK: Snapshot file name has been set.
+
+
+[15:38:47] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[15:38:49] [INFO] ⬅️ Response:
+  
+OK: Snapshot has been taken.
+
+
+[15:38:49] [INFO] 📡 Snapshot 回應：OK: Snapshot has been taken.
+[15:38:49] [INFO] 📸 拍照指令傳送 by encoder
+[15:38:49] [INFO] ⬅️ Response:
+  
+OK: Snapshot has been taken.
+
+
+[15:38:49] [INFO] 📡 Snapshot 回應：OK: Snapshot has been taken.
+[15:38:49] [INFO] 📸 拍照指令傳送 by encoder
+[15:38:50] [INFO] 📂 嘗試讀取 encoder 設定：C:\Users\coco\recoder\schedule_project\encoders.json
+[15:38:50] [INFO] ✅ 成功載入 encoder 設定，共 2 筆
+[15:38:50] [INFO] 📂 嘗試讀取 encoder 設定：C:\Users\coco\recoder\schedule_project\encoders.json
+[15:38:50] [INFO] ✅ 成功載入 encoder 設定，共 2 筆
+[15:38:54] [INFO] ⚠️ 檔案未生成，請檢查路徑或權限：//192.168.30.110/vlcode\preview\Bak4-2.png
+[15:38:54] [INFO] ⚠️ 檔案未生成，請檢查路徑或權限：//192.168.30.110/vlcode\preview\Bak4-1.png
+[15:39:05] [INFO] 👋 MainWindow 已關閉
+[15:53:33] [INFO] 📂 嘗試讀取 encoder 設定：C:\Users\coco\recoder\schedule_project\encoders.json
+[15:53:33] [INFO] ✅ 成功載入 encoder 設定，共 2 筆
+[15:53:33] [INFO] 🔧 MainWindow 建立中...
+[15:53:33] [INFO] 📂 嘗試讀取 encoder 設定：C:\Users\coco\recoder\schedule_project\encoders.json
+[15:53:33] [INFO] ✅ 成功載入 encoder 設定，共 2 筆
+[15:53:33] [INFO] ✅ Encoder 列表：['Bak4-2', 'Bak4-1']
+[15:53:33] [INFO] 🎯 draw_grid encoder_names:['Bak4-2', 'Bak4-1']
+[15:53:34] [INFO] 🔍 scene item count: 184
+[15:53:34] [INFO] 🖼️ 圖片放在右邊：//192.168.30.110/vlcode\08.06.2025\img\e3f3cd24-5ec6-449e-aaa7-28c2797d5458.png
+[15:53:34] [INFO] 🔍 scene item count: 190
+[15:53:34] [INFO] 🖼️ 圖片放在右邊：//192.168.30.110/vlcode\08.06.2025\img\d8858741-e546-4e3d-a582-d75d1c0108bc.png
+[15:53:34] [INFO] 🔍 scene item count: 196
+[15:53:34] [INFO] 🖼️ 圖片放在右邊：//192.168.30.110/vlcode\08.06.2025\img\7083db80-5fa4-4a25-9099-c546745e4b17.png
+[15:53:34] [INFO] 🔍 scene item count: 202
+[15:53:34] [INFO] 🖼️ 圖片放在右邊：//192.168.30.110/vlcode\08.06.2025\img\40d8f121-b23f-42f2-a564-3b53f8617bff.png
+[15:53:34] [INFO] 📂 已載入節目排程 C:/Users/coco/Documents/schedule_saved/schedule.json
+[15:53:34] [INFO] 🎯 draw_grid encoder_names:['Bak4-2', 'Bak4-1']
+[15:53:34] [INFO] 🔍 scene item count: 184
+[15:53:34] [INFO] 🖼️ 圖片放在右邊：//192.168.30.110/vlcode\08.06.2025\img\e3f3cd24-5ec6-449e-aaa7-28c2797d5458.png
+[15:53:34] [INFO] 🔍 scene item count: 190
+[15:53:34] [INFO] 🖼️ 圖片放在右邊：//192.168.30.110/vlcode\08.06.2025\img\d8858741-e546-4e3d-a582-d75d1c0108bc.png
+[15:53:34] [INFO] 🔍 scene item count: 196
+[15:53:34] [INFO] 🖼️ 圖片放在右邊：//192.168.30.110/vlcode\08.06.2025\img\7083db80-5fa4-4a25-9099-c546745e4b17.png
+[15:53:34] [INFO] 🔍 scene item count: 202
+[15:53:34] [INFO] 🖼️ 圖片放在右邊：//192.168.30.110/vlcode\08.06.2025\img\40d8f121-b23f-42f2-a564-3b53f8617bff.png
+[15:53:34] [INFO] 🎯 draw_grid encoder_names:['Bak4-2', 'Bak4-1']
+[15:53:34] [INFO] 🔍 scene item count: 184
+[15:53:34] [INFO] 🖼️ 圖片放在右邊：//192.168.30.110/vlcode\08.06.2025\img\e3f3cd24-5ec6-449e-aaa7-28c2797d5458.png
+[15:53:34] [INFO] 🔍 scene item count: 190
+[15:53:34] [INFO] 🖼️ 圖片放在右邊：//192.168.30.110/vlcode\08.06.2025\img\d8858741-e546-4e3d-a582-d75d1c0108bc.png
+[15:53:34] [INFO] 🔍 scene item count: 196
+[15:53:34] [INFO] 🖼️ 圖片放在右邊：//192.168.30.110/vlcode\08.06.2025\img\7083db80-5fa4-4a25-9099-c546745e4b17.png
+[15:53:34] [INFO] 🔍 scene item count: 202
+[15:53:34] [INFO] 🖼️ 圖片放在右邊：//192.168.30.110/vlcode\08.06.2025\img\40d8f121-b23f-42f2-a564-3b53f8617bff.png
+[15:53:34] [INFO] 🧭 自動捲動畫面至今天時間：X = 317
+[15:53:34] [INFO] 🔁 [同步] Runner block 數量：4
+[15:53:34] [INFO] 🎯 draw_grid encoder_names:['Bak4-2', 'Bak4-1']
+[15:53:34] [INFO] 🔍 scene item count: 184
+[15:53:34] [INFO] 🖼️ 圖片放在右邊：//192.168.30.110/vlcode\08.06.2025\img\e3f3cd24-5ec6-449e-aaa7-28c2797d5458.png
+[15:53:34] [INFO] 🔍 scene item count: 190
+[15:53:34] [INFO] 🖼️ 圖片放在右邊：//192.168.30.110/vlcode\08.06.2025\img\d8858741-e546-4e3d-a582-d75d1c0108bc.png
+[15:53:34] [INFO] 🔍 scene item count: 196
+[15:53:34] [INFO] 🖼️ 圖片放在右邊：//192.168.30.110/vlcode\08.06.2025\img\7083db80-5fa4-4a25-9099-c546745e4b17.png
+[15:53:34] [INFO] 🔍 scene item count: 202
+[15:53:34] [INFO] 🖼️ 圖片放在右邊：//192.168.30.110/vlcode\08.06.2025\img\40d8f121-b23f-42f2-a564-3b53f8617bff.png
+[15:53:34] [INFO] 🧹 自動清理 preview，已刪除 2 張舊圖片
+[15:53:34] [INFO] 🎯 draw_grid encoder_names:['Bak4-2', 'Bak4-1']
+[15:53:34] [INFO] 🔍 scene item count: 184
+[15:53:34] [INFO] 🖼️ 圖片放在右邊：//192.168.30.110/vlcode\08.06.2025\img\e3f3cd24-5ec6-449e-aaa7-28c2797d5458.png
+[15:53:35] [INFO] 🔍 scene item count: 190
+[15:53:35] [INFO] 🖼️ 圖片放在右邊：//192.168.30.110/vlcode\08.06.2025\img\d8858741-e546-4e3d-a582-d75d1c0108bc.png
+[15:53:35] [INFO] 🔍 scene item count: 196
+[15:53:35] [INFO] 🖼️ 圖片放在右邊：//192.168.30.110/vlcode\08.06.2025\img\7083db80-5fa4-4a25-9099-c546745e4b17.png
+[15:53:35] [INFO] 🔍 scene item count: 202
+[15:53:35] [INFO] 🖼️ 圖片放在右邊：//192.168.30.110/vlcode\08.06.2025\img\40d8f121-b23f-42f2-a564-3b53f8617bff.png
+[15:53:35] [INFO] 📂 已載入節目排程 C:/Users/coco/Documents/schedule_saved/schedule.json
+[15:53:35] [INFO] 📂 自動載入之前選的檔案：C:/Users/coco/Documents/schedule_saved/schedule.json
+[15:53:35] [INFO] 🛑 時間到 ➜ 停止錄影: APP 測試 (e3f3cd24-5ec6-449e-aaa7-28c2797d5458)
+[15:53:35] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[15:53:37] [INFO] ⬅️ Response:
+  
+OK: Profile has been stopped successfully.
+
+
+[15:53:37] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[15:53:39] [INFO] ⬅️ Response:
+  
+OK: Bak4-2:Stopped
+
+
+[15:53:39] [INFO] ⬅️ Response: OK: Bak4-2:Stopped
+[15:53:39] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[15:53:41] [INFO] ⬅️ Response:
+  
+OK: Bak4-1:Stopped
+
+
+[15:53:41] [INFO] ⬅️ Response: OK: Bak4-1:Stopped
+[15:53:41] [INFO] 🛑 時間到 ➜ 停止錄影: APP 命名 (d8858741-e546-4e3d-a582-d75d1c0108bc)
+[15:53:41] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[15:53:41] [INFO] 📸 為 Bak4-1 拍照 ➜ //192.168.30.110/vlcode\preview\Bak4-1.png
+[15:53:41] [INFO] 📸 為 Bak4-2 拍照 ➜ //192.168.30.110/vlcode\preview\Bak4-2.png
+[15:53:41] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[15:53:41] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[15:53:43] [INFO] ⬅️ Response:
+  
+OK: Profile has been stopped successfully.
+
+
+[15:53:43] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[15:53:44] [INFO] ⬅️ Response:
+  
+OK: Snapshot file name has been set.
+
+
+[15:53:44] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[15:53:44] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[15:53:45] [INFO] ⬅️ Response:
+  
+OK: Bak4-2:Stopped
+
+
+[15:53:45] [INFO] ⬅️ Response: OK: Bak4-2:Stopped
+[15:53:45] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[15:53:46] [INFO] ⬅️ Response:
+  
+OK: Snapshot has been taken.
+
+
+[15:53:46] [INFO] 📡 Snapshot 回應：OK: Snapshot has been taken.
+[15:53:46] [INFO] 📸 拍照指令傳送 by encoder
+[15:53:46] [INFO] ✅ 已儲存：//192.168.30.110/vlcode\preview\Bak4-1.png
+[15:53:46] [INFO] ⬅️ Response:
+  
+OK: Snapshot has been taken.
+
+
+[15:53:46] [INFO] 📡 Snapshot 回應：OK: Snapshot has been taken.
+[15:53:46] [INFO] 📸 拍照指令傳送 by encoder
+[15:53:46] [INFO] ✅ 已儲存：//192.168.30.110/vlcode\preview\Bak4-2.png
+[15:53:47] [INFO] ⬅️ Response:
+  
+OK: Bak4-1:Stopped
+
+
+[15:53:48] [INFO] ⬅️ Response: OK: Bak4-1:Stopped
+[15:53:48] [INFO] 🛑 時間到 ➜ 停止錄影: 名稱TEST (7083db80-5fa4-4a25-9099-c546745e4b17)
+[15:53:48] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[15:53:50] [INFO] ⬅️ Response:
+  
+OK: Profile has been stopped successfully.
+
+
+[15:53:50] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[15:53:52] [INFO] ⬅️ Response:
+  
+OK: Bak4-2:Stopped
+
+
+[15:53:52] [INFO] ⬅️ Response: OK: Bak4-2:Stopped
+[15:53:52] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[15:53:54] [INFO] ⬅️ Response:
+  
+OK: Bak4-1:Stopped
+
+
+[15:53:54] [INFO] ⬅️ Response: OK: Bak4-1:Stopped
+[15:53:54] [INFO] 🛑 時間到 ➜ 停止錄影: 寧 (40d8f121-b23f-42f2-a564-3b53f8617bff)
+[15:53:54] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[15:53:56] [INFO] ⬅️ Response:
+  
+OK: Profile has been stopped successfully.
+
+
+[15:53:56] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[15:53:58] [INFO] ⬅️ Response:
+  
+OK: Bak4-2:Stopped
+
+
+[15:53:58] [INFO] ⬅️ Response: OK: Bak4-2:Stopped
+[15:53:58] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[15:54:00] [INFO] ⬅️ Response:
+  
+OK: Bak4-1:Stopped
+
+
+[15:54:00] [INFO] ⬅️ Response: OK: Bak4-1:Stopped
+[15:54:04] [INFO] 📸 為 Bak4-1 拍照 ➜ //192.168.30.110/vlcode\preview\Bak4-1.png
+[15:54:04] [INFO] 📸 為 Bak4-2 拍照 ➜ //192.168.30.110/vlcode\preview\Bak4-2.png
+[15:54:04] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[15:54:04] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[15:54:06] [INFO] ⬅️ Response:
+  
+OK: Snapshot file name has been set.
+
+
+[15:54:06] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[15:54:06] [INFO] ⬅️ Response:
+  
+OK: Snapshot file name has been set.
+
+
+[15:54:06] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[15:54:08] [INFO] ⬅️ Response:
+  
+OK: Snapshot has been taken.
+
+
+[15:54:08] [INFO] 📡 Snapshot 回應：OK: Snapshot has been taken.
+[15:54:08] [INFO] 📸 拍照指令傳送 by encoder
+[15:54:08] [INFO] ⬅️ Response:
+  
+OK: Snapshot has been taken.
+
+
+[15:54:08] [INFO] 📡 Snapshot 回應：OK: Snapshot has been taken.
+[15:54:08] [INFO] 📸 拍照指令傳送 by encoder
+[15:54:13] [INFO] ⚠️ 檔案未生成，請檢查路徑或權限：//192.168.30.110/vlcode\preview\Bak4-2.png
+[15:54:13] [INFO] ⚠️ 檔案未生成，請檢查路徑或權限：//192.168.30.110/vlcode\preview\Bak4-1.png
+[15:54:34] [INFO] 📸 為 Bak4-2 拍照 ➜ //192.168.30.110/vlcode\preview\Bak4-2.png
+[15:54:34] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[15:54:34] [INFO] 📸 為 Bak4-1 拍照 ➜ //192.168.30.110/vlcode\preview\Bak4-1.png
+[15:54:34] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[15:54:36] [INFO] ⬅️ Response:
+  
+OK: Snapshot file name has been set.
+
+
+[15:54:36] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[15:54:36] [INFO] ⬅️ Response:
+  
+OK: Snapshot file name has been set.
+
+
+[15:54:36] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[15:54:38] [INFO] ⬅️ Response:
+  
+OK: Snapshot has been taken.
+
+
+[15:54:38] [INFO] 📡 Snapshot 回應：OK: Snapshot has been taken.
+[15:54:38] [INFO] 📸 拍照指令傳送 by encoder
+[15:54:38] [INFO] ⬅️ Response:
+  
+OK: Snapshot has been taken.
+
+
+[15:54:38] [INFO] 📡 Snapshot 回應：OK: Snapshot has been taken.
+[15:54:38] [INFO] 📸 拍照指令傳送 by encoder
+[15:54:43] [INFO] ⚠️ 檔案未生成，請檢查路徑或權限：//192.168.30.110/vlcode\preview\Bak4-1.png
+[15:54:43] [INFO] ⚠️ 檔案未生成，請檢查路徑或權限：//192.168.30.110/vlcode\preview\Bak4-2.png
+[15:55:04] [INFO] 📸 為 Bak4-2 拍照 ➜ //192.168.30.110/vlcode\preview\Bak4-2.png
+[15:55:04] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[15:55:04] [INFO] 📸 為 Bak4-1 拍照 ➜ //192.168.30.110/vlcode\preview\Bak4-1.png
+[15:55:04] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[15:55:06] [INFO] ⬅️ Response:
+  
+OK: Snapshot file name has been set.
+
+
+[15:55:06] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[15:55:06] [INFO] ⬅️ Response:
+  
+OK: Snapshot file name has been set.
+
+
+[15:55:06] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[15:55:08] [INFO] ⬅️ Response:
+  
+OK: Snapshot has been taken.
+
+
+[15:55:08] [INFO] 📡 Snapshot 回應：OK: Snapshot has been taken.
+[15:55:08] [INFO] 📸 拍照指令傳送 by encoder
+[15:55:08] [INFO] ⬅️ Response:
+  
+OK: Snapshot has been taken.
+
+
+[15:55:08] [INFO] 📡 Snapshot 回應：OK: Snapshot has been taken.
+[15:55:08] [INFO] 📸 拍照指令傳送 by encoder
+[15:55:13] [INFO] ⚠️ 檔案未生成，請檢查路徑或權限：//192.168.30.110/vlcode\preview\Bak4-1.png
+[15:55:13] [INFO] ⚠️ 檔案未生成，請檢查路徑或權限：//192.168.30.110/vlcode\preview\Bak4-2.png
+[15:55:34] [INFO] 📸 為 Bak4-1 拍照 ➜ //192.168.30.110/vlcode\preview\Bak4-1.png
+[15:55:34] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[15:55:34] [INFO] 📸 為 Bak4-2 拍照 ➜ //192.168.30.110/vlcode\preview\Bak4-2.png
+[15:55:34] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[15:55:36] [INFO] ⬅️ Response:
+  
+OK: Snapshot file name has been set.
+
+
+[15:55:36] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[15:55:36] [INFO] ⬅️ Response:
+  
+OK: Snapshot file name has been set.
+
+
+[15:55:36] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[15:55:38] [INFO] ⬅️ Response:
+  
+OK: Snapshot has been taken.
+
+
+[15:55:38] [INFO] 📡 Snapshot 回應：OK: Snapshot has been taken.
+[15:55:38] [INFO] 📸 拍照指令傳送 by encoder
+[15:55:38] [INFO] ✅ 已儲存：//192.168.30.110/vlcode\preview\Bak4-1.png
+[15:55:38] [INFO] ⬅️ Response:
+  
+OK: Snapshot has been taken.
+
+
+[15:55:38] [INFO] 📡 Snapshot 回應：OK: Snapshot has been taken.
+[15:55:38] [INFO] 📸 拍照指令傳送 by encoder
+[15:55:38] [INFO] ✅ 已儲存：//192.168.30.110/vlcode\preview\Bak4-2.png
+[15:55:42] [INFO] 👋 MainWindow 已關閉

@@ -74,4 +74,4 @@ class PathManager:
             raise ValueError("qdate 必須是 QDate 物件")
 
         date_folder = qdate.toString("MM.dd.yyyy")
-        return os.path.join(self.snapshot_root, date_folder, "img", f"{block_id}.png")
+        return os.path.join(self.record_root, date_folder, "img", f"{block_id}.png")

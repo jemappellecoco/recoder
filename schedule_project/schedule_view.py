@@ -58,8 +58,8 @@ class ScheduleView(QGraphicsView):
                 
                 #  ✅ 圖片 lazy load：只載一次
                 if not getattr(item, "preview_item", None):  # 尚未載入過
-                    if hasattr(self, "snapshot_root"):
-                        img_folder = os.path.join(self.snapshot_root, item.start_date.toString("MM.dd.yyyy"), "img")
+                    if hasattr(self, "record_root"):
+                        img_folder = os.path.join(self.record_root, item.start_date.toString("MM.dd.yyyy"), "img")
                         item.load_preview_images(img_folder)
    
     def update_now_line(self):
@@ -212,8 +212,8 @@ class ScheduleView(QGraphicsView):
                     block.status = old_block.status
                     if hasattr(old_block, "status_text") and old_block.status_text:
                         block.status_text.setText(old_block.status)
-                if block.block_id and hasattr(self, "snapshot_root"):
-                    img_folder = os.path.join(self.snapshot_root, block.start_date.toString("MM.dd.yyyy"), "img")
+                if block.block_id and hasattr(self, "record_root"):
+                    img_folder = os.path.join(self.record_root, block.start_date.toString("MM.dd.yyyy"), "img")
                     block.load_preview_images(img_folder)
 
             
