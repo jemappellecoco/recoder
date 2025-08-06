@@ -43,6 +43,7 @@ class MainWindow(QMainWindow):
         # === 基礎設定 ===
         self.path_manager = PathManager()
         self.record_root = self.path_manager.record_root
+        self.snapshot_root = self.path_manager.snapshot_root
         encoders = list_encoders_with_alias()
         self.encoder_names = [name for name, _ in encoders]
         self.encoder_aliases = {name: alias for name, alias in encoders}
@@ -80,7 +81,7 @@ class MainWindow(QMainWindow):
         self.encoder_pixmaps = {}
         self.encoder_entries = {}
         self.encoder_status = {}
-        preview_dir = os.path.join(self.record_root, "preview")
+        preview_dir = os.path.join(self.snapshot_root, "preview")
         os.makedirs(preview_dir, exist_ok=True)
 
         for name in self.encoder_names:
@@ -204,6 +205,7 @@ class MainWindow(QMainWindow):
         self.view.encoder_names = self.encoder_names
         self.view.encoder_status = self.encoder_status
         self.view.record_root = self.record_root
+        self.view.snapshot_root = self.snapshot_root
         self.view.load_schedule()
         self.view.draw_grid()
         # 自動對齊畫面到「現在時間」
@@ -229,7 +231,8 @@ class MainWindow(QMainWindow):
             encoder_status=self.encoder_status,
             record_root=self.record_root,
             encoder_names=self.encoder_names,
-            blocks=self.view.blocks
+            blocks=self.view.blocks,
+            snapshot_root=self.snapshot_root,
         )# ✅ 加這裡！建立 schedule_manager
         self.schedule_manager = CheckScheduleManager(
             encoder_names=self.encoder_names,
@@ -277,7 +280,7 @@ class MainWindow(QMainWindow):
         self.view.horizontalScrollBar().valueChanged.connect(self.header.sync_scroll)
         self.update_encoder_status_labels()
         self.view.draw_grid()
-        self.cleanup_timer = start_cleanup_timer(self.record_root)
+        self.cleanup_timer = start_cleanup_timer(self.snapshot_root)
         QTimer.singleShot(3000, self.update_all_encoder_snapshots)
         # === 初始復原狀態 ===
         # for name in self.encoder_names:
@@ -476,7 +479,7 @@ class MainWindow(QMainWindow):
         def on_finished(name, label):
             def load_image():
                 try:
-                    preview_dir = os.path.join(self.record_root, "preview")
+                    preview_dir = os.path.join(self.snapshot_root, "preview")
                     latest_path = find_latest_snapshot_by_prefix(preview_dir, name)
                     if latest_path and os.path.exists(latest_path):
                         pixmap = QPixmap(latest_path)
@@ -492,7 +495,7 @@ class MainWindow(QMainWindow):
             self.snapshot_workers = []
         try:
             for name, label in self.encoder_preview_labels.items():
-                worker = SnapshotWorker(name, self.record_root)
+                worker = SnapshotWorker(name, self.snapshot_root)
                 worker.finished.connect(lambda n, l=label: on_finished(n, l))
                 worker.finished.connect(lambda _, w=worker: self.snapshot_workers.remove(w))
                 worker.finished.connect(worker.deleteLater)
@@ -744,7 +747,7 @@ class MainWindow(QMainWindow):
         block = next((blk for blk in self.view.blocks if blk.block_id == block_id), None)
         if block:
             try:
-                future = take_snapshot_from_block(block, self.encoder_names)
+                future = take_snapshot_from_block(block, self.encoder_names, self.snapshot_root)
 
                 def on_done(fut):
                     snapshot_path = fut.result()
