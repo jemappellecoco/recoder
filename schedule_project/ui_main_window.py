@@ -29,8 +29,25 @@ from capture import start_cleanup_timer, stop_cleanup_timer
 from snapshot_worker import SnapshotWorker
 from EncoderManagerDialog import EncoderManagerDialog
 from encoder_utils import save_encoder_config, reload_encoder_config
+def get_preview_root_from_config():
+    try:
+        if not os.path.exists(CONFIG_FILE):
+            raise FileNotFoundError(f"找不到設定檔 {CONFIG_FILE}")
+        
+        with open(CONFIG_FILE, "r", encoding="utf-8") as f:
+            config = json.load(f)
+        
+        preview_root = config.get("preview_root")
+        if not preview_root:
+            raise ValueError("⚠️ config.json 中沒有設定 'preview_root'")
+        
+        return preview_root
+
+    except Exception as e:
+        raise RuntimeError(f"❌ 無法取得預覽路徑：{e}")
 def find_latest_snapshot_by_prefix(preview_dir, encoder_name):
-    pattern = os.path.join(preview_dir, f"{encoder_name}*.png")
+    pattern = os.path.join(preview_dir,"preview", f"{encoder_name}*.png") 
+    log(f"🔍 查找最新快照：{pattern}")
     matched_files = glob.glob(pattern)
     if not matched_files:
         return None
@@ -43,7 +60,16 @@ class MainWindow(QMainWindow):
         # === 基礎設定 ===
         self.path_manager = PathManager()
         self.record_root = self.path_manager.record_root
+        
         self.preview_root = self.path_manager.preview_root
+
+        if not os.path.exists(self.preview_root):
+            QMessageBox.critical(
+                self,
+                "❌ 預覽路徑無效",
+                f"⚠️ 找不到預覽儲存路徑：\n{self.preview_root}\n\n請重新選擇一個有效的資料夾。"
+            )
+            self.select_preview_root()  # 呼叫內建選擇資料夾的方法
         encoders = list_encoders_with_alias()
         self.encoder_names = [name for name, _ in encoders]
         self.encoder_aliases = {name: alias for name, alias in encoders}
@@ -528,7 +554,7 @@ class MainWindow(QMainWindow):
         if folder:
             self.preview_root = folder
             os.makedirs(self.preview_root, exist_ok=True)
-            log(f"📁 使用者設定預覽路徑為：{self.preview_root}")
+            log(f"📁 設定預覽資料夾：{self.preview_root}")
             self.path_manager.save_preview_root(folder)
 
     

@@ -74,16 +74,20 @@ def take_snapshot_from_block(block, encoder_names, snapshot_root: str = None):
 def take_snapshot_by_encoder(encoder_name, preview_root: str | None = None):
     try:
         if preview_root is None:
-            preview_root = PathManager().snapshot_root
+            preview_root = PathManager().snapshot_root  # 通常是 "Z:/"
 
         filename = encoder_name.replace(" ", "_")
-        snapshot_dir = preview_root
-        snapshot_relative = os.path.join( filename)  # ✅ 給 encoder 的相對路徑
 
-        snapshot_full = os.path.join(preview_root, f"{filename}.png")
+        # ✅ 傳給 encoder 的相對路徑（沒有副檔名）
+        snapshot_relative = os.path.join("preview", filename).replace("\\", "/")
+
+        # ✅ 本機實際要等的圖片檔案（Z:/preview/Bak4-1.png）
+        snapshot_dir = os.path.join(preview_root, "preview")
+        snapshot_full_path = os.path.join(snapshot_dir, f"{filename}.png")
 
         os.makedirs(snapshot_dir, exist_ok=True)
 
+        # 🔄 清除舊圖
         try:
             for f in os.listdir(snapshot_dir):
                 if f.startswith(filename):
@@ -92,19 +96,20 @@ def take_snapshot_by_encoder(encoder_name, preview_root: str | None = None):
                     except Exception as e:
                         log(f"⚠️ 無法刪除舊圖片 {f}：{e}")
         except Exception as e:
-            log(f"❌ 無法讀取 {snapshot_dir}：{e}")
+            log(f"❌ 無法讀取 snapshot_dir：{e}")
             return None
 
-        log(f"📸 為 {encoder_name} 拍照 ➜ {snapshot_full}")
+        log(f"📸 為 {encoder_name} 拍照 ➜ 儲存預期路徑：{snapshot_full_path}")
+        log(f"🛰️ 傳給 encoder 的路徑（不含副檔名）：{snapshot_relative}")
+
         send_encoder_command(encoder_name, f'SetSnapshotFileName "{encoder_name}" "{snapshot_relative}"')
         res = send_encoder_command(encoder_name, f'SnapShot "{encoder_name}"')
         log(f"📡 Snapshot 回應：{res}")
-        log(f"📸 拍照指令傳送 by encoder")
 
         cancel_event = threading.Event()
 
         def check_file():
-            return _wait_for_file(snapshot_full, cancel_event)
+            return _wait_for_file(snapshot_full_path, cancel_event)
 
         future = _snapshot_executor.submit(check_file)
         future.cancel_event = cancel_event
@@ -113,6 +118,7 @@ def take_snapshot_by_encoder(encoder_name, preview_root: str | None = None):
     except Exception as e:
         log(f"❌ take_snapshot_by_encoder 錯誤：{e}")
         return None
+
 # capture.py
 def start_cleanup_timer(preview_root, interval=300):
     """啟動自動清理 preview 圖片的計時器並回傳 Timer 參考。"""

@@ -11168,3 +11168,108 @@ OK: Snapshot has been taken.
 [15:35:22] [INFO] ⚠️ 檔案未生成，請檢查路徑或權限：//192.168.30.110/vlcode\preview\Bak4-2.png
 [15:35:22] [INFO] ⚠️ 檔案未生成，請檢查路徑或權限：//192.168.30.110/vlcode\preview\Bak4-1.png
 [15:35:36] [INFO] 👋 MainWindow 已關閉
+[16:25:48] [INFO] 📂 嘗試讀取 encoder 設定：C:\Users\coco\AppData\Local\Temp\_MEI629442\encoders.json
+[16:25:48] [INFO] ✅ 成功載入 encoder 設定，共 2 筆
+[16:25:48] [INFO] 🔧 MainWindow 建立中...
+[16:25:57] [INFO] 📁 設定預覽資料夾：Z:/
+[16:25:57] [INFO] 📂 嘗試讀取 encoder 設定：C:\Users\coco\AppData\Local\Temp\_MEI629442\encoders.json
+[16:25:57] [INFO] ✅ 成功載入 encoder 設定，共 2 筆
+[16:25:57] [INFO] ✅ Encoder 列表：['Bak4-1', 'Bak4-2']
+[16:25:57] [INFO] 🎯 draw_grid encoder_names:['Bak4-1', 'Bak4-2']
+[16:25:57] [INFO] 📂 已載入節目排程 C:/Users/coco/Documents/schedule_saved/schedule.json
+[16:25:57] [INFO] 🎯 draw_grid encoder_names:['Bak4-1', 'Bak4-2']
+[16:25:57] [INFO] 🎯 draw_grid encoder_names:['Bak4-1', 'Bak4-2']
+[16:25:57] [INFO] 🧭 自動捲動畫面至今天時間：X = 328
+[16:25:57] [INFO] 🔁 [同步] Runner block 數量：1
+[16:25:57] [INFO] 🎯 draw_grid encoder_names:['Bak4-1', 'Bak4-2']
+[16:25:57] [INFO] 🧹 自動清理 preview，已刪除 0 張舊圖片
+[16:25:57] [INFO] 🎯 draw_grid encoder_names:['Bak4-1', 'Bak4-2']
+[16:25:57] [INFO] 📂 已載入節目排程 C:/Users/coco/Documents/schedule_saved/schedule.json
+[16:25:57] [INFO] 📂 自動載入之前選的檔案：C:/Users/coco/Documents/schedule_saved/schedule.json
+[16:25:58] [INFO] 🛑 時間到 ➜ 停止錄影: 0807000 (4ed2a142-6878-4d98-b31c-33fa8c45bc38)
+[16:25:58] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[16:26:00] [INFO] ⬅️ Response:
+  
+OK: Profile has been stopped successfully.
+
+
+[16:26:00] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[16:26:02] [INFO] ⬅️ Response:
+  
+OK: Bak4-1:Stopped
+
+
+[16:26:02] [INFO] ⬅️ Response: OK: Bak4-1:Stopped
+[16:26:02] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[16:26:04] [INFO] ⬅️ Response:
+  
+OK: Bak4-2:Stopped
+
+
+[16:26:04] [INFO] ⬅️ Response: OK: Bak4-2:Stopped
+[16:26:04] [INFO] ✅ 已儲存節目排程：C:/Users/coco/Documents/schedule_saved/schedule.json
+[16:26:04] [INFO] 📸 為 Bak4-2 拍照 ➜ 儲存預期路徑：Z:/preview\Bak4-2.png
+[16:26:04] [INFO] 🛰️ 傳給 encoder 的路徑（不含副檔名）：preview/Bak4-2
+[16:26:04] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[16:26:04] [INFO] 📸 為 Bak4-1 拍照 ➜ 儲存預期路徑：Z:/preview\Bak4-1.png
+[16:26:04] [INFO] 🛰️ 傳給 encoder 的路徑（不含副檔名）：preview/Bak4-1
+[16:26:04] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[16:26:06] [INFO] 🎯 draw_grid encoder_names:['Bak4-1', 'Bak4-2']
+[16:26:06] [INFO] 🎯 draw_grid encoder_names:['Bak4-1', 'Bak4-2']
+[16:26:07] [INFO] ⬅️ Response:
+  
+OK: Snapshot file name has been set.
+
+
+[16:26:07] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[16:26:07] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[16:26:07] [INFO] 🎯 draw_grid encoder_names:['Bak4-1', 'Bak4-2']
+[16:26:07] [INFO] 🎯 draw_grid encoder_names:['Bak4-1', 'Bak4-2']
+[16:26:09] [INFO] ⬅️ Response:
+  
+
+[16:26:09] [INFO] 📡 Snapshot 回應：
+[16:26:09] [INFO] 🔍 查找最新快照：Z:/preview\Bak4-1*.png
+[16:26:11] [INFO] ⬅️ Response:
+  
+OK: Snapshot has been taken.
+
+
+[16:26:11] [INFO] 📡 Snapshot 回應：OK: Snapshot has been taken.
+[16:26:11] [INFO] 🔍 查找最新快照：Z:/preview\Bak4-2*.png
+[16:26:14] [INFO] ⚠️ 檔案未生成，請檢查路徑或權限：Z:/preview\Bak4-1.png
+[16:26:16] [INFO] ⚠️ 檔案未生成，請檢查路徑或權限：Z:/preview\Bak4-2.png
+[16:26:27] [INFO] 📸 為 Bak4-2 拍照 ➜ 儲存預期路徑：Z:/preview\Bak4-2.png
+[16:26:27] [INFO] 🛰️ 傳給 encoder 的路徑（不含副檔名）：preview/Bak4-2
+[16:26:27] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[16:26:27] [INFO] 📸 為 Bak4-1 拍照 ➜ 儲存預期路徑：Z:/preview\Bak4-1.png
+[16:26:27] [INFO] 🛰️ 傳給 encoder 的路徑（不含副檔名）：preview/Bak4-1
+[16:26:27] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[16:26:29] [INFO] ⬅️ Response:
+  
+OK: Snapshot file name has been set.
+
+
+[16:26:29] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[16:26:29] [INFO] ⬅️ Response:
+  
+OK: Snapshot file name has been set.
+
+
+[16:26:29] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[16:26:29] [INFO] 🎯 draw_grid encoder_names:['Bak4-1', 'Bak4-2']
+[16:26:29] [INFO] 📂 已載入節目排程 C:/Users/coco/Documents/schedule_saved/schedule.json
+[16:26:29] [INFO] 🔁 [同步] Runner block 數量：1
+[16:26:30] [INFO] ✅ 已儲存節目排程：C:/Users/coco/Documents/schedule_saved/schedule.json
+[16:26:31] [INFO] ⬅️ Response:
+  
+
+[16:26:31] [INFO] 📡 Snapshot 回應：
+[16:26:31] [INFO] ✅ 已儲存：Z:/preview\Bak4-1.png
+[16:26:31] [INFO] ⬅️ Response:
+  
+
+[16:26:31] [INFO] 📡 Snapshot 回應：
+[16:26:31] [INFO] 🔍 查找最新快照：Z:/preview\Bak4-1*.png
+[16:26:31] [INFO] 🔍 查找最新快照：Z:/preview\Bak4-2*.png
+[16:26:36] [INFO] ⚠️ 檔案未生成，請檢查路徑或權限：Z:/preview\Bak4-2.png

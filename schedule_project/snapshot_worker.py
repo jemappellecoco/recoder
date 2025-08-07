@@ -14,3 +14,4 @@ class SnapshotWorker(QThread):
             take_snapshot_by_encoder(self.encoder_name, preview_root=self.preview_root)
         finally:
             self.finished.emit(self.encoder_name)
+        
