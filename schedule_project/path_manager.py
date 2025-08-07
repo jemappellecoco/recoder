@@ -10,16 +10,41 @@ from utils import log
 class PathManager:
     def __init__(self):
         self.record_root = self.load_record_root()
+        self.preview_root = self.load_preview_root()
 
     
     def get_full_path(self, encoder_name, filename):
         date_folder = datetime.today().strftime("%m.%d.%Y")
         date_prefix = datetime.today().strftime("%m%d")
         return os.path.abspath(os.path.join(self.record_root, date_folder, f"{date_prefix}_{filename}"))
-    def save_record_root(self, path):
+    def _save_config(self, data):
         try:
             with open(CONFIG_FILE, 'w', encoding='utf-8') as f:
-                json.dump({'record_root': path}, f)
+                json.dump(data, f)
+        except Exception as e:
+            log("❌ 無法儲存 config:", e)
+
+    def save_record_root(self, path):
+        try:
+            data = {}
+            if os.path.exists(CONFIG_FILE):
+                with open(CONFIG_FILE, 'r', encoding='utf-8') as f:
+                    data = json.load(f)
+            data['record_root'] = path
+            data.setdefault('preview_root', self.preview_root)
+            self._save_config(data)
+        except Exception as e:
+            log("❌ 無法儲存 config:", e)
+
+    def save_preview_root(self, path):
+        try:
+            data = {}
+            if os.path.exists(CONFIG_FILE):
+                with open(CONFIG_FILE, 'r', encoding='utf-8') as f:
+                    data = json.load(f)
+            data['preview_root'] = path
+            data.setdefault('record_root', self.record_root)
+            self._save_config(data)
         except Exception as e:
             log("❌ 無法儲存 config:", e)
     def load_record_root(self):
@@ -41,8 +66,28 @@ class PathManager:
             log(f"❌ 無法讀取 config: {e}")
         return self.default_record_root()
 
+    def load_preview_root(self):
+        try:
+            if os.path.exists(CONFIG_FILE):
+                with open(CONFIG_FILE, 'r', encoding='utf-8') as f:
+                    data = json.load(f)
+                    return data.get('preview_root', self.default_preview_root())
+
+            path = resource_path(CONFIG_FILE)
+            if os.path.exists(path):
+                with open(path, 'r', encoding='utf-8') as f:
+                    data = json.load(f)
+                    return data.get('preview_root', self.default_preview_root())
+
+        except Exception as e:
+            log(f"❌ 無法讀取 config: {e}")
+        return self.default_preview_root()
+
     def default_record_root(self):
-        return os.path.join(os.getcwd(), "Recordings") 
+        return os.path.join(os.getcwd(), "Recordings")
+
+    def default_preview_root(self):
+        return os.path.join(self.default_record_root(), "preview")
     # def load_record_root(self):
     #     try:
     #         path = resource_path(CONFIG_FILE)
