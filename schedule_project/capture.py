@@ -5,6 +5,7 @@ from concurrent.futures import ThreadPoolExecutor
 
 from encoder_utils import send_encoder_command
 from utils import log
+from path_manager import PathManager
 cleanup_running = True
 
 _snapshot_executor = ThreadPoolExecutor(max_workers=4)
@@ -70,8 +71,11 @@ def take_snapshot_from_block(block, encoder_names, snapshot_root: str = None):
     except Exception as e:
         log(f"❌ take_snapshot_from_block 錯誤：{e}")
         return None
-def take_snapshot_by_encoder(encoder_name, preview_root):
+def take_snapshot_by_encoder(encoder_name, preview_root: str | None = None):
     try:
+        if preview_root is None:
+            preview_root = PathManager().snapshot_root
+
         filename = encoder_name.replace(" ", "_")
         snapshot_dir = preview_root
         snapshot_relative = os.path.join(snapshot_dir, filename)
