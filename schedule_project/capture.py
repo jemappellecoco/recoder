@@ -70,13 +70,12 @@ def take_snapshot_from_block(block, encoder_names, snapshot_root: str = None):
     except Exception as e:
         log(f"❌ take_snapshot_from_block 錯誤：{e}")
         return None
-def take_snapshot_by_encoder(encoder_name, snapshot_root="E:/"):
+def take_snapshot_by_encoder(encoder_name, preview_root):
     try:
-        subdir = "preview"
         filename = encoder_name.replace(" ", "_")
-        snapshot_dir = os.path.join(snapshot_root, subdir)
-        snapshot_relative = os.path.join(subdir, filename)
-        snapshot_full = os.path.join(snapshot_dir, f"{filename}.png")
+        snapshot_dir = preview_root
+        snapshot_relative = os.path.join(snapshot_dir, filename)
+        snapshot_full = f"{snapshot_relative}.png"
 
         os.makedirs(snapshot_dir, exist_ok=True)
 
@@ -110,7 +109,7 @@ def take_snapshot_by_encoder(encoder_name, snapshot_root="E:/"):
         log(f"❌ take_snapshot_by_encoder 錯誤：{e}")
         return None
 # capture.py
-def start_cleanup_timer(snapshot_root, interval=300):
+def start_cleanup_timer(preview_root, interval=300):
     """啟動自動清理 preview 圖片的計時器並回傳 Timer 參考。"""
     global cleanup_timer, cleanup_running
     cleanup_running = True
@@ -121,14 +120,13 @@ def start_cleanup_timer(snapshot_root, interval=300):
         if not cleanup_running:
             return
 
-        preview_dir = os.path.join(snapshot_root, "preview")
         now = time.time()
         deleted = 0
         try:
-            if os.path.exists(preview_dir):
-                for f in os.listdir(preview_dir):
+            if os.path.exists(preview_root):
+                for f in os.listdir(preview_root):
                     if f.endswith(".png"):
-                        fpath = os.path.join(preview_dir, f)
+                        fpath = os.path.join(preview_root, f)
                         if os.path.isfile(fpath) and now - os.path.getmtime(fpath) > interval:
                             os.remove(fpath)
                             deleted += 1

@@ -43,6 +43,7 @@ class MainWindow(QMainWindow):
         # === 基礎設定 ===
         self.path_manager = PathManager()
         self.record_root = self.path_manager.record_root
+        self.preview_root = self.path_manager.preview_root
         encoders = list_encoders_with_alias()
         self.encoder_names = [name for name, _ in encoders]
         self.encoder_aliases = {name: alias for name, alias in encoders}
@@ -80,8 +81,7 @@ class MainWindow(QMainWindow):
         self.encoder_pixmaps = {}
         self.encoder_entries = {}
         self.encoder_status = {}
-        preview_dir = os.path.join(self.record_root, "preview")
-        os.makedirs(preview_dir, exist_ok=True)
+        os.makedirs(self.preview_root, exist_ok=True)
 
         for name in self.encoder_names:
             display = self.encoder_aliases.get(name, name)
@@ -154,6 +154,8 @@ class MainWindow(QMainWindow):
         self.add_button.clicked.connect(self.add_new_block)
         # self.root_button = QPushButton("📁 設定影片儲存路徑")
         # self.root_button.clicked.connect(self.select_record_root)
+        self.preview_root_button = QPushButton("📁 設定預覽儲存路徑")
+        self.preview_root_button.clicked.connect(self.select_preview_root)
         self.save_button = QPushButton("💾 儲存")
         self.save_button.clicked.connect(lambda: self.view.save_schedule())
         self.load_button = QPushButton("📂 載入")
@@ -173,7 +175,7 @@ class MainWindow(QMainWindow):
         toolbar_layout.addStretch()
         toolbar_layout.addWidget(self.today_button)
         toolbar_layout.addWidget(self.select_schedule_button)
-        # toolbar_layout.addWidget(self.root_button)
+        toolbar_layout.addWidget(self.preview_root_button)
         toolbar_layout.addWidget(self.prev_button)
         toolbar_layout.addWidget(self.next_button)
         toolbar_layout.addWidget(self.add_button)
@@ -277,7 +279,7 @@ class MainWindow(QMainWindow):
         self.view.horizontalScrollBar().valueChanged.connect(self.header.sync_scroll)
         self.update_encoder_status_labels()
         self.view.draw_grid()
-        self.cleanup_timer = start_cleanup_timer(self.record_root)
+        self.cleanup_timer = start_cleanup_timer(self.preview_root)
         QTimer.singleShot(3000, self.update_all_encoder_snapshots)
         # === 初始復原狀態 ===
         # for name in self.encoder_names:
@@ -476,8 +478,7 @@ class MainWindow(QMainWindow):
         def on_finished(name, label):
             def load_image():
                 try:
-                    preview_dir = os.path.join(self.record_root, "preview")
-                    latest_path = find_latest_snapshot_by_prefix(preview_dir, name)
+                    latest_path = find_latest_snapshot_by_prefix(self.preview_root, name)
                     if latest_path and os.path.exists(latest_path):
                         pixmap = QPixmap(latest_path)
                         self.encoder_pixmaps[name] = pixmap
@@ -492,7 +493,7 @@ class MainWindow(QMainWindow):
             self.snapshot_workers = []
         try:
             for name, label in self.encoder_preview_labels.items():
-                worker = SnapshotWorker(name, self.record_root)
+                worker = SnapshotWorker(name, self.preview_root)
                 worker.finished.connect(lambda n, l=label: on_finished(n, l))
                 worker.finished.connect(lambda _, w=worker: self.snapshot_workers.remove(w))
                 worker.finished.connect(worker.deleteLater)
@@ -521,6 +522,14 @@ class MainWindow(QMainWindow):
             self.record_root = folder
             log(f"📁 使用者設定儲存路徑為：{self.record_root}")
             self.path_manager.save_record_root(folder)
+
+    def select_preview_root(self):
+        folder = QFileDialog.getExistingDirectory(self, "選擇預覽儲存路徑", self.preview_root)
+        if folder:
+            self.preview_root = folder
+            os.makedirs(self.preview_root, exist_ok=True)
+            log(f"📁 使用者設定預覽路徑為：{self.preview_root}")
+            self.path_manager.save_preview_root(folder)
 
     
     def add_new_block(self):
