@@ -88,6 +88,10 @@ class PathManager:
 
     def default_preview_root(self):
         return os.path.join(self.default_record_root(), "preview")
+
+    @property
+    def snapshot_root(self):
+        return self.preview_root
     # def load_record_root(self):
     #     try:
     #         path = resource_path(CONFIG_FILE)
