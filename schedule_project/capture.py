@@ -78,8 +78,9 @@ def take_snapshot_by_encoder(encoder_name, preview_root: str | None = None):
 
         filename = encoder_name.replace(" ", "_")
         snapshot_dir = preview_root
-        snapshot_relative = os.path.join(snapshot_dir, filename)
-        snapshot_full = f"{snapshot_relative}.png"
+        snapshot_relative = os.path.join( filename)  # ✅ 給 encoder 的相對路徑
+
+        snapshot_full = os.path.join(preview_root, f"{filename}.png")
 
         os.makedirs(snapshot_dir, exist_ok=True)
 
