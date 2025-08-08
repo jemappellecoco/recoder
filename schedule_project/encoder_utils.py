@@ -8,23 +8,34 @@ persistent_sock = None
 ENCODER_CONFIG_PATH = "encoders.json"
 
 # ➤ 載入 encoder IP/Port 設定
+def get_local_encoder_config_path():
+    return os.path.join(os.getcwd(), "encoders.json")
+
+ENCODER_CONFIG_PATH = get_local_encoder_config_path()
+
 def load_encoder_config():
-    path = resource_path("encoders.json")
-    log(f"📂 嘗試讀取 encoder 設定：{path}")  # ✅ 印出實際讀到哪個檔案
+    path = ENCODER_CONFIG_PATH
 
     if not os.path.exists(path):
-        log("❌ encoders.json 不存在")
-        return {}
+        # ➜ 初次執行，複製一份 default（打包內的 encoders.json）
+        default_path = resource_path("encoders.json")
+        if os.path.exists(default_path):
+            try:
+                with open(default_path, "r", encoding="utf-8") as f:
+                    default_data = json.load(f)
+                with open(path, "w", encoding="utf-8") as f:
+                    json.dump(default_data, f, indent=2, ensure_ascii=False)
+                log(f"📄 已複製預設 encoders.json 到本地 ➜ {path}")
+            except Exception as e:
+                log(f"❌ 初始化 encoders.json 失敗: {e}")
+                return {}
 
     try:
         with open(path, "r", encoding="utf-8") as f:
-            data = json.load(f)
-            log(f"✅ 成功載入 encoder 設定，共 {len(data)} 筆")
-            return data
+            return json.load(f)
     except Exception as e:
-        log(f"❌ 讀取 encoders.json 時發生錯誤：{e}" )
+        log(f"❌ 載入 encoders.json 失敗: {e}")
         return {}
-
 
 encoder_config = load_encoder_config()
 
@@ -134,10 +145,15 @@ def set_encoder_display_name(name: str, display_name: str):
         save_encoder_config(config)
         reload_encoder_config()
 
+
 def save_encoder_config(data: dict):
-    path = resource_path("encoders.json")
-    with open(path, "w", encoding="utf-8") as f:
-        json.dump(data, f, indent=2, ensure_ascii=False)
+    path = ENCODER_CONFIG_PATH
+    try:
+        with open(path, "w", encoding="utf-8") as f:
+            json.dump(data, f, indent=2, ensure_ascii=False)
+        log(f"💾 encoder 設定已儲存到 {path}")
+    except Exception as e:
+        log(f"❌ 儲存 encoder 設定失敗: {e}")
 
 def reload_encoder_config():
     global encoder_config
@@ -175,16 +191,12 @@ def discover_encoders(ip: str, port: int):
 
 
 def save_selected_encoders(names, ip, port):
-    """合併選取的裝置並保存到設定檔"""
-    path = resource_path(ENCODER_CONFIG_PATH)
-
-    # 讀取現有設定，若不存在則回傳空 dict
+    path = ENCODER_CONFIG_PATH
     config = load_encoder_config()
 
     added_names = []
     for name in names:
         if name in config:
-            # 若名稱已存在則跳過並記錄
             log(f"⚠️ 裝置 {name} 已存在，跳過新增")
             continue
         config[name] = {"host": ip, "port": port, "display_name": name}
@@ -197,8 +209,8 @@ def save_selected_encoders(names, ip, port):
     try:
         with open(path, "w", encoding="utf-8") as f:
             json.dump(config, f, indent=2, ensure_ascii=False)
-        log(f"✅ 已將 {len(added_names)} 個 encoder 寫入 {ENCODER_CONFIG_PATH}")
+        log(f"✅ 已將 {len(added_names)} 個 encoder 寫入 ➜ {path}")
         global encoder_config
         encoder_config = config
     except Exception as e:
-        log(f"❌ 寫入 config 失敗: {e}")
+        log(f"❌ 寫入 encoder 設定失敗: {e}")

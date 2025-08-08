@@ -29,22 +29,7 @@ from capture import start_cleanup_timer, stop_cleanup_timer
 from snapshot_worker import SnapshotWorker
 from EncoderManagerDialog import EncoderManagerDialog
 from encoder_utils import save_encoder_config, reload_encoder_config
-def get_preview_root_from_config():
-    try:
-        if not os.path.exists(CONFIG_FILE):
-            raise FileNotFoundError(f"找不到設定檔 {CONFIG_FILE}")
-        
-        with open(CONFIG_FILE, "r", encoding="utf-8") as f:
-            config = json.load(f)
-        
-        preview_root = config.get("preview_root")
-        if not preview_root:
-            raise ValueError("⚠️ config.json 中沒有設定 'preview_root'")
-        
-        return preview_root
 
-    except Exception as e:
-        raise RuntimeError(f"❌ 無法取得預覽路徑：{e}")
 def find_latest_snapshot_by_prefix(preview_dir, encoder_name):
     pattern = os.path.join(preview_dir,"preview", f"{encoder_name}*.png") 
     log(f"🔍 查找最新快照：{pattern}")
@@ -59,21 +44,15 @@ class MainWindow(QMainWindow):
         self.is_closing = False
         # === 基礎設定 ===
         self.path_manager = PathManager()
-        self.record_root = self.path_manager.record_root
+        self.ensure_valid_record_root()
+        self.ensure_valid_preview_root()
         
-        self.preview_root = self.path_manager.preview_root
-
-        if not os.path.exists(self.preview_root):
-            QMessageBox.critical(
-                self,
-                "❌ 預覽路徑無效",
-                f"⚠️ 找不到預覽儲存路徑：\n{self.preview_root}\n\n請重新選擇一個有效的資料夾。"
-            )
-            self.select_preview_root()  # 呼叫內建選擇資料夾的方法
+         # ✅ 接下來才能安全使用 record_root 與 preview_root
         encoders = list_encoders_with_alias()
         self.encoder_names = [name for name, _ in encoders]
         self.encoder_aliases = {name: alias for name, alias in encoders}
         self.encoder_controller = EncoderController(self.record_root)
+
         if not self.encoder_names:
             log("⚠️ 沒有從 socket 抓到 encoder，使用預設值")
             self.encoder_names = ["encoder1", "encoder2"]
@@ -107,6 +86,8 @@ class MainWindow(QMainWindow):
         self.encoder_pixmaps = {}
         self.encoder_entries = {}
         self.encoder_status = {}
+        
+            
         os.makedirs(self.preview_root, exist_ok=True)
 
         for name in self.encoder_names:
@@ -178,8 +159,8 @@ class MainWindow(QMainWindow):
         self.select_schedule_button.clicked.connect(self.select_schedule_json)
         self.add_button = QPushButton("➕ 新增排程")
         self.add_button.clicked.connect(self.add_new_block)
-        # self.root_button = QPushButton("📁 設定影片儲存路徑")
-        # self.root_button.clicked.connect(self.select_record_root)
+        self.root_button = QPushButton("📁 設定影片儲存路徑")
+        self.root_button.clicked.connect(self.select_record_root)
         self.preview_root_button = QPushButton("📁 設定預覽儲存路徑")
         self.preview_root_button.clicked.connect(self.select_preview_root)
         self.save_button = QPushButton("💾 儲存")
@@ -201,6 +182,7 @@ class MainWindow(QMainWindow):
         toolbar_layout.addStretch()
         toolbar_layout.addWidget(self.today_button)
         toolbar_layout.addWidget(self.select_schedule_button)
+        toolbar_layout.addWidget(self.root_button)
         toolbar_layout.addWidget(self.preview_root_button)
         toolbar_layout.addWidget(self.prev_button)
         toolbar_layout.addWidget(self.next_button)
@@ -323,6 +305,36 @@ class MainWindow(QMainWindow):
                         log(f"📂 自動載入之前選的檔案：{schedule_file}")
         except Exception as e:
             log(f"⚠️ config.json 載入失敗：{e}")
+    def ensure_valid_record_root(self):
+        while True:
+            self.record_root = self.path_manager.record_root
+            if os.path.isdir(self.record_root):
+                os.makedirs(self.record_root, exist_ok=True)
+                break
+            QMessageBox.critical(
+                self,
+                "❌ 錄影儲存路徑無效",
+                f"⚠️ 找不到錄影儲存路徑：\n{self.record_root}\n\n請重新選擇一個有效的資料夾。"
+            )
+            self.select_record_root()
+            # ⬇️ 這一行很關鍵
+            self.path_manager = PathManager()
+        os.makedirs(self.record_root, exist_ok=True)
+
+    def ensure_valid_preview_root(self):
+        while True:
+            self.preview_root = self.path_manager.preview_root
+            if os.path.isdir(self.preview_root):
+                os.makedirs(self.preview_root, exist_ok=True)
+                break
+            QMessageBox.critical(
+                self,
+                "❌ 預覽儲存路徑無效",
+                f"⚠️ 找不到預覽儲存路徑：\n{self.preview_root}\n\n請重新選擇一個有效的資料夾。"
+            )
+            self.select_preview_root()
+            self.path_manager = PathManager()  # 這一行也要加
+            self.preview_root = self.path_manager.preview_root
     def open_encoder_manager(self):
         reload_encoder_config()
         dialog = EncoderManagerDialog(self)
@@ -546,16 +558,28 @@ class MainWindow(QMainWindow):
         folder = QFileDialog.getExistingDirectory(self, "選擇儲存根目錄", self.record_root)
         if folder:
             self.record_root = folder
-            log(f"📁 使用者設定儲存路徑為：{self.record_root}")
+            self.path_manager.record_root = folder
             self.path_manager.save_record_root(folder)
+
+            # ✅ 更新給 runner、view、path_manager
+            self.runner.record_root = folder
+            self.view.record_root = folder
+            self.view.path_manager.record_root = folder
+            log(f"📁 使用者設定儲存路徑為：{folder}")
 
     def select_preview_root(self):
         folder = QFileDialog.getExistingDirectory(self, "選擇預覽儲存路徑", self.preview_root)
         if folder:
             self.preview_root = folder
             os.makedirs(self.preview_root, exist_ok=True)
-            log(f"📁 設定預覽資料夾：{self.preview_root}")
+            self.path_manager.preview_root = folder
             self.path_manager.save_preview_root(folder)
+
+            # ✅ 更新 path_manager 給 view
+            self.view.path_manager.preview_root = folder
+
+            log(f"📁 設定預覽資料夾：{folder}")
+
 
     
     def add_new_block(self):

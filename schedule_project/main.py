@@ -1,26 +1,39 @@
 import sys
 import os
 import shutil
+import traceback
 from PySide6.QtWidgets import QApplication
 from ui_main_window import MainWindow
-from utils import resource_path, log  # ✅ 你已經有的函數
+from utils import resource_path, log
+
+# 🧯 全域例外處理（會寫入 error.log，避免 silent crash）
+def except_hook(exctype, value, tb):
+    error_msg = "".join(traceback.format_exception(exctype, value, tb))
+    with open("error.log", "w", encoding="utf-8") as f:
+        f.write(error_msg)
+    log("❌ 發生例外，請查看 error.log")
+    sys.exit(1)
+
+sys.excepthook = except_hook
 
 if __name__ == "__main__":
-    # ✅ 若沒有 schedule.json，自動從 schedule.json 複製一份
-    if not os.path.exists("schedule.json"):
-        try:
+    # ✅ 若沒有 schedule.json，自動從 resource 複製
+    try:
+        if not os.path.exists("schedule.json"):
             shutil.copy(resource_path("schedule.json"), "schedule.json")
             log("📄 已建立預設排程檔案 schedule.json")
-        except Exception as e:
-            log(f"❌ 建立預設 schedule.json 失敗：{e}")
-    if not os.path.exists("config.json"):
-        try:
+    except Exception as e:
+        log(f"❌ 建立預設 schedule.json 失敗：{e}")
+
+    try:
+        if not os.path.exists("config.json"):
             shutil.copy(resource_path("config.json"), "config.json")
             log("📄 已建立預設設定檔 config.json")
-        except Exception as e:
-            log(f"❌ 建立預設 config.json 失敗：{e}")
+    except Exception as e:
+        log(f"❌ 建立預設 config.json 失敗：{e}")
+
+    # ✅ 確保 QApplication 建立成功
     app = QApplication(sys.argv)
     win = MainWindow()
     win.show()
-    # win.showFullScreen()
     sys.exit(app.exec())

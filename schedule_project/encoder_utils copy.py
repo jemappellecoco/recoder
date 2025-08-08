@@ -10,6 +10,13 @@ ENCODER_CONFIG_PATH = "encoders.json"
 # ➤ 全域持久 socket 變數（模擬 Telnet 模式）
 persistent_sock = None
 # ➤ 載入 encoder IP/Port 設定
+def get_user_config_path():
+    """
+    使用者目錄下儲存 encoder 設定（確保可讀寫）
+    """
+    config_dir = os.path.join(os.path.expanduser("~"), ".recorder_config")
+    os.makedirs(config_dir, exist_ok=True)
+    return os.path.join(config_dir, "encoders.json")
 def load_encoder_config():
     if not os.path.exists(ENCODER_CONFIG_PATH):
         log(f"❌ 找不到設定檔 {ENCODER_CONFIG_PATH}")
