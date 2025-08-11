@@ -36,7 +36,7 @@ class ScheduleRunner(QObject):
         self.timer.start(1000)  # 每秒檢查一次
         self.encoder_last_state = {}
         self.status_timer = QTimer(self)
-        self.status_timer.timeout.connect(self.refresh_encoder_statuses)
+        # self.status_timer.timeout.connect(self.refresh_encoder_statuses)
 
         self.status_timer.start(REFRESH_INTERVAL_MS)
 
@@ -47,14 +47,14 @@ class ScheduleRunner(QObject):
         s = int(seconds) % 60
         return f"{h:02d}:{m:02d}:{s:02d}"
     
-    def compute_status(self, now: QDateTime, start_dt: QDateTime, end_dt: QDateTime) -> str:
-        if now > end_dt:
-            return "狀態：⏹ 已結束"
-        elif now < start_dt:
-            return "狀態：⏳ 等待中"
-        else:
-            remaining = end_dt.toSecsSinceEpoch() - now.toSecsSinceEpoch()
-            return f"狀態：✅ 錄影中\n剩餘 {self.format_remaining_time(remaining)}"
+    # def compute_status(self, now: QDateTime, start_dt: QDateTime, end_dt: QDateTime) -> str:
+    #     if now > end_dt:
+    #         return "狀態：⏹ 已結束"
+    #     elif now < start_dt:
+    #         return "狀態：⏳ 等待中"
+    #     else:
+    #         remaining = end_dt.toSecsSinceEpoch() - now.toSecsSinceEpoch()
+    #         return f"狀態：✅ 錄影中\n剩餘 {self.format_remaining_time(remaining)}"
 
     def _handle_snapshot_result(self, block_id: str, snapshot_path: str):
         """Update UI when snapshot is finished in background thread."""
@@ -157,52 +157,52 @@ class ScheduleRunner(QObject):
         else:
             safe_set_label(status_label, "狀態：❌ 停止失敗", "color: red")
 
-        self.refresh_encoder_statuses()
+    #     self.refresh_encoder_statuses()
 
-    def refresh_encoder_statuses(self):
-        for encoder_name in self.encoder_names:
-            try:
-                res = send_encoder_command(encoder_name,f'EncStatus "{encoder_name}"')
-                log(f"⬅️ Response: {res}")
-            except Exception as e:
-                res = f"{e}"
+    # def refresh_encoder_statuses(self):
+    #     for encoder_name in self.encoder_names:
+    #         try:
+    #             res = send_encoder_command(encoder_name,f'EncStatus "{encoder_name}"')
+    #             log(f"⬅️ Response: {res}")
+    #         except Exception as e:
+    #             res = f"{e}"
 
-            # 比對是否有改變
-            if self.encoder_last_state.get(encoder_name) == res:
-                continue  # ❌ 一樣就跳過，不重畫 UI
+    #         # 比對是否有改變
+    #         if self.encoder_last_state.get(encoder_name) == res:
+    #             continue  # ❌ 一樣就跳過，不重畫 UI
 
-            self.encoder_last_state[encoder_name] = res  # ✅ 更新快取
+    #         self.encoder_last_state[encoder_name] = res  # ✅ 更新快取
 
-            # 解析狀態
-            if "Running" in res or "Runned" in res:
-                status_text = "✅ 錄影中"
-                color = "green"
-            elif "Paused" in res:
-                status_text = "⏸ 暫停中"
-                color = "orange"
-            elif "Stopped" in res or "None" in res:
-                status_text = "⏹ 停止中"
-                color = "gray"
-            elif "Prepared" in res or "Preparing" in res:
-                status_text = "🟡 準備中"
-                color = "blue"
-            elif "Error" in res:
-                status_text = "❌ 錯誤"
-                color = "red"
-            else:
-                status_text = f"❓未知\n{res}"
-                color = "black"
+    #         # 解析狀態
+    #         if "Running" in res or "Runned" in res:
+    #             status_text = "✅ 錄影中"
+    #             color = "green"
+    #         elif "Paused" in res:
+    #             status_text = "⏸ 暫停中"
+    #             color = "orange"
+    #         elif "Stopped" in res or "None" in res:
+    #             status_text = "⏹ 停止中"
+    #             color = "gray"
+    #         elif "Prepared" in res or "Preparing" in res:
+    #             status_text = "🟡 準備中"
+    #             color = "blue"
+    #         elif "Error" in res:
+    #             status_text = "❌ 錯誤"
+    #             color = "red"
+    #         else:
+    #             status_text = f"❓未知\n{res}"
+    #             color = "black"
 
             
-            # for block in self.blocks:
-            #     if block.track_index < len(self.encoder_names) and self.encoder_names[block.track_index] == encoder_name:
-            #         block.status = f"狀態：{status_text}"
-            #         block.update_text_position()
+    #         # for block in self.blocks:
+    #         #     if block.track_index < len(self.encoder_names) and self.encoder_names[block.track_index] == encoder_name:
+    #         #         block.status = f"狀態：{status_text}"
+    #         #         block.update_text_position()
 
-            if self.encoder_status.get(encoder_name):
-                self.encoder_status[encoder_name].setText(f"狀態：{status_text}")
-                self.encoder_status[encoder_name].setStyleSheet(f"color: {color}")
-            logging.debug(f"🌀 已更新 {encoder_name} 狀態為 {status_text}")
+    #         if self.encoder_status.get(encoder_name):
+    #             self.encoder_status[encoder_name].setText(f"狀態：{status_text}")
+    #             self.encoder_status[encoder_name].setStyleSheet(f"color: {color}")
+    #         logging.debug(f"🌀 已更新 {encoder_name} 狀態為 {status_text}")
 
     def find_block_by_label(self, label):
         for block in self.blocks:

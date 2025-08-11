@@ -118,3 +118,4 @@ class CheckScheduleManager:
                 if self.last_saved_ts is None or self.last_saved_ts.secsTo(now_ts) >= 10:
                     parent_view.save_schedule()
                     self.last_saved_ts = now_ts
+                parent_view.update()  # 🔹 強制重繪

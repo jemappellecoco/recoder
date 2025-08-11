@@ -116,10 +116,10 @@ class ScheduleView(QGraphicsView):
         self.now_time_label.setPos(x - 10, offset - 18)  # 🔴 新位置跟著 offset
         self.now_time_label.setZValue(1000)
         
-    def update_all_blocks(self):
-        for item in self.scene.items():
-            if isinstance(item, TimeBlock):
-                item.update_status_by_time()
+    # def update_all_blocks(self):
+    #     for item in self.scene.items():
+    #         if isinstance(item, TimeBlock):
+    #             item.update_status_by_time()
     
     def draw_grid(self):
         log(f"🎯 draw_grid encoder_names:{self.encoder_names}" )

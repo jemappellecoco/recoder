@@ -739,7 +739,7 @@ class MainWindow(QMainWindow):
             status_label.setText("狀態：❌ 停止失敗")
             status_label.setStyleSheet("color: red")
         
-        self.runner.refresh_encoder_statuses()
+        # self.runner.refresh_encoder_statuses()
         self.view.draw_grid()
         self.sync_runner_data()
         
@@ -862,7 +862,7 @@ class MainWindow(QMainWindow):
                     block.update_text_position()
                     break
 
-        self.runner.refresh_encoder_statuses()
+        # self.runner.refresh_encoder_statuses()
         self.view.draw_grid()
         self.update_encoder_status_labels()
 

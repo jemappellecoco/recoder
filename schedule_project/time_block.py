@@ -466,39 +466,39 @@ class TimeBlock(QGraphicsRectItem):
         super().mouseReleaseEvent(event)
         parent_view.save_schedule()
         self.setFlag(QGraphicsRectItem.ItemIsMovable, False)  
-    def update_status_by_time(self):
-        now = QDateTime.currentDateTime()
-        start_dt = QDateTime(self.start_date, QTime(int(self.start_hour), int((self.start_hour % 1) * 60)))
-        end_dt = start_dt.addSecs(int(self.duration_hours * 3600))
-        if self.status.startswith("狀態：⏹ 停止中"):
-            return  # ❗ 保護「停止中」狀態，不要讓它被蓋掉
-        # ✅ 如果已經結束且已經是「已結束」狀態，就不再更新，防止閃爍
-        if now > end_dt:
-            if self.status != "狀態：✅ 已結束":
-                self.status = "狀態：✅ 已結束"
-                self.setBrush(QBrush(QColor(180, 180, 180, 180)))  # 灰色
-                self.update_text_position()
-            return  # ✅ 直接結束
+#     def update_status_by_time(self):
+#         now = QDateTime.currentDateTime()
+#         start_dt = QDateTime(self.start_date, QTime(int(self.start_hour), int((self.start_hour % 1) * 60)))
+#         end_dt = start_dt.addSecs(int(self.duration_hours * 3600))
+#         if self.status.startswith("狀態：⏹ 停止中"):
+#             return  # ❗ 保護「停止中」狀態，不要讓它被蓋掉
+#         # ✅ 如果已經結束且已經是「已結束」狀態，就不再更新，防止閃爍
+#         if now > end_dt:
+#             if self.status != "狀態：✅ 已結束":
+#                 self.status = "狀態：✅ 已結束"
+#                 self.setBrush(QBrush(QColor(180, 180, 180, 180)))  # 灰色
+#                 self.update_text_position()
+#             return  # ✅ 直接結束
 
-        # ✅ 還沒開始
-        if now < start_dt:
-            secs_to_start = now.secsTo(start_dt)
-            h = secs_to_start // 3600
-            m = (secs_to_start % 3600) // 60
-            s = secs_to_start % 60
-            self.status = (
-                f"狀態：⏳ 等待中\n"
-                f"啟動於 {start_dt.toString('HH:mm')}\n"
-                f"倒數 {h:02}:{m:02}:{s:02}"
-)
-        else:
-            # ✅ 錄影中
-            secs_to_end = now.secsTo(end_dt)
-            h = secs_to_end // 3600
-            m = (secs_to_end % 3600) // 60
-            s = secs_to_end % 60
-            self.status = f"狀態：⏺️ 錄影中\n剩餘 {h:02}:{m:02}:{s:02}"
-        self.update_text_position()
+#         # ✅ 還沒開始
+#         if now < start_dt:
+#             secs_to_start = now.secsTo(start_dt)
+#             h = secs_to_start // 3600
+#             m = (secs_to_start % 3600) // 60
+#             s = secs_to_start % 60
+#             self.status = (
+#                 f"狀態：⏳ 等待中\n"
+#                 f"啟動於 {start_dt.toString('HH:mm')}\n"
+#                 f"倒數 {h:02}:{m:02}:{s:02}"
+# )
+#         else:
+#             # ✅ 錄影中
+#             secs_to_end = now.secsTo(end_dt)
+#             h = secs_to_end // 3600
+#             m = (secs_to_end % 3600) // 60
+#             s = secs_to_end % 60
+#             self.status = f"狀態：⏺️ 錄影中\n剩餘 {h:02}:{m:02}:{s:02}"
+#         self.update_text_position()
     def mouseDoubleClickEvent(self, event):
        
         event.accept()  # ✅ 優先阻止事件傳遞
