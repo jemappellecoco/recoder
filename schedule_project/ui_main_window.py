@@ -1,7 +1,7 @@
 from header_view import HeaderView
 from PySide6.QtCore import Qt
 from PySide6.QtWidgets import (
-    QMainWindow, QWidget, QPushButton, QLabel, QDateEdit, QInputDialog,QDialog,QFrame,QScrollArea,QSplitter,QTextEdit,
+    QMainWindow, QWidget, QPushButton, QLabel, QDateEdit, QSlider,QDialog,QFrame,QScrollArea,QSplitter,QTextEdit,
     QVBoxLayout, QHBoxLayout, QLineEdit, QApplication, QSizePolicy, QMessageBox, QMenu, QFileDialog
 )
 from time_block import PreviewImageItem
@@ -149,6 +149,13 @@ class MainWindow(QMainWindow):
         # --- Toolbar ---
         toolbar = QWidget()
         toolbar_layout = QHBoxLayout(toolbar)
+        self.zoom_slider = QSlider(Qt.Horizontal)
+        self.zoom_slider.setMinimum(5)
+        self.zoom_slider.setMaximum(100)
+        self.zoom_slider.setValue(20)  # 初始值與 hour_width 一樣
+        self.zoom_slider.valueChanged.connect(self.update_zoom)
+        toolbar_layout.addWidget(QLabel("Zoom："))
+        toolbar_layout.addWidget(self.zoom_slider)
         undo_button = QPushButton("↩️ 復原刪除")
         undo_button.clicked.connect(lambda: (self.block_manager.undo_last_delete(), self.sync_runner_data()))
         self.date_label = QLabel("起始日期：")
@@ -232,7 +239,8 @@ class MainWindow(QMainWindow):
         self.view.setContextMenuPolicy(Qt.CustomContextMenu)
         self.view.customContextMenuRequested.connect(self.show_block_context_menu)
         self.view.path_manager = self.path_manager
-
+        preview_dir = os.path.join(self.path_manager.snapshot_root, "preview")
+        start_cleanup_timer(preview_dir, check_period=300, max_age=300, run_immediately=False)
         self.block_manager = BlockManager(self.view)
         self.runner = ScheduleRunner(
             schedule_data=self.view.block_data,
@@ -287,7 +295,8 @@ class MainWindow(QMainWindow):
         self.view.horizontalScrollBar().valueChanged.connect(self.header.sync_scroll)
         self.update_encoder_status_labels()
         self.view.draw_grid()
-        self.cleanup_timer = start_cleanup_timer(self.preview_root)
+       
+
         QTimer.singleShot(3000, self.update_all_encoder_snapshots)
         # === 初始復原狀態 ===
         # for name in self.encoder_names:
@@ -305,36 +314,48 @@ class MainWindow(QMainWindow):
                         log(f"📂 自動載入之前選的檔案：{schedule_file}")
         except Exception as e:
             log(f"⚠️ config.json 載入失敗：{e}")
+    def update_zoom(self, value):
+        self.view.hour_width = value
+        self.view.day_width = 24 * value
+        self.header.hour_width = value
+        self.header.day_width = 24 * value
+
+        self.view.draw_grid()
+        self.header.draw_header()
+
+        # 重新定位所有 block
+        for block in self.view.blocks:
+            block.update_geometry(self.view.base_date)
+            block.update_text_position()
     def ensure_valid_record_root(self):
-        while True:
-            self.record_root = self.path_manager.record_root
-            if os.path.isdir(self.record_root):
-                os.makedirs(self.record_root, exist_ok=True)
-                break
+        self.record_root = self.path_manager.record_root
+        if not os.path.isdir(self.record_root):
+            log(f"❌ 無效的錄影儲存路徑：{self.record_root}")
             QMessageBox.critical(
                 self,
                 "❌ 錄影儲存路徑無效",
                 f"⚠️ 找不到錄影儲存路徑：\n{self.record_root}\n\n請重新選擇一個有效的資料夾。"
             )
-            self.select_record_root()
-            # ⬇️ 這一行很關鍵
+            self.select_record_root()  # 嘗試讓使用者重新選擇
             self.path_manager = PathManager()
+            self.record_root = self.path_manager.record_root  # 更新路徑
         os.makedirs(self.record_root, exist_ok=True)
 
+
     def ensure_valid_preview_root(self):
-        while True:
-            self.preview_root = self.path_manager.preview_root
-            if os.path.isdir(self.preview_root):
-                os.makedirs(self.preview_root, exist_ok=True)
-                break
+        self.preview_root = self.path_manager.preview_root
+        if not os.path.isdir(self.preview_root):
+            log(f"❌ 無效的預覽儲存路徑：{self.preview_root}")
             QMessageBox.critical(
                 self,
                 "❌ 預覽儲存路徑無效",
                 f"⚠️ 找不到預覽儲存路徑：\n{self.preview_root}\n\n請重新選擇一個有效的資料夾。"
             )
             self.select_preview_root()
-            self.path_manager = PathManager()  # 這一行也要加
+            self.path_manager = PathManager()
             self.preview_root = self.path_manager.preview_root
+        # os.makedirs(self.preview_root, exist_ok=True)
+
     def open_encoder_manager(self):
         reload_encoder_config()
         dialog = EncoderManagerDialog(self)
@@ -561,10 +582,13 @@ class MainWindow(QMainWindow):
             self.path_manager.record_root = folder
             self.path_manager.save_record_root(folder)
 
-            # ✅ 更新給 runner、view、path_manager
-            self.runner.record_root = folder
-            self.view.record_root = folder
-            self.view.path_manager.record_root = folder
+            # ✅ 更新給 runner、view、path_manager（若存在）
+            if hasattr(self, "runner"):
+                self.runner.record_root = folder
+            if hasattr(self, "view"):
+                self.view.record_root = folder
+                if hasattr(self.view, "path_manager"):
+                    self.view.path_manager.record_root = folder
             log(f"📁 使用者設定儲存路徑為：{folder}")
 
     def select_preview_root(self):
@@ -575,8 +599,9 @@ class MainWindow(QMainWindow):
             self.path_manager.preview_root = folder
             self.path_manager.save_preview_root(folder)
 
-            # ✅ 更新 path_manager 給 view
-            self.view.path_manager.preview_root = folder
+            # ✅ 更新 path_manager 給 view（若存在）
+            if hasattr(self, "view") and hasattr(self.view, "path_manager"):
+                self.view.path_manager.preview_root = folder
 
             log(f"📁 設定預覽資料夾：{folder}")
 
@@ -795,6 +820,8 @@ class MainWindow(QMainWindow):
         if block_id:
             self.runner.already_started.add(block_id)
             self.runner.start_encoder(encoder_name, filename, status_label, block_id)
+            self.schedule_manager.already_started.add(block_id)
+            self.sync_runner_data()
             for b in self.view.block_data:
                 if b.get("id") == block_id:
                     b["status"] = "✅ 錄影中"
@@ -803,7 +830,7 @@ class MainWindow(QMainWindow):
         block = next((blk for blk in self.view.blocks if blk.block_id == block_id), None)
         if block:
             try:
-                future = take_snapshot_from_block(block, self.encoder_names)
+                future = take_snapshot_from_block(block, self.encoder_names, snapshot_root=self.record_root)
 
                 def on_done(fut):
                     snapshot_path = fut.result()

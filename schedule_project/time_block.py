@@ -7,6 +7,24 @@ from path_manager import PathManager
 import os
 from utils import log
 logging.basicConfig(level=logging.INFO)
+def _safe_pixmap_from_file(path: str) -> QPixmap | None:
+    try:
+        if not path or not os.path.isfile(path):
+            return None
+        # 檔案存在但為 0 bytes 的情況也略過
+        try:
+            if os.path.getsize(path) <= 0:
+                return None
+        except Exception:
+            # 有些網路磁碟在 getsize 會噴例外，直接忽略大小檢查
+            pass
+
+        pm = QPixmap(path)
+        if pm.isNull():
+            return None
+        return pm
+    except Exception:
+        return None
 class PreviewImageItem(QGraphicsPixmapItem):
     def __init__(self, block_id, start_date, path_manager, label):
         super().__init__()
@@ -16,25 +34,33 @@ class PreviewImageItem(QGraphicsPixmapItem):
         self.label = label
 
     def mouseDoubleClickEvent(self, event):
-        img_path = self.path_manager.get_image_path(self.block_id, self.start_date)
-        if os.path.exists(img_path):
-            dialog = QDialog()
-            dialog.setWindowTitle(f"預覽：{self.label}")
-            layout = QVBoxLayout(dialog)
+        try:
+            img_path = self.path_manager.get_image_path(self.block_id, self.start_date)
+        except Exception:
+            return
 
-            label = QLabel()
-            pixmap = QPixmap(img_path)
-            if not pixmap.isNull():
-                scaled = pixmap.scaled(800, 600, Qt.KeepAspectRatio, Qt.SmoothTransformation)
-                label.setPixmap(scaled)
+        pm = _safe_pixmap_from_file(img_path)
+        if pm is None:
+            # 沒圖或壞圖就不開窗
+            log(f"ℹ️ 預覽圖不存在或無法讀取：{img_path}")
+            return
 
-            layout.addWidget(label)
-            dialog.setLayout(layout)
-            dialog.exec()
+        dialog = QDialog()
+        dialog.setWindowTitle(f"預覽：{self.label}")
+        layout = QVBoxLayout(dialog)
+
+        label = QLabel()
+        scaled = pm.scaled(800, 600, Qt.KeepAspectRatio, Qt.SmoothTransformation)
+        label.setPixmap(scaled)
+
+        layout.addWidget(label)
+        dialog.setLayout(layout)
+        dialog.exec()
 
 class TimeBlock(QGraphicsRectItem):
     HANDLE_WIDTH = 6
     BLOCK_HEIGHT = 100
+    MIN_DURATION_HOURS = 0.1   
     def __init__(self, start_date: QDate, track_index, start_hour, duration_hours=4, label="節目名稱", block_id=None):
     
         super().__init__(0, 0, duration_hours * 20, self.BLOCK_HEIGHT)
@@ -148,32 +174,35 @@ class TimeBlock(QGraphicsRectItem):
 
     def update_geometry(self, base_date: QDate):
         parent_view = self.scene().parent()
+        hour_width = getattr(parent_view, 'hour_width', 20)
+        day_width = 24 * hour_width
+
+        # 計算 block 的 x 位置與寬度
         day_offset = base_date.daysTo(self.start_date)
-        
-        block_x = day_offset * parent_view.day_width + self.start_hour * parent_view.hour_width
-        block_width = self.duration_hours * 20
+        block_x = day_offset * day_width + self.start_hour * hour_width
+        block_width = self.duration_hours * hour_width
 
-        # 計算畫布可視範圍
+        # 畫布限制
         min_x = 0
-        max_x = 7 * (24 * 20 + 20)  # 7 天的寬度
+        max_x = 7 * day_width
 
-        # 限制左邊：若 block 在左邊界外，裁掉左邊
+        # 左右裁切（保險）
         if block_x < min_x:
             overflow_left = min_x - block_x
             block_x = min_x
             block_width -= overflow_left
-
-        # 限制右邊：若 block 超過右邊界，裁掉右邊
         if block_x + block_width > max_x:
-            block_width = max(min(block_width, max_x - block_x), 20)
+            block_width = max(min(block_width, max_x - block_x), hour_width)
 
+        # 更新圖形與位置
         self.setRect(0, 0, block_width, self.BLOCK_HEIGHT)
         self.setPos(block_x, self.track_index * self.BLOCK_HEIGHT + parent_view.grid_top_offset)
 
-        # self.setPos(block_x, self.track_index * self.BLOCK_HEIGHT)
+        # 移動右側 handle
         self.right_handle.setRect(block_width - self.HANDLE_WIDTH, 0, self.HANDLE_WIDTH, self.BLOCK_HEIGHT)
 
         QTimer.singleShot(0, self.update_text_position)
+
         
 
     def mousePressEvent(self, event):
@@ -257,8 +286,9 @@ class TimeBlock(QGraphicsRectItem):
 
         if self.dragging_handle == 'right':
             delta = event.pos().x()
-            new_duration = round(max(1.0, delta / 20), 2)
-
+            # new_duration = round(max(1.0, delta / 20), 2)
+            hour_width = getattr(parent_view, 'hour_width', 20)
+            new_duration = round(max(self.MIN_DURATION_HOURS, delta / hour_width), 2)
             new_end_dt = QDateTime(self.start_date, QTime(int(self.start_hour), int((self.start_hour % 1) * 60)))
             new_end_dt = new_end_dt.addSecs(int(new_duration * 3600))
 
@@ -280,25 +310,27 @@ class TimeBlock(QGraphicsRectItem):
 
         elif self.dragging_handle == 'left':
             delta = event.pos().x()
-            max_shift = self.rect().width() - 20
-            shift_pixels = min(delta, max_shift)
-            shift_hours = round(shift_pixels / 20, 2)
+            hour_width = getattr(self.scene().parent(), 'hour_width', 20)
 
+            # ✅ 允許的最短時長（沒有類別常數就用 0.25 小時）
+            min_dur = getattr(self, "MIN_DURATION_HOURS", 0.25)
+
+            # ✅ 最多能往右推的像素：保證剩餘長度 >= 最短時長
+            max_shift_px = self.rect().width() - (min_dur * hour_width)
+
+            # clamp：不可小於 0，也不可超過 max_shift_px
+            shift_pixels = min(max(0, delta), max_shift_px)
+
+            shift_hours = round(shift_pixels / hour_width, 2)
             new_start_hour = self.start_hour + shift_hours
-            new_duration = self.duration_hours - shift_hours
+            new_duration = round(self.duration_hours - shift_hours, 2)
 
-            new_start_dt = QDateTime(self.start_date, QTime(int(new_start_hour), int((new_start_hour % 1) * 60)))
+            new_start_dt = QDateTime(
+                self.start_date, QTime(int(new_start_hour), int((new_start_hour % 1) * 60))
+            )
 
-            if new_start_dt < now:
-                log(f"⛔ 無法將開始時間拉到過去（{self.label}）")
-                self.flash_red()
-                return
-
-            if new_duration < 1:
-                log(f"⛔ 時間太短（{self.label}）")
-                self.flash_red()
-                return
-
+           
+            # ⚠️ 不再檢查 new_duration < 1，因為上面已經用 clamp 確保不會低於最短時長
             if not parent_view.is_overlap(self.start_date, self.track_index, new_start_hour, new_duration, exclude_label=self.block_id):
                 self.start_hour = new_start_hour
                 self.duration_hours = new_duration
@@ -366,11 +398,13 @@ class TimeBlock(QGraphicsRectItem):
         scene_pos = self.scenePos()
         new_x = scene_pos.x()
         new_y = scene_pos.y()
-
-        day_width = 24 * 20 + 20
+        hour_width = parent_view.hour_width  
+       
+        day_width = 24 * hour_width + hour_width
         hour_pixel = new_x % day_width
+        new_hour = round(hour_pixel / hour_width, 2)
         new_date = parent_view.base_date.addDays(int(new_x // day_width))
-        new_hour = round(hour_pixel / 20, 2)
+        # new_hour = round(hour_pixel / 20, 2)
         new_track = int(new_y // self.BLOCK_HEIGHT)
 
         max_track = len(parent_view.encoder_names)
@@ -405,7 +439,8 @@ class TimeBlock(QGraphicsRectItem):
         self.start_date = new_date
         self.start_hour = new_hour
         self.track_index = new_track
-        self.duration_hours = round(self.rect().width() / 20, 2)
+        # self.duration_hours = round(self.rect().width() / 20, 2)
+        self.duration_hours = round(self.rect().width() / hour_width, 2)
         self.update_geometry(parent_view.base_date)
          # 🔁 加這段：處理 end_hour 與 end_qdate
        
@@ -541,45 +576,78 @@ class TimeBlock(QGraphicsRectItem):
         QTimer.singleShot(300, lambda: self.setBrush(QBrush(original_color)))
 
     def load_preview_images(self, image_folder):
-        image_path = os.path.join(image_folder, f"{self.block_id}.png")
-        pixmap = QPixmap(image_path)
+        """安全載入 block 的縮圖；檔案不存在/壞掉就略過且隱藏舊縮圖。"""
+        try:
+            # 優先用呼叫端給的資料夾；若沒給，改用 PathManager 求精確路徑
+            image_path = None
 
-        if pixmap.isNull():
-            # log(f"❌ 無法載入圖片：{image_path}")
-            return
+            if image_folder:
+                candidate = os.path.join(image_folder, f"{self.block_id}.png")
+                if os.path.isfile(candidate):
+                    image_path = candidate
+            if not image_path:
+                # fallback：用 path_manager 直接算路徑
+                pm = getattr(self, "path_manager", None)
+                if pm is None:
+                    # 從 parent view 拿
+                    parent_view = self.scene().parent() if self.scene() else None
+                    pm = getattr(parent_view, "path_manager", None)
+                if pm:
+                    try:
+                        candidate = pm.get_image_path(self.block_id, self.start_date)
+                        if os.path.isfile(candidate):
+                            image_path = candidate
+                    except Exception:
+                        image_path = None
 
-        # ✅ 縮圖尺寸
-        width = 60
-        scaled = pixmap.scaledToWidth(width, Qt.SmoothTransformation)
+            pmx = _safe_pixmap_from_file(image_path) if image_path else None
+            if pmx is None:
+                # 找不到圖或讀不到 → 把舊的縮圖藏起來（避免殘影），不崩不報錯
+                if getattr(self, "preview_item", None):
+                    self.preview_item.setVisible(False)
+                # log(f"ℹ️ 找不到縮圖或無法讀取：block_id={self.block_id}")
+                return
 
-        # ✅ 建立獨立圖片 item 加到 scene
-        scene = self.scene()
-        log(f"🔍 scene item count: {len(scene.items())}")
-        if not scene:
-            log("⚠️ 無法取得 scene，取消縮圖建立")
-            
-            return
+            # 生成縮圖
+            width = 60
+            scaled = pmx.scaledToWidth(width, Qt.SmoothTransformation)
 
-        self.preview_item = PreviewImageItem(self.block_id, self.start_date, self.path_manager, self.label)
-        self.preview_item.setPixmap(scaled)
-        self.preview_item.setZValue(10)
-        self.preview_item.setAcceptedMouseButtons(Qt.LeftButton)
-        self.preview_item.setFlag(QGraphicsPixmapItem.ItemIsMovable, True)  # ✅ 可拖曳
+            scene = self.scene()
+            if not scene:
+                log("⚠️ 無法取得 scene，取消縮圖建立")
+                return
 
-        # ✅ 初始放在文字右側（根據 block 位置）
-        block_pos = self.scenePos()
-        text_rect = self.text.boundingRect()
-        x_offset = block_pos.x() + text_rect.width() + 8
-        y_offset = block_pos.y() + 2
-        self.preview_item.setPos(x_offset, y_offset)
+            # 建立或更新 preview_item
+            if not getattr(self, "preview_item", None):
+                # 取得 path_manager
+                pm = getattr(self, "path_manager", None)
+                if pm is None:
+                    parent_view = scene.parent()
+                    pm = getattr(parent_view, "path_manager", None)
 
-        # ✅ 加入場景
-        scene.addItem(self.preview_item)
+                self.preview_item = PreviewImageItem(self.block_id, self.start_date, pm, self.label)
+                self.preview_item.setZValue(10)
+                self.preview_item.setAcceptedMouseButtons(Qt.LeftButton)
+                self.preview_item.setFlag(QGraphicsPixmapItem.ItemIsMovable, True)
+                scene.addItem(self.preview_item)
 
-        # ✅ 標記 block_id（用於點擊判斷）
-        self.preview_item.block_id = self.block_id
-       
-        log(f"🖼️ 圖片放在右邊：{image_path}")
+            self.preview_item.setPixmap(scaled)
+            self.preview_item.setVisible(True)
+
+            # 放在文字右側
+            block_pos = self.scenePos()
+            text_rect = self.text.boundingRect() if self.text else None
+            x_offset = block_pos.x() + (text_rect.width() + 8 if text_rect else 8)
+            y_offset = block_pos.y() + 2
+            self.preview_item.setPos(x_offset, y_offset)
+
+            # 標記 block_id
+            self.preview_item.block_id = self.block_id
+
+            # log(f"🖼️ 縮圖就緒：{image_path}")
+        except Exception as e:
+            log(f"❌ load_preview_images 例外：{e}")
+            # 任何錯誤都吞掉，不讓 UI 崩
 
 
     def safe_delete(self):
@@ -592,17 +660,21 @@ class TimeBlock(QGraphicsRectItem):
                 item.scene().removeItem(item)
             setattr(self, item_attr, None)  # ✅ 解引用，防止後續被誤用
  
+    
     def show_image_popup(self, image_path):
+        """安全版本的圖片預覽（保留介面相容）。"""
+        pm = _safe_pixmap_from_file(image_path)
+        if pm is None:
+            log(f"ℹ️ 預覽圖不存在或無法讀取：{image_path}")
+            return
+
         dialog = QDialog()
         dialog.setWindowTitle(f"預覽：{self.label}")
         layout = QVBoxLayout(dialog)
 
         label = QLabel()
-        pixmap = QPixmap(image_path)
-
-        if not pixmap.isNull():
-            scaled = pixmap.scaled(800, 600, Qt.KeepAspectRatio, Qt.SmoothTransformation)
-            label.setPixmap(scaled)
+        scaled = pm.scaled(800, 600, Qt.KeepAspectRatio, Qt.SmoothTransformation)
+        label.setPixmap(scaled)
 
         layout.addWidget(label)
         dialog.setLayout(layout)

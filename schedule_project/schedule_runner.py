@@ -68,130 +68,65 @@ class ScheduleRunner(QObject):
         except Exception as e:
             log(f"❌ 更新預覽圖錯誤：{e}")
 
-    # def check_schedule(self):
-    #     now = QDateTime.currentDateTime()
-
-    #     for b in self.schedule_data:
-    #         block_id = b.get("id")
-
-    #         if block_id in self.already_stopped:
-    #             continue  # 🛑 已停止，不再處理
-
-    #         # 解析日期時間資訊
-    #         qdate = b["qdate"]
-    #         if isinstance(qdate, str):
-    #             qdate = QDate.fromString(qdate, "yyyy-MM-dd")
-
-    #         end_qdate = b.get("end_qdate", qdate)
-    #         if isinstance(end_qdate, str):
-    #             end_qdate = QDate.fromString(end_qdate, "yyyy-MM-dd")
-
-    #         start_hour = float(b["start_hour"])
-    #         end_hour = b.get("end_hour", b["start_hour"] + b["duration"])
-
-    #         start_dt = QDateTime(qdate, QTime(int(start_hour), int((start_hour % 1) * 60)))
-    #         end_dt = QDateTime(end_qdate, QTime(int(end_hour), int((end_hour % 1) * 60)))
-
-    #         # 若已經完全過期，略過
-    #         if now > end_dt:
-    #             continue
-
-    #         # Encoder 資訊
-    #         track_index = b["track_index"]
-    #         encoder_name = self.encoder_names[track_index]
-    #         status_label = self.encoder_status.get(encoder_name)
-    #         block = self.find_block_by_id(block_id)
-    #          # ✅ 若在錄影中區間，啟動錄影（只執行一次）
-    #         if start_dt <= now < end_dt and block_id not in self.already_started:
-    #             log(f"🚀 啟動錄影: {b['label']} ({block_id})")
-    #             self.start_encoder(encoder_name, b["label"], status_label, block_id)
-    #             self.already_started.add(block_id)
-            
-    #         elif now >= end_dt and block_id not in self.already_stopped:
-    #             self.stop_encoder(encoder_name, status_label)
-    #             self.already_stopped.add(block_id)
-    #             if block:
-    #                 block.status = self.compute_status(now, start_dt, end_dt)
-    #                 block.update_text_position()
-
-    #   # ✅ 統一檢查狀態是否改變 → 再決定要不要存檔
-    #     save_needed = False
-    #     block_map = {b["id"]: b for b in self.schedule_data if b.get("id")}
-    #     now = QDateTime.currentDateTime()
-
-    #     for item in self.blocks:
-    #         b = block_map.get(item.block_id)
-    #         if b:
-    #             # 重新計算狀態
-    #             qdate = b["qdate"]
-    #             if isinstance(qdate, str):
-    #                 qdate = QDate.fromString(qdate, "yyyy-MM-dd")
-    #             end_qdate = b.get("end_qdate", qdate)
-    #             if isinstance(end_qdate, str):
-    #                 end_qdate = QDate.fromString(end_qdate, "yyyy-MM-dd")
-    #             start_dt = QDateTime(qdate, QTime(int(b["start_hour"]), int((b["start_hour"] % 1) * 60)))
-    #             end_dt = QDateTime(end_qdate, QTime(int(b["end_hour"]), int((b["end_hour"] % 1) * 60)))
-
-    #             computed_status = self.compute_status(now, start_dt, end_dt)
-    #             if b.get("status", "") != computed_status:
-    #                 b["status"] = computed_status
-    #                 item.status = computed_status  # ✅ 順便更新畫面上的 block
-    #                 item.update_text_position()
-    #                 save_needed = True
-    #     if save_needed:
-    #         parent_view = self.blocks[0].scene().parent() if self.blocks else None
-    #         if parent_view:
-    #             now_ts = QDateTime.currentDateTime()
-    #             if not hasattr(self, "last_saved_ts"):
-    #                 self.last_saved_ts = now_ts.addSecs(-60)  # 初始化
-    #             if self.last_saved_ts.secsTo(now_ts) >= 10:
-    #                 parent_view.save_schedule()
-    #                 self.last_saved_ts = now_ts
-
     def start_encoder(self, encoder_name, filename, status_label, block_id=None):
         if status_label and not isValid(status_label):
             log(f"⚠️ QLabel for {encoder_name} no longer exists; skipping label update")
             status_label = None
 
-        now = QDateTime.currentDateTime()
-        date_folder = now.toString("MM.dd.yyyy")
-        date_prefix = now.toString("MMdd")
-        
+        # 先拿到 block（之後才用 block.start_date）
         block = self.find_block_by_id(block_id) if block_id else None
-        
+
+        # 用 block 的日期，避免跨日不一致
+        base_date = block.start_date if block else QDate.currentDate()
+        date_folder = base_date.toString("MM.dd.yyyy")
+        date_prefix = base_date.toString("MMdd")
+
         full_path = os.path.abspath(os.path.join(self.record_root, date_folder, f"{date_prefix}_{filename}"))
         rel_path = os.path.relpath(full_path, start=self.record_root)
-        
+
         sock = connect_socket(encoder_name)
         if not sock:
             safe_set_label(status_label, "❌ 無法連線", "color: red;")
         else:
             sock.close()
-
-        res1 = send_encoder_command(encoder_name, f'Setfile "{encoder_name}" 1 {rel_path}')
+        res1 = send_encoder_command(encoder_name, f'Setfile "{encoder_name}" 1 "{rel_path}"')
+        # res1 = send_encoder_command(encoder_name, f'Setfile "{encoder_name}" 1 {rel_path}')
         res2 = send_encoder_command(encoder_name, f'Start "{encoder_name}" 1')
 
         if "OK" in res1 and "OK" in res2:
             safe_set_label(status_label, "✅ 錄影中", "color: green;")
+        else:
+            # 啟動失敗就不要拍照，以免誤判
+            safe_set_label(status_label, "狀態：❌ 啟動失敗", "color: red;")
+            return
+
         # ✅ 只在第一次啟動時拍照，避免 check_schedule 觸發多次
         if block_id and block_id not in self.already_started:
             self.already_started.add(block_id)
             log(f"📸 update_all_encoder_snapshots triggered at {QDateTime.currentDateTime().toString('HH:mm:ss.zzz')}")
-            # ✅ 安全地在背景執行 snapshot
             window = QApplication.instance().activeWindow()
             if window and not getattr(window, "is_closing", False) and block:
                 def worker():
                     try:
-                        snapshot_path = take_snapshot_from_block(block, self.encoder_names)
+                        future = take_snapshot_from_block(
+                            block, self.encoder_names, snapshot_root=self.record_root
+                        )
+                        snapshot_path = None
+                        if future is not None:
+                            try:
+                                snapshot_path = future.result(timeout=6)  # _wait_for_file 預設 5 秒
+                            except Exception as e:
+                                log(f"⚠️ snapshot future error/timeout：{e}")
+                                snapshot_path = None
                         self.snapshot_result.emit(block.block_id, snapshot_path)
                     except Exception as e:
                         log(f"❌ snapshot thread error：{e}")
                         self.snapshot_result.emit(block.block_id if block else "", None)
                 threading.Thread(target=worker, daemon=True).start()
             else:
-                log(f"🛑 無視拍照：UI 已關閉或找不到 activeWindow")
-        if not block:
-            safe_set_label(status_label, "❌ 錯誤", "color: red;")
+                log("🛑 無視拍照：UI 已關閉或找不到 activeWindow")
+
+        
 
     def stop_encoder(self, encoder_name, status_label):
         if status_label and not isValid(status_label):

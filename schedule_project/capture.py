@@ -24,11 +24,13 @@ def _wait_for_file(path, cancel_event, timeout=5):
     log(f"⚠️ 檔案未生成，請檢查路徑或權限：{path}")
     return None
 def take_snapshot_from_block(block, encoder_names, snapshot_root: str = None):
-    if snapshot_root is None:
-        snapshot_root = os.getcwd()  # 使用目前的工作目錄
     try:
-        if not block.block_id:
-            log("❌ 無效 block_id，取消拍照")
+        # 守門：record_root 必須存在
+        if not snapshot_root or not os.path.isdir(snapshot_root):
+            log(f"ℹ️ 略過快照：snapshot_root 無效或不存在 -> {snapshot_root}")
+            return None
+        if not block or not block.block_id:
+            log("ℹ️ 略過快照：無效的 block/block_id")
             return None
 
         date_str = block.start_date.toString("MM.dd.yyyy")
@@ -88,16 +90,16 @@ def take_snapshot_by_encoder(encoder_name, preview_root: str | None = None):
         os.makedirs(snapshot_dir, exist_ok=True)
 
         # 🔄 清除舊圖
-        try:
-            for f in os.listdir(snapshot_dir):
-                if f.startswith(filename):
-                    try:
-                        os.remove(os.path.join(snapshot_dir, f))
-                    except Exception as e:
-                        log(f"⚠️ 無法刪除舊圖片 {f}：{e}")
-        except Exception as e:
-            log(f"❌ 無法讀取 snapshot_dir：{e}")
-            return None
+        # try:
+        #     for f in os.listdir(snapshot_dir):
+        #         if f.startswith(filename):
+        #             try:
+        #                 os.remove(os.path.join(snapshot_dir, f))
+        #             except Exception as e:
+        #                 log(f"⚠️ 無法刪除舊圖片 {f}：{e}")
+        # except Exception as e:
+        #     log(f"❌ 無法讀取 snapshot_dir：{e}")
+        #     return None
 
         log(f"📸 為 {encoder_name} 拍照 ➜ 儲存預期路徑：{snapshot_full_path}")
         log(f"🛰️ 傳給 encoder 的路徑（不含副檔名）：{snapshot_relative}")
@@ -120,17 +122,15 @@ def take_snapshot_by_encoder(encoder_name, preview_root: str | None = None):
         return None
 
 # capture.py
-def start_cleanup_timer(preview_root, interval=300):
-    """啟動自動清理 preview 圖片的計時器並回傳 Timer 參考。"""
+def start_cleanup_timer(preview_root, check_period=600, max_age=300, run_immediately=False):
+    """每 check_period 秒執行一次清理；只刪除修改時間超過 max_age 秒的檔案。"""
     global cleanup_timer, cleanup_running
     cleanup_running = True
 
     def cleanup():
-        """實際執行清理，並根據旗標決定是否排程下一次。"""
         global cleanup_timer
         if not cleanup_running:
             return
-
         now = time.time()
         deleted = 0
         try:
@@ -138,7 +138,7 @@ def start_cleanup_timer(preview_root, interval=300):
                 for f in os.listdir(preview_root):
                     if f.endswith(".png"):
                         fpath = os.path.join(preview_root, f)
-                        if os.path.isfile(fpath) and now - os.path.getmtime(fpath) > interval:
+                        if os.path.isfile(fpath) and now - os.path.getmtime(fpath) > max_age:
                             os.remove(fpath)
                             deleted += 1
             log(f"🧹 自動清理 preview，已刪除 {deleted} 張舊圖片")
@@ -146,12 +146,19 @@ def start_cleanup_timer(preview_root, interval=300):
             log(f"❌ 清理 preview 圖片失敗：{e}")
         finally:
             if cleanup_running:
-                cleanup_timer = threading.Timer(interval, cleanup)
+                cleanup_timer = threading.Timer(check_period, cleanup)
                 cleanup_timer.daemon = True
                 cleanup_timer.start()
 
-    cleanup()  # 立即清理並排程下一次
+    if run_immediately:
+        cleanup()                         # 立刻跑一次（可選）
+    else:
+        cleanup_timer = threading.Timer(check_period, cleanup)  # 延後第一次，避免一開就黑屏
+        cleanup_timer.daemon = True
+        cleanup_timer.start()
+
     return cleanup_timer
+
 
 
 def stop_cleanup_timer():

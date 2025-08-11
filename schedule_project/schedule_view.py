@@ -80,7 +80,7 @@ class ScheduleView(QGraphicsView):
             except RuntimeError:
                 pass
             self.now_time_label = None
-            return
+            return      
 
         # ➤ 計算目前時間對應的 X 座標
         time = now.time()
@@ -115,7 +115,7 @@ class ScheduleView(QGraphicsView):
         self.now_time_label.setDefaultTextColor(Qt.red)
         self.now_time_label.setPos(x - 10, offset - 18)  # 🔴 新位置跟著 offset
         self.now_time_label.setZValue(1000)
-
+        
     def update_all_blocks(self):
         for item in self.scene.items():
             if isinstance(item, TimeBlock):

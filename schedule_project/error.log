@@ -1,7 +1,7 @@
 Traceback (most recent call last):
   File "c:\Users\coco\recoder\schedule_project\main.py", line 37, in <module>
     win = MainWindow()
-  File "c:\Users\coco\recoder\schedule_project\ui_main_window.py", line 49, in __init__
-    self.preview_root = self.path_manager.preview_root
-                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-AttributeError: 'PathManager' object has no attribute 'preview_root'
+  File "c:\Users\coco\recoder\schedule_project\ui_main_window.py", line 243, in __init__
+    self.cleanup_timer = start_cleanup_timer(self.preview_root, interval=600)
+                         ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: start_cleanup_timer() got an unexpected keyword argument 'interval'
