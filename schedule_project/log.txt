@@ -54501,3 +54501,83 @@ OK: Snapshot has been taken.
 [17:04:52] [INFO] ✅ 已儲存：Z:/preview\Bak4-1.png
 [17:04:53] [INFO] 🔍 查找最新快照：Z:/preview\Bak4-1*.png
 [17:05:05] [INFO] 👋 MainWindow 已關閉
+[17:17:21] [INFO] 🔧 MainWindow 建立中...
+[17:17:21] [INFO] ✅ Encoder 列表：['Bak4-2', 'Bak4-1']
+[17:17:21] [INFO] 🎯 draw_grid encoder_names:['Bak4-2', 'Bak4-1']
+[17:17:21] [INFO] 📂 已載入節目排程 Z:/schedule_project/schedule.json
+[17:17:21] [INFO] 🎯 draw_grid encoder_names:['Bak4-2', 'Bak4-1']
+[17:17:21] [INFO] 🎯 draw_grid encoder_names:['Bak4-2', 'Bak4-1']
+[17:17:21] [INFO] 🧭 自動捲動畫面至今天時間：X = 345
+[17:17:21] [INFO] 🔁 [同步] Runner block 數量：1
+[17:17:21] [INFO] 🎯 draw_grid encoder_names:['Bak4-2', 'Bak4-1']
+[17:17:21] [INFO] 🎯 draw_grid encoder_names:['Bak4-2', 'Bak4-1']
+[17:17:21] [INFO] 📂 已載入節目排程 Z:/schedule_project/schedule.json
+[17:17:21] [INFO] 📂 自動載入之前選的檔案：Z:/schedule_project/schedule.json
+[17:17:22] [INFO] 🛑 時間到 ➜ 停止錄影: 9987 (c2572fe5-e002-41f7-bfd6-25b52357dd0b)
+[17:17:22] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[17:17:24] [INFO] ⬅️ Response:
+  
+OK: Profile has been stopped successfully.
+
+
+[17:17:24] [INFO] 📸 為 Bak4-2 拍照 ➜ 儲存預期路徑：Z:/preview\Bak4-2.png
+[17:17:24] [INFO] 📸 為 Bak4-1 拍照 ➜ 儲存預期路徑：Z:/preview\Bak4-1.png
+[17:17:24] [INFO] 🛰️ 傳給 encoder 的路徑（不含副檔名）：preview/Bak4-2
+[17:17:24] [INFO] 🛰️ 傳給 encoder 的路徑（不含副檔名）：preview/Bak4-1
+[17:17:24] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[17:17:24] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[17:17:26] [INFO] ⬅️ Response:
+  
+OK: Snapshot file name has been set.
+
+
+[17:17:26] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[17:17:26] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[17:17:28] [INFO] ⬅️ Response:
+  
+
+[17:17:28] [INFO] 📡 Snapshot 回應：
+[17:17:28] [INFO] ✅ 已儲存：Z:/preview\Bak4-1.png
+[17:17:29] [INFO] 🔍 查找最新快照：Z:/preview\Bak4-1*.png
+[17:17:30] [INFO] ⬅️ Response:
+  
+OK: Snapshot has been taken.
+
+
+[17:17:30] [INFO] 📡 Snapshot 回應：OK: Snapshot has been taken.
+[17:17:30] [INFO] ✅ 已儲存：Z:/preview\Bak4-2.png
+[17:17:30] [INFO] 🔍 查找最新快照：Z:/preview\Bak4-2*.png
+[17:17:51] [INFO] 📸 為 Bak4-2 拍照 ➜ 儲存預期路徑：Z:/preview\Bak4-2.png
+[17:17:51] [INFO] 📸 為 Bak4-1 拍照 ➜ 儲存預期路徑：Z:/preview\Bak4-1.png
+[17:17:51] [INFO] 🛰️ 傳給 encoder 的路徑（不含副檔名）：preview/Bak4-2
+[17:17:51] [INFO] 🛰️ 傳給 encoder 的路徑（不含副檔名）：preview/Bak4-1
+[17:17:51] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[17:17:51] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[17:17:53] [INFO] ⬅️ Response:
+  
+OK: Snapshot file name has been set.
+
+
+[17:17:53] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[17:17:53] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[17:17:55] [INFO] ⬅️ Response:
+  
+
+[17:17:55] [INFO] 📡 Snapshot 回應：
+[17:17:56] [INFO] ✅ 已儲存：Z:/preview\Bak4-2.png
+[17:17:56] [INFO] 🔍 查找最新快照：Z:/preview\Bak4-2*.png
+[17:17:57] [INFO] ⬅️ Response:
+  
+OK: Snapshot has been taken.
+
+
+[17:17:57] [INFO] 📡 Snapshot 回應：OK: Snapshot has been taken.
+[17:17:57] [INFO] ✅ 已儲存：Z:/preview\Bak4-1.png
+[17:17:58] [INFO] 🔍 查找最新快照：Z:/preview\Bak4-1*.png
+[17:18:21] [INFO] 📸 為 Bak4-1 拍照 ➜ 儲存預期路徑：Z:/preview\Bak4-1.png
+[17:18:21] [INFO] 📸 為 Bak4-2 拍照 ➜ 儲存預期路徑：Z:/preview\Bak4-2.png
+[17:18:21] [INFO] 🛰️ 傳給 encoder 的路徑（不含副檔名）：preview/Bak4-1
+[17:18:21] [INFO] 🛰️ 傳給 encoder 的路徑（不含副檔名）：preview/Bak4-2
+[17:18:21] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[17:18:21] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[17:18:23] [INFO] 👋 MainWindow 已關閉
