@@ -282,9 +282,9 @@ class MainWindow(QMainWindow):
         splitter.addWidget(right_panel)
 
         # === 啟動時間器 ===
-        self.encoder_status_timer = QTimer(self)
-        self.encoder_status_timer.timeout.connect(self.update_encoder_status_labels)
-        self.encoder_status_timer.start(2000)
+        # self.encoder_status_timer = QTimer(self)
+        # self.encoder_status_timer.timeout.connect(self.update_encoder_status_labels)
+        # self.encoder_status_timer.start(2000)
 
         self.snapshot_timer = QTimer(self)
         self.snapshot_timer.timeout.connect(self.update_all_encoder_snapshots)
@@ -695,8 +695,8 @@ class MainWindow(QMainWindow):
                 break
 
     def encoder_stop(self, encoder_name, status_label):
-        status_label.setText("狀態：🔁 停止中...")
-        status_label.setStyleSheet("color: blue")
+        # status_label.setText("狀態：🔁 停止中...")
+        # status_label.setStyleSheet("color: blue")
         QApplication.processEvents()
 
         ok = self.encoder_controller.stop_encoder(encoder_name)

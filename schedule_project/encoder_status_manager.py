@@ -1,40 +1,69 @@
-from encoder_utils import send_encoder_command
+# encoder_status_manager.py
+from encoder_utils import send_persistent_command  # 👈 改用持久連線
 from utils import log
+import time
 
 class EncoderStatusManager:
-    def __init__(self):
-        self.encoder_last_state = {}
+    def __init__(self, cooldown_ms: int = 800, log_every_s: int = 10):
+        self.encoder_last_state = {}     # {name: raw_response}
+        self._last_query_ts = {}         # {name: epoch_ms}
+        self._last_log_ts = {}           # {name: epoch_s}
+        self._cooldown_ms = cooldown_ms
+        self._log_every_s = log_every_s
 
-    def get_status(self, encoder_name):
-        """回傳單一 encoder 狀態 (status_text, color)"""
+    def _parse(self, res: str):
+        """把回應字串轉成 (text, color)"""
+        if not isinstance(res, str):
+            return "❓未知", "black"
+        r = res.strip()
+        if "Running" in r or "Runned" in r:
+            return "✅ 錄影中", "green"
+        if "Paused" in r:
+            return "⏸ 暫停中", "orange"
+        if "Stopped" in r or "None" in r:
+            return "⏹ 停止中", "gray"
+        if "Prepared" in r or "Preparing" in r:
+            return "🟡 準備中", "blue"
+        if "Error" in r:
+            return "❌ 錯誤", "red"
+        return "❓未知", "black"
+
+    def _maybe_log(self, name: str, res: str, changed: bool):
+        now_s = int(time.time())
+        last = self._last_log_ts.get(name, 0)
+        if changed or (now_s - last) >= self._log_every_s:
+            log(f"⬅️ EncStatus {name}: {res}")
+            self._last_log_ts[name] = now_s
+
+    def get_status(self, encoder_name: str):
+        """
+        回傳單一 encoder 狀態 (status_text, color)
+        - 800ms 內重複查詢直接回快取，避免頻繁阻塞 I/O
+        - 真查詢時使用持久連線，降低卡頓
+        """
+        now_ms = int(time.time() * 1000)
+        last_ms = self._last_query_ts.get(encoder_name, 0)
+
+        # 冷卻時間內直接回快取（仍保證有值）
+        if (now_ms - last_ms) < self._cooldown_ms and encoder_name in self.encoder_last_state:
+            cached = self.encoder_last_state[encoder_name]
+            return self._parse(cached)
+
+        # 真正查一次（持久連線）
         try:
-            res = send_encoder_command(encoder_name, f'EncStatus "{encoder_name}"')
-            log(f"⬅️ Response from {encoder_name}: {res}")
+            res = send_persistent_command(f'EncStatus "{encoder_name}"', encoder_name=encoder_name)
+
         except Exception as e:
             res = str(e)
 
-        # ⛔ 不再 return None，就算結果一樣也回傳狀態
+        prev = self.encoder_last_state.get(encoder_name)
+        changed = (prev != res)
         self.encoder_last_state[encoder_name] = res
+        self._last_query_ts[encoder_name] = now_ms
+        self._maybe_log(encoder_name, res, changed)
 
-        # 狀態解析
-        if "Running" in res or "Runned" in res:
-            return "✅ 錄影中", "green"
-        elif "Paused" in res:
-            return "⏸ 暫停中", "orange"
-        elif "Stopped" in res or "None" in res:
-            return "⏹ 停止中", "gray"
-        elif "Prepared" in res or "Preparing" in res:
-            return "🟡 準備中", "blue"
-        elif "Error" in res:
-            return "❌ 錯誤", "red"
-        else:
-            return f"❓未知\n{res}", "black"
+        return self._parse(res)
 
     def refresh_all(self, encoder_names):
-        """回傳所有 encoder 狀態字典 {encoder_name: (status_text, color)}"""
-        statuses = {}
-        for name in encoder_names:
-            result = self.get_status(name)
-            if result:  # 一定會有值了
-                statuses[name] = result
-        return statuses
+        """回傳 {encoder_name: (status_text, color)}"""
+        return {name: self.get_status(name) for name in encoder_names}

@@ -1,7 +1,7 @@
 # schedule_runner.py
 
 from encoder_controller import EncoderController 
-from PySide6.QtCore import QObject, QTimer, QDateTime, QDate, QTime, Signal
+from PySide6.QtCore import QObject, QRunnable, QThreadPool, QTimer, QDateTime, QDate, QTime, Signal
 from encoder_utils import connect_socket, send_encoder_command, send_persistent_command
 from encoder_status_manager import EncoderStatusManager
 import os
@@ -13,6 +13,26 @@ from shiboken6 import isValid
 from capture import take_snapshot_from_block 
 from utils import log   
 REFRESH_INTERVAL_MS =10*1000
+class _StatusWorkerSignals(QObject):
+    done = Signal(dict)  # {name: (text, color)}
+
+class _StatusWorker(QRunnable):
+    def __init__(self, names, status_manager):
+        super().__init__()
+        self.names = names
+        self.status_manager = status_manager
+        self.signals = _StatusWorkerSignals()
+    def run(self):
+        # 這裡做阻塞 I/O（socket），不在 UI 執行緒
+        result = {}
+        for name in self.names:
+            try:
+                stat = self.status_manager.get_status(name)  # 可能會打 EncStatus
+                if stat:  # 你的 get_status 可能回 None 表示無變化
+                    result[name] = stat
+            except Exception:
+                result[name] = ("❌ 無法連線", "red")
+        self.signals.done.emit(result)
 def safe_set_label(label, text, style):
     if not label or not isValid(label):
         return
@@ -37,13 +57,27 @@ class ScheduleRunner(QObject):
         self.timer.start(1000)  # 每秒檢查一次
         self.encoder_last_state = {}
         self.status_timer = QTimer(self)
-        self.status_timer.timeout.connect(self.refresh_encoder_statuses)
+        self.status_timer.timeout.connect(self._refresh_status_async)
 
         self.status_timer.start(REFRESH_INTERVAL_MS)
 
         self.snapshot_result.connect(self._handle_snapshot_result)
         self.encoder_status_manager = EncoderStatusManager()
         self.refresh_encoder_statuses()
+        self._pool = QThreadPool.globalInstance()
+    def _refresh_status_async(self):
+        worker = _StatusWorker(self.encoder_names, self.encoder_status_manager)  # ⬅️ 改這個
+        worker.signals.done.connect(self._apply_statuses)
+        self._pool.start(worker)
+
+
+    def _apply_statuses(self, statuses: dict):
+        for name, (text, color) in statuses.items():
+            label = self.encoder_status.get(name)  # ⬅️ 用這個
+            if label:
+                label.setText(f"狀態：{text}")
+                label.setStyleSheet(f"color: {color}")
+
     def refresh_encoder_statuses(self):
         statuses = self.encoder_status_manager.refresh_all(self.encoder_names)
         for name, (status_text, color) in statuses.items():
@@ -136,7 +170,7 @@ class ScheduleRunner(QObject):
             log(f"⚠️ QLabel for {encoder_name} no longer exists; skipping label update")
             status_label = None
 
-        safe_set_label(status_label, "狀態：🔁 停止中...", "color: blue")
+        # safe_set_label(status_label, "狀態：🔁 停止中...", "color: blue")
         QApplication.processEvents()
 
         ok = self.encoder_controller.stop_encoder(encoder_name)
