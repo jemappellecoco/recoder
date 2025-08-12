@@ -1,17 +1,5 @@
 Traceback (most recent call last):
-  File "c:\Users\coco\recoder\schedule_project\main.py", line 37, in <module>
-    win = MainWindow()
-  File "c:\Users\coco\recoder\schedule_project\ui_main_window.py", line 245, in __init__
-    self.runner = ScheduleRunner(
-                  ~~~~~~~~~~~~~~^
-        schedule_data=self.view.block_data,
-        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-    ...<3 lines>...
-        blocks=self.view.blocks
-        ^^^^^^^^^^^^^^^^^^^^^^^
-    )# ✅ 加這裡！建立 schedule_manager
-    ^
-  File "c:\Users\coco\recoder\schedule_project\schedule_runner.py", line 39, in __init__
-    self.status_timer.timeout.connect(self.refresh_encoder_statuses)
-                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-AttributeError: 'ScheduleRunner' object has no attribute 'refresh_encoder_statuses'
+  File "c:\Users\coco\recoder\schedule_project\schedule_view.py", line 130, in refresh_track_labels
+    status_text, color = self.encoder_status_manager.get_status(encoder_name)
+    ^^^^^^^^^^^^^^^^^^
+TypeError: cannot unpack non-iterable NoneType object

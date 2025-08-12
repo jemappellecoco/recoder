@@ -1,8 +1,9 @@
 from PySide6.QtWidgets import QGraphicsView, QGraphicsScene
 from PySide6.QtCore import Qt, QDate, QTimer,QDateTime, QTime
-from PySide6.QtGui import QPainter, QFont,QPen
+from PySide6.QtGui import QPainter, QFont,QPen,QColor
 from time_block import TimeBlock
 import json
+from encoder_status_manager import EncoderStatusManager
 import os
 import uuid
 from utils import log
@@ -48,6 +49,7 @@ class ScheduleView(QGraphicsView):
        
         self.grid_top_offset = 30
         self.setAlignment(Qt.AlignLeft | Qt.AlignTop)
+        self.encoder_status_manager = EncoderStatusManager()
     def update_visible_blocks_only(self):
         visible_rect = self.viewport().rect()
         visible_scene_rect = self.mapToScene(visible_rect).boundingRect()
@@ -120,7 +122,16 @@ class ScheduleView(QGraphicsView):
     #     for item in self.scene.items():
     #         if isinstance(item, TimeBlock):
     #             item.update_status_by_time()
-    
+    def refresh_track_labels(self):
+        """只更新 encoder 標籤狀態，不重畫 grid"""
+        for track_index, encoder_name in enumerate(self.encoder_names):
+            label_item = self.encoder_labels.get(encoder_name)
+            if label_item:
+                status_text, color = self.encoder_status_manager.get_status(encoder_name)
+                alias = get_encoder_display_name(encoder_name)
+                full_label = f"{alias}\n狀態：{status_text}"
+                label_item.setPlainText(full_label)
+                label_item.setDefaultTextColor(QColor(color))
     def draw_grid(self):
         log(f"🎯 draw_grid encoder_names:{self.encoder_names}" )
 
@@ -129,7 +140,7 @@ class ScheduleView(QGraphicsView):
         self.tracks = len(self.encoder_names)
         self.update_scene_rect()
         self.verticalScrollBar().setValue(0)
-
+        # 畫出背景格線
         for day in range(self.days):
             for hour in range(24):
                 x = day * self.day_width + hour * self.hour_width
@@ -139,22 +150,32 @@ class ScheduleView(QGraphicsView):
             x = day * self.day_width
             self.scene.addRect(x, offset, self.day_width, self.tracks * 100)
 
+           # 🔄 每個 track 標籤
         for track in range(self.tracks):
-            y = offset + track * 100  # ✅ 把每條橫線往下移 offset
+            y = offset + track * 100
             self.scene.addLine(0, y, self.days * self.day_width, y)
 
             if track < len(self.encoder_names):
                 encoder_name = self.encoder_names[track]
-                status_label = self.encoder_status.get(encoder_name)
-                status_text = status_label.text() if status_label else "未知"
                 alias = get_encoder_display_name(encoder_name)
-                full_label = f"{alias}\n{status_text}"
-            else:
-                full_label = f"未指定\n--"
 
-            label = self.scene.addText(full_label)
-            label.setFont(QFont("Arial", 9))
-            label.setPos(-95, y)  # ✅ y 已經包含 offset
+                # ✅ 用 EncoderStatusManager 查詢實際狀態
+                status_text, color = self.encoder_status_manager.get_status(encoder_name)
+                full_label = f"{alias}\n狀態：{status_text}"
+            else:
+                full_label = "未指定\n--"
+                color = "black"
+
+            label_item = self.scene.addText(full_label)
+            label_item.setFont(QFont("Arial", 9))
+            label_item.setPos(-95, y)
+
+        # ✅ 顯示對應顏色
+            label_item.setDefaultTextColor(QColor(color))
+
+        # ✅ 儲存以供後續 refresh
+            if track < len(self.encoder_names):
+                self.encoder_labels[encoder_name] = label_item
 
         self.draw_blocks()
         self.update_now_line()

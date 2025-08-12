@@ -47,3 +47,4 @@ class HeaderView(QGraphicsView):
         self.encoder_names = names
         self.draw_header()
         self.update()
+    

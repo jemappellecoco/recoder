@@ -1,4 +1,4 @@
-from header_view import HeaderView
+from header_view import HeaderView  
 from PySide6.QtCore import Qt
 from PySide6.QtWidgets import (
     QMainWindow, QWidget, QPushButton, QLabel, QDateEdit, QSlider,QDialog,QFrame,QScrollArea,QSplitter,QTextEdit,
@@ -88,7 +88,7 @@ class MainWindow(QMainWindow):
         self.encoder_entries = {}
         self.encoder_status = {}
         self.encoder_status_manager = EncoderStatusManager()
-            
+        
         os.makedirs(self.preview_root, exist_ok=True)
 
         for name in self.encoder_names:
@@ -218,12 +218,17 @@ class MainWindow(QMainWindow):
         # --- Header & ScheduleView ---
         self.header = HeaderView(self.encoder_names)
         self.view = ScheduleView()
+        self.view.encoder_status_manager = self.encoder_status_manager  # ✅ 傳入狀態管理器
+
         self.view.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
         self.view.encoder_names = self.encoder_names
         self.view.encoder_status = self.encoder_status
         self.view.record_root = self.record_root
         self.view.load_schedule()
         self.view.draw_grid()
+        self.track_status_timer = QTimer()
+        self.track_status_timer.timeout.connect(self.view.refresh_track_labels)
+        self.track_status_timer.start(10000)
         # 自動對齊畫面到「現在時間」
         now = QDateTime.currentDateTime()
         self.base_date = QDate.currentDate()
@@ -501,11 +506,12 @@ class MainWindow(QMainWindow):
     def get_encoder_status(self, name):
         result = self.encoder_status_manager.get_status(name)
         log(f"🧪 get_status({name}) 回傳：{result}")
+        
         if result:
             status_text, _ = result
             return status_text
         else:
-            # 如果無變化，取用 runner 快取內狀態（保底）
+            # ❗❗❗ Fallback：如果解析失敗（None），保留舊狀態以避免 UI 閃跳
             last = self.runner.encoder_last_state.get(name, "")
             if "Running" in last or "Runned" in last:
                 return "✅ 錄影中"
@@ -515,12 +521,15 @@ class MainWindow(QMainWindow):
                 return "⏹ 停止中"
             elif "Prepared" in last or "Preparing" in last:
                 return "🟡 準備中"
-            elif "Error" in last:
+            elif "Error" in last or "disconnect" in last:
                 return "❌ 錯誤"
             elif not last:
                 return "❌ 未連線"
             else:
-                return f"❓ 未知狀態 ({last})"
+                # 可選：log unknown 狀態但不顯示到 UI
+                log(f"⚠️ 無法解析狀態 fallback: {last}")
+                return ""
+
 
 
     def update_encoder_status_labels(self):
