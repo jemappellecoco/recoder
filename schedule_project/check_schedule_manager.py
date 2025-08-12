@@ -70,7 +70,8 @@ class CheckScheduleManager:
             block = self.find_block_by_id(block_id)
 
             # ➤ 自動開始錄影
-            if start_dt <= now < end_dt and block_id not in self.already_started:
+            delta = start_dt.secsTo(now)  # start_dt -> now 的秒數（到點會是 0）
+            if 0 <= delta <= 1 and block_id not in self.already_started:
                 if not block or "已結束" not in block.status:
                     log(f"🚀 啟動錄影: {b['label']} ({block_id})")
                     self.runner.start_encoder(encoder_name, b["label"], status_label, block_id)

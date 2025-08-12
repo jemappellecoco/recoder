@@ -29,6 +29,7 @@ from capture import start_cleanup_timer, stop_cleanup_timer
 from snapshot_worker import SnapshotWorker
 from EncoderManagerDialog import EncoderManagerDialog
 from encoder_utils import save_encoder_config, reload_encoder_config
+from encoder_status_manager import EncoderStatusManager
 
 def find_latest_snapshot_by_prefix(preview_dir, encoder_name):
     pattern = os.path.join(preview_dir,"preview", f"{encoder_name}*.png") 
@@ -86,7 +87,7 @@ class MainWindow(QMainWindow):
         self.encoder_pixmaps = {}
         self.encoder_entries = {}
         self.encoder_status = {}
-        
+        self.encoder_status_manager = EncoderStatusManager()
             
         os.makedirs(self.preview_root, exist_ok=True)
 
@@ -498,23 +499,29 @@ class MainWindow(QMainWindow):
             self.update_preview_scaled(name)
         super().resizeEvent(event)
     def get_encoder_status(self, name):
-        now = QDateTime.currentDateTime()
-        related_blocks = [b for b in self.view.block_data if b.get("encoder_name") == name]
-        current_status = "等待中"
-        for b in related_blocks:
-            start_dt = QDateTime(
-                b["qdate"],
-                QTime(int(b["start_hour"]), int((b["start_hour"] % 1) * 60)),
-            )
-            end_dt = start_dt.addSecs(int(b["duration"] * 3600))
-            if now < start_dt:
-                current_status = "等待中"
-            elif start_dt <= now <= end_dt:
-                current_status = "錄影中"
-                break
-            elif now > end_dt:
-                current_status = "已結束"
-        return current_status
+        result = self.encoder_status_manager.get_status(name)
+        log(f"🧪 get_status({name}) 回傳：{result}")
+        if result:
+            status_text, _ = result
+            return status_text
+        else:
+            # 如果無變化，取用 runner 快取內狀態（保底）
+            last = self.runner.encoder_last_state.get(name, "")
+            if "Running" in last or "Runned" in last:
+                return "✅ 錄影中"
+            elif "Paused" in last:
+                return "⏸ 暫停中"
+            elif "Stopped" in last or "None" in last:
+                return "⏹ 停止中"
+            elif "Prepared" in last or "Preparing" in last:
+                return "🟡 準備中"
+            elif "Error" in last:
+                return "❌ 錯誤"
+            elif not last:
+                return "❌ 未連線"
+            else:
+                return f"❓ 未知狀態 ({last})"
+
 
     def update_encoder_status_labels(self):
         try:
