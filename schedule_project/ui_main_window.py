@@ -423,6 +423,7 @@ class MainWindow(QMainWindow):
         self.header.set_base_date(today)
         self.date_picker.setDate(today)
     def safe_check_schedule(self):
+        log("🕒 檢查排程中...")
         try:
             self.schedule_manager.check_schedule()
         except Exception as e:
