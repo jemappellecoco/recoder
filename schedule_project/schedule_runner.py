@@ -71,8 +71,15 @@ class ScheduleRunner(QObject):
 
         self.snapshot_result.connect(self._handle_snapshot_result)
         self.encoder_status_manager = EncoderStatusManager()
+                # ✅ 自動更新 block 顯示狀態
+        self.block_status_timer = QTimer(self)
+        self.block_status_timer.timeout.connect(self._refresh_block_statuses)
+        self.block_status_timer.start(3000)  # 每秒更新一次
         self.refresh_encoder_statuses()
         self._pool = QThreadPool.globalInstance()
+    def _refresh_block_statuses(self):
+        for block in self.blocks:
+            block.update_status_by_time()
     def _refresh_status_async(self):
         log(f"🎯 啟動 StatusWorker：{self.encoder_names}")
         worker = _StatusWorker(self.encoder_names, self.encoder_status_manager)  # ⬅️ 改這個

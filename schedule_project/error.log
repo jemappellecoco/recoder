@@ -1,22 +1,17 @@
 Traceback (most recent call last):
   File "c:\Users\coco\recoder\schedule_project\main.py", line 41, in <module>
     win = MainWindow()
-  File "c:\Users\coco\recoder\schedule_project\ui_main_window.py", line 227, in __init__
-    self.view.load_schedule()
-    ~~~~~~~~~~~~~~~~~~~~~~~^^
-  File "c:\Users\coco\recoder\schedule_project\schedule_view.py", line 462, in load_schedule
-    self.draw_grid()
-    ~~~~~~~~~~~~~~^^
-  File "c:\Users\coco\recoder\schedule_project\schedule_view.py", line 180, in draw_grid
-    self.draw_blocks()
-    ~~~~~~~~~~~~~~~~^^
-  File "c:\Users\coco\recoder\schedule_project\schedule_view.py", line 213, in draw_blocks
-    block = TimeBlock(
-        data["qdate"],
-    ...<4 lines>...
-        block_id=data.get("id")
-    )
-  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 93, in __init__
-    self.status_text = QGraphicsSimpleTextItem(self.status, self)
-                                               ^^^^^^^^^^^
-AttributeError: 'TimeBlock' object has no attribute 'status'
+  File "c:\Users\coco\recoder\schedule_project\ui_main_window.py", line 251, in __init__
+    self.runner = ScheduleRunner(
+                  ~~~~~~~~~~~~~~^
+        schedule_data=self.view.block_data,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<3 lines>...
+        blocks=self.view.blocks
+        ^^^^^^^^^^^^^^^^^^^^^^^
+    )# ✅ 加這裡！建立 schedule_manager
+    ^
+  File "c:\Users\coco\recoder\schedule_project\schedule_runner.py", line 64, in __init__
+    self.timer.timeout.connect(self.check_schedule)
+                               ^^^^^^^^^^^^^^^^^^^
+AttributeError: 'ScheduleRunner' object has no attribute 'check_schedule'

@@ -15,6 +15,7 @@ class CheckScheduleManager:
         self.already_stopped = set()
         self.last_saved_ts = None
         self.encoder_status_manager = EncoderStatusManager()
+        
     def find_block_by_id(self, block_id):
         for blk in self.blocks:
             if blk.block_id == block_id:

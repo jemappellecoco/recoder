@@ -429,6 +429,7 @@ class TimeBlock(QGraphicsRectItem):
             parent_view.save_schedule()
             return
         # ✅ 重疊檢查
+
         if parent_view.is_overlap(new_date, new_track, new_hour, self.duration_hours, exclude_label=self.block_id):
             log("❌ 拖曳後重疊，還原")
             self.flash_red()
@@ -466,7 +467,30 @@ class TimeBlock(QGraphicsRectItem):
         super().mouseReleaseEvent(event)
         parent_view.save_schedule()
         self.setFlag(QGraphicsRectItem.ItemIsMovable, False)  
+    def update_status_by_time(self):
+        now = QDateTime.currentDateTime()
+        start_dt = QDateTime(self.start_date, QTime(int(self.start_hour), int((self.start_hour % 1) * 60)))
+        end_dt = start_dt.addSecs(int(self.duration_hours * 3600))
 
+        # ✅ 若已經結束，統一標記為「已結束」，不再讓硬體狀態蓋掉
+        if now > end_dt:
+            if self.status != "狀態：✅ 已結束":
+                self.status = "狀態：✅ 已結束"
+                self.setBrush(QBrush(QColor(180, 180, 180, 180)))  # 灰色
+                self.update_text_position()
+            return  # ❗重要：已結束就 return，不再讓後續邏輯處理
+
+        # ✅ 還沒開始
+        if now < start_dt:
+            if self.status != "狀態：⌛ 等待中":
+                self.status = "狀態：⌛ 等待中"
+                self.setBrush(QBrush(QColor(200, 200, 255, 180)))  # 藍色
+                self.update_text_position()
+            return
+
+        # ✅ 進行中：此時 UI 狀態應該依照硬體回報更新（例如 ScheduleRunner 寫入的狀態）
+        # ⚠️ 請勿在這裡修改成「錄影中 / 停止中」，由外部控制元件設定
+        pass
     def mouseDoubleClickEvent(self, event):
        
         event.accept()  # ✅ 優先阻止事件傳遞
