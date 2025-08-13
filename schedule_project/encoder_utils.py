@@ -99,16 +99,22 @@ def _get_persistent_sock(encoder_name: str):
 
     with _sock_lock:
         s = _persistent_socks.get(encoder_name)
-        if s is None:
-            s = connect_socket(encoder_name)
-            if s:
-                # 可選：開啟 TCP keepalive（不同 OS 可再細調）
-                try:
-                    s.setsockopt(socket.SOL_SOCKET, socket.SO_KEEPALIVE, 1)
-                except Exception:
-                    pass
-                _persistent_socks[encoder_name] = s
+    if s:
         return s
+
+    s = connect_socket(encoder_name)
+    if not s:
+        return None
+
+    try:
+        s.setsockopt(socket.SOL_SOCKET, socket.SO_KEEPALIVE, 1)
+    except Exception:
+        pass
+
+    with _sock_lock:
+        _persistent_socks[encoder_name] = s
+
+    return s
 
 def close_socket(encoder_name: str | None = None):
     """關閉單台或全部 encoder 的持久連線。"""
@@ -141,7 +147,6 @@ def send_persistent_command(cmd: str, encoder_name: str | None = None) -> str:
         return f"❌ {target} 無法連線"
 
     try:
-        return send_command(sock, cmd)
         return send_command(sock, cmd)
     except Exception as e:
         log(f"⚠️ {target} 可能連線失效，嘗試重連：{e}")
