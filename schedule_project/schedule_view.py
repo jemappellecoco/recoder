@@ -6,7 +6,7 @@ import json
 from encoder_status_manager import EncoderStatusManager
 import os
 import uuid
-from utils import log
+from utils import log,log_exception
 from encoder_utils import get_encoder_display_name
 from path_manager import PathManager 
 class ScheduleView(QGraphicsView):
@@ -223,7 +223,7 @@ class ScheduleView(QGraphicsView):
                 self.scene.addItem(block)
                 block.update_geometry(self.base_date)
                 block.encoder_names = self.encoder_names
-                block.status = data.get("status") or "狀態：⏳ 等待中"
+                # block.status = data.get("status") or "狀態：⏳ 等待中"
 
                 block.update_text_position()
                 # 從舊 block 繼承狀態與圖片
@@ -422,7 +422,7 @@ class ScheduleView(QGraphicsView):
 
             log(f"✅ 已儲存節目排程：{filename}")
         except Exception as e:
-            log(f"❌ 儲存失敗: {e}")
+            log_exception(f"❌ 儲存失敗: {e}")
 
 
 
@@ -435,7 +435,7 @@ class ScheduleView(QGraphicsView):
                         config = json.load(f)
                         filename = config.get("schedule_file", "schedule.json")
                 except Exception as e:
-                    log(f"⚠️ 無法從 config.json 取得 schedule 檔：{e}")
+                    log_exception(f"⚠️ 無法從 config.json 取得 schedule 檔：{e}")
                     filename = "schedule.json"
             else:
                 filename = "schedule.json"

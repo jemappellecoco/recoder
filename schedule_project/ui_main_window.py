@@ -24,7 +24,7 @@ from capture import take_snapshot_from_block
 from check_schedule_manager import CheckScheduleManager
 CONFIG_FILE = "config.json"
 from uuid import uuid4
-from utils import set_log_box ,log
+from utils import set_log_box ,log,log_exception
 from capture import start_cleanup_timer, stop_cleanup_timer
 from snapshot_worker import SnapshotWorker
 from EncoderManagerDialog import EncoderManagerDialog
@@ -426,7 +426,7 @@ class MainWindow(QMainWindow):
         try:
             self.schedule_manager.check_schedule()
         except Exception as e:
-            log(f"❌ [Timer] check_schedule 錯誤：{e}")
+            log_exception(f"❌ [Timer] check_schedule 錯誤：{e}")
         
     def build_encoder_widget(self, name):
         display = self.encoder_aliases.get(name, name)
@@ -540,7 +540,7 @@ class MainWindow(QMainWindow):
                 current_status = self.get_encoder_status(name)
                 status_label.setText(f"狀態：{current_status}")
         except Exception as e:
-            log(f"❌ [Timer] update_encoder_status_labels 發生錯誤：{e}")
+            log_exception(f"❌ [Timer] update_encoder_status_labels 發生錯誤：{e}")
             
             
     def update_all_encoder_snapshots(self):
@@ -563,7 +563,7 @@ class MainWindow(QMainWindow):
                     else:
                         label.setText(f"❌ 無法載入 {name} 圖片")
                 except Exception as e:
-                    log(f"❌ [Timer] 快照更新錯誤（{name}）：{e}")
+                    log_exception(f"❌ [Timer] 快照更新錯誤（{name}）：{e}")
             QTimer.singleShot(300, load_image)
 
         if not hasattr(self, "snapshot_workers"):
@@ -577,7 +577,7 @@ class MainWindow(QMainWindow):
                 self.snapshot_workers.append(worker)
                 worker.start()
         except Exception as e:
-            log(f"❌ [Timer] update_all_encoder_snapshots 整體錯誤：{e}")
+            log_exception(f"❌ [Timer] update_all_encoder_snapshots 整體錯誤：{e}")
 
     
     def select_schedule_json(self):
@@ -678,7 +678,7 @@ class MainWindow(QMainWindow):
                 try:
                     path = self.path_manager.get_full_path("", label)
                 except Exception as e:
-                    log(f"⚠️ get_full_path 錯誤: {e}")
+                    log_exception(f"⚠️ get_full_path 錯誤: {e}")
                     path = ""
 
                 menu.addAction(f"查看檔案名稱：{label}")
@@ -866,7 +866,7 @@ class MainWindow(QMainWindow):
 
                 future.add_done_callback(on_done)
             except Exception as e:
-                log(f"❌ 手動啟動拍照錯誤：{e}")
+                log_exception(f"❌ 手動啟動拍照錯誤：{e}")
         # if block:
         #     take_snapshot_from_block(block, self.encoder_names)
 

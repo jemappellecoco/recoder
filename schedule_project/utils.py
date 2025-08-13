@@ -4,11 +4,17 @@ import os
 from PySide6.QtCore import QDateTime
 from PySide6.QtGui import QTextCursor
 from PySide6.QtCore import QTimer
-
+import traceback
 _log_box = None
 _buffered_logs = []
 MAX_LOG_LINES = 500
 DEBUG_MODE = True
+def log_exception(e, note=""):
+    tb = traceback.format_exc()
+    if note:
+        log(f"❌ {note}\n{tb}", level="ERROR")
+    else:
+        log(f"❌ Exception:\n{tb}", level="ERROR")
 def set_log_box(widget):
     global _log_box
     _log_box = widget

@@ -23,16 +23,24 @@ class _StatusWorker(QRunnable):
         self.status_manager = status_manager
         self.signals = _StatusWorkerSignals()
     def run(self):
-        # 這裡做阻塞 I/O（socket），不在 UI 執行緒
+        from utils import log
         result = {}
-        for name in self.names:
-            try:
-                stat = self.status_manager.get_status(name)  # 可能會打 EncStatus
-                if stat:  # 你的 get_status 可能回 None 表示無變化
-                    result[name] = stat
-            except Exception:
-                result[name] = ("❌ 無法連線", "red")
-        self.signals.done.emit(result)
+        try:
+            for name in self.names:
+                if not name or not isinstance(name, str):
+                    log(f"⚠️ 無效 encoder 名稱: {name}", level="WARNING")
+                    continue
+                try:
+                    stat = self.status_manager.get_status(name)
+                    if stat:
+                        result[name] = stat
+                except Exception as e:
+                    log(f"❌ get_status({name}) 發生例外：{e}")
+                    result[name] = ("❌ 無法連線", "red")
+            self.signals.done.emit(result)
+        except Exception as e:
+            log(f"❌ _StatusWorker.run() 整體執行失敗：{e}", level="ERROR")
+        
 def safe_set_label(label, text, style):
     if not label or not isValid(label):
         return
@@ -66,6 +74,7 @@ class ScheduleRunner(QObject):
         self.refresh_encoder_statuses()
         self._pool = QThreadPool.globalInstance()
     def _refresh_status_async(self):
+        log(f"🎯 啟動 StatusWorker：{self.encoder_names}")
         worker = _StatusWorker(self.encoder_names, self.encoder_status_manager)  # ⬅️ 改這個
         worker.signals.done.connect(self._apply_statuses)
         self._pool.start(worker)

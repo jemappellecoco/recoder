@@ -2,7 +2,7 @@ from PySide6.QtCore import QDateTime, QDate, QTime
 from shiboken6 import isValid
 from utils import log  # 你之前的 log 函數
 from encoder_utils import get_encoder_display_name
-
+from encoder_status_manager import EncoderStatusManager
 class CheckScheduleManager:
     def __init__(self, encoder_names, encoder_status_dict, runner, parent_view_getter):
         self.encoder_names = encoder_names
@@ -14,20 +14,20 @@ class CheckScheduleManager:
         self.already_started = set()
         self.already_stopped = set()
         self.last_saved_ts = None
-
+        self.encoder_status_manager = EncoderStatusManager()
     def find_block_by_id(self, block_id):
         for blk in self.blocks:
             if blk.block_id == block_id:
                 return blk
         return None
 
-    def compute_status(self, now, start_dt, end_dt):
-        if now < start_dt:
-            return "🕒 等待中"
-        elif start_dt <= now <= end_dt:
-            return "✅ 錄影中"
-        else:
-            return "⏹️ 已結束"
+    # def compute_status(self, now, start_dt, end_dt):
+    #     if now < start_dt:
+    #         return "🕒 等待中"
+    #     elif start_dt <= now <= end_dt:
+    #         return "✅ 錄影中"
+    #     else:
+    #         return "⏹️ 已結束"
 
     def check_schedule(self):
         now = QDateTime.currentDateTime()
@@ -82,12 +82,12 @@ class CheckScheduleManager:
                 log(f"🛑 時間到 ➜ 停止錄影: {b['label']} ({block_id})")
                 self.runner.stop_encoder(encoder_name, status_label)
                 self.already_stopped.add(block_id)
-                if block:
-                    block.status = self.compute_status(now, start_dt, end_dt)
-                    block.update_text_position()
+                # if block:
+                #     block.status = self.compute_status(now, start_dt, end_dt)
+                #     block.update_text_position()
 
         # 更新 block 狀態 & 判斷是否需要儲存
-        save_needed = False
+        # save_needed = False
         block_map = {b["id"]: b for b in self.schedule_data if b.get("id")}
         now = QDateTime.currentDateTime()
 
@@ -105,18 +105,21 @@ class CheckScheduleManager:
                 start_dt = QDateTime(qdate, QTime(int(b["start_hour"]), int((b["start_hour"] % 1) * 60)))
                 end_dt = QDateTime(end_qdate, QTime(int(b["end_hour"]), int((b["end_hour"] % 1) * 60)))
 
-                computed_status = self.compute_status(now, start_dt, end_dt)
-                if b.get("status", "") != computed_status:
-                    b["status"] = computed_status
-                    item.status = computed_status
-                    item.update_text_position()
-                    save_needed = True
+                # computed_status = self.compute_status(now, start_dt, end_dt)
+                if b:
+                    encoder_name = self.encoder_names[item.track_index]
+                    enc_status = self.encoder_status_manager.get_status(encoder_name)
+                    if enc_status:
+                        status_text, _ = enc_status
+                        b["status"] = f"狀態：{status_text}"
+                        item.status = f"狀態：{status_text}"
+                        item.update_text_position()
 
-        if save_needed and self.blocks:
-            parent_view = self.get_parent_view()
-            if parent_view:
-                now_ts = QDateTime.currentDateTime()
-                if self.last_saved_ts is None or self.last_saved_ts.secsTo(now_ts) >= 10:
-                    parent_view.save_schedule()
-                    self.last_saved_ts = now_ts
-                parent_view.update()  # 🔹 強制重繪
+        
+        parent_view = self.get_parent_view()
+        if parent_view:
+            now_ts = QDateTime.currentDateTime()
+            if self.last_saved_ts is None or self.last_saved_ts.secsTo(now_ts) >= 10:
+                parent_view.save_schedule()
+                self.last_saved_ts = now_ts
+            parent_view.update()  # 🔹 強制重繪

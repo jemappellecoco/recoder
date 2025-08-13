@@ -4,7 +4,7 @@ import threading
 from concurrent.futures import ThreadPoolExecutor
 
 from encoder_utils import send_encoder_command
-from utils import log
+from utils import log,log_exception
 from path_manager import PathManager
 cleanup_running = True
 
@@ -51,7 +51,7 @@ def take_snapshot_from_block(block, encoder_names, snapshot_root: str = None):
                     except Exception as e:
                         log(f"⚠️ 無法刪除舊圖片 {f}：{e}")
         except Exception as e:
-            log(f"❌ 讀取 snapshot_dir 錯誤：{e}")
+            log_exception(e, "讀取 snapshot_dir 錯誤")
             return None
 
         log(f"📸 拍照中 - block: {block.label} / encoder: {encoder_name}")
