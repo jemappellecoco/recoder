@@ -839,7 +839,7 @@ class MainWindow(QMainWindow):
 
         if block_id:
             self.runner.already_started.add(block_id)
-            self.runner.start_encoder(encoder_name, filename, status_label, block_id)
+            self.runner.start_encoder_async(encoder_name, filename, status_label, block_id)
             self.schedule_manager.already_started.add(block_id)
             self.sync_runner_data()
             for b in self.view.block_data:

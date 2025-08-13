@@ -7,7 +7,7 @@ class CheckScheduleManager:
     def __init__(self, encoder_names, encoder_status_dict, runner, parent_view_getter):
         self.encoder_names = encoder_names
         self.encoder_status = encoder_status_dict
-        self.runner = runner  # 可以呼叫 start_encoder / stop_encoder
+        self.runner = runner  # 可以呼叫 start_encoder_async / stop_encoder_async
         self.get_parent_view = parent_view_getter  # 應該是一個 function
         self.schedule_data = []
         self.blocks = []
@@ -75,13 +75,13 @@ class CheckScheduleManager:
             if 0 <= delta <= 1 and block_id not in self.already_started:
                 if not block or "已結束" not in block.status:
                     log(f"🚀 啟動錄影: {b['label']} ({block_id})")
-                    self.runner.start_encoder(encoder_name, b["label"], status_label, block_id)
+                    self.runner.start_encoder_async(encoder_name, b["label"], status_label, block_id)
                     self.already_started.add(block_id)
 
             # ➤ 自動停止錄影
             if now >= end_dt and block_id not in self.already_stopped:
                 log(f"🛑 時間到 ➜ 停止錄影: {b['label']} ({block_id})")
-                self.runner.stop_encoder(encoder_name, status_label)
+                self.runner.stop_encoder_async(encoder_name, status_label)
                 self.already_stopped.add(block_id)
                 # if block:
                 #     block.status = self.compute_status(now, start_dt, end_dt)
