@@ -4,7 +4,7 @@ import json
 import os
 
 from utils import resource_path, log
-persistent_sock = None
+persistent_socks = {}
 ENCODER_CONFIG_PATH = "encoders.json"
 
 # ➤ 載入 encoder IP/Port 設定
@@ -86,36 +86,45 @@ def send_encoder_command(encoder_name, cmd):
     response = send_command(sock, cmd)
     sock.close()
     return response
-# ➤ 結束連線：關閉持久 socket
-def close_socket():
-    global persistent_sock
-    if persistent_sock:
+# ➤ 結束連線：關閉指定持久 socket
+def close_socket(encoder_name):
+    global persistent_socks
+    sock = persistent_socks.pop(encoder_name, None)
+    if sock:
         try:
-            persistent_sock.close()
+            sock.close()
         except Exception:
             pass
-        persistent_sock = None
+
+def close_all_sockets():
+    global persistent_socks
+    for s in list(persistent_socks.values()):
+        try:
+            s.close()
+        except Exception:
+            pass
+    persistent_socks.clear()
 
 # ➤ 使用持久 socket 發送命令
-def send_persistent_command(cmd, encoder_name=None):
-    """Send command using a persistent socket connection."""
-    global persistent_sock
-    if persistent_sock is None:
-        target = encoder_name if encoder_name else next(iter(encoder_config), None)
-        if target is None:
+def send_persistent_command(cmd, encoder_name):
+    """Send command using a persistent socket connection for a specific encoder."""
+    global persistent_socks
+    sock = persistent_socks.get(encoder_name)
+    if sock is None:
+        sock = connect_socket(encoder_name)
+        if sock:
+            persistent_socks[encoder_name] = sock
+        else:
             return "❌ 無可用的 encoder"
-        persistent_sock = connect_socket(target)
     try:
-        return send_command(persistent_sock, cmd)
+        return send_command(sock, cmd)
     except Exception as e:
-        log(f"⚠️ 可能連線已失效，重試一次：{e}")
-        close_socket()
-        target = encoder_name if encoder_name else next(iter(encoder_config), None)
-        if target is None:
-            return "❌ 無可用的 encoder"
-        persistent_sock = connect_socket(target)
-        if persistent_sock:
-            return send_command(persistent_sock, cmd)
+        log(f"⚠️ {encoder_name} 可能連線已失效，重試一次：{e}")
+        close_socket(encoder_name)
+        sock = connect_socket(encoder_name)
+        if sock:
+            persistent_socks[encoder_name] = sock
+            return send_command(sock, cmd)
         else:
             return "❌ 無法重新建立連線"
 # ➤ Encoder 列表（直接從設定檔讀取）
