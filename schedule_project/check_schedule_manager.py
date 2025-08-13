@@ -104,9 +104,8 @@ class CheckScheduleManager:
                 if isinstance(end_qdate, str):
                     end_qdate = QDate.fromString(end_qdate, "yyyy-MM-dd")
                 start_dt = QDateTime(qdate, QTime(int(b["start_hour"]), int((b["start_hour"] % 1) * 60)))
-                end_dt = QDateTime(end_qdate, QTime(int(b["end_hour"]), int((b["end_hour"] % 1) * 60)))
+                # end_dt = QDateTime(end_qdate, QTime(int(b["end_hour"]), int((b["end_hour"] % 1) * 60)))
 
-                # computed_status = self.compute_status(now, start_dt, end_dt)
                 if b:
                     encoder_name = self.encoder_names[item.track_index]
                     enc_status = self.encoder_status_manager.get_status(encoder_name)

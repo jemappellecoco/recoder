@@ -227,9 +227,9 @@ class MainWindow(QMainWindow):
         self.view.record_root = self.record_root
         self.view.load_schedule()
         self.view.draw_grid()
-        self.track_status_timer = QTimer()
-        self.track_status_timer.timeout.connect(self.view.refresh_track_labels)
-        self.track_status_timer.start(10000)
+        # self.track_status_timer = QTimer()
+        # self.track_status_timer.timeout.connect(self.view.refresh_track_labels)
+        # self.track_status_timer.start(10000)
         # 自動對齊畫面到「現在時間」
         now = QDateTime.currentDateTime()
         self.base_date = QDate.currentDate()
@@ -301,10 +301,9 @@ class MainWindow(QMainWindow):
         self.sync_runner_data()
         self.view.horizontalScrollBar().valueChanged.connect(self.header.sync_scroll)
         # self.update_encoder_status_labels()
-        QTimer.singleShot(2000, self.update_encoder_status_labels)
+        # QTimer.singleShot(2000, self.update_encoder_status_labels)
         self.view.draw_grid()
-        self.view.draw_grid()
-       
+     
 
         QTimer.singleShot(3000, self.update_all_encoder_snapshots)
         # === 初始復原狀態 ===

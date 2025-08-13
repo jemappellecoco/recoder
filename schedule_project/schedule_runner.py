@@ -75,21 +75,23 @@ class ScheduleRunner(QObject):
         self.block_status_timer = QTimer(self)
         self.block_status_timer.timeout.connect(self._refresh_block_statuses)
         self.block_status_timer.start(3000)  # 每秒更新一次
-        self.refresh_encoder_statuses()
+        # ✅ 改為使用 thread pool 異步刷新，避免啟動時卡 UI
         self._pool = QThreadPool.globalInstance()
+        QTimer.singleShot(0, self._refresh_status_async)
     def _refresh_block_statuses(self):
-        for block in self.blocks:
-            block.update_status_by_time()
+        self._refresh_status_async()
     def _refresh_status_async(self):
         log(f"🎯 啟動 StatusWorker：{self.encoder_names}")
-        worker = _StatusWorker(self.encoder_names, self.encoder_status_manager)  # ⬅️ 改這個
+        if not getattr(self, "encoder_names", None):
+            return
+        worker = _StatusWorker(self.encoder_names, self.encoder_status_manager)
         worker.signals.done.connect(self._apply_statuses)
         self._pool.start(worker)
 
 
     def _apply_statuses(self, statuses: dict):
         for name, (text, color) in statuses.items():
-            label = self.encoder_status.get(name)  # ⬅️ 用這個
+            label = self.encoder_status.get(name)
             if label:
                 label.setText(f"狀態：{text}")
                 label.setStyleSheet(f"color: {color}")

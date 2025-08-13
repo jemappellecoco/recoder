@@ -209,8 +209,8 @@ class ScheduleView(QGraphicsView):
         self.verticalScrollBar().setValue(self.verticalScrollBar().minimum())
 
         # ✅ 用背景 worker 批次刷新真實狀態（不阻塞 UI）
-        self.refresh_track_labels()
-
+        # self.refresh_track_labels()
+        QTimer.singleShot(0, self.refresh_track_labels)
 
   
 
