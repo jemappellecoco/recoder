@@ -18,11 +18,33 @@ def get_user_config_path():
     os.makedirs(config_dir, exist_ok=True)
     return os.path.join(config_dir, "encoders.json")
 def load_encoder_config():
-    if not os.path.exists(ENCODER_CONFIG_PATH):
-        log(f"❌ 找不到設定檔 {ENCODER_CONFIG_PATH}")
+    """
+    優先從使用者資料夾讀取 encoder 設定。
+    若不存在則複製 resource_path 中的預設檔案。
+    """
+    path = get_user_config_path()
+
+    # 若使用者檔案不存在，複製預設檔案過去
+    if not os.path.exists(path):
+        try:
+            default_path = resource_path("encoders.json")
+            if os.path.exists(default_path):
+                with open(default_path, "r", encoding="utf-8") as src:
+                    default_data = json.load(src)
+                with open(path, "w", encoding="utf-8") as dst:
+                    json.dump(default_data, dst, indent=2, ensure_ascii=False)
+                log(f"📁 已初始化 encoders.json 到 {path}")
+        except Exception as e:
+            log(f"⚠️ 無法初始化 encoders.json：{e}")
+            return {}
+
+    # 實際讀取使用者的設定檔
+    try:
+        with open(path, "r", encoding="utf-8") as f:
+            return json.load(f)
+    except Exception as e:
+        log(f"❌ 載入 encoders.json 失敗：{e}")
         return {}
-    with open(resource_path("encoders.json"), "r", encoding="utf-8") as f:
-        data = json.load(f)
 
 encoder_config = load_encoder_config()
 def init_socket():
@@ -101,7 +123,7 @@ def send_command(sock, cmd):
             except socket.timeout:
                 break
         response = data.decode("cp950", errors="replace")
-        log("⬅️ Response:\n", response)
+        log("⬅️ send_command Response:\n", response)
         return response.strip()
     except (ConnectionResetError, BrokenPipeError, OSError) as e:
         log("❌ 指令傳送失敗（連線中斷）:", e)
