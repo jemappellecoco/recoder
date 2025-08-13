@@ -108,7 +108,7 @@ class EditBlockDialog(QDialog):
         return {
             "qdate": self.date_input.date(),
             "label": self.name_input.text().strip(),
-            "start_hour": round(time.hour() + time.minute() / 60, 2),
+            "start_hour":  round(time.hour() + time.minute() / 60, 4),
             "duration": self.duration_input.value(),
             "encoder_name": self.encoder_selector.currentData()
         }

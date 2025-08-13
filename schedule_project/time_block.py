@@ -490,7 +490,11 @@ class TimeBlock(QGraphicsRectItem):
 
         # ✅ 進行中：此時 UI 狀態應該依照硬體回報更新（例如 ScheduleRunner 寫入的狀態）
         # ⚠️ 請勿在這裡修改成「錄影中 / 停止中」，由外部控制元件設定
-        pass
+          # ✅ 進行中（fallback）：顯示錄影中（綠藍）
+        if self.status != "狀態：✅ 錄影中":
+            self.status = "狀態：✅ 錄影中"
+            self.setBrush(QBrush(QColor(120, 200, 160, 180)))
+            self.update_text_position()
     def mouseDoubleClickEvent(self, event):
        
         event.accept()  # ✅ 優先阻止事件傳遞

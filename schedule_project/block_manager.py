@@ -9,19 +9,19 @@ class BlockManager:
         self.deleted_stack = deque()
     def add_block_with_unique_label(self, base_label, track_index=0, start_hour=9, duration=4, encoder_name=None, qdate=None, block_id=None):
         label = base_label
-        existing_labels = [b["label"] for b in self.view.block_data]
-        i = 1
-        while label in existing_labels:
-            label = f"{base_label}_{i}"
-            i += 1
+        # existing_labels = [b["label"] for b in self.view.block_data]
+        # i = 1
+        # while label in existing_labels:
+        #     label = f"{base_label}_{i}"
+        #     i += 1
 
         if qdate is None:
             qdate = self.view.base_date
 
         if block_id is None:
             block_id = str(uuid4()) 
-        end_hour = round(start_hour + duration, 4)
-        end_qdate = qdate.addDays(1) if end_hour >= 24 else qdate
+        # end_hour = round(start_hour + duration, 4)
+        # end_qdate = qdate.addDays(1) if end_hour >= 24 else qdate
         log("✅ 呼叫 add_time_block")
         self.view.add_time_block(
             qdate=qdate,

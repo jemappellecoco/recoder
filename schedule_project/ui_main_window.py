@@ -45,6 +45,7 @@ class MainWindow(QMainWindow):
         self.is_closing = False
         # === 基礎設定 ===
         self.path_manager = PathManager()
+        
         self.ensure_valid_record_root()
         self.ensure_valid_preview_root()
         

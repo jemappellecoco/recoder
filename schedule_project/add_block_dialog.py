@@ -101,7 +101,7 @@ class AddBlockDialog(QDialog):
             self.status_label.setText("❌ 請輸入正確的時間格式，例如 0930、9:30")
             return
 
-        start_hour = round(time.hour() + time.minute() / 60, 2)
+        start_hour = round(time.hour() + time.minute() / 60, 4)
         duration = self.duration_input.value()
         encoder_name = self.encoder_selector.currentData()
         track_index = self.encoder_names.index(encoder_name)

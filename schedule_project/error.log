@@ -1,17 +1,7 @@
 Traceback (most recent call last):
   File "c:\Users\coco\recoder\schedule_project\main.py", line 41, in <module>
     win = MainWindow()
-  File "c:\Users\coco\recoder\schedule_project\ui_main_window.py", line 251, in __init__
-    self.runner = ScheduleRunner(
-                  ~~~~~~~~~~~~~~^
-        schedule_data=self.view.block_data,
-        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-    ...<3 lines>...
-        blocks=self.view.blocks
-        ^^^^^^^^^^^^^^^^^^^^^^^
-    )# ✅ 加這裡！建立 schedule_manager
-    ^
-  File "c:\Users\coco\recoder\schedule_project\schedule_runner.py", line 64, in __init__
-    self.timer.timeout.connect(self.check_schedule)
-                               ^^^^^^^^^^^^^^^^^^^
-AttributeError: 'ScheduleRunner' object has no attribute 'check_schedule'
+  File "c:\Users\coco\recoder\schedule_project\ui_main_window.py", line 49, in __init__
+    self.ensure_valid_record_root()
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'MainWindow' object has no attribute 'ensure_valid_record_root'
