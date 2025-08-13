@@ -142,6 +142,7 @@ def send_persistent_command(cmd: str, encoder_name: str | None = None) -> str:
 
     try:
         return send_command(sock, cmd)
+        return send_command(sock, cmd)
     except Exception as e:
         log(f"⚠️ {target} 可能連線失效，嘗試重連：{e}")
         # 關閉該台，重建連線再送一次
