@@ -1,5 +1,6 @@
 from PySide6.QtWidgets import QGraphicsView, QGraphicsScene
-from PySide6.QtCore import Qt, QDate, QTimer,QDateTime, QTime
+from PySide6.QtCore import Qt, QDate, QTimer,QDateTime, QTime,QObject, Signal, QRunnable, QThreadPool
+ # 若上面沒 import 到就補上
 from PySide6.QtGui import QPainter, QFont,QPen,QColor
 from time_block import TimeBlock
 import json
@@ -9,6 +10,23 @@ import uuid
 from utils import log,log_exception
 from encoder_utils import get_encoder_display_name
 from path_manager import PathManager 
+class _TrackLabelWorkerSignals(QObject):
+    done = Signal(dict)  # {encoder_name: (status_text, color)}
+
+class _TrackLabelWorker(QRunnable):
+    def __init__(self, names, status_manager):
+        super().__init__()
+        self.names = names
+        self.status_manager = status_manager
+        self.signals = _TrackLabelWorkerSignals()
+
+    def run(self):
+        try:
+            # 這裡會阻塞，但已經在背景執行緒了
+            result = self.status_manager.refresh_all(self.names)
+            self.signals.done.emit(result)
+        except Exception:
+            self.signals.done.emit({})
 class ScheduleView(QGraphicsView):
     def __init__(self):
         super().__init__()
@@ -50,6 +68,7 @@ class ScheduleView(QGraphicsView):
         self.grid_top_offset = 30
         self.setAlignment(Qt.AlignLeft | Qt.AlignTop)
         self.encoder_status_manager = EncoderStatusManager()
+        self._pool = QThreadPool.globalInstance()
     def update_visible_blocks_only(self):
         visible_rect = self.viewport().rect()
         visible_scene_rect = self.mapToScene(visible_rect).boundingRect()
@@ -123,24 +142,35 @@ class ScheduleView(QGraphicsView):
     #         if isinstance(item, TimeBlock):
     #             item.update_status_by_time()
     def refresh_track_labels(self):
-        """只更新 encoder 標籤狀態，不重畫 grid"""
-        for track_index, encoder_name in enumerate(self.encoder_names):
-            label_item = self.encoder_labels.get(encoder_name)
+        # 啟動背景 worker 查詢所有 encoder 狀態
+        worker = _TrackLabelWorker(self.encoder_names, self.encoder_status_manager)
+        worker.signals.done.connect(self._apply_track_label_statuses)
+        self._pool.start(worker)
+
+    def _apply_track_label_statuses(self, statuses: dict):
+        # 在主線程被呼叫：安全更新 UI
+        for name, pair in statuses.items():
+            if not isinstance(pair, (tuple, list)) or len(pair) < 2:
+                continue
+            status_text, color = pair
+            label_item = self.encoder_labels.get(name)
             if label_item:
-                status_text, color = self.encoder_status_manager.get_status(encoder_name)
-                alias = get_encoder_display_name(encoder_name)
+                # 顯示名稱（alias）
+                alias = get_encoder_display_name(name)
                 full_label = f"{alias}\n狀態：{status_text}"
                 label_item.setPlainText(full_label)
                 label_item.setDefaultTextColor(QColor(color))
-    def draw_grid(self):
-        log(f"🎯 draw_grid encoder_names:{self.encoder_names}" )
 
-        offset = self.grid_top_offset  # ✅ 統一使用偏移量
+    def draw_grid(self):
+        log(f"🎯 draw_grid encoder_names:{self.encoder_names}")
+
+        offset = self.grid_top_offset
         self.scene.clear()
         self.tracks = len(self.encoder_names)
         self.update_scene_rect()
         self.verticalScrollBar().setValue(0)
-        # 畫出背景格線
+
+        # 仍保留原本用 item 畫格線（先不動），只是先解決同步查詢卡頓
         for day in range(self.days):
             for hour in range(24):
                 x = day * self.day_width + hour * self.hour_width
@@ -150,7 +180,8 @@ class ScheduleView(QGraphicsView):
             x = day * self.day_width
             self.scene.addRect(x, offset, self.day_width, self.tracks * 100)
 
-           # 🔄 每個 track 標籤
+        # 🔄 每個 track 標籤（改成占位，不同步查 EncStatus）
+        self.encoder_labels.clear()  # 先清一次，避免殘留舊 mapping
         for track in range(self.tracks):
             y = offset + track * 100
             self.scene.addLine(0, y, self.days * self.day_width, y)
@@ -158,28 +189,28 @@ class ScheduleView(QGraphicsView):
             if track < len(self.encoder_names):
                 encoder_name = self.encoder_names[track]
                 alias = get_encoder_display_name(encoder_name)
-
-                # ✅ 用 EncoderStatusManager 查詢實際狀態
-                status_text, color = self.encoder_status_manager.get_status(encoder_name)
-                full_label = f"{alias}\n狀態：{status_text}"
+                full_label = f"{alias}\n狀態：讀取中…"   # ⬅️ 占位
+                color = "black"
             else:
                 full_label = "未指定\n--"
                 color = "black"
+                encoder_name = None
 
             label_item = self.scene.addText(full_label)
             label_item.setFont(QFont("Arial", 9))
+            label_item.setDefaultTextColor(QColor(color))
             label_item.setPos(-95, y)
 
-        # ✅ 顯示對應顏色
-            label_item.setDefaultTextColor(QColor(color))
-
-        # ✅ 儲存以供後續 refresh
-            if track < len(self.encoder_names):
-                self.encoder_labels[encoder_name] = label_item
+            if encoder_name is not None:
+                self.encoder_labels[encoder_name] = label_item  # 之後 refresh 用
 
         self.draw_blocks()
         self.update_now_line()
         self.verticalScrollBar().setValue(self.verticalScrollBar().minimum())
+
+        # ✅ 用背景 worker 批次刷新真實狀態（不阻塞 UI）
+        self.refresh_track_labels()
+
 
   
 
@@ -340,43 +371,7 @@ class ScheduleView(QGraphicsView):
     def set_start_date(self, qdate):
         self.base_date = qdate
         self.draw_grid()
-    # def save_schedule(self, filename="schedule.json"):
-    #     try:
-    #     # ✅ 用 dict 快速對應 block_id → block_data
-    #         block_map = {b["id"]: b for b in self.block_data if b.get("id")}
-
-    #         now = QDateTime.currentDateTime()
-
-    #         # ✅ 同步畫面上的 TimeBlock 狀態
-    #         for item in self.scene.items():
-    #             if isinstance(item, TimeBlock) and item.block_id in block_map:
-    #                 start_dt = QDateTime(item.start_date, QTime(int(item.start_hour), int((item.start_hour % 1) * 60)))
-    #                 if start_dt >= now:
-    #                     block_map[item.block_id]["status"] = item.status  # ✅ 寫入最新狀態
-
-    #         # ✅ 寫入 JSON 檔
-    #         with open(filename, "w", encoding="utf-8") as f:
-    #             json.dump([
-    #                 {
-    #                     "qdate": b["qdate"].toString("yyyy-MM-dd"),
-    #                     "track_index": b["track_index"],
-    #                     "start_hour": b["start_hour"],
-    #                     "duration": b["duration"],
-    #                     "end_hour": b["end_hour"],
-    #                     "end_qdate": (
-    #                         b["end_qdate"].toString("yyyy-MM-dd") if isinstance(b["end_qdate"], QDate)
-    #                         else b["end_qdate"]
-    #                     ),
-    #                     "label": b["label"],
-    #                     "id": b.get("id"),
-    #                     "encoder_name": b.get("encoder_name"),
-    #                     "snapshot_path": b.get("snapshot_path", ""),
-    #                     "status": b.get("status", "")  # ✅ 最終會寫入最新的狀態（等待中、已結束等）
-    #                 } for b in self.block_data
-    #             ], f, ensure_ascii=False, indent=2)
-    #         log("✅ 已儲存節目排程 schedule.json")
-    #     except Exception as e:
-    #         log(f"❌ 儲存失敗: {e}")
+   
 
     
     def save_schedule(self, filename=None):
