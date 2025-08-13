@@ -299,7 +299,9 @@ class MainWindow(QMainWindow):
 
         self.sync_runner_data()
         self.view.horizontalScrollBar().valueChanged.connect(self.header.sync_scroll)
-        self.update_encoder_status_labels()
+        # self.update_encoder_status_labels()
+        QTimer.singleShot(2000, self.update_encoder_status_labels)
+        self.view.draw_grid()
         self.view.draw_grid()
        
 
