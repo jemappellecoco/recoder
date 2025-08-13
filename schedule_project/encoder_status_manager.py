@@ -65,11 +65,20 @@ class EncoderStatusManager:
 
         prev = self.encoder_last_state.get(encoder_name)
         changed = (prev != res)
-        self.encoder_last_state[encoder_name] = res
+         # ✏️ 更新查詢時間與狀態快取
         self._last_query_ts[encoder_name] = now_ms
+        # ✅ 若沒變化，就不重新解析，直接用舊的解析結果
+        if not changed and prev is not None:
+            return self._parse(prev)
+        self.encoder_last_state[encoder_name] = res
+        # self._last_query_ts[encoder_name] = now_ms
         self._maybe_log(encoder_name, res, changed)
+        parsed = self._parse(res)
+            # ✅ 若回傳未知（❓），保留上一個可解析狀態（但仍更新快取）
+        if parsed[0] == "❓ 未知" and prev is not None:
+            return self._parse(prev)
 
-        return self._parse(res)
+        return parsed
 
     def refresh_all(self, encoder_names):
         """回傳 {encoder_name: (status_text, color)}"""
