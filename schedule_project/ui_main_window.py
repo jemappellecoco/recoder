@@ -45,9 +45,9 @@ class MainWindow(QMainWindow):
         self.is_closing = False
         # === 基礎設定 ===
         self.path_manager = PathManager()
-        
-        self.ensure_valid_record_root()
-        self.ensure_valid_preview_root()
+        self.ensure_valid_paths()
+        # self.ensure_valid_record_root()
+        # self.ensure_valid_preview_root()
         
          # ✅ 接下來才能安全使用 record_root 與 preview_root
         encoders = list_encoders_with_alias()
@@ -356,34 +356,58 @@ class MainWindow(QMainWindow):
         for block in self.view.blocks:
             block.update_geometry(self.view.base_date)
             block.update_text_position()
-    def ensure_valid_record_root(self):
+    def ensure_valid_paths(self):
         self.record_root = self.path_manager.record_root
-        if not os.path.isdir(self.record_root):
-            log(f"❌ 無效的錄影儲存路徑：{self.record_root}")
-            QMessageBox.critical(
-                self,
-                "❌ 錄影儲存路徑無效",
-                f"⚠️ 找不到錄影儲存路徑：\n{self.record_root}\n\n請重新選擇一個有效的資料夾。"
-            )
-            self.select_record_root()  # 嘗試讓使用者重新選擇
-            self.path_manager = PathManager()
-            self.record_root = self.path_manager.record_root  # 更新路徑
-        os.makedirs(self.record_root, exist_ok=True)
-
-
-    def ensure_valid_preview_root(self):
         self.preview_root = self.path_manager.preview_root
-        if not os.path.isdir(self.preview_root):
-            log(f"❌ 無效的預覽儲存路徑：{self.preview_root}")
-            QMessageBox.critical(
-                self,
-                "❌ 預覽儲存路徑無效",
-                f"⚠️ 找不到預覽儲存路徑：\n{self.preview_root}\n\n請重新選擇一個有效的資料夾。"
-            )
+
+        invalid_record = not os.path.isdir(self.record_root)
+        invalid_preview = not os.path.isdir(self.preview_root)
+
+        if not invalid_record and not invalid_preview:
+            return
+
+        msg = "⚠️ 以下路徑無效，請重新設定：\n"
+        if invalid_record:
+            msg += f"\n📁 錄影儲存路徑：{self.record_root}"
+        if invalid_preview:
+            msg += f"\n🖼️ 預覽儲存路徑：{self.preview_root}"
+        msg += "\n\n請按「確定」後依序設定"
+
+        QMessageBox.critical(self, "❌ 路徑錯誤", msg)
+
+        if invalid_record:
+            self.select_record_root()
+        if invalid_preview:
             self.select_preview_root()
-            self.path_manager = PathManager()
-            self.preview_root = self.path_manager.preview_root
-        # os.makedirs(self.preview_root, exist_ok=True)
+
+    # def ensure_valid_record_root(self):
+    #     self.record_root = self.path_manager.record_root
+    #     if not os.path.isdir(self.record_root):
+    #         log(f"❌ 無效的錄影儲存路徑：{self.record_root}")
+    #         QMessageBox.critical(
+    #             self,
+    #             "❌ 錄影儲存路徑無效",
+    #             f"⚠️ 找不到錄影儲存路徑：\n{self.record_root}\n\n請重新選擇一個有效的資料夾。"
+    #         )
+    #         self.select_record_root()  # 嘗試讓使用者重新選擇
+    #         self.path_manager = PathManager()
+    #         self.record_root = self.path_manager.record_root  # 更新路徑
+    #     os.makedirs(self.record_root, exist_ok=True)
+
+
+    # def ensure_valid_preview_root(self):
+    #     self.preview_root = self.path_manager.preview_root
+    #     if not os.path.isdir(self.preview_root):
+    #         log(f"❌ 無效的預覽儲存路徑：{self.preview_root}")
+    #         QMessageBox.critical(
+    #             self,
+    #             "❌ 預覽儲存路徑無效",
+    #             f"⚠️ 找不到預覽儲存路徑：\n{self.preview_root}\n\n請重新選擇一個有效的資料夾。"
+    #         )
+    #         self.select_preview_root()
+    #         self.path_manager = PathManager()
+    #         self.preview_root = self.path_manager.preview_root
+    #     # os.makedirs(self.preview_root, exist_ok=True)
 
     def open_encoder_manager(self):
         reload_encoder_config()
