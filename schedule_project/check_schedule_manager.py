@@ -1,40 +1,90 @@
-from PySide6.QtCore import QDateTime, QDate, QTime
+# check_schedule_manager.py
+from PySide6.QtCore import QDateTime, QDate, QTime, QObject, Signal, QRunnable, QThreadPool
 from shiboken6 import isValid
-from utils import log  # 你之前的 log 函數
+from utils import log
 from encoder_utils import get_encoder_display_name
 from encoder_status_manager import EncoderStatusManager
-class CheckScheduleManager:
+
+# ---------------- Worker ----------------
+class _CheckWorkerSignals(QObject):
+    done = Signal(list)   # [{'action': 'start'|'stop', 'block_id': str, 'encoder_name': str}]
+
+
+class _CheckWorker(QRunnable):
+    """
+    真正做「排程計算」的背景工作：
+    - 不觸碰 UI 物件
+    - 不直接呼叫 runner（避免跨執行緒）
+    - 只回傳要做的動作清單，由主線程套用
+    """
+    def __init__(self, snapshot):
+        super().__init__()
+        self.snapshot = snapshot
+        self.signals = _CheckWorkerSignals()
+
+    def run(self):
+        now = QDateTime.currentDateTime()
+        actions = []
+
+        enc_names = self.snapshot["encoder_names"]
+        started = set(self.snapshot["already_started"])
+        stopped = set(self.snapshot["already_stopped"])
+
+        for b in self.snapshot["today_blocks"]:
+            block_id = b["id"]
+            if not block_id:
+                continue
+
+            qdate = b["qdate"]
+            end_qdate = b.get("end_qdate", qdate)
+
+            start_hour = float(b["start_hour"])
+            end_hour   = float(b.get("end_hour", b["start_hour"] + b["duration"]))
+
+            start_dt = QDateTime(qdate, QTime(int(start_hour), int((start_hour % 1) * 60)))
+            end_dt   = QDateTime(end_qdate, QTime(int(end_hour), int((end_hour % 1) * 60)))
+
+            track_idx = b["track_index"]
+            if not (0 <= track_idx < len(enc_names)):
+                continue
+            encoder_name = enc_names[track_idx]
+
+            # ➤ 自動開始
+            delta = start_dt.secsTo(now)  # start_dt -> now（到點=0）
+            if 0 <= delta <= 1 and block_id not in started:
+                actions.append({"action": "start", "block_id": block_id, "encoder_name": encoder_name})
+
+            # ➤ 自動停止
+            if now >= end_dt and block_id not in stopped:
+                actions.append({"action": "stop", "block_id": block_id, "encoder_name": encoder_name})
+
+        self.signals.done.emit(actions)
+
+
+# ---------------- Manager ----------------
+class CheckScheduleManager(QObject):
+    """
+    管理『排程檢查』，把重工作業丟到背景，主線程只負責套用結果。
+    """
     def __init__(self, encoder_names, encoder_status_dict, runner, parent_view_getter):
+        super().__init__()
         self.encoder_names = encoder_names
         self.encoder_status = encoder_status_dict
-        self.runner = runner  # 可以呼叫 start_encoder / stop_encoder
-        self.get_parent_view = parent_view_getter  # 應該是一個 function
+        self.runner = runner
+        self.get_parent_view = parent_view_getter
         self.schedule_data = []
         self.blocks = []
         self.already_started = set()
         self.already_stopped = set()
         self.last_saved_ts = None
         self.encoder_status_manager = EncoderStatusManager()
-        
-    def find_block_by_id(self, block_id):
-        for blk in self.blocks:
-            if blk.block_id == block_id:
-                return blk
-        return None
+        self._pool = QThreadPool.globalInstance()
 
-    # def compute_status(self, now, start_dt, end_dt):
-    #     if now < start_dt:
-    #         return "🕒 等待中"
-    #     elif start_dt <= now <= end_dt:
-    #         return "✅ 錄影中"
-    #     else:
-    #         return "⏹️ 已結束"
-
-    def check_schedule(self):
-        now = QDateTime.currentDateTime()
-        # log(f"🕵️‍♀️ check_schedule 開始執行：現在時間 {now.toString('yyyy-MM-dd HH:mm:ss')}")
+    # --- 將必要資料快照化，避免在 worker 內存取 Qt 物件 ---
+    def _make_snapshot(self):
+        today = QDate.currentDate()
+        today_blocks = []
         for b in self.schedule_data:
-            
             block_id = b.get("id")
             if not block_id:
                 continue
@@ -42,84 +92,82 @@ class CheckScheduleManager:
             qdate = b["qdate"]
             if isinstance(qdate, str):
                 qdate = QDate.fromString(qdate, "yyyy-MM-dd")
-            
-             # ✅ 只處理今天的排程
-            if qdate != QDate.currentDate():
+
+            # 只處理今天
+            if qdate != today:
                 continue
+
             end_qdate = b.get("end_qdate", qdate)
             if isinstance(end_qdate, str):
                 end_qdate = QDate.fromString(end_qdate, "yyyy-MM-dd")
 
-            start_hour = float(b["start_hour"])
-            end_hour = b.get("end_hour", b["start_hour"] + b["duration"])
+            today_blocks.append({
+                "id": block_id,
+                "qdate": qdate,
+                "end_qdate": end_qdate,
+                "track_index": b["track_index"],
+                "start_hour": float(b["start_hour"]),
+                "duration": float(b["duration"]),
+                "end_hour": float(b.get("end_hour", b["start_hour"] + b["duration"])),
+                "label": b["label"]
+            })
 
-            start_dt = QDateTime(qdate, QTime(int(start_hour), int((start_hour % 1) * 60)))
-            end_dt = QDateTime(end_qdate, QTime(int(end_hour), int((end_hour % 1) * 60)))
-            track_idx = b["track_index"]
-            if 0 <= track_idx < len(self.encoder_names):
-                encoder_name = self.encoder_names[track_idx]
-            else:
-                log(f"⚠️ 無效的 track_index: {track_idx}")
-                continue
-            # encoder_name = self.encoder_names[b["track_index"]]
-            status_label = self.encoder_status.get(encoder_name)
+        return {
+            "encoder_names": list(self.encoder_names),
+            "already_started": list(self.already_started),
+            "already_stopped": list(self.already_stopped),
+            "today_blocks": today_blocks,
+        }
+
+    # 主線程呼叫：把檢查丟到背景
+    def tick_async(self):
+        try:
+            snap = self._make_snapshot()
+            worker = _CheckWorker(snap)
+            worker.signals.done.connect(self._apply_actions_on_main)
+            self._pool.start(worker)
+        except Exception as e:
+            log(f"❌ tick_async error: {e}")
+
+    # 主線程 slot：依 worker 結果套用動作（這裡才觸碰 UI / runner）
+    def _apply_actions_on_main(self, actions: list):
+        if not actions:
+            return
+
+        for act in actions:
+            action = act["action"]
+            enc = act["encoder_name"]
+            block_id = act["block_id"]
+
+            status_label = self.encoder_status.get(enc)
             if status_label and not isValid(status_label):
-                alias = get_encoder_display_name(encoder_name)
-                log(f"⚠️ status label for {alias}已失效，略過 UI 更新")
-                self.encoder_status.pop(encoder_name, None)
+                alias = get_encoder_display_name(enc)
+                log(f"⚠️ status label for {alias} 已失效，略過 UI 更新")
+                self.encoder_status.pop(enc, None)
                 status_label = None
+
+            # 找 block（為了 label / 日期等）
             block = self.find_block_by_id(block_id)
+            label = block.label if block else next((b["label"] for b in self.schedule_data if b.get("id") == block_id), "")
 
-            # ➤ 自動開始錄影
-            delta = start_dt.secsTo(now)  # start_dt -> now 的秒數（到點會是 0）
-            if 0 <= delta <= 1 and block_id not in self.already_started:
-                if not block or "已結束" not in block.status:
-                    log(f"🚀 啟動錄影: {b['label']} ({block_id})")
-                    self.runner.start_encoder(encoder_name, b["label"], status_label, block_id)
-                    self.already_started.add(block_id)
+            if action == "start" and block_id not in self.already_started:
+                log(f"🚀 [主線程] 啟動錄影：{label} ({block_id}) on {enc}")
+                self.runner.start_encoder(enc, label, status_label, block_id)
+                self.already_started.add(block_id)
 
-            # ➤ 自動停止錄影
-            if now >= end_dt and block_id not in self.already_stopped:
-                log(f"🛑 時間到 ➜ 停止錄影: {b['label']} ({block_id})")
-                self.runner.stop_encoder(encoder_name, status_label)
+            elif action == "stop" and block_id not in self.already_stopped:
+                log(f"🛑 [主線程] 停止錄影：{label} ({block_id}) on {enc}")
+                self.runner.stop_encoder(enc, status_label)
                 self.already_stopped.add(block_id)
-                # if block:
-                #     block.status = self.compute_status(now, start_dt, end_dt)
-                #     block.update_text_position()
 
-        # 更新 block 狀態 & 判斷是否需要儲存
-        # save_needed = False
-        block_map = {b["id"]: b for b in self.schedule_data if b.get("id")}
-        now = QDateTime.currentDateTime()
-
-        for item in self.blocks:
-            b = block_map.get(item.block_id)
-            if b:
-                qdate = b["qdate"]
-                if isinstance(qdate, str):
-                    qdate = QDate.fromString(qdate, "yyyy-MM-dd")
-                end_qdate = b.get("end_qdate", qdate)
-                if qdate != QDate.currentDate():
-                    continue
-                if isinstance(end_qdate, str):
-                    end_qdate = QDate.fromString(end_qdate, "yyyy-MM-dd")
-                start_dt = QDateTime(qdate, QTime(int(b["start_hour"]), int((b["start_hour"] % 1) * 60)))
-                # end_dt = QDateTime(end_qdate, QTime(int(b["end_hour"]), int((b["end_hour"] % 1) * 60)))
-
-                if b:
-                    encoder_name = self.encoder_names[item.track_index]
-                    enc_status = self.encoder_status_manager.get_status(encoder_name)
-                    if enc_status:
-                        status_text, _ = enc_status
-                        b["status"] = f"狀態：{status_text}"
-                        item.status = f"狀態：{status_text}"
-                        item.update_text_position()
-
-        
+        # 套用後更新畫面 / 儲存
         parent_view = self.get_parent_view()
         if parent_view:
-            now_ts = QDateTime.currentDateTime()
-            if self.last_saved_ts is None or self.last_saved_ts.secsTo(now_ts) >= 10:
-                parent_view.save_schedule()
-                self.last_saved_ts = now_ts
-            parent_view.update()  # 🔹 強制重繪
+            parent_view.save_schedule()
+            parent_view.update()
+
+    def find_block_by_id(self, block_id):
+        for blk in self.blocks:
+            if blk.block_id == block_id:
+                return blk
+        return None

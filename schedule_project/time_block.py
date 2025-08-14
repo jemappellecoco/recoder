@@ -309,43 +309,96 @@ class TimeBlock(QGraphicsRectItem):
                 parent_view.save_schedule()
 
         elif self.dragging_handle == 'left':
-            delta = event.pos().x()
-            hour_width = getattr(self.scene().parent(), 'hour_width', 20)
+            parent_view = self.scene().parent()
+            hour_width = getattr(parent_view, 'hour_width', 20)
 
-            # ✅ 允許的最短時長（沒有類別常數就用 0.25 小時）
+            # 最短時長
             min_dur = getattr(self, "MIN_DURATION_HOURS", 0.25)
 
-            # ✅ 最多能往右推的像素：保證剩餘長度 >= 最短時長
-            max_shift_px = self.rect().width() - (min_dur * hour_width)
+            # 允許向右推（縮短）到只剩最短時長
+            max_shift_right_px = self.rect().width() - (min_dur * hour_width)
 
-            # clamp：不可小於 0，也不可超過 max_shift_px
-            shift_pixels = min(max(0, delta), max_shift_px)
+            # 以本 block 座標系計算滑鼠位移
+            delta_px = self.mapFromScene(event.scenePos()).x()
 
-            shift_hours = round(shift_pixels / hour_width, 2)
-            new_start_hour = self.start_hour + shift_hours
-            new_duration = round(self.duration_hours - shift_hours, 2)
+            # ✅ 核心：允許往左（負值）也允許往右，但右推最多只能到剩最短時長
+            # 左推（變早）不做 0:00 的夾限，因為允許跨日
+            shift_px = max(-10**9, min(delta_px, max_shift_right_px))
+            shift_h  = round(shift_px / hour_width, 3)
 
-            new_start_dt = QDateTime(
-                self.start_date, QTime(int(new_start_hour), int((new_start_hour % 1) * 60))
-            )
+            # 候選的新起點與新時長（左拉是 shift_h < 0 → start 變小、duration 變大）
+            cand_start_hour = round(self.start_hour + shift_h, 3)
+            cand_duration   = round(self.duration_hours - shift_h, 3)
 
-           
-            # ⚠️ 不再檢查 new_duration < 1，因為上面已經用 clamp 確保不會低於最短時長
-            if not parent_view.is_overlap(self.start_date, self.track_index, new_start_hour, new_duration, exclude_label=self.block_id):
-                self.start_hour = new_start_hour
-                self.duration_hours = new_duration
-                self.update_geometry(parent_view.base_date)
-                end_hour, end_qdate = self.compute_end_info()
-                self.update_block_data({
-                    "start_hour": self.start_hour,
-                    "duration": self.duration_hours,
-                    "end_hour": end_hour,
-                    "end_qdate": end_qdate
-                })
-                parent_view.save_schedule()
-            else:
-                log(f"❌ 重疊偵測：{self.label} 移動後會與他人重疊")
+            # 保證最短時長
+            if cand_duration < min_dur:
                 self.flash_red()
+                return
+
+            # 允許跨日：把 <0 或 >=24 的小時數換算到正確日期
+            cand_qdate = self.start_date
+            while cand_start_hour < 0:
+                cand_qdate = cand_qdate.addDays(-1)
+                cand_start_hour += 24.0
+            while cand_start_hour >= 24:
+                cand_qdate = cand_qdate.addDays(+1)
+                cand_start_hour -= 24.0
+
+            # 不得把起點或終點拉到「現在」之前
+            if self.is_start_or_end_in_past(cand_qdate, cand_start_hour, cand_duration):
+                self.flash_red()
+                return
+
+            # === 跨日安全的重疊檢查（用時間區間比對）===
+            def _dt(qd: QDate, hourf: float) -> QDateTime:
+                return QDateTime(qd, QTime(int(hourf) % 24, int((hourf % 1) * 60)))
+
+            cand_start_dt = _dt(cand_qdate, cand_start_hour)
+            cand_end_hour = cand_start_hour + cand_duration
+            cand_end_qd   = cand_qdate.addDays(1) if cand_end_hour >= 24 else cand_qdate
+            cand_end_dt   = _dt(cand_end_qd, cand_end_hour % 24)
+
+            has_overlap = False
+            for b in parent_view.block_data:
+                if b.get("id") == self.block_id or b["track_index"] != self.track_index:
+                    continue
+
+                qd = b["qdate"] if isinstance(b["qdate"], QDate) else QDate.fromString(b["qdate"], "yyyy-MM-dd")
+                b_start = float(b["start_hour"])
+                b_end   = float(b.get("end_hour", b["start_hour"] + b["duration"]))
+                end_qd  = b.get("end_qdate", qd.addDays(1) if b_end >= 24 else qd)
+                if isinstance(end_qd, str):
+                    end_qd = QDate.fromString(end_qd, "yyyy-MM-dd")
+
+                b_start_dt = _dt(qd, b_start)
+                b_end_dt   = _dt(end_qd if b_end < 24 else qd.addDays(1), b_end % 24)
+
+                # 區間 [s1,e1) 與 [s2,e2) 是否交集
+                if (cand_start_dt < b_end_dt) and (b_start_dt < cand_end_dt):
+                    has_overlap = True
+                    break
+
+            if has_overlap:
+                self.flash_red()
+                return
+
+            # ✅ 套用更新
+            self.start_date = cand_qdate
+            self.start_hour = cand_start_hour
+            self.duration_hours = cand_duration
+
+            self.update_geometry(parent_view.base_date)
+            end_hour, end_qdate = self.compute_end_info()
+            self.update_block_data({
+                "qdate":      self.start_date,
+                "start_hour": self.start_hour,
+                "duration":   self.duration_hours,
+                "end_hour":   end_hour,
+                "end_qdate":  end_qdate
+            })
+            parent_view.save_schedule()
+
+
 
 
     def compute_end_info(self):
@@ -676,7 +729,8 @@ class TimeBlock(QGraphicsRectItem):
         dialog.setLayout(layout)
         dialog.exec()
     def is_start_or_end_in_past(self, qdate, start_hour, duration):
-        now = QDateTime.currentDateTime()
+        # now = QDateTime.currentDateTime()
+        now = QDateTime.currentDateTime().addSecs(60)
         start_dt = QDateTime(qdate, QTime(int(start_hour), int((start_hour % 1) * 60)))
         end_hour = start_hour + duration
         end_qdate = qdate.addDays(1) if end_hour >= 24 else qdate

@@ -69,6 +69,24 @@ class ScheduleView(QGraphicsView):
         self.setAlignment(Qt.AlignLeft | Qt.AlignTop)
         self.encoder_status_manager = EncoderStatusManager()
         self._pool = QThreadPool.globalInstance()
+        
+        self._status_timer = QTimer(self)
+        self._status_timer.timeout.connect(self.refresh_track_labels)  # 只丟 worker，不做 I/O
+        self._status_timer.start(2000)  # 每 2 秒觸發一次背景刷新
+        
+        self.block_status_timer = QTimer(self)
+        self.block_status_timer.timeout.connect(self.update_all_blocks)  # 見下方新函式
+        self.block_status_timer.start(1000)  # 每秒更新一次（可改 2000/5000）
+    def set_track_label_status(self, encoder_name: str, status_text: str | None, color: str = "black"):
+        """供外部（MainWindow）呼叫：把某台 encoder 的狀態顯示在左側標題行。"""
+        item = self.encoder_labels.get(encoder_name)
+        if not item:
+            return
+        alias = get_encoder_display_name(encoder_name)
+        # 你若真的要完全「不顯示狀態」，就把下一行改成：text = alias
+        text = alias if not status_text else f"{alias}\n狀態：{status_text}"
+        item.setPlainText(text)
+        item.setDefaultTextColor(QColor(color))
     def update_visible_blocks_only(self):
         visible_rect = self.viewport().rect()
         visible_scene_rect = self.mapToScene(visible_rect).boundingRect()
@@ -137,10 +155,12 @@ class ScheduleView(QGraphicsView):
         self.now_time_label.setPos(x - 10, offset - 18)  # 🔴 新位置跟著 offset
         self.now_time_label.setZValue(1000)
         
-    # def update_all_blocks(self):
-    #     for item in self.scene.items():
-    #         if isinstance(item, TimeBlock):
-    #             item.update_status_by_time()
+    def update_all_blocks(self):
+            # 只更新畫面內的 block，省資源
+        visible_scene_rect = self.mapToScene(self.viewport().rect()).boundingRect()
+        for item in self.scene.items(visible_scene_rect):
+            if isinstance(item, TimeBlock):
+                item.update_status_by_time()
     def refresh_track_labels(self):
         # 啟動背景 worker 查詢所有 encoder 狀態
         worker = _TrackLabelWorker(self.encoder_names, self.encoder_status_manager)
@@ -189,7 +209,7 @@ class ScheduleView(QGraphicsView):
             if track < len(self.encoder_names):
                 encoder_name = self.encoder_names[track]
                 alias = get_encoder_display_name(encoder_name)
-                full_label = f"{alias}\n狀態：讀取中…"   # ⬅️ 占位
+                full_label = f"{alias}"   # ⬅️ 占位
                 color = "black"
             else:
                 full_label = "未指定\n--"
@@ -210,8 +230,7 @@ class ScheduleView(QGraphicsView):
 
         # ✅ 用背景 worker 批次刷新真實狀態（不阻塞 UI）
         # self.refresh_track_labels()
-        QTimer.singleShot(0, self.refresh_track_labels)
-
+        
   
 
     def update_scene_rect(self):
@@ -257,6 +276,8 @@ class ScheduleView(QGraphicsView):
                 # block.status = data.get("status") or "狀態：⏳ 等待中"
 
                 block.update_text_position()
+                # ✅ 立刻依現在時間套狀態（等待中／已結束）
+                block.update_status_by_time()
                 # 從舊 block 繼承狀態與圖片
                 old_block = old_block_map.get(data["label"])
                 if old_block:

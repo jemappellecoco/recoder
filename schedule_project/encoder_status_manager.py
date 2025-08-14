@@ -8,6 +8,7 @@ class EncoderStatusManager:
         self.encoder_last_state = {}     # {name: raw_response}
         self._last_query_ts = {}         # {name: epoch_ms}
         self._last_log_ts = {}           # {name: epoch_s}
+        self._last_good_parsed = {}      # {name: (text, color)}
         self._cooldown_ms = cooldown_ms
         self._log_every_s = log_every_s
 
@@ -62,23 +63,47 @@ class EncoderStatusManager:
 
         except Exception as e:
             res = str(e)
+        prev_raw = self.encoder_last_state.get(encoder_name)
+        changed = (prev_raw != res)
 
-        prev = self.encoder_last_state.get(encoder_name)
-        changed = (prev != res)
-         # ✏️ 更新查詢時間與狀態快取
         self._last_query_ts[encoder_name] = now_ms
-        # ✅ 若沒變化，就不重新解析，直接用舊的解析結果
-        if not changed and prev is not None:
-            return self._parse(prev)
         self.encoder_last_state[encoder_name] = res
-        # self._last_query_ts[encoder_name] = now_ms
         self._maybe_log(encoder_name, res, changed)
-        parsed = self._parse(res)
-            # ✅ 若回傳未知（❓），保留上一個可解析狀態（但仍更新快取）
-        if parsed[0] == "❓ 未知" and prev is not None:
-            return self._parse(prev)
 
-        return parsed
+        # 若 raw 沒變，直接用先前的「解析後」結果（避免重複波動）
+        if not changed and encoder_name in self._last_good_parsed:
+            return self._last_good_parsed[encoder_name]
+
+        parsed = self._parse(res)
+
+        # ❗回退策略：
+        # - 若是未知/無回應，就回退到「最後一次可用解析」
+        # - 否則更新「最後一次可用解析」
+        if parsed[0] in ("❓ 未知", "❌ 無回應"):
+            if encoder_name in self._last_good_parsed:
+                return self._last_good_parsed[encoder_name]
+            # 沒有可回退就維持未知
+            return parsed
+        else:
+            self._last_good_parsed[encoder_name] = parsed
+            return parsed
+
+        # prev = self.encoder_last_state.get(encoder_name)
+        # changed = (prev != res)
+        #  # ✏️ 更新查詢時間與狀態快取
+        # self._last_query_ts[encoder_name] = now_ms
+        # # ✅ 若沒變化，就不重新解析，直接用舊的解析結果
+        # if not changed and prev is not None:
+        #     return self._parse(prev)
+        # self.encoder_last_state[encoder_name] = res
+        # # self._last_query_ts[encoder_name] = now_ms
+        # self._maybe_log(encoder_name, res, changed)
+        # parsed = self._parse(res)
+        #     # ✅ 若回傳未知（❓），保留上一個可解析狀態（但仍更新快取）
+        # if parsed[0] == "❓ 未知" and prev is not None:
+        #     return self._parse(prev)
+
+        # return parsed
 
     def refresh_all(self, encoder_names):
         """回傳 {encoder_name: (status_text, color)}"""

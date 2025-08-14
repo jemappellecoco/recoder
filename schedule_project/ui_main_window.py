@@ -6,7 +6,7 @@ from PySide6.QtWidgets import (
 )
 from time_block import PreviewImageItem
 from PySide6.QtGui import QPixmap,QBrush ,QColor    
-from PySide6.QtCore import QDate, Qt,QDateTime,QTime,QTimer
+from PySide6.QtCore import QDate, Qt,QDateTime,QTime,QTimer,QThreadPool
 from schedule_view import ScheduleView
 from encoder_utils import list_encoders_with_alias
 from capture import take_snapshot_by_encoder
@@ -30,7 +30,7 @@ from snapshot_worker import SnapshotWorker
 from EncoderManagerDialog import EncoderManagerDialog
 from encoder_utils import save_encoder_config, reload_encoder_config
 from encoder_status_manager import EncoderStatusManager
-
+from schedule_view import _TrackLabelWorker
 def find_latest_snapshot_by_prefix(preview_dir, encoder_name):
     pattern = os.path.join(preview_dir,"preview", f"{encoder_name}*.png") 
     log(f"🔍 查找最新快照：{pattern}")
@@ -115,14 +115,14 @@ class MainWindow(QMainWindow):
             entry.setMaximumWidth(80)
             start_btn = QPushButton("▶️")
             stop_btn = QPushButton("⏹")
-            path_btn = QPushButton("📁")
+            # path_btn = QPushButton("📁")
             status = QLabel("+++")
             status.setAlignment(Qt.AlignVCenter)
             line.addWidget(label)
             line.addWidget(entry)
             line.addWidget(start_btn)
             line.addWidget(stop_btn)
-            line.addWidget(path_btn)
+            # line.addWidget(path_btn)
             line.addWidget(status)
             line.setStretch(0, 1)
             line.setStretch(1, 5)
@@ -135,7 +135,7 @@ class MainWindow(QMainWindow):
 
             start_btn.clicked.connect(lambda _, n=name, e=entry, s=status: self.encoder_start(n, e, s))
             stop_btn.clicked.connect(lambda _, n=name, s=status: self.encoder_stop(n, s))
-            path_btn.clicked.connect(lambda _, n=name, e=entry: self.show_file_path(n, e))
+            # path_btn.clicked.connect(lambda _, n=name, e=entry: self.show_file_path(n, e))
             self.encoder_entries[name] = entry
             self.encoder_status[name] = status
 
@@ -291,7 +291,11 @@ class MainWindow(QMainWindow):
         # self.encoder_status_timer = QTimer(self)
         # self.encoder_status_timer.timeout.connect(self.update_encoder_status_labels)
         # self.encoder_status_timer.start(2000)
+        self._left_status_timer = QTimer(self)
+        self._left_status_timer.timeout.connect(self.refresh_left_status_async)
+        self._left_status_timer.start(2000)  # 跟右側一樣節奏
 
+        
         self.snapshot_timer = QTimer(self)
         self.snapshot_timer.timeout.connect(self.update_all_encoder_snapshots)
         self.snapshot_timer.start(30000)
@@ -303,7 +307,9 @@ class MainWindow(QMainWindow):
         # self.update_encoder_status_labels()
         # QTimer.singleShot(2000, self.update_encoder_status_labels)
         self.view.draw_grid()
-     
+        self.check_timer = QTimer(self)
+        self.check_timer.timeout.connect(self.safe_check_schedule)
+        self.check_timer.start(1000)
 
         QTimer.singleShot(3000, self.update_all_encoder_snapshots)
         # === 初始復原狀態 ===
@@ -322,6 +328,21 @@ class MainWindow(QMainWindow):
                         log(f"📂 自動載入之前選的檔案：{schedule_file}")
         except Exception as e:
             log(f"⚠️ config.json 載入失敗：{e}")
+    def refresh_left_status_async(self):
+            worker = _TrackLabelWorker(self.encoder_names, self.encoder_status_manager)
+            worker.signals.done.connect(self._apply_left_statuses)  # 回主線程
+            QThreadPool.globalInstance().start(worker)
+
+    def _apply_left_statuses(self, statuses: dict):
+        # statuses: {encoder_name: (status_text, color)}
+        for name, pair in statuses.items():
+            if not isinstance(pair, (tuple, list)) or len(pair) < 2:
+                continue
+            text, color = pair
+            lbl = self.encoder_status.get(name)  # 左側每台 encoder 的 QLabel
+            if lbl:
+                lbl.setText(f"狀態：{text}")
+                lbl.setStyleSheet(f"color: {color}")
     def update_zoom(self, value):
         self.view.hour_width = value
         self.view.day_width = 24 * value
@@ -425,7 +446,8 @@ class MainWindow(QMainWindow):
     def safe_check_schedule(self):
         log("🕒 檢查排程中...")
         try:
-            self.schedule_manager.check_schedule()
+            # 改成非同步：丟給 worker，避免主線程卡住
+            self.schedule_manager.tick_async()
         except Exception as e:
             log_exception(f"❌ [Timer] check_schedule 錯誤：{e}")
         
@@ -466,9 +488,10 @@ class MainWindow(QMainWindow):
 
         start_btn = QPushButton("▶️")
         stop_btn = QPushButton("⏹")
-        path_btn = QPushButton("📁")
+        # path_btn = QPushButton("📁")
         status = QLabel("狀態：+++")
-        for btn in [start_btn, stop_btn, path_btn]:
+        for btn in [start_btn, stop_btn]:
+        # for btn in [start_btn, stop_btn, path_btn]:
             btn.setSizePolicy(QSizePolicy.MinimumExpanding, QSizePolicy.Fixed)
             btn.setMinimumWidth(15)
             btn.setMaximumWidth(60)
@@ -481,7 +504,7 @@ class MainWindow(QMainWindow):
         control_row.addWidget(entry)
         control_row.addWidget(start_btn)
         control_row.addWidget(stop_btn)
-        control_row.addWidget(path_btn)
+        # control_row.addWidget(path_btn)
         control_row.addWidget(status)
 
         encoder_box.addLayout(control_row)
@@ -489,7 +512,7 @@ class MainWindow(QMainWindow):
         # 📎 綁定與註冊
         start_btn.clicked.connect(lambda _, n=name, e=entry, s=status: self.encoder_start(n, e, s))
         stop_btn.clicked.connect(lambda _, n=name, s=status: self.encoder_stop(n, s))
-        path_btn.clicked.connect(lambda _, n=name, e=entry: self.show_file_path(n, e))
+        # path_btn.clicked.connect(lambda _, n=name, e=entry: self.show_file_path(n, e))
 
         self.encoder_entries[name] = entry
         self.encoder_status[name] = status
@@ -538,8 +561,19 @@ class MainWindow(QMainWindow):
     def update_encoder_status_labels(self):
         try:
             for name, status_label in self.encoder_status.items():
-                current_status = self.get_encoder_status(name)
-                status_label.setText(f"狀態：{current_status}")
+                # 用同一份狀態來源 ➜ 兩邊一致
+                result = self.encoder_status_manager.get_status(name)
+                # get_status 回傳 (status_text, color)
+                if not result:
+                    continue
+                status_text, color = result
+
+                # 左側控制面板（既有）
+                status_label.setText(f"狀態：{status_text}")
+                status_label.setStyleSheet(f"color: {color}")
+
+                # 右側時間表左邊的標題（新）
+                self.view.set_track_label_status(name, status_text, color)
         except Exception as e:
             log_exception(f"❌ [Timer] update_encoder_status_labels 發生錯誤：{e}")
             
