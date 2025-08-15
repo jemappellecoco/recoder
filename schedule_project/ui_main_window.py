@@ -101,6 +101,10 @@ class MainWindow(QMainWindow):
             encoder_box.setContentsMargins(0, 0, 0, 0)
 
             preview_label = QLabel(f"🖼️ {display} 預覽載入中...")
+            preview_label.setScaledContents(False)                      # 我們自己控制縮放
+            preview_label.setSizePolicy(QSizePolicy.Ignored, QSizePolicy.Ignored)  # 不讓 pixmap 影響 sizeHint
+            preview_label.setAlignment(Qt.AlignCenter)
+
             preview_label.setMinimumHeight(180)
             preview_label.setMinimumWidth(0)
             preview_label.setSizePolicy(QSizePolicy.Preferred, QSizePolicy.Preferred)
@@ -219,6 +223,7 @@ class MainWindow(QMainWindow):
                 border: 1px solid #333;
             }
         """)
+
         set_log_box(self.log_box)
 
         # --- Header & ScheduleView ---
@@ -296,10 +301,26 @@ class MainWindow(QMainWindow):
         splitter.addWidget(scroll_area)
         splitter.addWidget(right_panel)
 
+        # 讓右側吃伸展；左側不主動搶寬
+        splitter.setStretchFactor(0, 0)   # 左：scroll_area
+        splitter.setStretchFactor(1, 1)   # 右：right_panel
+
+        # 給個合理初始寬度分配（可調）
+        splitter.setSizes([260, 1200])
+
+        # 確保右側可被壓到很窄，不會卡住 splitter
+        right_panel.setMinimumWidth(1)
+        self.header.setMinimumWidth(1)
+        self.view.setMinimumWidth(1)
+
+        # 左側別主動搶寬（但保留你 preview_label 的 Preferred）
+        scroll_area.setSizePolicy(QSizePolicy.Minimum, QSizePolicy.Expanding)
+        scroll_area.setMinimumWidth(1)
         # === 啟動時間器 ===
         # self.encoder_status_timer = QTimer(self)
         # self.encoder_status_timer.timeout.connect(self.update_encoder_status_labels)
         # self.encoder_status_timer.start(2000)
+        self._left_workers = []
         self._left_status_timer = QTimer(self)
         self._left_status_timer.timeout.connect(self.refresh_left_status_async)
         self._left_status_timer.start(2000)  # 跟右側一樣節奏
@@ -319,13 +340,9 @@ class MainWindow(QMainWindow):
         self.check_timer = QTimer(self)
         self.check_timer.timeout.connect(self.safe_check_schedule)
         self.check_timer.start(1000)
-
+        
         QTimer.singleShot(3000, self.update_all_encoder_snapshots)
-        # === 初始復原狀態 ===
-        # for name in self.encoder_names:
-        #     snapshot_path = take_snapshot_by_encoder(name, snapshot_root=self.record_root)
-        #     log(f"📸 啟動時補拍 {name} ➔ {snapshot_path}")
-
+  
         try:
             if os.path.exists(CONFIG_FILE):
                 with open(CONFIG_FILE, "r", encoding="utf-8") as f:
@@ -338,9 +355,22 @@ class MainWindow(QMainWindow):
         except Exception as e:
             log(f"⚠️ config.json 載入失敗：{e}")
     def refresh_left_status_async(self):
-            worker = _TrackLabelWorker(self.encoder_names, self.encoder_status_manager)
-            worker.signals.done.connect(self._apply_left_statuses)  # 回主線程
-            QThreadPool.globalInstance().start(worker)
+        worker = _TrackLabelWorker(self.encoder_names, self.encoder_status_manager)
+        self._left_workers.append(worker)  # ✅ 保存參照
+        worker.signals.done.connect(self._apply_left_statuses)
+
+        def _cleanup(_=None, w=worker):
+            try:
+                self._left_workers.remove(w)
+            except ValueError:
+                pass
+        worker.signals.done.connect(_cleanup)
+
+        QThreadPool.globalInstance().start(worker)
+    # def refresh_left_status_async(self):
+    #         worker = _TrackLabelWorker(self.encoder_names, self.encoder_status_manager)
+    #         worker.signals.done.connect(self._apply_left_statuses)  # 回主線程
+    #         QThreadPool.globalInstance().start(worker)
 
     def _apply_left_statuses(self, statuses: dict):
         # statuses: {encoder_name: (status_text, color)}
@@ -455,7 +485,7 @@ class MainWindow(QMainWindow):
                 for name in self.encoder_names:
                     widget = self.build_encoder_widget(name)
                     layout.addWidget(widget)
-
+                    
         # ✅ 更新 Header & View 需要的 encoder info
         self.view.encoder_names = self.encoder_names
         self.view.encoder_status = self.encoder_status
@@ -553,12 +583,30 @@ class MainWindow(QMainWindow):
         self.encoder_status[name] = status
         status.setText(f"狀態：{self.get_encoder_status(name)}")
         return encoder_widget
-    def update_preview_scaled(self, name):
+    # def update_preview_scaled(self, name):
+    #     label = self.encoder_preview_labels.get(name)
+    #     pixmap = self.encoder_pixmaps.get(name)
+    #     if label and pixmap:
+    #         scaled = pixmap.scaled(label.size(), Qt.KeepAspectRatio, Qt.SmoothTransformation)
+    #         label.setPixmap(scaled)
+    def update_preview_scaled(self, name: str):
         label = self.encoder_preview_labels.get(name)
-        pixmap = self.encoder_pixmaps.get(name)
-        if label and pixmap:
-            scaled = pixmap.scaled(label.size(), Qt.KeepAspectRatio, Qt.SmoothTransformation)
-            label.setPixmap(scaled)
+        pm = self.encoder_pixmaps.get(name)
+        if not label or not pm or pm.isNull():
+            return
+
+        # 只用可用內容區域，不用 label.size() / sizeHint()
+        target_size = label.contentsRect().size()
+        if not target_size.isValid() or target_size.isEmpty():
+            return
+
+        # 只有在目標大小跟現有顯示不一樣時才重算，避免頻繁 setPixmap 觸發重排
+        cur = label.pixmap()
+        if cur and cur.size() == target_size:
+            return
+
+        scaled = pm.scaled(target_size, Qt.KeepAspectRatio, Qt.SmoothTransformation)
+        label.setPixmap(scaled)
 
     def resizeEvent(self, event):
         for name in self.encoder_names:

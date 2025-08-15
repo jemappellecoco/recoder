@@ -1,7 +1,5 @@
 Traceback (most recent call last):
-  File "c:\Users\coco\recoder\schedule_project\main.py", line 41, in <module>
-    win = MainWindow()
-  File "c:\Users\coco\recoder\schedule_project\ui_main_window.py", line 189, in __init__
-    self.runner.start_buttons   = self.start_buttons
-    ^^^^^^^^^^^
-AttributeError: 'MainWindow' object has no attribute 'runner'. Did you mean: 'render'?
+  File "c:\Users\coco\recoder\schedule_project\schedule_runner.py", line 114, in _apply_statuses
+    start_btn.setDisabled(is_running)   # 錄影中 → 不能按開始（會變灰）
+    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+RuntimeError: Internal C++ object (PySide6.QtWidgets.QPushButton) already deleted.

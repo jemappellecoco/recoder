@@ -7,7 +7,7 @@ from encoder_status_manager import EncoderStatusManager
 import os
 import logging
 import threading
-from PySide6.QtWidgets import QApplication
+from PySide6.QtWidgets import QApplication,QGraphicsOpacityEffect
 from shiboken6 import isValid
 # from check_schedule_manager import CheckScheduleManager
 from capture import take_snapshot_from_block 
@@ -88,6 +88,14 @@ class ScheduleRunner(QObject):
         worker.signals.done.connect(self._apply_statuses)
         self._pool.start(worker)
 
+    def _set_opacity(self, widget, value: float):
+        if not widget:
+            return
+        eff = widget.graphicsEffect()
+        if not isinstance(eff, QGraphicsOpacityEffect):
+            eff = QGraphicsOpacityEffect(widget)
+            widget.setGraphicsEffect(eff)
+        eff.setOpacity(value)  # 0.0 ~ 1.0
 
     def _apply_statuses(self, statuses: dict):
         for name, (text, color) in statuses.items():
@@ -108,6 +116,15 @@ class ScheduleRunner(QObject):
                 name_input.setDisabled(is_running)  # 錄影中 → 不能改檔名（會變灰）
             if stop_btn:
                 stop_btn.setDisabled(not is_running)  # 只有錄影中才允許停止
+                    # 半透明灰（0.45 可自行微調）
+            dim  = 0.45
+            full = 1.0
+            if start_btn:
+                self._set_opacity(start_btn, dim if is_running else full)
+            if name_input:
+                self._set_opacity(name_input, dim if is_running else full)
+            if stop_btn:
+                self._set_opacity(stop_btn, full if is_running else dim)
     def refresh_encoder_statuses(self):
         statuses = self.encoder_status_manager.refresh_all(self.encoder_names)
         for name, (status_text, color) in statuses.items():
