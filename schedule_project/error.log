@@ -1,8 +1,7 @@
 Traceback (most recent call last):
   File "c:\Users\coco\recoder\schedule_project\main.py", line 41, in <module>
     win = MainWindow()
-  File "c:\Users\coco\recoder\schedule_project\ui_main_window.py", line 95, in __init__
-    os.makedirs(self.preview_root, exist_ok=True)
-    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "<frozen os>", line 228, in makedirs
-FileNotFoundError: [WinError 3] 系統找不到指定的路徑。: 'B:/'
+  File "c:\Users\coco\recoder\schedule_project\ui_main_window.py", line 189, in __init__
+    self.runner.start_buttons   = self.start_buttons
+    ^^^^^^^^^^^
+AttributeError: 'MainWindow' object has no attribute 'runner'. Did you mean: 'render'?

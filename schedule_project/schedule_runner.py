@@ -95,7 +95,19 @@ class ScheduleRunner(QObject):
             if label:
                 label.setText(f"狀態：{text}")
                 label.setStyleSheet(f"color: {color}")
+                    # === 新增：依狀態啟/停用控制項 ===
+            is_running = "錄影中" in text  # 或 color == "green"
 
+            start_btn = getattr(self, "start_buttons", {}).get(name)
+            stop_btn  = getattr(self, "stop_buttons", {}).get(name)
+            name_input = getattr(self, "filename_inputs", {}).get(name)
+
+            if start_btn:
+                start_btn.setDisabled(is_running)   # 錄影中 → 不能按開始（會變灰）
+            if name_input:
+                name_input.setDisabled(is_running)  # 錄影中 → 不能改檔名（會變灰）
+            if stop_btn:
+                stop_btn.setDisabled(not is_running)  # 只有錄影中才允許停止
     def refresh_encoder_statuses(self):
         statuses = self.encoder_status_manager.refresh_all(self.encoder_names)
         for name, (status_text, color) in statuses.items():

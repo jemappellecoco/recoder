@@ -77,6 +77,26 @@ class ScheduleView(QGraphicsView):
         self.block_status_timer = QTimer(self)
         self.block_status_timer.timeout.connect(self.update_all_blocks)  # 見下方新函式
         self.block_status_timer.start(1000)  # 每秒更新一次（可改 2000/5000）
+        self._pool = QThreadPool.globalInstance()
+        self._bg_workers = []      # ✅ 保存背景任務，避免被 GC
+    def get_now_x(self) -> int | None:
+        now = QDateTime.currentDateTime()
+        days = self.base_date.daysTo(now.date())
+        if not (0 <= days < self.days):
+            return None
+        t = now.time()
+        hours = t.hour() + t.minute() / 60 + t.second() / 3600
+        return int(days * self.day_width + hours * self.hour_width)
+
+    def center_on_x(self, x: int):
+        sb = self.horizontalScrollBar()
+        target = int(x - self.viewport().width() / 2)
+        sb.setValue(max(sb.minimum(), min(sb.maximum(), target)))
+
+    def center_on_now(self):
+        x = self.get_now_x()
+        if x is not None:
+            self.center_on_x(x)
     def set_track_label_status(self, encoder_name: str, status_text: str | None, color: str = "black"):
         """供外部（MainWindow）呼叫：把某台 encoder 的狀態顯示在左側標題行。"""
         item = self.encoder_labels.get(encoder_name)

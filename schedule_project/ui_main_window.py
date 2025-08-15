@@ -5,7 +5,7 @@ from PySide6.QtWidgets import (
     QVBoxLayout, QHBoxLayout, QLineEdit, QApplication, QSizePolicy, QMessageBox, QMenu, QFileDialog
 )
 from time_block import PreviewImageItem
-from PySide6.QtGui import QPixmap,QBrush ,QColor    
+from PySide6.QtGui import QPixmap,QBrush ,QColor   
 from PySide6.QtCore import QDate, Qt,QDateTime,QTime,QTimer,QThreadPool
 from schedule_view import ScheduleView
 from encoder_utils import list_encoders_with_alias
@@ -91,7 +91,8 @@ class MainWindow(QMainWindow):
         self.encoder_status_manager = EncoderStatusManager()
         
         os.makedirs(self.preview_root, exist_ok=True)
-
+        self.start_buttons = {}
+        self.stop_buttons = {}
         for name in self.encoder_names:
             display = self.encoder_aliases.get(name, name)
             encoder_widget = QWidget()
@@ -138,6 +139,8 @@ class MainWindow(QMainWindow):
             # path_btn.clicked.connect(lambda _, n=name, e=entry: self.show_file_path(n, e))
             self.encoder_entries[name] = entry
             self.encoder_status[name] = status
+            self.start_buttons[name]   = start_btn     # ← 新增
+            self.stop_buttons[name]    = stop_btn      # ← 新增
 
         # encoder_scroll_layout.addWidget(encoder_panel)
         encoder_scroll_layout.addWidget(self.encoder_panel)
@@ -184,6 +187,8 @@ class MainWindow(QMainWindow):
         self.today_button.clicked.connect(self.jump_to_today)
         self.manage_encoder_button = QPushButton("⚙️ 管理 Encoder")
         self.manage_encoder_button.clicked.connect(self.open_encoder_manager)
+        
+
         toolbar_layout.addWidget(self.manage_encoder_button)
 
         toolbar_layout.addWidget(self.date_label)
@@ -256,6 +261,10 @@ class MainWindow(QMainWindow):
             encoder_names=self.encoder_names,
             blocks=self.view.blocks
         )# ✅ 加這裡！建立 schedule_manager
+                # ✅ 建立完 runner 後，再把控制權交給 runner（移到這裡）
+        self.runner.start_buttons   = self.start_buttons
+        self.runner.stop_buttons    = self.stop_buttons
+        self.runner.filename_inputs = self.encoder_entries
         self.schedule_manager = CheckScheduleManager(
             encoder_names=self.encoder_names,
             encoder_status_dict=self.encoder_status,
@@ -356,6 +365,7 @@ class MainWindow(QMainWindow):
         for block in self.view.blocks:
             block.update_geometry(self.view.base_date)
             block.update_text_position()
+        self.view.center_on_now()
     def ensure_valid_paths(self):
         self.record_root = self.path_manager.record_root
         self.preview_root = self.path_manager.preview_root
@@ -467,6 +477,7 @@ class MainWindow(QMainWindow):
         self.view.set_start_date(today)
         self.header.set_base_date(today)
         self.date_picker.setDate(today)
+        self.view.center_on_now()  
     def safe_check_schedule(self):
         log("🕒 檢查排程中...")
         try:
@@ -617,6 +628,10 @@ class MainWindow(QMainWindow):
                     latest_path = find_latest_snapshot_by_prefix(self.preview_root, name)
                     if latest_path and os.path.exists(latest_path):
                         pixmap = QPixmap(latest_path)
+                                    # ⬇️ 加在這裡，避免空圖片覆蓋舊圖
+                        if pixmap.isNull():
+                            log(f"⚠️ {name} 載入圖片為空，略過更新")
+                            return  
                         self.encoder_pixmaps[name] = pixmap
                         self.update_preview_scaled(name)
                     else:
@@ -631,7 +646,16 @@ class MainWindow(QMainWindow):
             for name, label in self.encoder_preview_labels.items():
                 worker = SnapshotWorker(name, self.preview_root)
                 worker.finished.connect(lambda n, l=label: on_finished(n, l))
-                worker.finished.connect(lambda _, w=worker: self.snapshot_workers.remove(w))
+
+                # ✅ 用獨立函式安全清理
+                def _cleanup(_, w=worker):
+                    try:
+                        if w in self.snapshot_workers:
+                            self.snapshot_workers.remove(w)
+                    except Exception:
+                        pass
+                worker.finished.connect(_cleanup)
+
                 worker.finished.connect(worker.deleteLater)
                 self.snapshot_workers.append(worker)
                 worker.start()
