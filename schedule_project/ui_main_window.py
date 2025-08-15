@@ -4,6 +4,7 @@ from PySide6.QtWidgets import (
     QMainWindow, QWidget, QPushButton, QLabel, QDateEdit, QSlider,QDialog,QFrame,QScrollArea,QSplitter,QTextEdit,
     QVBoxLayout, QHBoxLayout, QLineEdit, QApplication, QSizePolicy, QMessageBox, QMenu, QFileDialog
 )
+from shiboken6 import isValid
 from time_block import PreviewImageItem
 from PySide6.QtGui import QPixmap,QBrush ,QColor   
 from PySide6.QtCore import QDate, Qt,QDateTime,QTime,QTimer,QThreadPool
@@ -670,22 +671,33 @@ class MainWindow(QMainWindow):
                         fut.cancel_event.set()
             return
 
-        def on_finished(name, label):
+        def on_finished(name, old_label):
             def load_image():
                 try:
+                    # ⛑️ 重新取得目前還活著的 label，避免閉包抓舊物件
+                    cur_label = self.encoder_preview_labels.get(name)
+                    if not cur_label or not isValid(cur_label):
+                        # 舊 label 已失效 / 已被替換：拔掉殘留 mapping（可選）
+                        self.encoder_preview_labels.pop(name, None)
+                        return
+
                     latest_path = find_latest_snapshot_by_prefix(self.preview_root, name)
                     if latest_path and os.path.exists(latest_path):
-                        pixmap = QPixmap(latest_path)
-                                    # ⬇️ 加在這裡，避免空圖片覆蓋舊圖
-                        if pixmap.isNull():
+                        pm = QPixmap(latest_path)
+                        if pm.isNull():
                             log(f"⚠️ {name} 載入圖片為空，略過更新")
-                            return  
-                        self.encoder_pixmaps[name] = pixmap
-                        self.update_preview_scaled(name)
+                            return
+                        self.encoder_pixmaps[name] = pm
+                        # ⛑️ 再次確認 label 還在
+                        if isValid(cur_label):
+                            self.update_preview_scaled(name)
                     else:
-                        label.setText(f"❌ 無法載入 {name} 圖片")
+                        # ⛑️ 只在 label 還活著時才 setText
+                        if isValid(cur_label):
+                            cur_label.setText(f"❌ 無法載入 {name} 圖片")
                 except Exception as e:
                     log_exception(f"❌ [Timer] 快照更新錯誤（{name}）：{e}")
+
             QTimer.singleShot(300, load_image)
 
         if not hasattr(self, "snapshot_workers"):

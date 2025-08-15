@@ -37,7 +37,9 @@ class _StatusWorker(QRunnable):
                 except Exception as e:
                     log(f"❌ get_status({name}) 發生例外：{e}")
                     result[name] = ("❌ 無法連線", "red")
-            self.signals.done.emit(result)
+            # ✅ signals 還活著才 emit
+            if self.signals and isValid(self.signals):
+                self.signals.done.emit(result)
         except Exception as e:
             log(f"❌ _StatusWorker.run() 整體執行失敗：{e}", level="ERROR")
         
@@ -77,54 +79,124 @@ class ScheduleRunner(QObject):
         self.block_status_timer.start(3000)  # 每秒更新一次
         # ✅ 改為使用 thread pool 異步刷新，避免啟動時卡 UI
         self._pool = QThreadPool.globalInstance()
+        self._status_workers = []   # ✅ 持有 worker，避免 signals 被 GC
+        self._is_closing = False    # ✅ 關閉旗標
         QTimer.singleShot(0, self._refresh_status_async)
     def _refresh_block_statuses(self):
         self._refresh_status_async()
     def _refresh_status_async(self):
         log(f"🎯 啟動 StatusWorker：{self.encoder_names}")
-        if not getattr(self, "encoder_names", None):
+        if self._is_closing or not getattr(self, "encoder_names", None):
             return
-        worker = _StatusWorker(self.encoder_names, self.encoder_status_manager)
-        worker.signals.done.connect(self._apply_statuses)
+            # ⛑️ 若上一輪尚未回來，就先不再開新的一輪
+        if getattr(self, "_status_workers", None) and len(self._status_workers) >= 1:
+            return
+        worker = _StatusWorker(list(self.encoder_names), self.encoder_status_manager)
+
+        # ✅ 持有，避免 signals 被回收
+        self._status_workers.append(worker)
+
+        def _on_done(result, w=worker):
+            # 視窗關閉或 runner 被收時，不再碰 UI
+            if not hasattr(self, "_is_closing") or self._is_closing:
+                pass
+            else:
+                try:
+                    self._apply_statuses(result)
+                except Exception as e:
+                    log(f"❌ _apply_statuses error: {e}")
+            # ✅ 用完釋放引用
+            try:
+                self._status_workers.remove(w)
+            except ValueError:
+                pass
+
+        worker.signals.done.connect(_on_done)
         self._pool.start(worker)
 
+    # def _refresh_status_async(self):
+    #     log(f"🎯 啟動 StatusWorker：{self.encoder_names}")
+    #     if not getattr(self, "encoder_names", None):
+    #         return
+    #     worker = _StatusWorker(self.encoder_names, self.encoder_status_manager)
+    #     worker.signals.done.connect(self._apply_statuses)
+    #     self._pool.start(worker)
+
     def _set_opacity(self, widget, value: float):
-        if not widget:
+        if not widget or not isValid(widget):
             return
         eff = widget.graphicsEffect()
         if not isinstance(eff, QGraphicsOpacityEffect):
             eff = QGraphicsOpacityEffect(widget)
             widget.setGraphicsEffect(eff)
-        eff.setOpacity(value)  # 0.0 ~ 1.0
-
+        eff.setOpacity(value)
+    def _get_widget(self, mapping: dict, name: str):
+        """拿到還活著的 widget；死了就從 mapping 移除並回傳 None。"""
+        if not isinstance(mapping, dict):
+            return None
+        w = mapping.get(name)
+        if not w or not isValid(w):
+            mapping.pop(name, None)
+            return None
+        return w
     def _apply_statuses(self, statuses: dict):
-        for name, (text, color) in statuses.items():
-            label = self.encoder_status.get(name)
+        current = set(getattr(self, "encoder_names", []) or [])
+        for name, pair in statuses.items():
+            # 這台已被刪除 → 清 mapping、跳過
+            if name not in current:
+                for m in (
+                    getattr(self, "encoder_status", None),
+                    getattr(self, "start_buttons", None),
+                    getattr(self, "stop_buttons", None),
+                    getattr(self, "filename_inputs", None),
+                ):
+                    if isinstance(m, dict):
+                        m.pop(name, None)
+                continue
+
+            try:
+                text, color = pair
+            except Exception:
+                text, color = ("❓ 未知", "gray")
+
+            # label
+            label = self._get_widget(getattr(self, "encoder_status", {}), name)
             if label:
-                label.setText(f"狀態：{text}")
-                label.setStyleSheet(f"color: {color}")
-                    # === 新增：依狀態啟/停用控制項 ===
-            is_running = "錄影中" in text  # 或 color == "green"
+                try:
+                    label.setText(f"狀態：{text}")
+                    label.setStyleSheet(f"color: {color}")
+                except RuntimeError:
+                    getattr(self, "encoder_status", {}).pop(name, None)
+                    label = None
 
-            start_btn = getattr(self, "start_buttons", {}).get(name)
-            stop_btn  = getattr(self, "stop_buttons", {}).get(name)
-            name_input = getattr(self, "filename_inputs", {}).get(name)
+            is_running = ("錄影中" in text)
 
-            if start_btn:
-                start_btn.setDisabled(is_running)   # 錄影中 → 不能按開始（會變灰）
-            if name_input:
-                name_input.setDisabled(is_running)  # 錄影中 → 不能改檔名（會變灰）
-            if stop_btn:
-                stop_btn.setDisabled(not is_running)  # 只有錄影中才允許停止
-                    # 半透明灰（0.45 可自行微調）
-            dim  = 0.45
-            full = 1.0
-            if start_btn:
-                self._set_opacity(start_btn, dim if is_running else full)
-            if name_input:
-                self._set_opacity(name_input, dim if is_running else full)
-            if stop_btn:
-                self._set_opacity(stop_btn, full if is_running else dim)
+            # 控制項
+            start_btn  = self._get_widget(getattr(self, "start_buttons", {}), name)
+            stop_btn   = self._get_widget(getattr(self, "stop_buttons", {}), name)
+            name_input = self._get_widget(getattr(self, "filename_inputs", {}), name)
+
+            try:
+                if start_btn:
+                    start_btn.setDisabled(is_running)
+                    self._set_opacity(start_btn, 0.45 if is_running else 1.0)
+            except RuntimeError:
+                getattr(self, "start_buttons", {}).pop(name, None)
+
+            try:
+                if name_input:
+                    name_input.setDisabled(is_running)
+                    self._set_opacity(name_input, 0.45 if is_running else 1.0)
+            except RuntimeError:
+                getattr(self, "filename_inputs", {}).pop(name, None)
+
+            try:
+                if stop_btn:
+                    stop_btn.setDisabled(not is_running)
+                    self._set_opacity(stop_btn, 1.0 if is_running else 0.45)
+            except RuntimeError:
+                getattr(self, "stop_buttons", {}).pop(name, None)
+
     def refresh_encoder_statuses(self):
         statuses = self.encoder_status_manager.refresh_all(self.encoder_names)
         for name, (status_text, color) in statuses.items():
@@ -211,7 +283,6 @@ class ScheduleRunner(QObject):
                 log("🛑 無視拍照：UI 已關閉或找不到 activeWindow")
 
         
-
     def stop_encoder(self, encoder_name, status_label):
         if status_label and not isValid(status_label):
             log(f"⚠️ QLabel for {encoder_name} no longer exists; skipping label update")
@@ -222,24 +293,81 @@ class ScheduleRunner(QObject):
 
         ok = self.encoder_controller.stop_encoder(encoder_name)
         now = QDateTime.currentDateTime()
-        encoder_index = self.encoder_names.index(encoder_name)
+
+        # ⛔ encoder 可能已被刪除：名稱不在清單就不要做 index() 與 block 更新
+        if encoder_name not in getattr(self, "encoder_names", []):
+            if ok:
+                safe_set_label(status_label, "狀態：⏹ 停止中", "color: gray")
+            else:
+                safe_set_label(status_label, "狀態：❌ 停止失敗", "color: red")
+            return
+
+        # 走到這裡代表還在清單中，才安全取 index
+        try:
+            encoder_index = self.encoder_names.index(encoder_name)
+        except ValueError:
+            # 雙保險（極少數 race）
+            if ok:
+                safe_set_label(status_label, "狀態：⏹ 停止中", "color: gray")
+            else:
+                safe_set_label(status_label, "狀態：❌ 停止失敗", "color: red")
+            return
 
         if ok:
-            for block in self.blocks:
-                if block.track_index == encoder_index:
-                    start_dt = QDateTime(block.start_date, QTime(int(block.start_hour), int((block.start_hour % 1) * 60)))
-                    end_dt = start_dt.addSecs(int(block.duration_hours * 3600))
-                    if start_dt <= now <= end_dt:
-                        block.status = "⏹ 停止中"
-                        block.update_text_position()
-                        self.already_stopped.add(block.block_id)
-                        # ✅ 儲存狀態回 block_data
-                        for b in self.schedule_data:
-                            if b.get("id") == block.block_id:
-                                b["status"] = block.status  # ⬅️ 儲存下來
+            # 🔒 block 可能已被移除（scene clear 或重建時），任何 UI 操作包 try/except
+            for block in list(getattr(self, "blocks", [])):
+                try:
+                    if getattr(block, "track_index", None) == encoder_index:
+                        start_dt = QDateTime(block.start_date, QTime(int(block.start_hour), int((block.start_hour % 1) * 60)))
+                        end_dt = start_dt.addSecs(int(block.duration_hours * 3600))
+                        if start_dt <= now <= end_dt:
+                            block.status = "⏹ 停止中"
+                            try:
+                                block.update_text_position()
+                            except RuntimeError:
+                                pass
+                            self.already_stopped.add(getattr(block, "block_id", ""))
+
+                            # ✅ 儲存狀態回 block_data（dict，非 Qt 物件，安全）
+                            for b in self.schedule_data:
+                                if b.get("id") == getattr(block, "block_id", None):
+                                    b["status"] = block.status
+                except RuntimeError:
+                    # block 物件已在 Qt 端被刪除
+                    continue
+
             safe_set_label(status_label, "狀態：⏹ 停止中", "color: gray")
         else:
             safe_set_label(status_label, "狀態：❌ 停止失敗", "color: red")
+
+    # def stop_encoder(self, encoder_name, status_label):
+    #     if status_label and not isValid(status_label):
+    #         log(f"⚠️ QLabel for {encoder_name} no longer exists; skipping label update")
+    #         status_label = None
+
+    #     # safe_set_label(status_label, "狀態：🔁 停止中...", "color: blue")
+    #     QApplication.processEvents()
+
+    #     ok = self.encoder_controller.stop_encoder(encoder_name)
+    #     now = QDateTime.currentDateTime()
+    #     encoder_index = self.encoder_names.index(encoder_name)
+
+    #     if ok:
+    #         for block in self.blocks:
+    #             if block.track_index == encoder_index:
+    #                 start_dt = QDateTime(block.start_date, QTime(int(block.start_hour), int((block.start_hour % 1) * 60)))
+    #                 end_dt = start_dt.addSecs(int(block.duration_hours * 3600))
+    #                 if start_dt <= now <= end_dt:
+    #                     block.status = "⏹ 停止中"
+    #                     block.update_text_position()
+    #                     self.already_stopped.add(block.block_id)
+    #                     # ✅ 儲存狀態回 block_data
+    #                     for b in self.schedule_data:
+    #                         if b.get("id") == block.block_id:
+    #                             b["status"] = block.status  # ⬅️ 儲存下來
+    #         safe_set_label(status_label, "狀態：⏹ 停止中", "color: gray")
+    #     else:
+    #         safe_set_label(status_label, "狀態：❌ 停止失敗", "color: red")
 
    
 
@@ -254,7 +382,16 @@ class ScheduleRunner(QObject):
                 return block
         return None
     
-
     def stop_timers(self):
-        self.timer.stop()
-        self.status_timer.stop()
+        self._is_closing = True   # ✅ 通知不要再啟新 worker/不要更新 UI
+        if hasattr(self, "timer"):
+            self.timer.stop()
+        if hasattr(self, "status_timer"):
+            self.status_timer.stop()
+        if hasattr(self, "block_status_timer"):
+            self.block_status_timer.stop()
+        if hasattr(self, "runner"):
+            self.runner.stop_timers()
+    # def stop_timers(self):
+    #     self.timer.stop()
+    #     self.status_timer.stop()

@@ -7,13 +7,27 @@ import json
 from encoder_status_manager import EncoderStatusManager
 import os
 import uuid
-
+from shiboken6 import isValid
 from utils import log,log_exception
 from encoder_utils import get_encoder_display_name
 from path_manager import PathManager 
 class _TrackLabelWorkerSignals(QObject):
     done = Signal(dict)  # {encoder_name: (status_text, color)}
 
+# class _TrackLabelWorker(QRunnable):
+#     def __init__(self, names, status_manager):
+#         super().__init__()
+#         self.names = names
+#         self.status_manager = status_manager
+#         self.signals = _TrackLabelWorkerSignals()
+
+#     def run(self):
+#         try:
+#             # 這裡會阻塞，但已經在背景執行緒了
+#             result = self.status_manager.refresh_all(self.names)
+#             self.signals.done.emit(result)
+#         except Exception:
+#             self.signals.done.emit({})
 class _TrackLabelWorker(QRunnable):
     def __init__(self, names, status_manager):
         super().__init__()
@@ -23,11 +37,18 @@ class _TrackLabelWorker(QRunnable):
 
     def run(self):
         try:
-            # 這裡會阻塞，但已經在背景執行緒了
             result = self.status_manager.refresh_all(self.names)
-            self.signals.done.emit(result)
+            # ✅ 發射前確認 signal 來源仍有效
+            if self.signals and isValid(self.signals):
+                self.signals.done.emit(result)
         except Exception:
-            self.signals.done.emit({})
+            # ✅ 就算失敗也先確保 signal 還活著再 emit
+            try:
+                if self.signals and isValid(self.signals):
+                    self.signals.done.emit({})
+            except Exception:
+                # signals 已不存在就安靜結束
+                pass
 class ScheduleView(QGraphicsView):
     def __init__(self):
         super().__init__()
@@ -182,25 +203,46 @@ class ScheduleView(QGraphicsView):
         for item in self.scene.items(visible_scene_rect):
             if isinstance(item, TimeBlock):
                 item.update_status_by_time()
+    # def refresh_track_labels(self):
+    #     # 啟動背景 worker 查詢所有 encoder 狀態
+    #     worker = _TrackLabelWorker(self.encoder_names, self.encoder_status_manager)
+    #     worker.signals.done.connect(self._apply_track_label_statuses)
+    #     self._pool.start(worker)
     def refresh_track_labels(self):
         # 啟動背景 worker 查詢所有 encoder 狀態
-        worker = _TrackLabelWorker(self.encoder_names, self.encoder_status_manager)
-        worker.signals.done.connect(self._apply_track_label_statuses)
-        self._pool.start(worker)
+        worker = _TrackLabelWorker(list(self.encoder_names), self.encoder_status_manager)
 
+        # ✅ 持有 worker，避免 signals 被回收
+        self._bg_workers.append(worker)
+
+        def _on_done(result, w=worker):
+            # 視圖已關閉或正在關閉就跳過
+            if getattr(self, "_is_closing", False) or not isValid(self):
+                pass
+            else:
+                self._apply_track_label_statuses(result)
+            # ✅ 用完就移除引用
+            try:
+                self._bg_workers.remove(w)
+            except ValueError:
+                pass
+
+        worker.signals.done.connect(_on_done)
+        self._pool.start(worker)
     def _apply_track_label_statuses(self, statuses: dict):
-        # 在主線程被呼叫：安全更新 UI
         for name, pair in statuses.items():
             if not isinstance(pair, (tuple, list)) or len(pair) < 2:
                 continue
             status_text, color = pair
             label_item = self.encoder_labels.get(name)
-            if label_item:
-                # 顯示名稱（alias）
-                alias = get_encoder_display_name(name)
-                full_label = f"{alias}\n狀態：{status_text}"
-                label_item.setPlainText(full_label)
-                label_item.setDefaultTextColor(QColor(color))
+            if not (label_item and isValid(label_item)):
+                # 物件已失效就拔掉 mapping，避免下次再碰
+                self.encoder_labels.pop(name, None)
+                continue
+            alias = get_encoder_display_name(name)
+            full_label = f"{alias}\n狀態：{status_text}"
+            label_item.setPlainText(full_label)
+            label_item.setDefaultTextColor(QColor(color))
 
     def draw_grid(self):
         log(f"🎯 draw_grid encoder_names:{self.encoder_names}")
@@ -502,11 +544,21 @@ class ScheduleView(QGraphicsView):
             log(f"🕘 無 {filename} 檔案，自動跳過載入。")
 
 
+    # def stop_timers(self):
+    #         if hasattr(self, "now_timer"):
+    #             self.now_timer.stop()
+    #         if hasattr(self, "global_timer"):
+    #             self.global_timer.stop()
     def stop_timers(self):
-            if hasattr(self, "now_timer"):
-                self.now_timer.stop()
-            if hasattr(self, "global_timer"):
-                self.global_timer.stop()
+        if hasattr(self, "now_timer"):
+            self.now_timer.stop()
+        if hasattr(self, "global_timer"):
+            self.global_timer.stop()
+        if hasattr(self, "_status_timer"):
+            self._status_timer.stop()
+        if hasattr(self, "block_status_timer"):
+            self.block_status_timer.stop()
+        self._is_closing = True  # ✅ 告知背景回來時別再碰 UI
     def set_encoder_names(self, names):
         self.encoder_names = names
         self.update()
