@@ -8,26 +8,14 @@ from encoder_status_manager import EncoderStatusManager
 import os
 import uuid
 from shiboken6 import isValid
+from utils import hours_to_hhmm, hhmm_to_hours 
+# from utils import min_to_hhmm, hours_to_hhmm
 from utils import log
 from encoder_utils import get_encoder_display_name
 from path_manager import PathManager 
 class _TrackLabelWorkerSignals(QObject):
     done = Signal(dict)  # {encoder_name: (status_text, color)}
 
-# class _TrackLabelWorker(QRunnable):
-#     def __init__(self, names, status_manager):
-#         super().__init__()
-#         self.names = names
-#         self.status_manager = status_manager
-#         self.signals = _TrackLabelWorkerSignals()
-
-#     def run(self):
-#         try:
-#             # 這裡會阻塞，但已經在背景執行緒了
-#             result = self.status_manager.refresh_all(self.names)
-#             self.signals.done.emit(result)
-#         except Exception:
-#             self.signals.done.emit({})
 class _TrackLabelWorker(QRunnable):
     def __init__(self, names, status_manager):
         super().__init__()
@@ -480,31 +468,100 @@ class ScheduleView(QGraphicsView):
                         block_map[item.block_id]["status"] = item.status
 
             with open(filename, "w", encoding="utf-8") as f:
-                json.dump([
-                    {
-                        "qdate": b["qdate"].toString("yyyy-MM-dd"),
-                        "track_index": b["track_index"],
-                        "start_hour": b["start_hour"],
-                        "duration": b["duration"],
-                        "end_hour": b["end_hour"],
-                        "end_qdate": (
-                            b["end_qdate"].toString("yyyy-MM-dd") if isinstance(b["end_qdate"], QDate)
-                            else b["end_qdate"]
-                        ),
-                        "label": b["label"],
-                        "id": b.get("id"),
-                        "encoder_name": b.get("encoder_name"),
-                        "snapshot_path": b.get("snapshot_path", ""),
-                        "status": b.get("status", "")
-                    } for b in self.block_data
-                ], f, ensure_ascii=False, indent=2)
-
+                # json.dump([
+                #     {
+                #         "qdate": b["qdate"].toString("yyyy-MM-dd"),
+                #         "track_index": b["track_index"],
+                #         "start_hour": b["start_hour"],
+                #         "duration": b["duration"],
+                #         "end_hour": b["end_hour"],
+                #         "end_qdate": (
+                #             b["end_qdate"].toString("yyyy-MM-dd") if isinstance(b["end_qdate"], QDate)
+                #             else b["end_qdate"]
+                #         ),
+                #         "label": b["label"],
+                #         "id": b.get("id"),
+                #         "encoder_name": b.get("encoder_name"),
+                #         "snapshot_path": b.get("snapshot_path", ""),
+                #         "status": b.get("status", "")
+                #     } for b in self.block_data
+                                # ], f, ensure_ascii=False, indent=2)
+                json.dump([{
+                    "qdate": b["qdate"].toString("yyyy-MM-dd"),
+                    "track_index": b["track_index"],
+                    "start_time": hours_to_hhmm(b["start_hour"]),     # HH:MM
+                    "duration_time": hours_to_hhmm(b["duration"]),    # HH:MM
+                    "end_time": hours_to_hhmm(b["end_hour"]),         # HH:MM
+                    "end_qdate": (
+                        b["end_qdate"].toString("yyyy-MM-dd")
+                        if isinstance(b["end_qdate"], QDate) else str(b["end_qdate"])
+                    ),
+                    "label": b["label"],
+                    "id": b.get("id"),
+                    "encoder_name": b.get("encoder_name"),
+                    "snapshot_path": b.get("snapshot_path",""),
+                    "status": b.get("status","")
+                } for b in self.block_data], f, ensure_ascii=False, indent=2)
             log(f"✅ 已儲存節目排程：{filename}")
         except Exception as e:
             log(f"❌ 儲存失敗: {e}",level="ERROR")
 
 
 
+    # def load_schedule(self, filename=None):
+    #     if filename is None:
+    #         # 嘗試從 config.json 讀取使用者設定的 schedule 檔案路徑
+    #         if os.path.exists("config.json"):
+    #             try:
+    #                 with open("config.json", "r", encoding="utf-8") as f:
+    #                     config = json.load(f)
+    #                     filename = config.get("schedule_file", "schedule.json")
+    #             except Exception as e:
+    #                 log(f"⚠️ 無法從 config.json 取得 schedule 檔：{e}",level="ERROR")
+    #                 filename = "schedule.json"
+    #         else:
+    #             filename = "schedule.json"
+
+    #     try:
+    #         with open(filename, "r", encoding="utf-8") as f:
+    #             raw = json.load(f)
+    #             # load_schedule
+    #             self.block_data = [{
+    #                  "qdate": b["qdate"].toString("yyyy-MM-dd"),
+    #                 "track_index": b["track_index"],
+    #                 "start_time": hours_to_hhmm(b["start_hour"]),     # HH:MM
+    #                 "duration_time": hours_to_hhmm(b["duration"]),    # HH:MM
+    #                 "end_time": hours_to_hhmm(b["end_hour"]),         # HH:MM
+    #                 "end_qdate": (
+    #                     b["end_qdate"].toString("yyyy-MM-dd")
+    #                     if isinstance(b["end_qdate"], QDate) else str(b["end_qdate"])
+    #                 ),
+    #                 "label": b["label"],
+    #                 "id": b.get("id"),
+    #                 "encoder_name": b.get("encoder_name"),
+    #                 "snapshot_path": b.get("snapshot_path",""),
+    #                 "status": b.get("status","")
+    #             } for b in raw]
+    #             # self.block_data = [
+    #             #     {
+    #             #         "qdate": QDate.fromString(b["qdate"], "yyyy-MM-dd"),
+    #             #         "track_index": b["track_index"],
+    #             #         "start_hour": b["start_hour"],
+    #             #         "duration": b["duration"],
+    #             #         "end_hour": b.get("end_hour", b["start_hour"] + b["duration"]),
+    #             #         "end_qdate": QDate.fromString(b.get("end_qdate"), "yyyy-MM-dd") if b.get("end_qdate") else None,
+    #             #         "label": b["label"],
+    #             #         "id": b.get("id"),
+    #             #         "encoder_name": b.get("encoder_name"),
+    #             #         # "snapshot_path": b.get("snapshot_path", ""),
+    #             #         "status": b.get("status", "")
+    #             #     } for b in raw
+    #             # ]
+    #         self.remap_block_tracks()
+    #         self.draw_grid()
+    #         log(f"📂 已載入節目排程 {filename}")
+    #     except FileNotFoundError:
+    #         log(f"🕘 無 {filename} 檔案，自動跳過載入。")
     def load_schedule(self, filename=None):
         if filename is None:
             # 嘗試從 config.json 讀取使用者設定的 schedule 檔案路徑
@@ -514,7 +571,7 @@ class ScheduleView(QGraphicsView):
                         config = json.load(f)
                         filename = config.get("schedule_file", "schedule.json")
                 except Exception as e:
-                    log(f"⚠️ 無法從 config.json 取得 schedule 檔：{e}",level="ERROR")
+                    log(f"⚠️ 無法從 config.json 取得 schedule 檔：{e}", level="ERROR")
                     filename = "schedule.json"
             else:
                 filename = "schedule.json"
@@ -522,27 +579,47 @@ class ScheduleView(QGraphicsView):
         try:
             with open(filename, "r", encoding="utf-8") as f:
                 raw = json.load(f)
-                self.block_data = [
-                    {
-                        "qdate": QDate.fromString(b["qdate"], "yyyy-MM-dd"),
-                        "track_index": b["track_index"],
-                        "start_hour": b["start_hour"],
-                        "duration": b["duration"],
-                        "end_hour": b.get("end_hour", b["start_hour"] + b["duration"]),
-                        "end_qdate": QDate.fromString(b.get("end_qdate"), "yyyy-MM-dd") if b.get("end_qdate") else None,
-                        "label": b["label"],
-                        "id": b.get("id"),
-                        "encoder_name": b.get("encoder_name"),
-                        # "snapshot_path": b.get("snapshot_path", ""),
-                        "status": b.get("status", "")
-                    } for b in raw
-                ]
+
+            new_data = []
+            for b in raw:
+                # 1) 讀日期
+                qdate = QDate.fromString(b["qdate"], "yyyy-MM-dd")
+                end_qdate = QDate.fromString(b.get("end_qdate") or b["qdate"], "yyyy-MM-dd")
+
+                # 2) HH:MM 轉回內部浮點小時
+                start_hour = hhmm_to_hours(b["start_time"])
+                duration   = hhmm_to_hours(b["duration_time"])
+                end_hour   = hhmm_to_hours(b["end_time"]) if b.get("end_time") else (start_hour + duration)
+
+                # 3) 其他欄位容錯
+                label = b.get("label", "")
+                try:
+                    track_idx = int(b.get("track_index", 0))
+                except Exception:
+                    track_idx = 0
+
+                new_data.append({
+                    "qdate": qdate,
+                    "track_index": track_idx,
+                    "start_hour": start_hour,    # ✅ 內部一律用 float 小時
+                    "duration": duration,
+                    "end_hour": end_hour,
+                    "end_qdate": end_qdate,
+                    "label": label,
+                    "id": b.get("id"),
+                    "encoder_name": b.get("encoder_name"),
+                    "snapshot_path": b.get("snapshot_path", ""),
+                    "status": b.get("status", "")
+                })
+
+            self.block_data = new_data
             self.remap_block_tracks()
             self.draw_grid()
             log(f"📂 已載入節目排程 {filename}")
         except FileNotFoundError:
             log(f"🕘 無 {filename} 檔案，自動跳過載入。")
-
+        except Exception as e:
+            log(f"❌ 載入失敗：{e}", level="ERROR")
 
     # def stop_timers(self):
     #         if hasattr(self, "now_timer"):

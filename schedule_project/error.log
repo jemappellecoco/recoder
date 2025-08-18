@@ -16,3 +16,85 @@ Traceback (most recent call last):
                                                 ^^
 NameError: name 'Qt' is not defined
 
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\main.py", line 46, in <module>
+    win = MainWindow()
+  File "c:\Users\coco\recoder\schedule_project\ui_main_window.py", line 239, in __init__
+    self.view.load_schedule()
+    ~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "c:\Users\coco\recoder\schedule_project\schedule_view.py", line 532, in load_schedule
+    "start_time": b["start_time"],
+                  ~^^^^^^^^^^^^^^
+KeyError: 'start_time'
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\main.py", line 46, in <module>
+    win = MainWindow()
+  File "c:\Users\coco\recoder\schedule_project\ui_main_window.py", line 239, in __init__
+    self.view.load_schedule()
+    ~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "c:\Users\coco\recoder\schedule_project\schedule_view.py", line 532, in load_schedule
+    "start_time": b["start_time"],
+                  ~^^^^^^^^^^^^^^
+KeyError: 'start_time'
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\main.py", line 46, in <module>
+    win = MainWindow()
+  File "c:\Users\coco\recoder\schedule_project\ui_main_window.py", line 239, in __init__
+    self.view.load_schedule()
+    ~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "c:\Users\coco\recoder\schedule_project\schedule_view.py", line 530, in load_schedule
+    "qdate": b["qdate"].toString("yyyy-MM-dd"),
+             ^^^^^^^^^^^^^^^^^^^
+AttributeError: 'str' object has no attribute 'toString'
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\main.py", line 46, in <module>
+    win = MainWindow()
+  File "c:\Users\coco\recoder\schedule_project\ui_main_window.py", line 239, in __init__
+    self.view.load_schedule()
+    ~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "c:\Users\coco\recoder\schedule_project\schedule_view.py", line 561, in load_schedule
+    self.draw_grid()
+    ~~~~~~~~~~~~~~^^
+  File "c:\Users\coco\recoder\schedule_project\schedule_view.py", line 278, in draw_grid
+    self.draw_blocks()
+    ~~~~~~~~~~~~~~~~^^
+  File "c:\Users\coco\recoder\schedule_project\schedule_view.py", line 309, in draw_blocks
+    total_hours = data["start_hour"] + data["duration"]
+                  ~~~~^^^^^^^^^^^^^^
+KeyError: 'start_hour'
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\add_block_dialog.py", line 81, in format_time_input
+    min_start = _ceil_to_next_minute(QDateTime.currentDateTime().addSecs(MIN_LEAD_SECONDS))
+                ^^^^^^^^^^^^^^^^^^^^
+NameError: name '_ceil_to_next_minute' is not defined
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\add_block_dialog.py", line 81, in format_time_input
+    min_start = _ceil_to_next_minute(QDateTime.currentDateTime().addSecs(MIN_LEAD_SECONDS))
+                ^^^^^^^^^^^^^^^^^^^^
+NameError: name '_ceil_to_next_minute' is not defined
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\add_block_dialog.py", line 81, in format_time_input
+    min_start = _ceil_to_next_minute(QDateTime.currentDateTime().addSecs(MIN_LEAD_SECONDS))
+                ^^^^^^^^^^^^^^^^^^^^
+NameError: name '_ceil_to_next_minute' is not defined
+

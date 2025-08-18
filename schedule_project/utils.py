@@ -1,7 +1,8 @@
 # utils.py
 import sys
 import os
-from PySide6.QtCore import QDateTime, QObject, Signal,Qt
+from PySide6.QtCore import QDateTime, QObject, Signal,Qt,QDate, QTime
+
 from PySide6.QtGui import QTextCursor
 from PySide6.QtCore import QTimer
 import traceback
@@ -10,10 +11,89 @@ _buffered_logs = []
 MAX_LOG_LINES = 500
 DEBUG_MODE = True
 # 用訊號把任何執行緒的 log 丟回主執行緒處理
+
 class _LogBus(QObject):
     pushed = Signal(str)
 
 _log_bus = None
+# ==== HH:MM <-> 分鐘 / QTime / 小時數 工具 ====
+
+DAY_MIN = 24 * 60
+
+def hhmm_to_min(s: str) -> int:
+    """
+    'HH:MM' -> 整數分鐘（0..1439，超出一律取模）
+    """
+    try:
+        h, m = s.strip().split(":")
+        return (int(h) * 60 + int(m)) % DAY_MIN
+    except Exception:
+        return 0
+
+def min_to_hhmm(mins: int | float) -> str:
+    """
+    分鐘 -> 'HH:MM'（會做 24h 取模）
+    """
+    mins = int(round(mins)) % DAY_MIN
+    return f"{mins // 60:02d}:{mins % 60:02d}"
+
+def qtime_to_hhmm(t: QTime) -> str:
+    """
+    QTime -> 'HH:MM'
+    """
+    if not isinstance(t, QTime) or not t.isValid():
+        return "00:00"
+    return f"{t.hour():02d}:{t.minute():02d}"
+
+def hhmm_to_qtime(s: str) -> QTime:
+    """
+    'HH:MM' -> QTime（非法字串回傳 00:00）
+    """
+    try:
+        h, m = s.strip().split(":")
+        h, m = int(h), int(m)
+        if 0 <= h < 24 and 0 <= m < 60:
+            return QTime(h, m)
+    except Exception:
+        pass
+    return QTime(0, 0)
+
+def hours_to_hhmm(hours: float) -> str:
+    """
+    小時(可含小數) -> 'HH:MM'
+    例如 1.5 -> '01:30'
+    """
+    total_min = int(round(float(hours) * 60))
+    return min_to_hhmm(total_min)
+
+def hhmm_to_hours(s: str) -> float:
+    """
+    'HH:MM' -> 小時(浮點)
+    例如 '01:30' -> 1.5
+    """
+    return hhmm_to_min(s) / 60.0
+
+def add_minutes_wrap(qdate: QDate, qtime: QTime, delta_min: int) -> tuple[QDate, QTime]:
+    """
+    在 (qdate, qtime) 上加 delta_min 分鐘，回傳(可能跨日)的新 (QDate, QTime)
+    """
+    if not isinstance(qdate, QDate):
+        qdate = QDate.currentDate()
+    if not isinstance(qtime, QTime) or not qtime.isValid():
+        qtime = QTime(0, 0)
+
+    base_min = qtime.hour() * 60 + qtime.minute()
+    total = base_min + int(delta_min)
+
+    # 計算跨日
+    days_delta, mins = divmod(total, DAY_MIN)
+    if mins < 0:
+        mins += DAY_MIN
+        days_delta -= 1
+
+    new_date = qdate.addDays(days_delta)
+    new_time = QTime(mins // 60, mins % 60)
+    return new_date, new_time
 
 def set_log_box(widget):
     """主視窗建立好 QTextEdit 後要第一時間呼叫這個。"""
