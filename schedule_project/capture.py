@@ -4,7 +4,7 @@ import threading
 from concurrent.futures import ThreadPoolExecutor
 
 from encoder_utils import send_encoder_command
-from utils import log,log_exception
+from utils import log
 from path_manager import PathManager
 cleanup_running = True
 
@@ -51,7 +51,7 @@ def take_snapshot_from_block(block, encoder_names, snapshot_root: str = None):
                     except Exception as e:
                         log(f"⚠️ 無法刪除舊圖片 {f}：{e}")
         except Exception as e:
-            log_exception(e, "讀取 snapshot_dir 錯誤")
+            log(e, "讀取 snapshot_dir 錯誤")
             return None
 
         log(f"📸 拍照中 - block: {block.label} / encoder: {encoder_name}")
@@ -71,7 +71,7 @@ def take_snapshot_from_block(block, encoder_names, snapshot_root: str = None):
         return future
 
     except Exception as e:
-        log_exception(f"❌ take_snapshot_from_block 錯誤：{e}")
+        log(f"❌ take_snapshot_from_block 錯誤：{e}",level="ERROR")
         return None
 def take_snapshot_by_encoder(encoder_name, preview_root: str | None = None):
     try:
@@ -118,7 +118,7 @@ def take_snapshot_by_encoder(encoder_name, preview_root: str | None = None):
         return future
 
     except Exception as e:
-        log_exception(f"❌ take_snapshot_by_encoder 錯誤：{e}")
+        log(f"❌ take_snapshot_by_encoder 錯誤：{e}",level="ERROR")
         return None
 
 # capture.py
@@ -143,7 +143,7 @@ def start_cleanup_timer(preview_root, check_period=600, max_age=300, run_immedia
                             deleted += 1
             log(f"🧹 自動清理 preview，已刪除 {deleted} 張舊圖片")
         except Exception as e:
-            log_exception(f"❌ 清理 preview 圖片失敗：{e}")
+            log(f"❌ 清理 preview 圖片失敗：{e}",level="ERROR")
         finally:
             if cleanup_running:
                 cleanup_timer = threading.Timer(check_period, cleanup)

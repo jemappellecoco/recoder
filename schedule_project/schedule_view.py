@@ -8,7 +8,7 @@ from encoder_status_manager import EncoderStatusManager
 import os
 import uuid
 from shiboken6 import isValid
-from utils import log,log_exception
+from utils import log
 from encoder_utils import get_encoder_display_name
 from path_manager import PathManager 
 class _TrackLabelWorkerSignals(QObject):
@@ -501,7 +501,7 @@ class ScheduleView(QGraphicsView):
 
             log(f"✅ 已儲存節目排程：{filename}")
         except Exception as e:
-            log_exception(f"❌ 儲存失敗: {e}")
+            log(f"❌ 儲存失敗: {e}",level="ERROR")
 
 
 
@@ -514,7 +514,7 @@ class ScheduleView(QGraphicsView):
                         config = json.load(f)
                         filename = config.get("schedule_file", "schedule.json")
                 except Exception as e:
-                    log_exception(f"⚠️ 無法從 config.json 取得 schedule 檔：{e}")
+                    log(f"⚠️ 無法從 config.json 取得 schedule 檔：{e}",level="ERROR")
                     filename = "schedule.json"
             else:
                 filename = "schedule.json"

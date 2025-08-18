@@ -75,7 +75,7 @@ def send_command(sock, cmd):
             except socket.timeout:
                 break
         response = data.decode("utf-8", errors="replace")
-        log(f"⬅️ Response:\n {response}")
+        # log(f"⬅️ Response:\n {response}")
         return response.strip()
     except Exception as e:
         log(f"❌ 指令傳送失敗: {e}")

@@ -25,6 +25,14 @@ def _safe_pixmap_from_file(path: str) -> QPixmap | None:
         return pm
     except Exception:
         return None
+def _sync_runner(self):
+    parent_view = self.scene().parent()
+    if hasattr(parent_view, "runner"):
+        parent_view.runner.schedule_data = parent_view.block_data
+        parent_view.runner.blocks = getattr(parent_view, "blocks", [])
+    mw = parent_view.window()
+    if hasattr(mw, "sync_runner_data"):
+        mw.sync_runner_data()
 class PreviewImageItem(QGraphicsPixmapItem):
     def __init__(self, block_id, start_date, path_manager, label):
         super().__init__()
@@ -397,7 +405,7 @@ class TimeBlock(QGraphicsRectItem):
                 "end_qdate":  end_qdate
             })
             parent_view.save_schedule()
-
+            _sync_runner(self) 
 
 
 
@@ -414,7 +422,7 @@ class TimeBlock(QGraphicsRectItem):
         self.setFlag(QGraphicsRectItem.ItemIsMovable, False)
         self.prevent_drag = False
         parent_view = self.scene().parent()
-        
+    
         if not self.has_moved:
             self.setFlag(QGraphicsRectItem.ItemIsMovable, False)
             self.update_geometry(parent_view.base_date)
@@ -441,6 +449,7 @@ class TimeBlock(QGraphicsRectItem):
                     })
                     break
             parent_view.save_schedule()
+            _sync_runner(self)
             self.setFlag(QGraphicsRectItem.ItemIsMovable, False)
             return
 
@@ -480,6 +489,7 @@ class TimeBlock(QGraphicsRectItem):
             self.flash_red()
             self.update_geometry(parent_view.base_date)
             parent_view.save_schedule()
+            _sync_runner(self) 
             return
         # ✅ 重疊檢查
 
@@ -519,6 +529,7 @@ class TimeBlock(QGraphicsRectItem):
         
         super().mouseReleaseEvent(event)
         parent_view.save_schedule()
+        _sync_runner(self) 
         self.setFlag(QGraphicsRectItem.ItemIsMovable, False)  
     def update_status_by_time(self):
         now = QDateTime.currentDateTime()
@@ -571,51 +582,115 @@ class TimeBlock(QGraphicsRectItem):
         # ✅ 點到區塊其他地方 → 編輯 Dialog
         log(f"📝 點擊 block：{self.label}")
         parent_view = self.scene().parent()
-        block_data = None
-        for b in parent_view.block_data:
-            if b.get("id") == self.block_id:
-                block_data = b
-                break
+        encoder_names = getattr(parent_view, "encoder_names", [])
 
-        if not block_data:
-            log("⚠️ 找不到對應 block 資料")
-            return
+        # 用目前的 block 狀態當作初值，確保看到的是最新
+        block_dict = {
+            "qdate": self.start_date,
+            "label": self.label,
+            "start_hour": float(self.start_hour),
+            "duration": float(self.duration_hours),
+            "encoder_name": encoder_names[self.track_index] if 0 <= self.track_index < len(encoder_names) else None,
+            "id": self.block_id,
+        }
+
+        # 是否唯讀：已開始就鎖日期/開始時間/設備（EditBlockDialog 也會再檢一次）
+        readonly = QDateTime(self.start_date, QTime(int(self.start_hour), int((self.start_hour % 1) * 60))) <= QDateTime.currentDateTime()
+        dialog = EditBlockDialog(block_dict, encoder_names, readonly=readonly)
+        # parent_view = self.scene().parent()
+        # block_data = None
+        # for b in parent_view.block_data:
+        #     if b.get("id") == self.block_id:
+        #         block_data = b
+        #         break
+
+        # if not block_data:
+        #     log("⚠️ 找不到對應 block 資料")
+        #     return
         
-        dialog = EditBlockDialog(block_data, self.encoder_names, readonly=(now > end_dt))
+        # dialog = EditBlockDialog(block_data, self.encoder_names, readonly=(now > end_dt))
+        # if dialog.exec():
+        #     updated = dialog.get_updated_data()
+        #        # ✅ 加這段防呆檢查「是否會落在過去」
+        #     start_dt = QDateTime(updated["qdate"], QTime(int(updated["start_hour"]), int((updated["start_hour"] % 1) * 60)))
+        #     end_hour = updated["start_hour"] + updated["duration"]
+        #     end_qdate = updated["qdate"].addDays(1) if end_hour >= 24 else updated["qdate"]
+        #     end_dt = QDateTime(end_qdate, QTime(int(end_hour % 24), int((end_hour % 1) * 60)))
+        #     now = QDateTime.currentDateTime()
+
+        #     if start_dt < now or end_dt < now:
+               
+        #         self.flash_red()
+        #         return
+        #     self.start_date = updated["qdate"]
+        #     self.label = updated["label"]
+        #     self.start_hour = updated["start_hour"]
+        #     self.duration_hours = updated["duration"]
+        #     self.track_index = parent_view.encoder_names.index(updated["encoder_name"])
+
+        #     self.update_geometry(parent_view.base_date)
+        #     self.update_text_position()
+        #     end_hour, end_qdate = self.compute_end_info()
+        #     block_data.update({
+        #         "qdate": self.start_date,
+        #         "start_hour": self.start_hour,
+        #         "duration": self.duration_hours,
+        #         "end_hour": end_hour,
+        #         "end_qdate": end_qdate,
+        #         "label": self.label,
+        #         "encoder_name": updated["encoder_name"]
+        #     })
+        #     parent_view.save_schedule()
+
+        # event.accept()
         if dialog.exec():
             updated = dialog.get_updated_data()
-               # ✅ 加這段防呆檢查「是否會落在過去」
-            start_dt = QDateTime(updated["qdate"], QTime(int(updated["start_hour"]), int((updated["start_hour"] % 1) * 60)))
+
+            # 只擋「結束早於現在」
             end_hour = updated["start_hour"] + updated["duration"]
             end_qdate = updated["qdate"].addDays(1) if end_hour >= 24 else updated["qdate"]
             end_dt = QDateTime(end_qdate, QTime(int(end_hour % 24), int((end_hour % 1) * 60)))
-            now = QDateTime.currentDateTime()
-
-            if start_dt < now or end_dt < now:
-               
+            if end_dt < QDateTime.currentDateTime():
                 self.flash_red()
                 return
+
+            # 回寫到 TimeBlock 本體
             self.start_date = updated["qdate"]
             self.label = updated["label"]
-            self.start_hour = updated["start_hour"]
-            self.duration_hours = updated["duration"]
-            self.track_index = parent_view.encoder_names.index(updated["encoder_name"])
+            self.start_hour = float(updated["start_hour"])
+            self.duration_hours = float(updated["duration"])
+            self.track_index = getattr(parent_view, "encoder_names", []).index(updated["encoder_name"]) \
+                if updated.get("encoder_name") in getattr(parent_view, "encoder_names", []) else self.track_index
 
+            # 重算位置與顯示
             self.update_geometry(parent_view.base_date)
             self.update_text_position()
-            end_hour, end_qdate = self.compute_end_info()
-            block_data.update({
-                "qdate": self.start_date,
-                "start_hour": self.start_hour,
-                "duration": self.duration_hours,
-                "end_hour": end_hour,
-                "end_qdate": end_qdate,
-                "label": self.label,
-                "encoder_name": updated["encoder_name"]
-            })
-            parent_view.save_schedule()
 
-        # event.accept()
+            # 回寫到 block_data（同你現有邏輯）
+            end_hour, end_qdate = self.compute_end_info()
+            for b in parent_view.block_data:
+                if b.get("id") == self.block_id:
+                    b.update({
+                        "qdate": self.start_date,
+                        "start_hour": self.start_hour,
+                        "duration": self.duration_hours,
+                        "end_hour": end_hour,
+                        "end_qdate": end_qdate,
+                        "label": self.label,
+                        "encoder_name": updated["encoder_name"]
+                    })
+                    break
+
+            # 存檔
+            parent_view.save_schedule()
+            _sync_runner(self) 
+            # # ⬅️⬅️ 新增：把最新資料同步回 runner / schedule_manager
+            # if hasattr(parent_view, "runner"):
+            #     parent_view.runner.schedule_data = parent_view.block_data
+            #     parent_view.runner.blocks = getattr(parent_view, "blocks", [])
+            # mw = parent_view.window()
+            # if hasattr(mw, "sync_runner_data"):
+            #     mw.sync_runner_data()
 
 
     def flash_red(self):
