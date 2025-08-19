@@ -6,6 +6,7 @@ import logging
 from path_manager import PathManager
 import os
 from utils import log
+from utils import hours_to_hhmm, hhmm_to_hours
 logging.basicConfig(level=logging.INFO)
 def _safe_pixmap_from_file(path: str) -> QPixmap | None:
     try:
@@ -181,6 +182,15 @@ class TimeBlock(QGraphicsRectItem):
         )
 
     def update_geometry(self, base_date: QDate):
+            # 🔧 保證兩邊都是 QDate
+        if isinstance(base_date, str):
+            base_date = QDate.fromString(base_date, "yyyy-MM-dd")
+            if not base_date.isValid():
+                base_date = QDate.currentDate()
+
+        if isinstance(self.start_date, str):
+            q = QDate.fromString(self.start_date, "yyyy-MM-dd")
+            self.start_date = q if q.isValid() else QDate.currentDate()
         parent_view = self.scene().parent()
         hour_width = getattr(parent_view, 'hour_width', 20)
         day_width = 24 * hour_width
@@ -532,6 +542,26 @@ class TimeBlock(QGraphicsRectItem):
         _sync_runner(self) 
         self.setFlag(QGraphicsRectItem.ItemIsMovable, False)  
     def update_status_by_time(self):
+        # 🔧 最小修正：確保 self.start_date 是 QDate
+        if isinstance(self.start_date, str):
+            self.start_date = QDate.fromString(self.start_date, "yyyy-MM-dd")
+            if not self.start_date.isValid():
+                self.start_date = QDate.currentDate()
+
+        # 🔧 保證型別正確（避免偶爾是字串）
+        try:
+            sh = float(self.start_hour)
+        except Exception:
+            sh = 0.0
+        try:
+            dur_h = float(self.duration_hours)
+        except Exception:
+            dur_h = 0.0
+
+        start_dt = QDateTime(
+            self.start_date,
+            QTime(int(self.start_hour), int((self.start_hour % 1) * 60))
+        )
         now = QDateTime.currentDateTime()
         start_dt = QDateTime(self.start_date, QTime(int(self.start_hour), int((self.start_hour % 1) * 60)))
         end_dt = start_dt.addSecs(int(self.duration_hours * 3600))
@@ -588,8 +618,8 @@ class TimeBlock(QGraphicsRectItem):
         block_dict = {
             "qdate": self.start_date,
             "label": self.label,
-            "start_hour": float(self.start_hour),
-            "duration": float(self.duration_hours),
+            "start_time": hours_to_hhmm(self.start_hour), 
+            "duration_time": hours_to_hhmm(self.duration_hours),
             "encoder_name": encoder_names[self.track_index] if 0 <= self.track_index < len(encoder_names) else None,
             "id": self.block_id,
         }
@@ -597,54 +627,10 @@ class TimeBlock(QGraphicsRectItem):
         # 是否唯讀：已開始就鎖日期/開始時間/設備（EditBlockDialog 也會再檢一次）
         readonly = QDateTime(self.start_date, QTime(int(self.start_hour), int((self.start_hour % 1) * 60))) <= QDateTime.currentDateTime()
         dialog = EditBlockDialog(block_dict, encoder_names, readonly=readonly)
-        # parent_view = self.scene().parent()
-        # block_data = None
-        # for b in parent_view.block_data:
-        #     if b.get("id") == self.block_id:
-        #         block_data = b
-        #         break
-
-        # if not block_data:
-        #     log("⚠️ 找不到對應 block 資料")
-        #     return
-        
-        # dialog = EditBlockDialog(block_data, self.encoder_names, readonly=(now > end_dt))
-        # if dialog.exec():
-        #     updated = dialog.get_updated_data()
-        #        # ✅ 加這段防呆檢查「是否會落在過去」
-        #     start_dt = QDateTime(updated["qdate"], QTime(int(updated["start_hour"]), int((updated["start_hour"] % 1) * 60)))
-        #     end_hour = updated["start_hour"] + updated["duration"]
-        #     end_qdate = updated["qdate"].addDays(1) if end_hour >= 24 else updated["qdate"]
-        #     end_dt = QDateTime(end_qdate, QTime(int(end_hour % 24), int((end_hour % 1) * 60)))
-        #     now = QDateTime.currentDateTime()
-
-        #     if start_dt < now or end_dt < now:
-               
-        #         self.flash_red()
-        #         return
-        #     self.start_date = updated["qdate"]
-        #     self.label = updated["label"]
-        #     self.start_hour = updated["start_hour"]
-        #     self.duration_hours = updated["duration"]
-        #     self.track_index = parent_view.encoder_names.index(updated["encoder_name"])
-
-        #     self.update_geometry(parent_view.base_date)
-        #     self.update_text_position()
-        #     end_hour, end_qdate = self.compute_end_info()
-        #     block_data.update({
-        #         "qdate": self.start_date,
-        #         "start_hour": self.start_hour,
-        #         "duration": self.duration_hours,
-        #         "end_hour": end_hour,
-        #         "end_qdate": end_qdate,
-        #         "label": self.label,
-        #         "encoder_name": updated["encoder_name"]
-        #     })
-        #     parent_view.save_schedule()
-        # === ❶ 重點：建立 overlap_checker，並「排除自己」===
+               # === ❶ 重點：建立 overlap_checker，並「排除自己」===
         def overlap_checker(qdate, track_index, start_hour, duration):
             # 你的 ScheduleView.is_overlap 簽名：(..., exclude_label=None)
-            return parent_view.is_overlap(qdate, track_index, start_hour, duration, exclude_label=self.label)
+            return parent_view.is_overlap(qdate, track_index, start_hour, duration, exclude_label=self.block_id)
 
         readonly = start_dt <= QDateTime.currentDateTime()
         # ❷ 把 overlap_checker 傳給 EditBlockDialog（照我前一則回覆改好的版本）
@@ -652,20 +638,31 @@ class TimeBlock(QGraphicsRectItem):
         # event.accept()
         if dialog.exec():
             updated = dialog.get_updated_data()
-
+             # 1) 轉換 qdate（字串 -> QDate）
+            qdate_val = updated.get("qdate")
+            if isinstance(qdate_val, QDate):
+                qdate_q = qdate_val
+            else:
+                qdate_q = QDate.fromString(str(qdate_val), "yyyy-MM-dd")  # 安全轉型
+                # 轉回內部 float
+            new_start_hour = hhmm_to_hours(updated["start_time"])
+            new_duration   = hhmm_to_hours(updated["duration_time"])
             # 只擋「結束早於現在」
-            end_hour = updated["start_hour"] + updated["duration"]
-            end_qdate = updated["qdate"].addDays(1) if end_hour >= 24 else updated["qdate"]
-            end_dt = QDateTime(end_qdate, QTime(int(end_hour % 24), int((end_hour % 1) * 60)))
+            end_hour  = new_start_hour + new_duration
+            end_qdate_q = qdate_q.addDays(1) if end_hour >= 24 else qdate_q
+            end_dt = QDateTime(end_qdate_q, QTime(int(end_hour % 24), int((end_hour % 1) * 60)))
+            # end_qdate = updated["qdate"].addDays(1) if end_hour >= 24 else updated["qdate"]
+            # end_dt = QDateTime(end_qdate, QTime(int(end_hour % 24), int((end_hour % 1) * 60)))
             if end_dt < QDateTime.currentDateTime():
                 self.flash_red()
                 return
 
             # 回寫到 TimeBlock 本體
-            self.start_date = updated["qdate"]
+            # self.start_date = updated["qdate"]
+            self.start_date = qdate_q 
             self.label = updated["label"]
-            self.start_hour = float(updated["start_hour"])
-            self.duration_hours = float(updated["duration"])
+            self.start_hour = new_start_hour
+            self.duration_hours = new_duration
             self.track_index = getattr(parent_view, "encoder_names", []).index(updated["encoder_name"]) \
                 if updated.get("encoder_name") in getattr(parent_view, "encoder_names", []) else self.track_index
 
@@ -684,7 +681,9 @@ class TimeBlock(QGraphicsRectItem):
                         "end_hour": end_hour,
                         "end_qdate": end_qdate,
                         "label": self.label,
-                        "encoder_name": updated["encoder_name"]
+                        "encoder_name": updated["encoder_name"],
+                        "start_time": hours_to_hhmm(self.start_hour),
+                        "duration_time": hours_to_hhmm(self.duration_hours),
                     })
                     break
 

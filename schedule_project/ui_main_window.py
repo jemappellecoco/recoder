@@ -32,6 +32,7 @@ from EncoderManagerDialog import EncoderManagerDialog
 from encoder_utils import save_encoder_config, reload_encoder_config
 from encoder_status_manager import EncoderStatusManager
 from schedule_view import _TrackLabelWorker
+from utils import hours_to_hhmm, hhmm_to_hours
 def find_latest_snapshot_by_prefix(preview_dir, encoder_name):
     pattern = os.path.join(preview_dir,"preview", f"{encoder_name}*.png") 
     log(f"🔍 查找最新快照：{pattern}")
@@ -778,12 +779,14 @@ class MainWindow(QMainWindow):
         if dialog.exec() == QDialog.Accepted:
             name, qdate, time_obj, duration, encoder_name = dialog.get_values()
             track_index = self.encoder_names.index(encoder_name)
-            start_hour = round(time_obj.hour() + time_obj.minute() / 60, 2)
+            start_hour = hhmm_to_hours(time_obj.toString("HH:mm"))
+            # start_time = time_obj.toString("HH:mm")
+            duration_hours = hhmm_to_hours(duration) if isinstance(duration, str) else float(duration)
             self.block_manager.add_block_with_unique_label(
                 name, 
                 track_index=track_index, 
                 start_hour=start_hour, 
-                duration=duration, 
+                duration=duration_hours, 
                 encoder_name=encoder_name,
                 qdate=qdate
                 )

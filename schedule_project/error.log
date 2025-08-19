@@ -170,3 +170,246 @@ Traceback (most recent call last):
                                                    ^^^^^^^^^^^^^^^^^^^^^
 AttributeError: 'AddBlockDialog' object has no attribute 'MIN_LEAD_SECONDS'
 
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 600, in mouseDoubleClickEvent
+    dialog = EditBlockDialog(block_dict, encoder_names, readonly=readonly)
+  File "c:\Users\coco\recoder\schedule_project\edit_block_dialog.py", line 20, in __init__
+    hour = int(block_data["start_hour"])
+               ~~~~~~~~~~^^^^^^^^^^^^^^
+KeyError: 'start_hour'
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 600, in mouseDoubleClickEvent
+    dialog = EditBlockDialog(block_dict, encoder_names, readonly=readonly)
+  File "c:\Users\coco\recoder\schedule_project\edit_block_dialog.py", line 20, in __init__
+    hour = int(block_data["start_hour"])
+               ~~~~~~~~~~^^^^^^^^^^^^^^
+KeyError: 'start_hour'
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 600, in mouseDoubleClickEvent
+    dialog = EditBlockDialog(block_dict, encoder_names, readonly=readonly)
+  File "c:\Users\coco\recoder\schedule_project\edit_block_dialog.py", line 20, in __init__
+    hour = int(block_data["start_hour"])
+               ~~~~~~~~~~^^^^^^^^^^^^^^
+KeyError: 'start_hour'
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 600, in mouseDoubleClickEvent
+    dialog = EditBlockDialog(block_dict, encoder_names, readonly=readonly)
+  File "c:\Users\coco\recoder\schedule_project\edit_block_dialog.py", line 20, in __init__
+    hour = int(block_data["start_hour"])
+               ~~~~~~~~~~^^^^^^^^^^^^^^
+KeyError: 'start_hour'
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 600, in mouseDoubleClickEvent
+    dialog = EditBlockDialog(block_dict, encoder_names, readonly=readonly)
+  File "c:\Users\coco\recoder\schedule_project\edit_block_dialog.py", line 56, in __init__
+    self.duration_input.setValue(float(block_data["duration"]))
+                                       ~~~~~~~~~~^^^^^^^^^^^^
+KeyError: 'duration'
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 600, in mouseDoubleClickEvent
+    dialog = EditBlockDialog(block_dict, encoder_names, readonly=readonly)
+  File "c:\Users\coco\recoder\schedule_project\edit_block_dialog.py", line 56, in __init__
+    self.duration_input.setValue(float(block_data["duration"]))
+                                       ~~~~~~~~~~^^^^^^^^^^^^
+KeyError: 'duration'
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 600, in mouseDoubleClickEvent
+    dialog = EditBlockDialog(block_dict, encoder_names, readonly=readonly)
+  File "c:\Users\coco\recoder\schedule_project\edit_block_dialog.py", line 56, in __init__
+    self.duration_input.setValue(float(block_data["duration"]))
+                                       ~~~~~~~~~~^^^^^^^^^^^^
+KeyError: 'duration'
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 600, in mouseDoubleClickEvent
+    dialog = EditBlockDialog(block_dict, encoder_names, readonly=readonly)
+  File "c:\Users\coco\recoder\schedule_project\edit_block_dialog.py", line 56, in __init__
+    self.duration_input.setValue(float(block_data["duration"]))
+                                       ~~~~~~~~~~^^^^^^^^^^^^
+KeyError: 'duration'
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 611, in mouseDoubleClickEvent
+    updated = dialog.get_updated_data()
+  File "c:\Users\coco\recoder\schedule_project\edit_block_dialog.py", line 152, in get_updated_data
+    "duration_time": hours_to_hhmm(duration_h),
+                     ^^^^^^^^^^^^^
+NameError: name 'hours_to_hhmm' is not defined
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 611, in mouseDoubleClickEvent
+    updated = dialog.get_updated_data()
+  File "c:\Users\coco\recoder\schedule_project\edit_block_dialog.py", line 152, in get_updated_data
+    "duration_time": hours_to_hhmm(duration_h),
+                     ^^^^^^^^^^^^^
+NameError: name 'hours_to_hhmm' is not defined
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 616, in mouseDoubleClickEvent
+    end_hour = updated["start_hour"] + updated["duration"]
+               ~~~~~~~^^^^^^^^^^^^^^
+KeyError: 'start_hour'
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 617, in mouseDoubleClickEvent
+    end_qdate = updated["qdate"].addDays(1) if end_hour >= 24 else updated["qdate"]
+                ^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'str' object has no attribute 'addDays'
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 623, in mouseDoubleClickEvent
+    end_qdate = updated["qdate"].addDays(1) if end_hour >= 24 else updated["qdate"]
+                ^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'str' object has no attribute 'addDays'
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 640, in mouseDoubleClickEvent
+    self.update_geometry(parent_view.base_date)
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 190, in update_geometry
+    day_offset = base_date.daysTo(self.start_date)
+TypeError: 'PySide6.QtCore.QDate.daysTo' called with wrong argument types:
+  PySide6.QtCore.QDate.daysTo(str)
+Supported signatures:
+  PySide6.QtCore.QDate.daysTo(d: PySide6.QtCore.QDate, /)
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\schedule_view.py", line 193, in update_all_blocks
+    item.update_status_by_time()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 537, in update_status_by_time
+    start_dt = QDateTime(self.start_date, QTime(int(self.start_hour), int((self.start_hour % 1) * 60)))
+TypeError: 'PySide6.QtCore.QDateTime.__init__' called with wrong argument types:
+  PySide6.QtCore.QDateTime.__init__(str, QTime)
+Supported signatures:
+  PySide6.QtCore.QDateTime.__init__()
+  PySide6.QtCore.QDateTime.__init__(date: PySide6.QtCore.QDate, time: PySide6.QtCore.QTime, spec: PySide6.QtCore.Qt.TimeSpec, /, offsetSeconds: int | None = None)
+  PySide6.QtCore.QDateTime.__init__(date: PySide6.QtCore.QDate, time: PySide6.QtCore.QTime, /, resolve: PySide6.QtCore.QDateTime.TransitionResolution = Instance(PySide6.QtCore.QDateTime.TransitionResolution.LegacyBehavior))
+  PySide6.QtCore.QDateTime.__init__(date: PySide6.QtCore.QDate, time: PySide6.QtCore.QTime, timeZone: PySide6.QtCore.QTimeZone | PySide6.QtCore.QTimeZone.Initialization, /, resolve: PySide6.QtCore.QDateTime.TransitionResolution = Instance(PySide6.QtCore.QDateTime.TransitionResolution.LegacyBehavior))
+  PySide6.QtCore.QDateTime.__init__(other: PySide6.QtCore.QDateTime, /)
+  PySide6.QtCore.QDateTime.__init__(year: int, month: int, day: int, h: int, m: int, s: int, /)
+  PySide6.QtCore.QDateTime.__init__(year: int, month: int, day: int, h: int, m: int, s: int, ms: int, /, spec: PySide6.QtCore.Qt.TimeSpec = Instance(Qt.LocalTime))
+  PySide6.QtCore.QDateTime.__init__(year: int, month: int, day: int, h: int, m: int, s: int, ms: int, /, spec: int = Instance(Qt.LocalTime))
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\schedule_view.py", line 193, in update_all_blocks
+    item.update_status_by_time()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 537, in update_status_by_time
+    start_dt = QDateTime(self.start_date, QTime(int(self.start_hour), int((self.start_hour % 1) * 60)))
+TypeError: 'PySide6.QtCore.QDateTime.__init__' called with wrong argument types:
+  PySide6.QtCore.QDateTime.__init__(str, QTime)
+Supported signatures:
+  PySide6.QtCore.QDateTime.__init__()
+  PySide6.QtCore.QDateTime.__init__(date: PySide6.QtCore.QDate, time: PySide6.QtCore.QTime, spec: PySide6.QtCore.Qt.TimeSpec, /, offsetSeconds: int | None = None)
+  PySide6.QtCore.QDateTime.__init__(date: PySide6.QtCore.QDate, time: PySide6.QtCore.QTime, /, resolve: PySide6.QtCore.QDateTime.TransitionResolution = Instance(PySide6.QtCore.QDateTime.TransitionResolution.LegacyBehavior))
+  PySide6.QtCore.QDateTime.__init__(date: PySide6.QtCore.QDate, time: PySide6.QtCore.QTime, timeZone: PySide6.QtCore.QTimeZone | PySide6.QtCore.QTimeZone.Initialization, /, resolve: PySide6.QtCore.QDateTime.TransitionResolution = Instance(PySide6.QtCore.QDateTime.TransitionResolution.LegacyBehavior))
+  PySide6.QtCore.QDateTime.__init__(other: PySide6.QtCore.QDateTime, /)
+  PySide6.QtCore.QDateTime.__init__(year: int, month: int, day: int, h: int, m: int, s: int, /)
+  PySide6.QtCore.QDateTime.__init__(year: int, month: int, day: int, h: int, m: int, s: int, ms: int, /, spec: PySide6.QtCore.Qt.TimeSpec = Instance(Qt.LocalTime))
+  PySide6.QtCore.QDateTime.__init__(year: int, month: int, day: int, h: int, m: int, s: int, ms: int, /, spec: int = Instance(Qt.LocalTime))
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\schedule_view.py", line 193, in update_all_blocks
+    item.update_status_by_time()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 537, in update_status_by_time
+    start_dt = QDateTime(self.start_date, QTime(int(self.start_hour), int((self.start_hour % 1) * 60)))
+TypeError: 'PySide6.QtCore.QDateTime.__init__' called with wrong argument types:
+  PySide6.QtCore.QDateTime.__init__(str, QTime)
+Supported signatures:
+  PySide6.QtCore.QDateTime.__init__()
+  PySide6.QtCore.QDateTime.__init__(date: PySide6.QtCore.QDate, time: PySide6.QtCore.QTime, spec: PySide6.QtCore.Qt.TimeSpec, /, offsetSeconds: int | None = None)
+  PySide6.QtCore.QDateTime.__init__(date: PySide6.QtCore.QDate, time: PySide6.QtCore.QTime, /, resolve: PySide6.QtCore.QDateTime.TransitionResolution = Instance(PySide6.QtCore.QDateTime.TransitionResolution.LegacyBehavior))
+  PySide6.QtCore.QDateTime.__init__(date: PySide6.QtCore.QDate, time: PySide6.QtCore.QTime, timeZone: PySide6.QtCore.QTimeZone | PySide6.QtCore.QTimeZone.Initialization, /, resolve: PySide6.QtCore.QDateTime.TransitionResolution = Instance(PySide6.QtCore.QDateTime.TransitionResolution.LegacyBehavior))
+  PySide6.QtCore.QDateTime.__init__(other: PySide6.QtCore.QDateTime, /)
+  PySide6.QtCore.QDateTime.__init__(year: int, month: int, day: int, h: int, m: int, s: int, /)
+  PySide6.QtCore.QDateTime.__init__(year: int, month: int, day: int, h: int, m: int, s: int, ms: int, /, spec: PySide6.QtCore.Qt.TimeSpec = Instance(Qt.LocalTime))
+  PySide6.QtCore.QDateTime.__init__(year: int, month: int, day: int, h: int, m: int, s: int, ms: int, /, spec: int = Instance(Qt.LocalTime))
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\schedule_view.py", line 193, in update_all_blocks
+    item.update_status_by_time()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 537, in update_status_by_time
+    start_dt = QDateTime(self.start_date, QTime(int(self.start_hour), int((self.start_hour % 1) * 60)))
+TypeError: 'PySide6.QtCore.QDateTime.__init__' called with wrong argument types:
+  PySide6.QtCore.QDateTime.__init__(str, QTime)
+Supported signatures:
+  PySide6.QtCore.QDateTime.__init__()
+  PySide6.QtCore.QDateTime.__init__(date: PySide6.QtCore.QDate, time: PySide6.QtCore.QTime, spec: PySide6.QtCore.Qt.TimeSpec, /, offsetSeconds: int | None = None)
+  PySide6.QtCore.QDateTime.__init__(date: PySide6.QtCore.QDate, time: PySide6.QtCore.QTime, /, resolve: PySide6.QtCore.QDateTime.TransitionResolution = Instance(PySide6.QtCore.QDateTime.TransitionResolution.LegacyBehavior))
+  PySide6.QtCore.QDateTime.__init__(date: PySide6.QtCore.QDate, time: PySide6.QtCore.QTime, timeZone: PySide6.QtCore.QTimeZone | PySide6.QtCore.QTimeZone.Initialization, /, resolve: PySide6.QtCore.QDateTime.TransitionResolution = Instance(PySide6.QtCore.QDateTime.TransitionResolution.LegacyBehavior))
+  PySide6.QtCore.QDateTime.__init__(other: PySide6.QtCore.QDateTime, /)
+  PySide6.QtCore.QDateTime.__init__(year: int, month: int, day: int, h: int, m: int, s: int, /)
+  PySide6.QtCore.QDateTime.__init__(year: int, month: int, day: int, h: int, m: int, s: int, ms: int, /, spec: PySide6.QtCore.Qt.TimeSpec = Instance(Qt.LocalTime))
+  PySide6.QtCore.QDateTime.__init__(year: int, month: int, day: int, h: int, m: int, s: int, ms: int, /, spec: int = Instance(Qt.LocalTime))
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 650, in mouseDoubleClickEvent
+    self.update_geometry(parent_view.base_date)
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 190, in update_geometry
+    day_offset = base_date.daysTo(self.start_date)
+TypeError: 'PySide6.QtCore.QDate.daysTo' called with wrong argument types:
+  PySide6.QtCore.QDate.daysTo(str)
+Supported signatures:
+  PySide6.QtCore.QDate.daysTo(d: PySide6.QtCore.QDate, /)
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 660, in mouseDoubleClickEvent
+    self.update_geometry(parent_view.base_date)
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 190, in update_geometry
+    day_offset = base_date.daysTo(self.start_date)
+TypeError: 'PySide6.QtCore.QDate.daysTo' called with wrong argument types:
+  PySide6.QtCore.QDate.daysTo(str)
+Supported signatures:
+  PySide6.QtCore.QDate.daysTo(d: PySide6.QtCore.QDate, /)
+

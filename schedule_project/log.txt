@@ -508831,3 +508831,3330 @@ OK: Bak4-1:Stopped
 
 OK: Bak4-1:Stopped
 [12:06:00] [INFO] 👋 MainWindow 已關閉
+[14:12:32] [INFO] 🔧 MainWindow 建立中...
+[14:12:32] [INFO] ✅ Encoder 列表：['Bak4-1', 'Bak4-2']
+[14:12:32] [INFO] 🎯 draw_grid encoder_names:['Bak4-1', 'Bak4-2']
+[14:12:32] [INFO] 📂 已載入節目排程 Z:/schedule_project/schedule.json
+[14:12:32] [INFO] 🎯 draw_grid encoder_names:['Bak4-1', 'Bak4-2']
+[14:12:32] [INFO] 🎯 draw_grid encoder_names:['Bak4-1', 'Bak4-2']
+[14:12:32] [INFO] 🧭 自動捲動畫面至今天時間：X = 284
+[14:12:32] [INFO] 🔁 [同步] Runner block 數量：2
+[14:12:32] [INFO] 🎯 draw_grid encoder_names:['Bak4-1', 'Bak4-2']
+[14:12:32] [INFO] 🎯 draw_grid encoder_names:['Bak4-1', 'Bak4-2']
+[14:12:32] [INFO] 📂 已載入節目排程 Z:/schedule_project/schedule.json
+[14:12:32] [INFO] 📂 自動載入之前選的檔案：Z:/schedule_project/schedule.json
+[14:12:32] [INFO] 🎯 啟動 StatusWorker：['Bak4-1', 'Bak4-2']
+[14:12:32] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[14:12:33] [INFO] 🕒 檢查排程中...
+[14:12:33] [INFO] 🕒 檢查排程中...
+[14:12:34] [INFO] 📝 點擊 block：222
+[14:12:34] [ERROR] ❌ 發生例外：
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 600, in mouseDoubleClickEvent
+    dialog = EditBlockDialog(block_dict, encoder_names, readonly=readonly)
+  File "c:\Users\coco\recoder\schedule_project\edit_block_dialog.py", line 20, in __init__
+    hour = int(block_data["start_hour"])
+               ~~~~~~~~~~^^^^^^^^^^^^^^
+KeyError: 'start_hour'
+
+[14:12:34] [INFO] 🕒 檢查排程中...
+[14:12:34] [INFO] 🕒 檢查排程中...
+[14:12:35] [INFO] 🎯 啟動 StatusWorker：['Bak4-1', 'Bak4-2']
+[14:12:35] [INFO] 🕒 檢查排程中...
+[14:12:35] [INFO] 🕒 檢查排程中...
+[14:12:35] [INFO] 📸 為 Bak4-1 拍照 ➜ 儲存預期路徑：Z:/preview\Bak4-1.png
+[14:12:35] [INFO] 📸 為 Bak4-2 拍照 ➜ 儲存預期路徑：Z:/preview\Bak4-2.png
+[14:12:35] [INFO] 🛰️ 傳給 encoder 的路徑（不含副檔名）：preview/Bak4-1
+[14:12:35] [INFO] 🛰️ 傳給 encoder 的路徑（不含副檔名）：preview/Bak4-2
+[14:12:35] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[14:12:35] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[14:12:36] [INFO] ⬅️ EncStatus Bak4-1: 
+[14:12:36] [INFO] ⬅️ EncStatus Bak4-1: OK: Bak4-1:Stopped
+
+OK: Bak4-1:Stopped
+[14:12:36] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[14:12:36] [INFO] 🕒 檢查排程中...
+[14:12:36] [INFO] ⬅️ EncStatus Bak4-1: OK: Bak4-1:Stopped
+[14:12:36] [INFO] 🕒 檢查排程中...
+[14:12:37] [INFO] 🕒 檢查排程中...
+[14:12:37] [INFO] 🕒 檢查排程中...
+[14:12:37] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[14:12:37] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[14:12:38] [INFO] 📝 點擊 block：222
+[14:12:38] [ERROR] ❌ 發生例外：
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 600, in mouseDoubleClickEvent
+    dialog = EditBlockDialog(block_dict, encoder_names, readonly=readonly)
+  File "c:\Users\coco\recoder\schedule_project\edit_block_dialog.py", line 20, in __init__
+    hour = int(block_data["start_hour"])
+               ~~~~~~~~~~^^^^^^^^^^^^^^
+KeyError: 'start_hour'
+
+[14:12:38] [INFO] ⬅️ EncStatus Bak4-2: OK: Bak4-2:Stopped
+[14:12:38] [INFO] 🎯 啟動 StatusWorker：['Bak4-1', 'Bak4-2']
+[14:12:38] [INFO] 🕒 檢查排程中...
+[14:12:38] [INFO] 🕒 檢查排程中...
+[14:12:39] [INFO] 🕒 檢查排程中...
+[14:12:39] [INFO] 🕒 檢查排程中...
+[14:12:39] [INFO] 📡 Snapshot 回應：OK: Snapshot has been taken.
+[14:12:40] [INFO] 📡 Snapshot 回應：OK: Snapshot has been taken.
+[14:12:40] [INFO] ✅ 已儲存：Z:/preview\Bak4-2.png
+[14:12:40] [INFO] 🔍 查找最新快照：Z:/preview\Bak4-1*.png
+[14:12:40] [INFO] 🔍 查找最新快照：Z:/preview\Bak4-2*.png
+[14:12:40] [INFO] 🕒 檢查排程中...
+[14:12:40] [INFO] 🕒 檢查排程中...
+[14:12:40] [INFO] ⬅️ EncStatus Bak4-1: OK: Bak4-1:Stopped
+
+OK: Bak4-1:Stopped
+[14:12:41] [INFO] 🎯 啟動 StatusWorker：['Bak4-1', 'Bak4-2']
+[14:12:41] [INFO] 🕒 檢查排程中...
+[14:12:41] [INFO] 🕒 檢查排程中...
+[14:12:42] [INFO] 👋 MainWindow 已關閉
+[14:17:22] [INFO] 🔧 MainWindow 建立中...
+[14:17:22] [INFO] ✅ Encoder 列表：['Bak4-1', 'Bak4-2']
+[14:17:22] [INFO] 🎯 draw_grid encoder_names:['Bak4-1', 'Bak4-2']
+[14:17:23] [INFO] 📂 已載入節目排程 Z:/schedule_project/schedule.json
+[14:17:23] [INFO] 🎯 draw_grid encoder_names:['Bak4-1', 'Bak4-2']
+[14:17:23] [INFO] 🎯 draw_grid encoder_names:['Bak4-1', 'Bak4-2']
+[14:17:23] [INFO] 🧭 自動捲動畫面至今天時間：X = 285
+[14:17:23] [INFO] 🔁 [同步] Runner block 數量：2
+[14:17:23] [INFO] 🎯 draw_grid encoder_names:['Bak4-1', 'Bak4-2']
+[14:17:23] [INFO] 🎯 draw_grid encoder_names:['Bak4-1', 'Bak4-2']
+[14:17:23] [INFO] 📂 已載入節目排程 Z:/schedule_project/schedule.json
+[14:17:23] [INFO] 📂 自動載入之前選的檔案：Z:/schedule_project/schedule.json
+[14:17:23] [INFO] 🎯 啟動 StatusWorker：['Bak4-1', 'Bak4-2']
+[14:17:23] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[14:17:24] [INFO] 🕒 檢查排程中...
+[14:17:24] [INFO] 🕒 檢查排程中...
+[14:17:25] [INFO] 🕒 檢查排程中...
+[14:17:25] [INFO] 🕒 檢查排程中...
+[14:17:25] [INFO] ⬅️ EncStatus Bak4-1: OK: Bak4-1:Stopped
+[14:17:25] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[14:17:26] [INFO] 🎯 啟動 StatusWorker：['Bak4-1', 'Bak4-2']
+[14:17:26] [INFO] 🕒 檢查排程中...
+[14:17:26] [INFO] 🕒 檢查排程中...
+[14:17:26] [INFO] 📸 為 Bak4-2 拍照 ➜ 儲存預期路徑：Z:/preview\Bak4-2.png
+[14:17:26] [INFO] 📸 為 Bak4-1 拍照 ➜ 儲存預期路徑：Z:/preview\Bak4-1.png
+[14:17:26] [INFO] 🛰️ 傳給 encoder 的路徑（不含副檔名）：preview/Bak4-2
+[14:17:26] [INFO] 🛰️ 傳給 encoder 的路徑（不含副檔名）：preview/Bak4-1
+[14:17:26] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[14:17:26] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[14:17:27] [INFO] ⬅️ EncStatus Bak4-1: 
+[14:17:27] [INFO] 🕒 檢查排程中...
+[14:17:27] [INFO] ⬅️ EncStatus Bak4-1: OK: Bak4-1:Stopped
+
+OK: Bak4-1:Stopped
+[14:17:28] [INFO] 🕒 檢查排程中...
+[14:17:28] [INFO] 🕒 檢查排程中...
+[14:17:28] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[14:17:28] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[14:17:29] [INFO] 🎯 啟動 StatusWorker：['Bak4-1', 'Bak4-2']
+[14:17:29] [INFO] 🕒 檢查排程中...
+[14:17:29] [INFO] 🕒 檢查排程中...
+OK: Bak4-2:Stopped
+[14:17:29] [INFO] ⬅️ EncStatus Bak4-1: 
+[14:17:29] [INFO] ⬅️ EncStatus Bak4-2: 
+[14:17:29] [INFO] ⬅️ EncStatus Bak4-2: OK: Bak4-2:Stopped
+
+OK: Bak4-2:Stopped
+[14:17:30] [INFO] 🕒 檢查排程中...
+[14:17:30] [INFO] 🕒 檢查排程中...
+[14:17:30] [INFO] 📡 Snapshot 回應：OK: Snapshot has been taken.
+[14:17:30] [INFO] 📡 Snapshot 回應：OK: Snapshot has been taken.
+[14:17:30] [INFO] ⬅️ EncStatus Bak4-1: OK: Bak4-1:Stopped
+[14:17:30] [INFO] ✅ 已儲存：Z:/preview\Bak4-2.png
+[14:17:30] [INFO] 🔍 查找最新快照：Z:/preview\Bak4-1*.png
+[14:17:31] [INFO] 🔍 查找最新快照：Z:/preview\Bak4-2*.png
+[14:17:31] [INFO] ⬅️ EncStatus Bak4-1: OK: Bak4-1:Stopped
+
+OK: Bak4-1:Stopped
+
+OK: Bak4-1:Stopped
+[14:17:31] [INFO] ⬅️ EncStatus Bak4-2: OK: Bak4-2:Stopped
+[14:17:31] [INFO] 🕒 檢查排程中...
+[14:17:31] [INFO] 🕒 檢查排程中...
+[14:17:32] [INFO] 🎯 啟動 StatusWorker：['Bak4-1', 'Bak4-2']
+[14:17:32] [INFO] 🕒 檢查排程中...
+[14:17:32] [INFO] 🕒 檢查排程中...
+[14:17:32] [INFO] ⬅️ EncStatus Bak4-1: 
+[14:17:33] [INFO] 🎯 啟動 StatusWorker：['Bak4-1', 'Bak4-2']
+[14:17:33] [INFO] 🕒 檢查排程中...
+[14:17:33] [INFO] 🕒 檢查排程中...
+[14:17:34] [INFO] 🕒 檢查排程中...
+[14:17:34] [INFO] 🕒 檢查排程中...
+[14:17:34] [INFO] ⬅️ EncStatus Bak4-1: OK: Bak4-1:Stopped
+
+OK: Bak4-1:Stopped
+
+OK: Bak4-1:Stopped
+[14:17:34] [INFO] ⬅️ EncStatus Bak4-2: OK: Bak4-2:Stopped
+
+OK: Bak4-2:Stopped
+[14:17:35] [INFO] 🎯 啟動 StatusWorker：['Bak4-1', 'Bak4-2']
+[14:17:35] [INFO] 🕒 檢查排程中...
+[14:17:35] [INFO] ⬅️ EncStatus Bak4-1: OK: Bak4-1:Stopped
+[14:17:35] [INFO] 🕒 檢查排程中...
+[14:17:35] [INFO] ⚠️ 檔案未生成，請檢查路徑或權限：Z:/preview\Bak4-1.png
+[14:17:35] [INFO] ⬅️ EncStatus Bak4-2: 
+[14:17:35] [INFO] ⬅️ EncStatus Bak4-2: OK: Bak4-2:Stopped
+[14:17:36] [INFO] 🕒 檢查排程中...
+[14:17:36] [INFO] 🕒 檢查排程中...
+[14:17:36] [INFO] ⬅️ EncStatus Bak4-2: OK: Bak4-2:Stopped
+[14:17:36] [INFO] ⬅️ EncStatus Bak4-2: 
+[14:17:36] [INFO] ⬅️ EncStatus Bak4-2: OK: Bak4-2:Stopped
+
+OK: Bak4-2:Stopped
+[14:17:37] [INFO] 🕒 檢查排程中...
+[14:17:37] [INFO] 🕒 檢查排程中...
+[14:17:38] [INFO] 🎯 啟動 StatusWorker：['Bak4-1', 'Bak4-2']
+[14:17:38] [INFO] 🕒 檢查排程中...
+[14:17:38] [INFO] 🕒 檢查排程中...
+[14:17:38] [INFO] ⬅️ EncStatus Bak4-2: 
+[14:17:38] [INFO] ⬅️ EncStatus Bak4-2: OK: Bak4-2:Stopped
+
+OK: Bak4-2:Stopped
+[14:17:39] [INFO] 🕒 檢查排程中...
+[14:17:39] [INFO] 🕒 檢查排程中...
+[14:17:40] [INFO] 🕒 檢查排程中...
+[14:17:40] [INFO] ⬅️ EncStatus Bak4-1: 
+[14:17:40] [INFO] 🕒 檢查排程中...
+[14:17:40] [INFO] ⬅️ EncStatus Bak4-1: OK: Bak4-1:Stopped
+
+OK: Bak4-1:Stopped
+
+OK: Bak4-1:Stopped
+[14:17:40] [INFO] ⬅️ EncStatus Bak4-1: 
+[14:17:40] [INFO] ⬅️ EncStatus Bak4-1: OK: Bak4-1:Stopped
+[14:17:41] [INFO] 🎯 啟動 StatusWorker：['Bak4-1', 'Bak4-2']
+[14:17:41] [INFO] 🕒 檢查排程中...
+[14:17:41] [INFO] 🕒 檢查排程中...
+[14:17:41] [INFO] ⬅️ EncStatus Bak4-2: OK: Bak4-2:Stopped
+[14:17:42] [INFO] 🕒 檢查排程中...
+[14:17:42] [INFO] 🕒 檢查排程中...
+[14:17:42] [INFO] ⬅️ EncStatus Bak4-2: 
+[14:17:42] [INFO] ⬅️ EncStatus Bak4-2: OK: Bak4-2:Stopped
+
+OK: Bak4-2:Stopped
+[14:17:42] [INFO] ⬅️ EncStatus Bak4-2: OK: Bak4-2:Stopped
+
+OK: Bak4-2:Stopped
+[14:17:43] [INFO] 🎯 啟動 StatusWorker：['Bak4-1', 'Bak4-2']
+[14:17:43] [INFO] 🕒 檢查排程中...
+[14:17:43] [INFO] ⬅️ EncStatus Bak4-2: 
+[14:17:43] [INFO] ⬅️ EncStatus Bak4-2: OK: Bak4-2:Stopped
+[14:17:44] [INFO] 🎯 啟動 StatusWorker：['Bak4-1', 'Bak4-2']
+[14:17:44] [INFO] 🕒 檢查排程中...
+[14:17:44] [INFO] 🕒 檢查排程中...
+[14:17:45] [INFO] 🕒 檢查排程中...
+[14:17:45] [INFO] ⬅️ EncStatus Bak4-1: OK: Bak4-1:Stopped
+[14:17:45] [INFO] ⬅️ EncStatus Bak4-1: OK: Bak4-1:Stopped
+
+OK: Bak4-1:Stopped
+[14:17:45] [INFO] 🕒 檢查排程中...
+[14:17:46] [INFO] 🕒 檢查排程中...
+[14:17:46] [INFO] 🕒 檢查排程中...
+[14:17:47] [INFO] 🎯 啟動 StatusWorker：['Bak4-1', 'Bak4-2']
+[14:17:47] [INFO] 🕒 檢查排程中...
+[14:17:47] [INFO] ⬅️ EncStatus Bak4-1: 
+[14:17:47] [INFO] ⬅️ EncStatus Bak4-1: OK: Bak4-1:Stopped
+
+OK: Bak4-1:Stopped
+[14:17:47] [INFO] ⬅️ EncStatus Bak4-2: 
+[14:17:47] [INFO] 🕒 檢查排程中...
+[14:17:47] [INFO] ⬅️ EncStatus Bak4-2: OK: Bak4-2:Stopped
+
+OK: Bak4-2:Stopped
+[14:17:47] [INFO] ⬅️ EncStatus Bak4-2: OK: Bak4-2:Stopped
+[14:17:48] [INFO] 🕒 檢查排程中...
+[14:17:48] [INFO] 🕒 檢查排程中...
+[14:17:49] [INFO] 🕒 檢查排程中...
+[14:17:49] [INFO] ⬅️ EncStatus Bak4-2: OK: Bak4-2:Stopped
+
+OK: Bak4-2:Stopped
+[14:17:49] [INFO] ⬅️ EncStatus Bak4-2: 
+[14:17:49] [INFO] 🕒 檢查排程中...
+[14:17:50] [INFO] 🎯 啟動 StatusWorker：['Bak4-1', 'Bak4-2']
+[14:17:50] [INFO] 🕒 檢查排程中...
+[14:17:50] [INFO] 🕒 檢查排程中...
+[14:17:50] [INFO] ⬅️ EncStatus Bak4-1: 
+[14:17:50] [INFO] ⬅️ EncStatus Bak4-1: OK: Bak4-1:Stopped
+
+OK: Bak4-1:Stopped
+[14:17:51] [INFO] 🕒 檢查排程中...
+[14:17:51] [INFO] 🕒 檢查排程中...
+[14:17:52] [INFO] 🕒 檢查排程中...
+[14:17:52] [INFO] ⬅️ EncStatus Bak4-1: 
+[14:17:52] [INFO] ⬅️ EncStatus Bak4-1: OK: Bak4-1:Stopped
+[14:17:52] [INFO] 🕒 檢查排程中...
+[14:17:53] [INFO] 🎯 啟動 StatusWorker：['Bak4-1', 'Bak4-2']
+[14:17:53] [INFO] 🎯 啟動 StatusWorker：['Bak4-1', 'Bak4-2']
+[14:17:53] [INFO] 🕒 檢查排程中...
+[14:17:53] [INFO] ⬅️ EncStatus Bak4-1: 
+[14:17:53] [INFO] ⬅️ EncStatus Bak4-1: OK: Bak4-1:Stopped
+
+OK: Bak4-1:Stopped
+
+OK: Bak4-1:Stopped
+
+OK: Bak4-1:Stopped
+[14:17:53] [INFO] 📸 為 Bak4-2 拍照 ➜ 儲存預期路徑：Z:/preview\Bak4-2.png
+[14:17:53] [INFO] 📸 為 Bak4-1 拍照 ➜ 儲存預期路徑：Z:/preview\Bak4-1.png
+[14:17:53] [INFO] 🛰️ 傳給 encoder 的路徑（不含副檔名）：preview/Bak4-2
+[14:17:53] [INFO] 🛰️ 傳給 encoder 的路徑（不含副檔名）：preview/Bak4-1
+[14:17:53] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[14:17:53] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[14:17:53] [INFO] 🕒 檢查排程中...
+[14:17:54] [INFO] 🕒 檢查排程中...
+[14:17:54] [INFO] 🕒 檢查排程中...
+[14:17:54] [INFO] ⬅️ EncStatus Bak4-2: OK: Bak4-2:Stopped
+
+OK: Bak4-2:Stopped
+[14:17:54] [INFO] ⬅️ EncStatus Bak4-1: OK: Bak4-1:Stopped
+[14:17:55] [INFO] 🕒 檢查排程中...
+[14:17:55] [INFO] 🕒 檢查排程中...
+OK: Bak4-2:Stopped
+[14:17:55] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[14:17:55] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[14:17:56] [INFO] 🎯 啟動 StatusWorker：['Bak4-1', 'Bak4-2']
+[14:17:56] [INFO] 🕒 檢查排程中...
+[14:17:56] [INFO] 🕒 檢查排程中...
+[14:17:56] [INFO] ⬅️ EncStatus Bak4-2: 
+[14:17:57] [INFO] 🕒 檢查排程中...
+[14:17:57] [INFO] ⬅️ EncStatus Bak4-1: 
+[14:17:57] [INFO] ⬅️ EncStatus Bak4-1: OK: Bak4-1:Stopped
+[14:17:57] [INFO] 🕒 檢查排程中...
+[14:17:57] [INFO] 📡 Snapshot 回應：OK: Snapshot has been taken.
+[14:17:57] [INFO] 📡 Snapshot 回應：OK: Snapshot has been taken.
+[14:17:57] [INFO] ✅ 已儲存：Z:/preview\Bak4-2.png
+[14:17:57] [INFO] 🔍 查找最新快照：Z:/preview\Bak4-1*.png
+[14:17:58] [INFO] 🔍 查找最新快照：Z:/preview\Bak4-2*.png
+[14:17:58] [INFO] 🕒 檢查排程中...
+[14:17:58] [INFO] 🕒 檢查排程中...
+[14:17:58] [INFO] ⬅️ EncStatus Bak4-2: OK: Bak4-2:Stopped
+
+OK: Bak4-2:Stopped
+
+OK: Bak4-2:Stopped
+[14:17:58] [INFO] ⬅️ EncStatus Bak4-1: 
+[14:17:58] [INFO] ⬅️ EncStatus Bak4-1: OK: Bak4-1:Stopped
+
+OK: Bak4-1:Stopped
+[14:17:59] [INFO] 📝 點擊 block：222
+[14:17:59] [ERROR] ❌ 發生例外：
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 600, in mouseDoubleClickEvent
+    dialog = EditBlockDialog(block_dict, encoder_names, readonly=readonly)
+  File "c:\Users\coco\recoder\schedule_project\edit_block_dialog.py", line 20, in __init__
+    hour = int(block_data["start_hour"])
+               ~~~~~~~~~~^^^^^^^^^^^^^^
+KeyError: 'start_hour'
+
+[14:17:59] [INFO] 🎯 啟動 StatusWorker：['Bak4-1', 'Bak4-2']
+[14:17:59] [INFO] ⬅️ EncStatus Bak4-2: 
+[14:17:59] [INFO] ⬅️ EncStatus Bak4-1: OK: Bak4-1:Stopped
+
+OK: Bak4-1:Stopped
+[14:17:59] [INFO] 🕒 檢查排程中...
+[14:17:59] [INFO] 🕒 檢查排程中...
+[14:18:00] [INFO] 🕒 檢查排程中...
+[14:18:00] [INFO] 🕒 檢查排程中...
+[14:18:00] [INFO] ⬅️ EncStatus Bak4-1: 
+[14:18:00] [INFO] ⬅️ EncStatus Bak4-1: OK: Bak4-1:Stopped
+[14:18:00] [INFO] ⬅️ EncStatus Bak4-2: OK: Bak4-2:Stopped
+
+OK: Bak4-2:Stopped
+[14:18:00] [INFO] ⬅️ EncStatus Bak4-2: 
+[14:18:01] [INFO] 🕒 檢查排程中...
+[14:18:01] [INFO] ⬅️ EncStatus Bak4-2: 
+: Bak4-2:Stopped
+[14:18:01] [INFO] 🕒 檢查排程中...
+[14:18:01] [INFO] 📝 點擊 block：222
+[14:18:01] [ERROR] ❌ 發生例外：
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 600, in mouseDoubleClickEvent
+    dialog = EditBlockDialog(block_dict, encoder_names, readonly=readonly)
+  File "c:\Users\coco\recoder\schedule_project\edit_block_dialog.py", line 20, in __init__
+    hour = int(block_data["start_hour"])
+               ~~~~~~~~~~^^^^^^^^^^^^^^
+KeyError: 'start_hour'
+
+[14:18:02] [INFO] 🎯 啟動 StatusWorker：['Bak4-1', 'Bak4-2']
+[14:18:02] [INFO] 🕒 檢查排程中...
+[14:18:02] [INFO] 🕒 檢查排程中...
+[14:18:02] [INFO] ⚠️ 檔案未生成，請檢查路徑或權限：Z:/preview\Bak4-1.png
+[14:18:03] [INFO] 🎯 啟動 StatusWorker：['Bak4-1', 'Bak4-2']
+[14:18:03] [INFO] 🕒 檢查排程中...
+[14:18:03] [INFO] 🕒 檢查排程中...
+[14:18:04] [INFO] 🕒 檢查排程中...
+[14:18:04] [INFO] 🕒 檢查排程中...
+[14:18:04] [INFO] ⬅️ EncStatus Bak4-1: 
+[14:18:04] [INFO] ⬅️ EncStatus Bak4-1: OK: Bak4-1:Stopped
+
+OK: Bak4-1:Stopped
+[14:18:05] [INFO] 🎯 啟動 StatusWorker：['Bak4-1', 'Bak4-2']
+[14:18:05] [INFO] 🕒 檢查排程中...
+[14:18:05] [INFO] ⬅️ EncStatus Bak4-1: 
+[14:18:05] [INFO] 🕒 檢查排程中...
+[14:18:06] [INFO] 🕒 檢查排程中...
+[14:18:06] [INFO] 🕒 檢查排程中...
+[14:18:06] [INFO] ⬅️ EncStatus Bak4-2: 
+[14:18:06] [INFO] ⬅️ EncStatus Bak4-2: OK: Bak4-2:Stopped
+[14:18:06] [INFO] ⬅️ EncStatus Bak4-2: OK: Bak4-2:Stopped
+
+OK: Bak4-2:Stopped
+[14:18:07] [INFO] 🕒 檢查排程中...
+[14:18:07] [INFO] 🕒 檢查排程中...
+[14:18:08] [INFO] 🎯 啟動 StatusWorker：['Bak4-1', 'Bak4-2']
+[14:18:08] [INFO] 🕒 檢查排程中...
+[14:18:08] [INFO] 🕒 檢查排程中...
+[14:18:08] [INFO] ⬅️ EncStatus Bak4-2: OK: Bak4-2:Stopped
+
+OK: Bak4-2:Stopped
+
+OK: Bak4-2:Stopped
+[14:18:09] [INFO] 🕒 檢查排程中...
+[14:18:09] [INFO] ⬅️ EncStatus Bak4-1: 
+[14:18:09] [INFO] ⬅️ EncStatus Bak4-1: OK: Bak4-1:Stopped
+
+OK: Bak4-1:Stopped
+[14:18:09] [INFO] 🕒 檢查排程中...
+[14:18:10] [INFO] 🕒 檢查排程中...
+[14:18:10] [INFO] 🕒 檢查排程中...
+[14:18:10] [INFO] ⬅️ EncStatus Bak4-1: 
+[14:18:10] [INFO] ⬅️ EncStatus Bak4-2: OK: Bak4-2:Stopped
+[14:18:11] [INFO] 🎯 啟動 StatusWorker：['Bak4-1', 'Bak4-2']
+[14:18:11] [INFO] 🕒 檢查排程中...
+[14:18:11] [INFO] 🕒 檢查排程中...
+[14:18:11] [INFO] ⬅️ EncStatus Bak4-2: 
+: Bak4-2:Stopped
+
+OK: Bak4-2:Stopped
+[14:18:12] [INFO] 🕒 檢查排程中...
+[14:18:12] [INFO] 🕒 檢查排程中...
+[14:18:12] [INFO] 👋 MainWindow 已關閉
+[14:42:52] [INFO] 🔧 MainWindow 建立中...
+[14:42:52] [INFO] ✅ Encoder 列表：['Bak4-1', 'Bak4-2']
+[14:42:52] [INFO] 🎯 draw_grid encoder_names:['Bak4-1', 'Bak4-2']
+[14:42:52] [INFO] 📂 已載入節目排程 Z:/schedule_project/schedule.json
+[14:42:52] [INFO] 🎯 draw_grid encoder_names:['Bak4-1', 'Bak4-2']
+[14:42:52] [INFO] 🎯 draw_grid encoder_names:['Bak4-1', 'Bak4-2']
+[14:42:52] [INFO] 🧭 自動捲動畫面至今天時間：X = 294
+[14:42:52] [INFO] 🔁 [同步] Runner block 數量：2
+[14:42:52] [INFO] 🎯 draw_grid encoder_names:['Bak4-1', 'Bak4-2']
+[14:42:52] [INFO] 🎯 draw_grid encoder_names:['Bak4-1', 'Bak4-2']
+[14:42:52] [INFO] 📂 已載入節目排程 Z:/schedule_project/schedule.json
+[14:42:52] [INFO] 📂 自動載入之前選的檔案：Z:/schedule_project/schedule.json
+[14:42:52] [INFO] 🎯 啟動 StatusWorker：['Bak4-1', 'Bak4-2']
+[14:42:52] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[14:42:53] [INFO] 🕒 檢查排程中...
+[14:42:53] [INFO] 🕒 檢查排程中...
+[14:42:54] [INFO] 📝 點擊 block：222
+[14:42:54] [ERROR] ❌ 發生例外：
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 600, in mouseDoubleClickEvent
+    dialog = EditBlockDialog(block_dict, encoder_names, readonly=readonly)
+  File "c:\Users\coco\recoder\schedule_project\edit_block_dialog.py", line 56, in __init__
+    self.duration_input.setValue(float(block_data["duration"]))
+                                       ~~~~~~~~~~^^^^^^^^^^^^
+KeyError: 'duration'
+
+[14:42:54] [INFO] 🕒 檢查排程中...
+[14:42:54] [INFO] 🕒 檢查排程中...
+[14:42:55] [INFO] 🎯 啟動 StatusWorker：['Bak4-1', 'Bak4-2']
+[14:42:55] [INFO] 🕒 檢查排程中...
+[14:42:55] [INFO] 🕒 檢查排程中...
+[14:42:55] [INFO] 📸 為 Bak4-1 拍照 ➜ 儲存預期路徑：Z:/preview\Bak4-1.png
+[14:42:55] [INFO] 📸 為 Bak4-2 拍照 ➜ 儲存預期路徑：Z:/preview\Bak4-2.png
+[14:42:55] [INFO] 🛰️ 傳給 encoder 的路徑（不含副檔名）：preview/Bak4-1
+[14:42:55] [INFO] 🛰️ 傳給 encoder 的路徑（不含副檔名）：preview/Bak4-2
+[14:42:55] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[14:42:55] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[14:42:56] [INFO] ⬅️ EncStatus Bak4-1: 
+[14:42:56] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[14:42:56] [INFO] 👋 MainWindow 已關閉
+[14:48:47] [INFO] 🔧 MainWindow 建立中...
+[14:48:47] [INFO] ✅ Encoder 列表：['Bak4-1', 'Bak4-2']
+[14:48:47] [INFO] 🎯 draw_grid encoder_names:['Bak4-1', 'Bak4-2']
+[14:48:47] [INFO] 📂 已載入節目排程 Z:/schedule_project/schedule.json
+[14:48:47] [INFO] 🎯 draw_grid encoder_names:['Bak4-1', 'Bak4-2']
+[14:48:47] [INFO] 🎯 draw_grid encoder_names:['Bak4-1', 'Bak4-2']
+[14:48:47] [INFO] 🧭 自動捲動畫面至今天時間：X = 296
+[14:48:47] [INFO] 🔁 [同步] Runner block 數量：2
+[14:48:47] [INFO] 🎯 draw_grid encoder_names:['Bak4-1', 'Bak4-2']
+[14:48:47] [INFO] 🎯 draw_grid encoder_names:['Bak4-1', 'Bak4-2']
+[14:48:47] [INFO] 📂 已載入節目排程 Z:/schedule_project/schedule.json
+[14:48:47] [INFO] 📂 自動載入之前選的檔案：Z:/schedule_project/schedule.json
+[14:48:47] [INFO] 🎯 啟動 StatusWorker：['Bak4-1', 'Bak4-2']
+[14:48:47] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[14:48:48] [INFO] 🕒 檢查排程中...
+[14:48:48] [INFO] 🕒 檢查排程中...
+[14:48:49] [INFO] 📝 點擊 block：222
+[14:48:49] [ERROR] ❌ 發生例外：
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 600, in mouseDoubleClickEvent
+    dialog = EditBlockDialog(block_dict, encoder_names, readonly=readonly)
+  File "c:\Users\coco\recoder\schedule_project\edit_block_dialog.py", line 56, in __init__
+    self.duration_input.setValue(float(block_data["duration"]))
+                                       ~~~~~~~~~~^^^^^^^^^^^^
+KeyError: 'duration'
+
+[14:48:49] [INFO] 🕒 檢查排程中...
+[14:48:49] [INFO] 🕒 檢查排程中...
+[14:48:49] [INFO] ⬅️ EncStatus Bak4-1: OK: Bak4-1:Stopped
+[14:48:49] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[14:48:50] [INFO] 🎯 啟動 StatusWorker：['Bak4-1', 'Bak4-2']
+[14:48:50] [INFO] 🕒 檢查排程中...
+[14:48:50] [INFO] 🕒 檢查排程中...
+[14:48:50] [INFO] 📸 為 Bak4-1 拍照 ➜ 儲存預期路徑：Z:/preview\Bak4-1.png
+[14:48:50] [INFO] 📸 為 Bak4-2 拍照 ➜ 儲存預期路徑：Z:/preview\Bak4-2.png
+[14:48:50] [INFO] 🛰️ 傳給 encoder 的路徑（不含副檔名）：preview/Bak4-1
+[14:48:50] [INFO] 🛰️ 傳給 encoder 的路徑（不含副檔名）：preview/Bak4-2
+[14:48:50] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[14:48:50] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[14:48:51] [INFO] ⬅️ EncStatus Bak4-1: OK: Bak4-1:Stopped
+[14:48:51] [INFO] 🕒 檢查排程中...
+[14:48:51] [INFO] 🕒 檢查排程中...
+[14:48:52] [INFO] 👋 MainWindow 已關閉
+[15:01:26] [INFO] 🔧 MainWindow 建立中...
+[15:01:26] [INFO] ✅ Encoder 列表：['Bak4-1', 'Bak4-2']
+[15:01:26] [INFO] 🎯 draw_grid encoder_names:['Bak4-1', 'Bak4-2']
+[15:01:26] [INFO] 📂 已載入節目排程 Z:/schedule_project/schedule.json
+[15:01:26] [INFO] 🎯 draw_grid encoder_names:['Bak4-1', 'Bak4-2']
+[15:01:26] [INFO] 🎯 draw_grid encoder_names:['Bak4-1', 'Bak4-2']
+[15:01:26] [INFO] 🧭 自動捲動畫面至今天時間：X = 300
+[15:01:26] [INFO] 🔁 [同步] Runner block 數量：2
+[15:01:26] [INFO] 🎯 draw_grid encoder_names:['Bak4-1', 'Bak4-2']
+[15:01:26] [INFO] 🎯 draw_grid encoder_names:['Bak4-1', 'Bak4-2']
+[15:01:26] [INFO] 📂 已載入節目排程 Z:/schedule_project/schedule.json
+[15:01:26] [INFO] 📂 自動載入之前選的檔案：Z:/schedule_project/schedule.json
+[15:01:26] [INFO] 🎯 啟動 StatusWorker：['Bak4-1', 'Bak4-2']
+[15:01:26] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[15:01:27] [INFO] 🕒 檢查排程中...
+[15:01:27] [INFO] 🕒 檢查排程中...
+[15:01:28] [INFO] 🕒 檢查排程中...
+[15:01:28] [INFO] 🕒 檢查排程中...
+[15:01:28] [INFO] ⬅️ EncStatus Bak4-1: OK: Bak4-1:Stopped
+[15:01:28] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[15:01:29] [INFO] 🎯 啟動 StatusWorker：['Bak4-1', 'Bak4-2']
+[15:01:29] [INFO] 🕒 檢查排程中...
+[15:01:29] [INFO] 🕒 檢查排程中...
+[15:01:29] [INFO] 📸 為 Bak4-2 拍照 ➜ 儲存預期路徑：Z:/preview\Bak4-2.png
+[15:01:29] [INFO] 📸 為 Bak4-1 拍照 ➜ 儲存預期路徑：Z:/preview\Bak4-1.png
+[15:01:29] [INFO] 🛰️ 傳給 encoder 的路徑（不含副檔名）：preview/Bak4-2
+[15:01:29] [INFO] 🛰️ 傳給 encoder 的路徑（不含副檔名）：preview/Bak4-1
+[15:01:29] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[15:01:29] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[15:01:29] [INFO] 📝 點擊 block：888
+[15:01:29] [ERROR] ❌ 發生例外：
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 600, in mouseDoubleClickEvent
+    dialog = EditBlockDialog(block_dict, encoder_names, readonly=readonly)
+  File "c:\Users\coco\recoder\schedule_project\edit_block_dialog.py", line 56, in __init__
+    self.duration_input.setValue(float(block_data["duration"]))
+                                       ~~~~~~~~~~^^^^^^^^^^^^
+KeyError: 'duration'
+
+[15:01:30] [INFO] 🕒 檢查排程中...
+[15:01:30] [INFO] 🕒 檢查排程中...
+[15:01:30] [INFO] ⬅️ EncStatus Bak4-1: 
+[15:01:30] [INFO] ⬅️ EncStatus Bak4-1: OK: Bak4-1:Stopped
+
+OK: Bak4-1:Stopped
+[15:01:31] [INFO] 🕒 檢查排程中...
+[15:01:31] [INFO] 🕒 檢查排程中...
+[15:01:31] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[15:01:31] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[15:01:32] [INFO] ⬅️ EncStatus Bak4-1: OK: Bak4-1:Stopped
+[15:01:32] [INFO] 🎯 啟動 StatusWorker：['Bak4-1', 'Bak4-2']
+[15:01:32] [INFO] 🕒 檢查排程中...
+[15:01:32] [INFO] 🕒 檢查排程中...
+[15:01:32] [INFO] ⬅️ EncStatus Bak4-2: OK: Bak4-2:Stopped
+
+OK: Bak4-2:Stopped
+[15:01:32] [INFO] ⬅️ EncStatus Bak4-2: 
+[15:01:33] [INFO] 🕒 檢查排程中...
+[15:01:33] [INFO] 🕒 檢查排程中...
+[15:01:33] [INFO] 📡 Snapshot 回應：OK: Snapshot has been taken.
+[15:01:33] [INFO] 📡 Snapshot 回應：OK: Snapshot has been taken.
+[15:01:33] [INFO] ✅ 已儲存：Z:/preview\Bak4-2.png
+[15:01:34] [INFO] 🔍 查找最新快照：Z:/preview\Bak4-1*.png
+[15:01:34] [INFO] ⬅️ EncStatus Bak4-2: OK: Bak4-2:Stopped
+[15:01:34] [INFO] 🔍 查找最新快照：Z:/preview\Bak4-2*.png
+[15:01:34] [INFO] 🕒 檢查排程中...
+[15:01:34] [INFO] 🕒 檢查排程中...
+[15:01:34] [INFO] ⬅️ EncStatus Bak4-2: 
+[15:01:34] [INFO] ⬅️ EncStatus Bak4-2: OK: Bak4-2:Stopped
+
+OK: Bak4-2:Stopped
+[15:01:35] [INFO] 🎯 啟動 StatusWorker：['Bak4-1', 'Bak4-2']
+[15:01:35] [INFO] 🕒 檢查排程中...
+[15:01:35] [INFO] 🕒 檢查排程中...
+[15:01:36] [INFO] ⬅️ EncStatus Bak4-1: 
+[15:01:36] [INFO] 🎯 啟動 StatusWorker：['Bak4-1', 'Bak4-2']
+[15:01:36] [INFO] 🕒 檢查排程中...
+[15:01:36] [INFO] 🕒 檢查排程中...
+[15:01:36] [INFO] ⬅️ EncStatus Bak4-2: OK: Bak4-2:Stopped
+[15:01:37] [INFO] 🕒 檢查排程中...
+[15:01:37] [INFO] 🕒 檢查排程中...
+[15:01:38] [INFO] ⬅️ EncStatus Bak4-1: OK: Bak4-1:Stopped
+
+OK: Bak4-1:Stopped
+
+OK: Bak4-1:Stopped
+
+OK: Bak4-1:Stopped
+[15:01:38] [INFO] 🎯 啟動 StatusWorker：['Bak4-1', 'Bak4-2']
+[15:01:38] [INFO] 🕒 檢查排程中...
+[15:01:38] [INFO] 🕒 檢查排程中...
+[15:01:38] [INFO] ✅ 已儲存節目排程：Z:/schedule_project/schedule.json
+[15:01:38] [INFO] 🔁 [同步] Runner block 數量：2
+[15:01:38] [INFO] ⚠️ 檔案未生成，請檢查路徑或權限：Z:/preview\Bak4-1.png
+[15:01:39] [INFO] 🕒 檢查排程中...
+[15:01:39] [INFO] 🕒 檢查排程中...
+[15:01:39] [INFO] ⬅️ EncStatus Bak4-2: OK: Bak4-2:Stopped
+[15:01:40] [INFO] ⬅️ EncStatus Bak4-1: OK: Bak4-1:Stopped
+[15:01:40] [INFO] ⬅️ EncStatus Bak4-2: OK: Bak4-2:Stopped
+[15:01:40] [INFO] ⬅️ EncStatus Bak4-2: OK: Bak4-2:Stopped
+
+OK: Bak4-2:Stopped
+[15:01:40] [INFO] ⬅️ EncStatus Bak4-2: 
+[15:01:40] [INFO] 📝 點擊 block：888
+[15:01:40] [ERROR] ❌ 發生例外：
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 600, in mouseDoubleClickEvent
+    dialog = EditBlockDialog(block_dict, encoder_names, readonly=readonly)
+  File "c:\Users\coco\recoder\schedule_project\edit_block_dialog.py", line 56, in __init__
+    self.duration_input.setValue(float(block_data["duration"]))
+                                       ~~~~~~~~~~^^^^^^^^^^^^
+KeyError: 'duration'
+
+[15:01:40] [INFO] 🕒 檢查排程中...
+[15:01:40] [INFO] 🕒 檢查排程中...
+[15:01:40] [INFO] ⬅️ EncStatus Bak4-1: OK: Bak4-1:Stopped
+
+OK: Bak4-1:Stopped
+[15:01:40] [INFO] ⬅️ EncStatus Bak4-1: 
+[15:01:41] [INFO] 🎯 啟動 StatusWorker：['Bak4-1', 'Bak4-2']
+[15:01:41] [INFO] 🕒 檢查排程中...
+[15:01:41] [INFO] 🕒 檢查排程中...
+[15:01:42] [INFO] 🕒 檢查排程中...
+[15:01:42] [INFO] 🕒 檢查排程中...
+[15:01:42] [INFO] ⬅️ EncStatus Bak4-2: OK: Bak4-2:Stopped
+[15:01:42] [INFO] ⬅️ EncStatus Bak4-2: 
+[15:01:42] [INFO] ⬅️ EncStatus Bak4-2: OK: Bak4-2:Stopped
+
+OK: Bak4-2:Stopped
+[15:01:43] [INFO] 🕒 檢查排程中...
+[15:01:43] [INFO] 🕒 檢查排程中...
+[15:01:43] [INFO] ⬅️ EncStatus Bak4-1: 
+[15:01:44] [INFO] ⬅️ EncStatus Bak4-1: 
+: Bak4-1:Stopped
+
+OK: Bak4-1:Stopped
+
+OK: Bak4-1:Stopped
+[15:01:44] [INFO] 🎯 啟動 StatusWorker：['Bak4-1', 'Bak4-2']
+[15:01:44] [INFO] ⬅️ EncStatus Bak4-1: OK: Bak4-1:Stopped
+
+OK: Bak4-1:Stopped
+[15:01:44] [INFO] 🕒 檢查排程中...
+[15:01:44] [INFO] 🕒 檢查排程中...
+[15:01:45] [INFO] 🕒 檢查排程中...
+[15:01:45] [INFO] 🕒 檢查排程中...
+[15:01:46] [INFO] ⬅️ EncStatus Bak4-1: OK: Bak4-1:Stopped
+[15:01:46] [INFO] ⬅️ EncStatus Bak4-2: OK: Bak4-2:Stopped
+
+OK: Bak4-2:Stopped
+[15:01:46] [INFO] 🎯 啟動 StatusWorker：['Bak4-1', 'Bak4-2']
+[15:01:46] [INFO] 🕒 檢查排程中...
+[15:01:46] [INFO] 🕒 檢查排程中...
+[15:01:46] [INFO] ⬅️ EncStatus Bak4-2: OK: Bak4-2:Stopped
+[15:01:46] [INFO] ⬅️ EncStatus Bak4-2: OK: Bak4-2:Stopped
+
+OK: Bak4-2:Stopped
+[15:01:47] [INFO] 🎯 啟動 StatusWorker：['Bak4-1', 'Bak4-2']
+[15:01:47] [INFO] 🕒 檢查排程中...
+[15:01:47] [INFO] 🕒 檢查排程中...
+[15:01:48] [INFO] ⬅️ EncStatus Bak4-2: 
+[15:01:48] [INFO] ⬅️ EncStatus Bak4-2: OK: Bak4-2:Stopped
+[15:01:48] [INFO] 🕒 檢查排程中...
+[15:01:48] [INFO] 🕒 檢查排程中...
+[15:01:49] [INFO] 🕒 檢查排程中...
+[15:01:49] [INFO] 🕒 檢查排程中...
+[15:01:49] [INFO] 🧪 檢查名稱: 8889
+[15:01:49] [INFO] 🔴 重疊偵測：與 888 發生重疊
+[15:01:50] [INFO] ⬅️ EncStatus Bak4-1: 
+[15:01:50] [INFO] ⬅️ EncStatus Bak4-1: OK: Bak4-1:Stopped
+
+OK: Bak4-1:Stopped
+
+OK: Bak4-1:Stopped
+[15:01:50] [INFO] 🎯 啟動 StatusWorker：['Bak4-1', 'Bak4-2']
+[15:01:50] [INFO] 🕒 檢查排程中...
+[15:01:50] [INFO] 🕒 檢查排程中...
+[15:01:50] [INFO] ⬅️ EncStatus Bak4-2: OK: Bak4-2:Stopped
+[15:01:51] [INFO] 🕒 檢查排程中...
+[15:01:51] [INFO] 🕒 檢查排程中...
+[15:01:52] [INFO] ⬅️ EncStatus Bak4-1: 
+[15:01:52] [INFO] ⬅️ EncStatus Bak4-2: 
+[15:01:52] [INFO] ⬅️ EncStatus Bak4-2: OK: Bak4-2:Stopped
+
+OK: Bak4-2:Stopped
+[15:01:52] [INFO] ⬅️ EncStatus Bak4-2: OK: Bak4-2:Stopped
+[15:01:52] [INFO] 🕒 檢查排程中...
+[15:01:52] [INFO] 🕒 檢查排程中...
+[15:01:52] [INFO] ⬅️ EncStatus Bak4-1: OK: Bak4-1:Stopped
+
+OK: Bak4-1:Stopped
+
+OK: Bak4-1:Stopped
+[15:01:53] [INFO] 🎯 啟動 StatusWorker：['Bak4-1', 'Bak4-2']
+[15:01:53] [INFO] 🕒 檢查排程中...
+[15:01:53] [INFO] 🕒 檢查排程中...
+[15:01:54] [INFO] 🕒 檢查排程中...
+[15:01:54] [INFO] 🕒 檢查排程中...
+[15:01:54] [INFO] ⬅️ EncStatus Bak4-1: OK: Bak4-1:Stopped
+[15:01:55] [INFO] 🕒 檢查排程中...
+[15:01:55] [INFO] 🕒 檢查排程中...
+[15:01:55] [INFO] ⬅️ EncStatus Bak4-1: OK: Bak4-1:Stopped
+[15:01:55] [INFO] 🧪 檢查名稱: 8889
+[15:01:55] [INFO] ✅ 呼叫 add_time_block
+[15:01:55] [INFO] ✅ 已加入 block: 8889
+[15:01:55] [INFO] ✅ 已儲存節目排程：Z:/schedule_project/schedule.json
+[15:01:55] [INFO] 🔁 [同步] Runner block 數量：3
+[15:01:56] [INFO] ⬅️ EncStatus Bak4-1: 
+[15:01:56] [INFO] ⬅️ EncStatus Bak4-1: OK: Bak4-1:Stopped
+
+OK: Bak4-1:Stopped
+[15:01:56] [INFO] 🎯 啟動 StatusWorker：['Bak4-1', 'Bak4-2']
+[15:01:56] [INFO] 🎯 啟動 StatusWorker：['Bak4-1', 'Bak4-2']
+[15:01:56] [INFO] 🕒 檢查排程中...
+[15:01:56] [INFO] 🕒 檢查排程中...
+[15:01:56] [INFO] 📸 為 Bak4-1 拍照 ➜ 儲存預期路徑：Z:/preview\Bak4-1.png
+[15:01:56] [INFO] 📸 為 Bak4-2 拍照 ➜ 儲存預期路徑：Z:/preview\Bak4-2.png
+[15:01:56] [INFO] 🛰️ 傳給 encoder 的路徑（不含副檔名）：preview/Bak4-1
+[15:01:56] [INFO] 🛰️ 傳給 encoder 的路徑（不含副檔名）：preview/Bak4-2
+[15:01:56] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[15:01:57] [INFO] 🕒 檢查排程中...
+[15:01:57] [INFO] 🕒 檢查排程中...
+[15:01:57] [INFO] ⬅️ EncStatus Bak4-2: 
+[15:01:58] [INFO] ⬅️ EncStatus Bak4-1: OK: Bak4-1:Stopped
+[15:01:58] [INFO] ⬅️ EncStatus Bak4-2: 
+[15:01:58] [INFO] ⬅️ EncStatus Bak4-2: OK: Bak4-2:Stopped
+
+OK: Bak4-2:Stopped
+
+OK: Bak4-2:Stopped
+
+OK: Bak4-2:Stopped
+[15:01:58] [INFO] ⬅️ EncStatus Bak4-1: 
+[15:01:58] [INFO] 🕒 檢查排程中...
+[15:01:58] [INFO] 🕒 檢查排程中...
+[15:01:58] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[15:01:58] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[15:01:59] [INFO] 🎯 啟動 StatusWorker：['Bak4-1', 'Bak4-2']
+[15:01:59] [INFO] 🕒 檢查排程中...
+[15:01:59] [INFO] 🕒 檢查排程中...
+[15:02:00] [INFO] ⬅️ EncStatus Bak4-1: OK: Bak4-1:Stopped
+
+OK: Bak4-1:Stopped
+
+OK: Bak4-1:Stopped
+[15:02:00] [INFO] 🕒 檢查排程中...
+[15:02:00] [INFO] 🕒 檢查排程中...
+[15:02:00] [INFO] ⬅️ EncStatus Bak4-1: 
+[15:02:00] [INFO] ⬅️ EncStatus Bak4-2: 
+[15:02:00] [INFO] 📡 Snapshot 回應：OK: Snapshot has been taken.
+[15:02:00] [INFO] 📡 Snapshot 回應：OK: Snapshot has been taken.
+[15:02:00] [INFO] ✅ 已儲存：Z:/preview\Bak4-2.png
+[15:02:01] [INFO] 🔍 查找最新快照：Z:/preview\Bak4-1*.png
+[15:02:01] [INFO] 🔍 查找最新快照：Z:/preview\Bak4-2*.png
+[15:02:01] [INFO] 🕒 檢查排程中...
+[15:02:01] [INFO] 🕒 檢查排程中...
+[15:02:01] [INFO] ⬅️ EncStatus Bak4-1: 
+[15:02:01] [INFO] ⬅️ EncStatus Bak4-1: OK: Bak4-1:Stopped
+
+OK: Bak4-1:Stopped
+[15:02:02] [INFO] ⬅️ EncStatus Bak4-2: OK: Bak4-2:Stopped
+[15:02:02] [INFO] ⬅️ EncStatus Bak4-1: OK: Bak4-1:Stopped
+[15:02:02] [INFO] 🎯 啟動 StatusWorker：['Bak4-1', 'Bak4-2']
+[15:02:02] [INFO] 🕒 檢查排程中...
+[15:02:02] [INFO] 🕒 檢查排程中...
+[15:02:02] [INFO] ⬅️ EncStatus Bak4-2: OK: Bak4-2:Stopped
+
+OK: Bak4-2:Stopped
+
+OK: Bak4-2:Stopped
+[15:02:03] [INFO] 🕒 檢查排程中...
+[15:02:03] [INFO] 🕒 檢查排程中...
+[15:02:03] [INFO] ⬅️ EncStatus Bak4-2: OK: Bak4-2:Stopped
+[15:02:04] [INFO] ⬅️ EncStatus Bak4-1: 
+: Bak4-1:Stopped
+
+OK: Bak4-1:Stopped
+[15:02:04] [INFO] 🕒 檢查排程中...
+[15:02:04] [INFO] 🕒 檢查排程中...
+[15:02:04] [INFO] ⬅️ EncStatus Bak4-1: OK: Bak4-1:Stopped
+[15:02:05] [INFO] 🎯 啟動 StatusWorker：['Bak4-1', 'Bak4-2']
+[15:02:05] [INFO] 🕒 檢查排程中...
+[15:02:05] [INFO] 🕒 檢查排程中...
+[15:02:05] [INFO] ⚠️ 檔案未生成，請檢查路徑或權限：Z:/preview\Bak4-1.png
+[15:02:06] [INFO] 🎯 啟動 StatusWorker：['Bak4-1', 'Bak4-2']
+[15:02:06] [INFO] 🕒 檢查排程中...
+[15:02:06] [INFO] 🕒 檢查排程中...
+[15:02:06] [INFO] 👋 MainWindow 已關閉
+[15:06:43] [INFO] 🔧 MainWindow 建立中...
+[15:06:43] [INFO] ✅ Encoder 列表：['Bak4-1', 'Bak4-2']
+[15:06:43] [INFO] 🎯 draw_grid encoder_names:['Bak4-1', 'Bak4-2']
+[15:06:44] [INFO] 📂 已載入節目排程 Z:/schedule_project/schedule.json
+[15:06:44] [INFO] 🎯 draw_grid encoder_names:['Bak4-1', 'Bak4-2']
+[15:06:44] [INFO] 🎯 draw_grid encoder_names:['Bak4-1', 'Bak4-2']
+[15:06:44] [INFO] 🧭 自動捲動畫面至今天時間：X = 302
+[15:06:44] [INFO] 🔁 [同步] Runner block 數量：3
+[15:06:44] [INFO] 🎯 draw_grid encoder_names:['Bak4-1', 'Bak4-2']
+[15:06:44] [INFO] 🎯 draw_grid encoder_names:['Bak4-1', 'Bak4-2']
+[15:06:44] [INFO] 📂 已載入節目排程 Z:/schedule_project/schedule.json
+[15:06:44] [INFO] 📂 自動載入之前選的檔案：Z:/schedule_project/schedule.json
+[15:06:44] [INFO] 🎯 啟動 StatusWorker：['Bak4-1', 'Bak4-2']
+[15:06:44] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[15:06:45] [INFO] 🕒 檢查排程中...
+[15:06:45] [INFO] 🕒 檢查排程中...
+[15:06:46] [INFO] 🕒 檢查排程中...
+[15:06:46] [INFO] 🕒 檢查排程中...
+[15:06:46] [INFO] ⬅️ EncStatus Bak4-1: OK: Bak4-1:Stopped
+[15:06:46] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[15:06:46] [INFO] 📝 點擊 block：222
+[15:06:47] [INFO] 🎯 啟動 StatusWorker：['Bak4-1', 'Bak4-2']
+[15:06:47] [INFO] 🕒 檢查排程中...
+[15:06:47] [INFO] 🕒 檢查排程中...
+[15:06:47] [INFO] 📸 為 Bak4-1 拍照 ➜ 儲存預期路徑：Z:/preview\Bak4-1.png
+[15:06:47] [INFO] 📸 為 Bak4-2 拍照 ➜ 儲存預期路徑：Z:/preview\Bak4-2.png
+[15:06:47] [INFO] 🛰️ 傳給 encoder 的路徑（不含副檔名）：preview/Bak4-1
+[15:06:47] [INFO] 🛰️ 傳給 encoder 的路徑（不含副檔名）：preview/Bak4-2
+[15:06:47] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[15:06:47] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[15:06:48] [INFO] 🕒 檢查排程中...
+[15:06:48] [INFO] ⬅️ EncStatus Bak4-1: OK: Bak4-1:Stopped
+[15:06:48] [INFO] 🕒 檢查排程中...
+[15:06:49] [INFO] 🕒 檢查排程中...
+[15:06:49] [INFO] 🕒 檢查排程中...
+[15:06:49] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[15:06:49] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[15:06:49] [INFO] ⬅️ EncStatus Bak4-1: 
+[15:06:50] [INFO] 🎯 啟動 StatusWorker：['Bak4-1', 'Bak4-2']
+[15:06:50] [INFO] 🕒 檢查排程中...
+[15:06:50] [INFO] ⬅️ EncStatus Bak4-2: OK: Bak4-2:Stopped
+
+OK: Bak4-2:Stopped
+[15:06:50] [INFO] 🕒 檢查排程中...
+OK: Bak4-1:Stopped
+
+OK: Bak4-1:Stopped
+
+OK: Bak4-1:Stopped
+[15:06:51] [INFO] 🕒 檢查排程中...
+[15:06:51] [INFO] 🕒 檢查排程中...
+[15:06:51] [INFO] 📡 Snapshot 回應：OK: Snapshot has been taken.
+[15:06:51] [INFO] ✅ 已儲存：Z:/preview\Bak4-2.png
+[15:06:51] [INFO] 📡 Snapshot 回應：OK: Snapshot has been taken.
+[15:06:51] [INFO] 🔍 查找最新快照：Z:/preview\Bak4-2*.png
+[15:06:51] [INFO] ⬅️ EncStatus Bak4-2: 
+[15:06:51] [INFO] ⬅️ EncStatus Bak4-1: OK: Bak4-1:Stopped
+[15:06:51] [INFO] ⬅️ EncStatus Bak4-2: OK: Bak4-2:Stopped
+[15:06:52] [INFO] 🔍 查找最新快照：Z:/preview\Bak4-1*.png
+[15:06:52] [ERROR] ❌ 發生例外：
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 611, in mouseDoubleClickEvent
+    updated = dialog.get_updated_data()
+  File "c:\Users\coco\recoder\schedule_project\edit_block_dialog.py", line 152, in get_updated_data
+    "duration_time": hours_to_hhmm(duration_h),
+                     ^^^^^^^^^^^^^
+NameError: name 'hours_to_hhmm' is not defined
+
+[15:06:52] [INFO] 🕒 檢查排程中...
+[15:06:52] [INFO] 🕒 檢查排程中...
+[15:06:53] [INFO] 🎯 啟動 StatusWorker：['Bak4-1', 'Bak4-2']
+[15:06:53] [INFO] 🕒 檢查排程中...
+[15:06:53] [INFO] 🕒 檢查排程中...
+[15:06:53] [INFO] 📝 點擊 block：222
+[15:06:53] [INFO] ⬅️ EncStatus Bak4-2: 
+[15:06:53] [INFO] ⬅️ EncStatus Bak4-2: OK: Bak4-2:Stopped
+
+OK: Bak4-2:Stopped
+[15:06:54] [INFO] ⬅️ EncStatus Bak4-1: 
+[15:06:54] [INFO] 🎯 啟動 StatusWorker：['Bak4-1', 'Bak4-2']
+[15:06:54] [INFO] ⬅️ EncStatus Bak4-1: OK: Bak4-1:Stopped
+[15:06:54] [INFO] 🕒 檢查排程中...
+[15:06:54] [INFO] 🕒 檢查排程中...
+[15:06:54] [ERROR] ❌ 發生例外：
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 611, in mouseDoubleClickEvent
+    updated = dialog.get_updated_data()
+  File "c:\Users\coco\recoder\schedule_project\edit_block_dialog.py", line 152, in get_updated_data
+    "duration_time": hours_to_hhmm(duration_h),
+                     ^^^^^^^^^^^^^
+NameError: name 'hours_to_hhmm' is not defined
+
+[15:06:55] [INFO] 🕒 檢查排程中...
+[15:06:55] [INFO] 🕒 檢查排程中...
+[15:06:56] [INFO] ⬅️ EncStatus Bak4-2: OK: Bak4-2:Stopped
+[15:06:56] [INFO] 🎯 啟動 StatusWorker：['Bak4-1', 'Bak4-2']
+[15:06:56] [INFO] ⬅️ EncStatus Bak4-2: 
+[15:06:56] [INFO] 🕒 檢查排程中...
+[15:06:56] [INFO] ⬅️ EncStatus Bak4-1: 
+[15:06:56] [INFO] ⬅️ EncStatus Bak4-2: OK: Bak4-2:Stopped
+[15:06:56] [INFO] 🕒 檢查排程中...
+[15:06:56] [INFO] ⬅️ EncStatus Bak4-1: OK: Bak4-1:Stopped
+
+OK: Bak4-1:Stopped
+[15:06:56] [INFO] 👋 MainWindow 已關閉
+[15:07:23] [INFO] 🔧 MainWindow 建立中...
+[15:07:23] [INFO] ✅ Encoder 列表：['Bak4-1', 'Bak4-2']
+[15:07:23] [INFO] 🎯 draw_grid encoder_names:['Bak4-1', 'Bak4-2']
+[15:07:23] [INFO] 📂 已載入節目排程 Z:/schedule_project/schedule.json
+[15:07:23] [INFO] 🎯 draw_grid encoder_names:['Bak4-1', 'Bak4-2']
+[15:07:23] [INFO] 🎯 draw_grid encoder_names:['Bak4-1', 'Bak4-2']
+[15:07:23] [INFO] 🧭 自動捲動畫面至今天時間：X = 302
+[15:07:23] [INFO] 🔁 [同步] Runner block 數量：3
+[15:07:23] [INFO] 🎯 draw_grid encoder_names:['Bak4-1', 'Bak4-2']
+[15:07:23] [INFO] 🎯 draw_grid encoder_names:['Bak4-1', 'Bak4-2']
+[15:07:23] [INFO] 📂 已載入節目排程 Z:/schedule_project/schedule.json
+[15:07:23] [INFO] 📂 自動載入之前選的檔案：Z:/schedule_project/schedule.json
+[15:07:23] [INFO] 🎯 啟動 StatusWorker：['Bak4-1', 'Bak4-2']
+[15:07:23] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[15:07:24] [INFO] 🕒 檢查排程中...
+[15:07:24] [INFO] 🕒 檢查排程中...
+[15:07:24] [INFO] 📝 點擊 block：222
+[15:07:25] [INFO] 🕒 檢查排程中...
+[15:07:25] [INFO] 🕒 檢查排程中...
+[15:07:26] [INFO] 🎯 啟動 StatusWorker：['Bak4-1', 'Bak4-2']
+[15:07:26] [INFO] 🕒 檢查排程中...
+[15:07:26] [INFO] 🕒 檢查排程中...
+[15:07:26] [INFO] 📸 為 Bak4-2 拍照 ➜ 儲存預期路徑：Z:/preview\Bak4-2.png
+[15:07:26] [INFO] 📸 為 Bak4-1 拍照 ➜ 儲存預期路徑：Z:/preview\Bak4-1.png
+[15:07:26] [INFO] 🛰️ 傳給 encoder 的路徑（不含副檔名）：preview/Bak4-2
+[15:07:26] [INFO] 🛰️ 傳給 encoder 的路徑（不含副檔名）：preview/Bak4-1
+[15:07:26] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[15:07:26] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[15:07:27] [INFO] ⬅️ EncStatus Bak4-1: 
+[15:07:27] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[15:07:27] [ERROR] ❌ 發生例外：
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 616, in mouseDoubleClickEvent
+    end_hour = updated["start_hour"] + updated["duration"]
+               ~~~~~~~^^^^^^^^^^^^^^
+KeyError: 'start_hour'
+
+[15:07:27] [INFO] 🕒 檢查排程中...
+[15:07:27] [INFO] ⬅️ EncStatus Bak4-1: OK: Bak4-1:Stopped
+[15:07:27] [INFO] 🕒 檢查排程中...
+[15:07:28] [INFO] 🕒 檢查排程中...
+[15:07:28] [INFO] 🕒 檢查排程中...
+[15:07:28] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[15:07:28] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[15:07:29] [INFO] ⬅️ EncStatus Bak4-1: OK: Bak4-1:Stopped
+
+OK: Bak4-1:Stopped
+
+OK: Bak4-1:Stopped
+[15:07:29] [INFO] ⬅️ EncStatus Bak4-2: OK: Bak4-2:Stopped
+[15:07:29] [INFO] 👋 MainWindow 已關閉
+[15:09:43] [INFO] 🔧 MainWindow 建立中...
+[15:09:43] [INFO] ✅ Encoder 列表：['Bak4-1', 'Bak4-2']
+[15:09:43] [INFO] 🎯 draw_grid encoder_names:['Bak4-1', 'Bak4-2']
+[15:09:43] [INFO] 📂 已載入節目排程 Z:/schedule_project/schedule.json
+[15:09:43] [INFO] 🎯 draw_grid encoder_names:['Bak4-1', 'Bak4-2']
+[15:09:43] [INFO] 🎯 draw_grid encoder_names:['Bak4-1', 'Bak4-2']
+[15:09:43] [INFO] 🧭 自動捲動畫面至今天時間：X = 303
+[15:09:43] [INFO] 🔁 [同步] Runner block 數量：3
+[15:09:43] [INFO] 🎯 draw_grid encoder_names:['Bak4-1', 'Bak4-2']
+[15:09:43] [INFO] 🎯 draw_grid encoder_names:['Bak4-1', 'Bak4-2']
+[15:09:43] [INFO] 📂 已載入節目排程 Z:/schedule_project/schedule.json
+[15:09:43] [INFO] 📂 自動載入之前選的檔案：Z:/schedule_project/schedule.json
+[15:09:43] [INFO] 🎯 啟動 StatusWorker：['Bak4-1', 'Bak4-2']
+[15:09:43] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[15:09:44] [INFO] 🕒 檢查排程中...
+[15:09:44] [INFO] 🕒 檢查排程中...
+[15:09:45] [INFO] 📝 點擊 block：222
+[15:09:45] [INFO] 🕒 檢查排程中...
+[15:09:45] [INFO] 🕒 檢查排程中...
+[15:09:45] [INFO] ⬅️ EncStatus Bak4-1: OK: Bak4-1:Stopped
+[15:09:45] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[15:09:46] [INFO] 🎯 啟動 StatusWorker：['Bak4-1', 'Bak4-2']
+[15:09:46] [INFO] 🕒 檢查排程中...
+[15:09:46] [INFO] 🕒 檢查排程中...
+[15:09:46] [INFO] 📸 為 Bak4-1 拍照 ➜ 儲存預期路徑：Z:/preview\Bak4-1.png
+[15:09:46] [INFO] 🛰️ 傳給 encoder 的路徑（不含副檔名）：preview/Bak4-1
+[15:09:46] [INFO] 📸 為 Bak4-2 拍照 ➜ 儲存預期路徑：Z:/preview\Bak4-2.png
+[15:09:46] [INFO] 🛰️ 傳給 encoder 的路徑（不含副檔名）：preview/Bak4-2
+[15:09:46] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[15:09:46] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[15:09:47] [INFO] ⬅️ EncStatus Bak4-1: OK: Bak4-1:Stopped
+[15:09:47] [INFO] 🕒 檢查排程中...
+[15:09:47] [INFO] 🕒 檢查排程中...
+[15:09:48] [ERROR] ❌ 發生例外：
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 617, in mouseDoubleClickEvent
+    end_qdate = updated["qdate"].addDays(1) if end_hour >= 24 else updated["qdate"]
+                ^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'str' object has no attribute 'addDays'
+
+[15:09:48] [INFO] 🕒 檢查排程中...
+[15:09:48] [INFO] 🕒 檢查排程中...
+[15:09:48] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[15:09:48] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[15:09:49] [INFO] ⬅️ EncStatus Bak4-1: 
+[15:09:49] [INFO] ⬅️ EncStatus Bak4-2: 
+[15:09:49] [INFO] ⬅️ EncStatus Bak4-2: OK: Bak4-2:Stopped
+
+OK: Bak4-2:Stopped
+[15:09:49] [INFO] 🎯 啟動 StatusWorker：['Bak4-1', 'Bak4-2']
+[15:09:49] [INFO] 🕒 檢查排程中...
+[15:09:49] [INFO] 🕒 檢查排程中...
+[15:09:50] [INFO] 👋 MainWindow 已關閉
+[15:10:57] [INFO] 🔧 MainWindow 建立中...
+[15:10:57] [INFO] ✅ Encoder 列表：['Bak4-1', 'Bak4-2']
+[15:10:57] [INFO] 🎯 draw_grid encoder_names:['Bak4-1', 'Bak4-2']
+[15:10:57] [INFO] 📂 已載入節目排程 Z:/schedule_project/schedule.json
+[15:10:57] [INFO] 🎯 draw_grid encoder_names:['Bak4-1', 'Bak4-2']
+[15:10:57] [INFO] 🎯 draw_grid encoder_names:['Bak4-1', 'Bak4-2']
+[15:10:57] [INFO] 🧭 自動捲動畫面至今天時間：X = 303
+[15:10:57] [INFO] 🔁 [同步] Runner block 數量：3
+[15:10:57] [INFO] 🎯 draw_grid encoder_names:['Bak4-1', 'Bak4-2']
+[15:10:57] [INFO] 🎯 draw_grid encoder_names:['Bak4-1', 'Bak4-2']
+[15:10:57] [INFO] 📂 已載入節目排程 Z:/schedule_project/schedule.json
+[15:10:57] [INFO] 📂 自動載入之前選的檔案：Z:/schedule_project/schedule.json
+[15:10:57] [INFO] 🎯 啟動 StatusWorker：['Bak4-1', 'Bak4-2']
+[15:10:57] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[15:10:58] [INFO] 🕒 檢查排程中...
+[15:10:58] [INFO] 🕒 檢查排程中...
+[15:10:59] [INFO] 📝 點擊 block：222
+[15:10:59] [INFO] 🕒 檢查排程中...
+[15:10:59] [INFO] 🕒 檢查排程中...
+[15:11:00] [INFO] 🎯 啟動 StatusWorker：['Bak4-1', 'Bak4-2']
+[15:11:00] [INFO] 🕒 檢查排程中...
+[15:11:00] [INFO] 🕒 檢查排程中...
+[15:11:00] [INFO] 📸 為 Bak4-1 拍照 ➜ 儲存預期路徑：Z:/preview\Bak4-1.png
+[15:11:00] [INFO] 📸 為 Bak4-2 拍照 ➜ 儲存預期路徑：Z:/preview\Bak4-2.png
+[15:11:00] [INFO] 🛰️ 傳給 encoder 的路徑（不含副檔名）：preview/Bak4-1
+[15:11:00] [INFO] 🛰️ 傳給 encoder 的路徑（不含副檔名）：preview/Bak4-2
+[15:11:00] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[15:11:00] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[15:11:01] [INFO] ⬅️ EncStatus Bak4-1: OK: Bak4-1:Stopped
+
+OK: Bak4-1:Stopped
+[15:11:01] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[15:11:01] [INFO] ⬅️ EncStatus Bak4-1: 
+[15:11:01] [INFO] 🕒 檢查排程中...
+[15:11:01] [INFO] 🕒 檢查排程中...
+[15:11:01] [ERROR] ❌ 發生例外：
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 623, in mouseDoubleClickEvent
+    end_qdate = updated["qdate"].addDays(1) if end_hour >= 24 else updated["qdate"]
+                ^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'str' object has no attribute 'addDays'
+
+[15:11:02] [INFO] 🕒 檢查排程中...
+[15:11:02] [INFO] 🕒 檢查排程中...
+[15:11:02] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[15:11:02] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[15:11:03] [INFO] ⬅️ EncStatus Bak4-1: OK: Bak4-1:Stopped
+
+OK: Bak4-1:Stopped
+[15:11:03] [INFO] ⬅️ EncStatus Bak4-2: OK: Bak4-2:Stopped
+[15:11:03] [INFO] 🎯 啟動 StatusWorker：['Bak4-1', 'Bak4-2']
+[15:11:03] [INFO] 🕒 檢查排程中...
+[15:11:03] [INFO] 🕒 檢查排程中...
+[15:11:03] [INFO] ⬅️ EncStatus Bak4-1: OK: Bak4-1:Stopped
+[15:11:04] [INFO] 👋 MainWindow 已關閉
+[15:12:20] [INFO] 🔧 MainWindow 建立中...
+[15:12:20] [INFO] ✅ Encoder 列表：['Bak4-1', 'Bak4-2']
+[15:12:20] [INFO] 🎯 draw_grid encoder_names:['Bak4-1', 'Bak4-2']
+[15:12:21] [INFO] 📂 已載入節目排程 Z:/schedule_project/schedule.json
+[15:12:21] [INFO] 🎯 draw_grid encoder_names:['Bak4-1', 'Bak4-2']
+[15:12:21] [INFO] 🎯 draw_grid encoder_names:['Bak4-1', 'Bak4-2']
+[15:12:21] [INFO] 🧭 自動捲動畫面至今天時間：X = 304
+[15:12:21] [INFO] 🔁 [同步] Runner block 數量：3
+[15:12:21] [INFO] 🎯 draw_grid encoder_names:['Bak4-1', 'Bak4-2']
+[15:12:21] [INFO] 🎯 draw_grid encoder_names:['Bak4-1', 'Bak4-2']
+[15:12:21] [INFO] 📂 已載入節目排程 Z:/schedule_project/schedule.json
+[15:12:21] [INFO] 📂 自動載入之前選的檔案：Z:/schedule_project/schedule.json
+[15:12:21] [INFO] 🎯 啟動 StatusWorker：['Bak4-1', 'Bak4-2']
+[15:12:21] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[15:12:22] [INFO] 🕒 檢查排程中...
+[15:12:22] [INFO] 🕒 檢查排程中...
+[15:12:23] [INFO] 🕒 檢查排程中...
+[15:12:23] [INFO] 🕒 檢查排程中...
+[15:12:24] [INFO] 🎯 啟動 StatusWorker：['Bak4-1', 'Bak4-2']
+[15:12:24] [INFO] 🕒 檢查排程中...
+[15:12:24] [INFO] 🕒 檢查排程中...
+[15:12:24] [INFO] 📸 為 Bak4-1 拍照 ➜ 儲存預期路徑：Z:/preview\Bak4-1.png
+[15:12:24] [INFO] 📸 為 Bak4-2 拍照 ➜ 儲存預期路徑：Z:/preview\Bak4-2.png
+[15:12:24] [INFO] 🛰️ 傳給 encoder 的路徑（不含副檔名）：preview/Bak4-1
+[15:12:24] [INFO] 🛰️ 傳給 encoder 的路徑（不含副檔名）：preview/Bak4-2
+[15:12:24] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[15:12:24] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[15:12:24] [INFO] 📝 點擊 block：222
+[15:12:24] [INFO] ⬅️ EncStatus Bak4-1: 
+[15:12:24] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[15:12:24] [INFO] ⬅️ EncStatus Bak4-1: OK: Bak4-1:Stopped
+
+OK: Bak4-1:Stopped
+[15:12:25] [INFO] 🕒 檢查排程中...
+[15:12:25] [INFO] 🕒 檢查排程中...
+[15:12:25] [INFO] ⬅️ EncStatus Bak4-1: OK: Bak4-1:Stopped
+[15:12:26] [INFO] 🕒 檢查排程中...
+[15:12:26] [INFO] 🕒 檢查排程中...
+[15:12:26] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[15:12:26] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[15:12:26] [INFO] ⬅️ EncStatus Bak4-2: OK: Bak4-2:Stopped
+[15:12:26] [INFO] ⬅️ EncStatus Bak4-2: OK: Bak4-2:Stopped
+[15:12:27] [ERROR] ❌ 發生例外：
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 640, in mouseDoubleClickEvent
+    self.update_geometry(parent_view.base_date)
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 190, in update_geometry
+    day_offset = base_date.daysTo(self.start_date)
+TypeError: 'PySide6.QtCore.QDate.daysTo' called with wrong argument types:
+  PySide6.QtCore.QDate.daysTo(str)
+Supported signatures:
+  PySide6.QtCore.QDate.daysTo(d: PySide6.QtCore.QDate, /)
+
+[15:12:27] [INFO] 🎯 啟動 StatusWorker：['Bak4-1', 'Bak4-2']
+[15:12:27] [INFO] 🕒 檢查排程中...
+[15:12:27] [INFO] 🕒 檢查排程中...
+[15:12:27] [ERROR] ❌ 發生例外：
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\schedule_view.py", line 193, in update_all_blocks
+    item.update_status_by_time()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 537, in update_status_by_time
+    start_dt = QDateTime(self.start_date, QTime(int(self.start_hour), int((self.start_hour % 1) * 60)))
+TypeError: 'PySide6.QtCore.QDateTime.__init__' called with wrong argument types:
+  PySide6.QtCore.QDateTime.__init__(str, QTime)
+Supported signatures:
+  PySide6.QtCore.QDateTime.__init__()
+  PySide6.QtCore.QDateTime.__init__(date: PySide6.QtCore.QDate, time: PySide6.QtCore.QTime, spec: PySide6.QtCore.Qt.TimeSpec, /, offsetSeconds: int | None = None)
+  PySide6.QtCore.QDateTime.__init__(date: PySide6.QtCore.QDate, time: PySide6.QtCore.QTime, /, resolve: PySide6.QtCore.QDateTime.TransitionResolution = Instance(PySide6.QtCore.QDateTime.TransitionResolution.LegacyBehavior))
+  PySide6.QtCore.QDateTime.__init__(date: PySide6.QtCore.QDate, time: PySide6.QtCore.QTime, timeZone: PySide6.QtCore.QTimeZone | PySide6.QtCore.QTimeZone.Initialization, /, resolve: PySide6.QtCore.QDateTime.TransitionResolution = Instance(PySide6.QtCore.QDateTime.TransitionResolution.LegacyBehavior))
+  PySide6.QtCore.QDateTime.__init__(other: PySide6.QtCore.QDateTime, /)
+  PySide6.QtCore.QDateTime.__init__(year: int, month: int, day: int, h: int, m: int, s: int, /)
+  PySide6.QtCore.QDateTime.__init__(year: int, month: int, day: int, h: int, m: int, s: int, ms: int, /, spec: PySide6.QtCore.Qt.TimeSpec = Instance(Qt.LocalTime))
+  PySide6.QtCore.QDateTime.__init__(year: int, month: int, day: int, h: int, m: int, s: int, ms: int, /, spec: int = Instance(Qt.LocalTime))
+
+[15:12:28] [INFO] 🕒 檢查排程中...
+[15:12:28] [INFO] 🕒 檢查排程中...
+[15:12:28] [INFO] 📡 Snapshot 回應：OK: Snapshot has been taken.
+[15:12:28] [INFO] 📡 Snapshot 回應：OK: Snapshot has been taken.
+[15:12:28] [INFO] ✅ 已儲存：Z:/preview\Bak4-2.png
+[15:12:28] [ERROR] ❌ 發生例外：
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\schedule_view.py", line 193, in update_all_blocks
+    item.update_status_by_time()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 537, in update_status_by_time
+    start_dt = QDateTime(self.start_date, QTime(int(self.start_hour), int((self.start_hour % 1) * 60)))
+TypeError: 'PySide6.QtCore.QDateTime.__init__' called with wrong argument types:
+  PySide6.QtCore.QDateTime.__init__(str, QTime)
+Supported signatures:
+  PySide6.QtCore.QDateTime.__init__()
+  PySide6.QtCore.QDateTime.__init__(date: PySide6.QtCore.QDate, time: PySide6.QtCore.QTime, spec: PySide6.QtCore.Qt.TimeSpec, /, offsetSeconds: int | None = None)
+  PySide6.QtCore.QDateTime.__init__(date: PySide6.QtCore.QDate, time: PySide6.QtCore.QTime, /, resolve: PySide6.QtCore.QDateTime.TransitionResolution = Instance(PySide6.QtCore.QDateTime.TransitionResolution.LegacyBehavior))
+  PySide6.QtCore.QDateTime.__init__(date: PySide6.QtCore.QDate, time: PySide6.QtCore.QTime, timeZone: PySide6.QtCore.QTimeZone | PySide6.QtCore.QTimeZone.Initialization, /, resolve: PySide6.QtCore.QDateTime.TransitionResolution = Instance(PySide6.QtCore.QDateTime.TransitionResolution.LegacyBehavior))
+  PySide6.QtCore.QDateTime.__init__(other: PySide6.QtCore.QDateTime, /)
+  PySide6.QtCore.QDateTime.__init__(year: int, month: int, day: int, h: int, m: int, s: int, /)
+  PySide6.QtCore.QDateTime.__init__(year: int, month: int, day: int, h: int, m: int, s: int, ms: int, /, spec: PySide6.QtCore.Qt.TimeSpec = Instance(Qt.LocalTime))
+  PySide6.QtCore.QDateTime.__init__(year: int, month: int, day: int, h: int, m: int, s: int, ms: int, /, spec: int = Instance(Qt.LocalTime))
+
+[15:12:28] [INFO] 🔍 查找最新快照：Z:/preview\Bak4-1*.png
+[15:12:29] [INFO] 🔍 查找最新快照：Z:/preview\Bak4-2*.png
+[15:12:29] [INFO] ⬅️ EncStatus Bak4-1: OK: Bak4-1:Stopped
+[15:12:29] [INFO] 🕒 檢查排程中...
+[15:12:29] [INFO] 🕒 檢查排程中...
+[15:12:29] [ERROR] ❌ 發生例外：
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\schedule_view.py", line 193, in update_all_blocks
+    item.update_status_by_time()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 537, in update_status_by_time
+    start_dt = QDateTime(self.start_date, QTime(int(self.start_hour), int((self.start_hour % 1) * 60)))
+TypeError: 'PySide6.QtCore.QDateTime.__init__' called with wrong argument types:
+  PySide6.QtCore.QDateTime.__init__(str, QTime)
+Supported signatures:
+  PySide6.QtCore.QDateTime.__init__()
+  PySide6.QtCore.QDateTime.__init__(date: PySide6.QtCore.QDate, time: PySide6.QtCore.QTime, spec: PySide6.QtCore.Qt.TimeSpec, /, offsetSeconds: int | None = None)
+  PySide6.QtCore.QDateTime.__init__(date: PySide6.QtCore.QDate, time: PySide6.QtCore.QTime, /, resolve: PySide6.QtCore.QDateTime.TransitionResolution = Instance(PySide6.QtCore.QDateTime.TransitionResolution.LegacyBehavior))
+  PySide6.QtCore.QDateTime.__init__(date: PySide6.QtCore.QDate, time: PySide6.QtCore.QTime, timeZone: PySide6.QtCore.QTimeZone | PySide6.QtCore.QTimeZone.Initialization, /, resolve: PySide6.QtCore.QDateTime.TransitionResolution = Instance(PySide6.QtCore.QDateTime.TransitionResolution.LegacyBehavior))
+  PySide6.QtCore.QDateTime.__init__(other: PySide6.QtCore.QDateTime, /)
+  PySide6.QtCore.QDateTime.__init__(year: int, month: int, day: int, h: int, m: int, s: int, /)
+  PySide6.QtCore.QDateTime.__init__(year: int, month: int, day: int, h: int, m: int, s: int, ms: int, /, spec: PySide6.QtCore.Qt.TimeSpec = Instance(Qt.LocalTime))
+  PySide6.QtCore.QDateTime.__init__(year: int, month: int, day: int, h: int, m: int, s: int, ms: int, /, spec: int = Instance(Qt.LocalTime))
+
+[15:12:30] [INFO] 🎯 啟動 StatusWorker：['Bak4-1', 'Bak4-2']
+[15:12:30] [INFO] 🕒 檢查排程中...
+[15:12:30] [INFO] 🕒 檢查排程中...
+[15:12:30] [ERROR] ❌ 發生例外：
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\schedule_view.py", line 193, in update_all_blocks
+    item.update_status_by_time()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 537, in update_status_by_time
+    start_dt = QDateTime(self.start_date, QTime(int(self.start_hour), int((self.start_hour % 1) * 60)))
+TypeError: 'PySide6.QtCore.QDateTime.__init__' called with wrong argument types:
+  PySide6.QtCore.QDateTime.__init__(str, QTime)
+Supported signatures:
+  PySide6.QtCore.QDateTime.__init__()
+  PySide6.QtCore.QDateTime.__init__(date: PySide6.QtCore.QDate, time: PySide6.QtCore.QTime, spec: PySide6.QtCore.Qt.TimeSpec, /, offsetSeconds: int | None = None)
+  PySide6.QtCore.QDateTime.__init__(date: PySide6.QtCore.QDate, time: PySide6.QtCore.QTime, /, resolve: PySide6.QtCore.QDateTime.TransitionResolution = Instance(PySide6.QtCore.QDateTime.TransitionResolution.LegacyBehavior))
+  PySide6.QtCore.QDateTime.__init__(date: PySide6.QtCore.QDate, time: PySide6.QtCore.QTime, timeZone: PySide6.QtCore.QTimeZone | PySide6.QtCore.QTimeZone.Initialization, /, resolve: PySide6.QtCore.QDateTime.TransitionResolution = Instance(PySide6.QtCore.QDateTime.TransitionResolution.LegacyBehavior))
+  PySide6.QtCore.QDateTime.__init__(other: PySide6.QtCore.QDateTime, /)
+  PySide6.QtCore.QDateTime.__init__(year: int, month: int, day: int, h: int, m: int, s: int, /)
+  PySide6.QtCore.QDateTime.__init__(year: int, month: int, day: int, h: int, m: int, s: int, ms: int, /, spec: PySide6.QtCore.Qt.TimeSpec = Instance(Qt.LocalTime))
+  PySide6.QtCore.QDateTime.__init__(year: int, month: int, day: int, h: int, m: int, s: int, ms: int, /, spec: int = Instance(Qt.LocalTime))
+
+[15:12:31] [INFO] 🎯 啟動 StatusWorker：['Bak4-1', 'Bak4-2']
+[15:12:31] [INFO] 🕒 檢查排程中...
+[15:12:31] [INFO] 🕒 檢查排程中...
+[15:12:31] [INFO] ⬅️ EncStatus Bak4-2: OK: Bak4-2:Stopped
+
+OK: Bak4-2:Stopped
+[15:12:31] [INFO] 👋 MainWindow 已關閉
+[15:18:20] [INFO] 🔧 MainWindow 建立中...
+[15:18:20] [INFO] ✅ Encoder 列表：['Bak4-1', 'Bak4-2']
+[15:18:20] [INFO] 🎯 draw_grid encoder_names:['Bak4-1', 'Bak4-2']
+[15:18:20] [INFO] 📂 已載入節目排程 Z:/schedule_project/schedule.json
+[15:18:20] [INFO] 🎯 draw_grid encoder_names:['Bak4-1', 'Bak4-2']
+[15:18:20] [INFO] 🎯 draw_grid encoder_names:['Bak4-1', 'Bak4-2']
+[15:18:20] [INFO] 🧭 自動捲動畫面至今天時間：X = 306
+[15:18:20] [INFO] 🔁 [同步] Runner block 數量：3
+[15:18:20] [INFO] 🎯 draw_grid encoder_names:['Bak4-1', 'Bak4-2']
+[15:18:20] [INFO] 🎯 draw_grid encoder_names:['Bak4-1', 'Bak4-2']
+[15:18:20] [INFO] 📂 已載入節目排程 Z:/schedule_project/schedule.json
+[15:18:20] [INFO] 📂 自動載入之前選的檔案：Z:/schedule_project/schedule.json
+[15:18:20] [INFO] 🎯 啟動 StatusWorker：['Bak4-1', 'Bak4-2']
+[15:18:20] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[15:18:21] [INFO] 🕒 檢查排程中...
+[15:18:21] [INFO] 🕒 檢查排程中...
+[15:18:21] [INFO] 📝 點擊 block：222
+[15:18:22] [INFO] 🕒 檢查排程中...
+[15:18:22] [INFO] 🕒 檢查排程中...
+[15:18:22] [INFO] ⬅️ EncStatus Bak4-1: OK: Bak4-1:Stopped
+[15:18:22] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[15:18:23] [INFO] 🎯 啟動 StatusWorker：['Bak4-1', 'Bak4-2']
+[15:18:23] [INFO] 🕒 檢查排程中...
+[15:18:23] [INFO] 🕒 檢查排程中...
+[15:18:23] [INFO] 📸 為 Bak4-2 拍照 ➜ 儲存預期路徑：Z:/preview\Bak4-2.png
+[15:18:23] [INFO] 📸 為 Bak4-1 拍照 ➜ 儲存預期路徑：Z:/preview\Bak4-1.png
+[15:18:23] [INFO] 🛰️ 傳給 encoder 的路徑（不含副檔名）：preview/Bak4-2
+[15:18:23] [INFO] 🛰️ 傳給 encoder 的路徑（不含副檔名）：preview/Bak4-1
+[15:18:23] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[15:18:24] [INFO] ⬅️ EncStatus Bak4-1: OK: Bak4-1:Stopped
+[15:18:24] [ERROR] ❌ 發生例外：
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 650, in mouseDoubleClickEvent
+    self.update_geometry(parent_view.base_date)
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 190, in update_geometry
+    day_offset = base_date.daysTo(self.start_date)
+TypeError: 'PySide6.QtCore.QDate.daysTo' called with wrong argument types:
+  PySide6.QtCore.QDate.daysTo(str)
+Supported signatures:
+  PySide6.QtCore.QDate.daysTo(d: PySide6.QtCore.QDate, /)
+
+[15:18:24] [INFO] 🕒 檢查排程中...
+[15:18:24] [INFO] 🕒 檢查排程中...
+[15:18:24] [INFO] ⬅️ EncStatus Bak4-2: OK: Bak4-2:Stopped
+[15:18:25] [INFO] 🕒 檢查排程中...
+[15:18:25] [INFO] 🕒 檢查排程中...
+[15:18:25] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[15:18:25] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[15:18:26] [INFO] ⬅️ EncStatus Bak4-2: OK: Bak4-2:Stopped
+[15:18:26] [INFO] 🎯 啟動 StatusWorker：['Bak4-1', 'Bak4-2']
+[15:18:26] [INFO] 🕒 檢查排程中...
+[15:18:26] [INFO] 🕒 檢查排程中...
+[15:18:26] [INFO] 👋 MainWindow 已關閉
+[15:18:40] [INFO] 🔧 MainWindow 建立中...
+[15:18:40] [INFO] ✅ Encoder 列表：['Bak4-1', 'Bak4-2']
+[15:18:41] [INFO] 🎯 draw_grid encoder_names:['Bak4-1', 'Bak4-2']
+[15:18:41] [INFO] 📂 已載入節目排程 Z:/schedule_project/schedule.json
+[15:18:41] [INFO] 🎯 draw_grid encoder_names:['Bak4-1', 'Bak4-2']
+[15:18:41] [INFO] 🎯 draw_grid encoder_names:['Bak4-1', 'Bak4-2']
+[15:18:41] [INFO] 🧭 自動捲動畫面至今天時間：X = 306
+[15:18:41] [INFO] 🔁 [同步] Runner block 數量：3
+[15:18:41] [INFO] 🎯 draw_grid encoder_names:['Bak4-1', 'Bak4-2']
+[15:18:41] [INFO] 🎯 draw_grid encoder_names:['Bak4-1', 'Bak4-2']
+[15:18:41] [INFO] 📂 已載入節目排程 Z:/schedule_project/schedule.json
+[15:18:41] [INFO] 📂 自動載入之前選的檔案：Z:/schedule_project/schedule.json
+[15:18:41] [INFO] 🎯 啟動 StatusWorker：['Bak4-1', 'Bak4-2']
+[15:18:41] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[15:18:42] [INFO] 🕒 檢查排程中...
+[15:18:42] [INFO] 🕒 檢查排程中...
+[15:18:42] [INFO] 📝 點擊 block：222
+[15:18:43] [INFO] 🕒 檢查排程中...
+[15:18:43] [INFO] 🕒 檢查排程中...
+[15:18:44] [INFO] 🎯 啟動 StatusWorker：['Bak4-1', 'Bak4-2']
+[15:18:44] [INFO] 🕒 檢查排程中...
+[15:18:44] [INFO] 🕒 檢查排程中...
+[15:18:44] [INFO] 📸 為 Bak4-2 拍照 ➜ 儲存預期路徑：Z:/preview\Bak4-2.png
+[15:18:44] [INFO] 📸 為 Bak4-1 拍照 ➜ 儲存預期路徑：Z:/preview\Bak4-1.png
+[15:18:44] [INFO] 🛰️ 傳給 encoder 的路徑（不含副檔名）：preview/Bak4-2
+[15:18:44] [INFO] 🛰️ 傳給 encoder 的路徑（不含副檔名）：preview/Bak4-1
+[15:18:44] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[15:18:44] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[15:18:45] [INFO] ⬅️ EncStatus Bak4-1: 
+[15:18:45] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[15:18:45] [INFO] ⬅️ EncStatus Bak4-1: OK: Bak4-1:Stopped
+
+OK: Bak4-1:Stopped
+[15:18:45] [INFO] 🕒 檢查排程中...
+[15:18:45] [INFO] 🕒 檢查排程中...
+[15:18:45] [ERROR] ❌ 發生例外：
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 660, in mouseDoubleClickEvent
+    self.update_geometry(parent_view.base_date)
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 190, in update_geometry
+    day_offset = base_date.daysTo(self.start_date)
+TypeError: 'PySide6.QtCore.QDate.daysTo' called with wrong argument types:
+  PySide6.QtCore.QDate.daysTo(str)
+Supported signatures:
+  PySide6.QtCore.QDate.daysTo(d: PySide6.QtCore.QDate, /)
+
+[15:18:46] [INFO] 🕒 檢查排程中...
+[15:18:46] [INFO] 🕒 檢查排程中...
+[15:18:46] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[15:18:46] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[15:18:47] [INFO] ⬅️ EncStatus Bak4-1: OK: Bak4-1:Stopped
+
+OK: Bak4-1:Stopped
+[15:18:47] [INFO] ⬅️ EncStatus Bak4-2: OK: Bak4-2:Stopped
+[15:18:47] [INFO] 🎯 啟動 StatusWorker：['Bak4-1', 'Bak4-2']
+[15:18:47] [INFO] 🕒 檢查排程中...
+[15:18:47] [INFO] 🕒 檢查排程中...
+[15:18:47] [INFO] 👋 MainWindow 已關閉
+[15:20:19] [INFO] 🔧 MainWindow 建立中...
+[15:20:19] [INFO] ✅ Encoder 列表：['Bak4-1', 'Bak4-2']
+[15:20:19] [INFO] 🎯 draw_grid encoder_names:['Bak4-1', 'Bak4-2']
+[15:20:19] [INFO] 📂 已載入節目排程 Z:/schedule_project/schedule.json
+[15:20:19] [INFO] 🎯 draw_grid encoder_names:['Bak4-1', 'Bak4-2']
+[15:20:19] [INFO] 🎯 draw_grid encoder_names:['Bak4-1', 'Bak4-2']
+[15:20:19] [INFO] 🧭 自動捲動畫面至今天時間：X = 306
+[15:20:19] [INFO] 🔁 [同步] Runner block 數量：3
+[15:20:19] [INFO] 🎯 draw_grid encoder_names:['Bak4-1', 'Bak4-2']
+[15:20:19] [INFO] 🎯 draw_grid encoder_names:['Bak4-1', 'Bak4-2']
+[15:20:19] [INFO] 📂 已載入節目排程 Z:/schedule_project/schedule.json
+[15:20:19] [INFO] 📂 自動載入之前選的檔案：Z:/schedule_project/schedule.json
+[15:20:20] [INFO] 🎯 啟動 StatusWorker：['Bak4-1', 'Bak4-2']
+[15:20:20] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[15:20:20] [INFO] 🕒 檢查排程中...
+[15:20:20] [INFO] 🕒 檢查排程中...
+[15:20:21] [INFO] 📝 點擊 block：222
+[15:20:21] [INFO] 🕒 檢查排程中...
+[15:20:21] [INFO] 🕒 檢查排程中...
+[15:20:22] [INFO] 🎯 啟動 StatusWorker：['Bak4-1', 'Bak4-2']
+[15:20:22] [INFO] 🕒 檢查排程中...
+[15:20:22] [INFO] 🕒 檢查排程中...
+[15:20:22] [INFO] 📸 為 Bak4-1 拍照 ➜ 儲存預期路徑：Z:/preview\Bak4-1.png
+[15:20:22] [INFO] 📸 為 Bak4-2 拍照 ➜ 儲存預期路徑：Z:/preview\Bak4-2.png
+[15:20:22] [INFO] 🛰️ 傳給 encoder 的路徑（不含副檔名）：preview/Bak4-1
+[15:20:22] [INFO] 🛰️ 傳給 encoder 的路徑（不含副檔名）：preview/Bak4-2
+[15:20:22] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[15:20:22] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[15:20:23] [INFO] ⬅️ EncStatus Bak4-1: OK: Bak4-1:Stopped
+
+OK: Bak4-1:Stopped
+[15:20:23] [INFO] ⬅️ EncStatus Bak4-1: 
+[15:20:23] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[15:20:23] [INFO] 🕒 檢查排程中...
+[15:20:23] [INFO] 🕒 檢查排程中...
+[15:20:24] [INFO] ✅ 已儲存節目排程：Z:/schedule_project/schedule.json
+[15:20:24] [INFO] 🔁 [同步] Runner block 數量：3
+[15:20:24] [INFO] 🕒 檢查排程中...
+[15:20:24] [INFO] 🕒 檢查排程中...
+[15:20:24] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[15:20:24] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[15:20:25] [INFO] ⬅️ EncStatus Bak4-1: OK: Bak4-1:Stopped
+[15:20:25] [INFO] ⬅️ EncStatus Bak4-2: OK: Bak4-2:Stopped
+[15:20:25] [INFO] ⬅️ EncStatus Bak4-2: OK: Bak4-2:Stopped
+[15:20:25] [INFO] 🎯 啟動 StatusWorker：['Bak4-1', 'Bak4-2']
+[15:20:25] [INFO] 🕒 檢查排程中...
+[15:20:25] [INFO] ⬅️ EncStatus Bak4-1: 
+[15:20:25] [INFO] 🕒 檢查排程中...
+[15:20:26] [INFO] 📝 點擊 block：222
+[15:20:26] [INFO] 🕒 檢查排程中...
+[15:20:26] [INFO] 🕒 檢查排程中...
+[15:20:27] [INFO] 📡 Snapshot 回應：OK: Snapshot has been taken.
+[15:20:27] [INFO] 📡 Snapshot 回應：OK: Snapshot has been taken.
+[15:20:27] [INFO] ✅ 已儲存：Z:/preview\Bak4-2.png
+[15:20:27] [INFO] ⬅️ EncStatus Bak4-1: 
+: Bak4-1:Stopped
+
+OK: Bak4-1:Stopped
+
+OK: Bak4-1:Stopped
+[15:20:27] [INFO] 🔍 查找最新快照：Z:/preview\Bak4-1*.png
+[15:20:27] [INFO] 🔍 查找最新快照：Z:/preview\Bak4-2*.png
+[15:20:27] [INFO] 🕒 檢查排程中...
+[15:20:27] [INFO] ⬅️ EncStatus Bak4-1: OK: Bak4-1:Stopped
+[15:20:27] [INFO] ⬅️ EncStatus Bak4-1: OK: Bak4-1:Stopped
+[15:20:27] [INFO] 🕒 檢查排程中...
+[15:20:28] [INFO] 🎯 啟動 StatusWorker：['Bak4-1', 'Bak4-2']
+[15:20:28] [INFO] 🕒 檢查排程中...
+[15:20:28] [INFO] 🕒 檢查排程中...
+[15:20:29] [INFO] ✅ 已儲存節目排程：Z:/schedule_project/schedule.json
+[15:20:29] [INFO] 🔁 [同步] Runner block 數量：3
+[15:20:29] [INFO] 🎯 啟動 StatusWorker：['Bak4-1', 'Bak4-2']
+[15:20:29] [INFO] 🕒 檢查排程中...
+[15:20:29] [INFO] ⬅️ EncStatus Bak4-2: 
+[15:20:29] [INFO] ⬅️ EncStatus Bak4-2: OK: Bak4-2:Stopped
+
+OK: Bak4-2:Stopped
+[15:20:29] [INFO] 🕒 檢查排程中...
+[15:20:30] [INFO] 🕒 檢查排程中...
+[15:20:30] [INFO] 🕒 檢查排程中...
+[15:20:31] [INFO] ✅ 已儲存節目排程：Z:/schedule_project/schedule.json
+[15:20:31] [INFO] 🔁 [同步] Runner block 數量：3
+[15:20:31] [INFO] ✅ 已儲存節目排程：Z:/schedule_project/schedule.json
+[15:20:31] [INFO] ✅ 已儲存節目排程：Z:/schedule_project/schedule.json
+[15:20:31] [INFO] 🔁 [同步] Runner block 數量：3
+[15:20:31] [INFO] ✅ 已儲存節目排程：Z:/schedule_project/schedule.json
+[15:20:31] [INFO] 🔁 [同步] Runner block 數量：3
+[15:20:31] [INFO] ✅ 已儲存節目排程：Z:/schedule_project/schedule.json
+[15:20:31] [INFO] 🔁 [同步] Runner block 數量：3
+[15:20:31] [INFO] ✅ 已儲存節目排程：Z:/schedule_project/schedule.json
+[15:20:31] [INFO] 🔁 [同步] Runner block 數量：3
+[15:20:31] [INFO] ✅ 已儲存節目排程：Z:/schedule_project/schedule.json
+[15:20:31] [INFO] 🔁 [同步] Runner block 數量：3
+[15:20:31] [INFO] ✅ 已儲存節目排程：Z:/schedule_project/schedule.json
+[15:20:31] [INFO] 🔁 [同步] Runner block 數量：3
+[15:20:31] [INFO] ✅ 已儲存節目排程：Z:/schedule_project/schedule.json
+[15:20:31] [INFO] 🔁 [同步] Runner block 數量：3
+[15:20:31] [INFO] ✅ 已儲存節目排程：Z:/schedule_project/schedule.json
+[15:20:31] [INFO] 🔁 [同步] Runner block 數量：3
+[15:20:31] [INFO] ✅ 已儲存節目排程：Z:/schedule_project/schedule.json
+[15:20:31] [INFO] 🔁 [同步] Runner block 數量：3
+[15:20:31] [INFO] ✅ 已儲存節目排程：Z:/schedule_project/schedule.json
+[15:20:31] [INFO] 🔁 [同步] Runner block 數量：3
+[15:20:31] [INFO] ✅ 已儲存節目排程：Z:/schedule_project/schedule.json
+[15:20:31] [INFO] 🔁 [同步] Runner block 數量：3
+[15:20:31] [INFO] ✅ 已儲存節目排程：Z:/schedule_project/schedule.json
+[15:20:31] [INFO] 🔁 [同步] Runner block 數量：3
+[15:20:31] [INFO] ✅ 已儲存節目排程：Z:/schedule_project/schedule.json
+[15:20:31] [INFO] 🔁 [同步] Runner block 數量：3
+[15:20:31] [INFO] ✅ 已儲存節目排程：Z:/schedule_project/schedule.json
+[15:20:31] [INFO] 🔁 [同步] Runner block 數量：3
+[15:20:31] [INFO] ✅ 已儲存節目排程：Z:/schedule_project/schedule.json
+[15:20:31] [INFO] 🔁 [同步] Runner block 數量：3
+[15:20:31] [INFO] ✅ 已儲存節目排程：Z:/schedule_project/schedule.json
+[15:20:31] [INFO] 🔁 [同步] Runner block 數量：3
+[15:20:31] [INFO] ✅ 已儲存節目排程：Z:/schedule_project/schedule.json
+[15:20:31] [INFO] 🔁 [同步] Runner block 數量：3
+[15:20:31] [INFO] ✅ 已儲存節目排程：Z:/schedule_project/schedule.json
+[15:20:31] [INFO] 🔁 [同步] Runner block 數量：3
+[15:20:31] [INFO] ⬅️ EncStatus Bak4-2: 
+[15:20:31] [INFO] ✅ 已儲存節目排程：Z:/schedule_project/schedule.json
+[15:20:31] [INFO] 🔁 [同步] Runner block 數量：3
+[15:20:31] [INFO] ✅ 已儲存節目排程：Z:/schedule_project/schedule.json
+[15:20:31] [INFO] 🔁 [同步] Runner block 數量：3
+[15:20:31] [INFO] ✅ 已儲存節目排程：Z:/schedule_project/schedule.json
+[15:20:31] [INFO] 🔁 [同步] Runner block 數量：3
+[15:20:31] [INFO] ✅ 已儲存節目排程：Z:/schedule_project/schedule.json
+[15:20:31] [INFO] 🔁 [同步] Runner block 數量：3
+[15:20:31] [INFO] ✅ 已儲存節目排程：Z:/schedule_project/schedule.json
+[15:20:31] [INFO] 🔁 [同步] Runner block 數量：3
+[15:20:31] [INFO] ✅ 已儲存節目排程：Z:/schedule_project/schedule.json
+[15:20:31] [INFO] 🔁 [同步] Runner block 數量：3
+[15:20:31] [INFO] 🎯 啟動 StatusWorker：['Bak4-1', 'Bak4-2']
+[15:20:31] [INFO] 🕒 檢查排程中...
+[15:20:31] [INFO] ⬅️ EncStatus Bak4-1: 
+[15:20:31] [INFO] ⬅️ EncStatus Bak4-1: OK: Bak4-1:Stopped
+
+OK: Bak4-1:Stopped
+[15:20:31] [INFO] 🕒 檢查排程中...
+[15:20:32] [INFO] ⚠️ 檔案未生成，請檢查路徑或權限：Z:/preview\Bak4-1.png
+[15:20:32] [INFO] 🕒 檢查排程中...
+[15:20:32] [INFO] ✅ 已儲存節目排程：Z:/schedule_project/schedule.json
+[15:20:32] [INFO] 🕒 檢查排程中...
+[15:20:32] [INFO] ✅ 已儲存節目排程：Z:/schedule_project/schedule.json
+[15:20:33] [INFO] ✅ 已儲存節目排程：Z:/schedule_project/schedule.json
+[15:20:33] [INFO] ✅ 已儲存節目排程：Z:/schedule_project/schedule.json
+[15:20:33] [INFO] ✅ 已儲存節目排程：Z:/schedule_project/schedule.json
+[15:20:33] [INFO] ✅ 已儲存節目排程：Z:/schedule_project/schedule.json
+[15:20:33] [INFO] ✅ 已儲存節目排程：Z:/schedule_project/schedule.json
+[15:20:33] [INFO] ✅ 已儲存節目排程：Z:/schedule_project/schedule.json
+[15:20:33] [INFO] ✅ 已儲存節目排程：Z:/schedule_project/schedule.json
+[15:20:33] [INFO] ✅ 已儲存節目排程：Z:/schedule_project/schedule.json
+[15:20:33] [INFO] ✅ 已儲存節目排程：Z:/schedule_project/schedule.json
+[15:20:33] [INFO] ✅ 已儲存節目排程：Z:/schedule_project/schedule.json
+[15:20:33] [INFO] ✅ 已儲存節目排程：Z:/schedule_project/schedule.json
+[15:20:33] [INFO] ✅ 已儲存節目排程：Z:/schedule_project/schedule.json
+[15:20:33] [INFO] ✅ 已儲存節目排程：Z:/schedule_project/schedule.json
+[15:20:33] [INFO] 🔴 重疊偵測：與 222 發生重疊
+[15:20:33] [INFO] 🔴 重疊偵測：與 222 發生重疊
+[15:20:33] [INFO] 🔴 重疊偵測：與 222 發生重疊
+[15:20:33] [INFO] 🔴 重疊偵測：與 222 發生重疊
+[15:20:33] [INFO] 🔴 重疊偵測：與 222 發生重疊
+[15:20:33] [INFO] 🔴 重疊偵測：與 222 發生重疊
+[15:20:33] [INFO] 🔴 重疊偵測：與 222 發生重疊
+[15:20:33] [INFO] 🔴 重疊偵測：與 222 發生重疊
+[15:20:33] [INFO] 🔴 重疊偵測：與 222 發生重疊
+[15:20:33] [INFO] 🔴 重疊偵測：與 222 發生重疊
+[15:20:33] [INFO] 🔴 重疊偵測：與 222 發生重疊
+[15:20:33] [INFO] 🔴 重疊偵測：與 222 發生重疊
+[15:20:33] [INFO] 🔴 重疊偵測：與 222 發生重疊
+[15:20:33] [INFO] 🔴 重疊偵測：與 222 發生重疊
+[15:20:33] [INFO] 🔴 重疊偵測：與 222 發生重疊
+[15:20:33] [INFO] 🔴 重疊偵測：與 222 發生重疊
+[15:20:33] [INFO] ⬅️ EncStatus Bak4-2: OK: Bak4-2:Stopped
+[15:20:33] [INFO] 🔴 重疊偵測：與 222 發生重疊
+[15:20:33] [INFO] 🔴 重疊偵測：與 222 發生重疊
+[15:20:33] [INFO] 🔴 重疊偵測：與 222 發生重疊
+[15:20:33] [INFO] 🔴 重疊偵測：與 222 發生重疊
+[15:20:33] [INFO] 🔴 重疊偵測：與 222 發生重疊
+[15:20:33] [INFO] 🔴 重疊偵測：與 222 發生重疊
+[15:20:33] [INFO] 🔴 重疊偵測：與 222 發生重疊
+[15:20:33] [INFO] 🔴 重疊偵測：與 222 發生重疊
+[15:20:33] [INFO] 🔴 重疊偵測：與 222 發生重疊
+[15:20:33] [INFO] 🔴 重疊偵測：與 222 發生重疊
+[15:20:33] [INFO] 🔴 重疊偵測：與 222 發生重疊
+[15:20:33] [INFO] 🔴 重疊偵測：與 222 發生重疊
+[15:20:33] [INFO] 🔴 重疊偵測：與 222 發生重疊
+[15:20:33] [INFO] 🔴 重疊偵測：與 222 發生重疊
+[15:20:33] [INFO] 🔴 重疊偵測：與 222 發生重疊
+[15:20:33] [INFO] 🔴 重疊偵測：與 222 發生重疊
+[15:20:33] [INFO] 🔴 重疊偵測：與 222 發生重疊
+[15:20:33] [INFO] 🕒 檢查排程中...
+[15:20:33] [INFO] ⬅️ EncStatus Bak4-1: OK: Bak4-1:Stopped
+[15:20:33] [INFO] 🕒 檢查排程中...
+[15:20:34] [INFO] 🎯 啟動 StatusWorker：['Bak4-1', 'Bak4-2']
+[15:20:34] [INFO] 🕒 檢查排程中...
+[15:20:34] [INFO] 🕒 檢查排程中...
+[15:20:35] [INFO] ⬅️ EncStatus Bak4-1: 
+[15:20:35] [INFO] 🕒 檢查排程中...
+[15:20:35] [INFO] ⬅️ EncStatus Bak4-1: OK: Bak4-1:Stopped
+
+OK: Bak4-1:Stopped
+[15:20:35] [INFO] 🕒 檢查排程中...
+[15:20:36] [INFO] 🕒 檢查排程中...
+[15:20:36] [INFO] 🕒 檢查排程中...
+[15:20:37] [INFO] ⬅️ EncStatus Bak4-1: OK: Bak4-1:Stopped
+[15:20:37] [INFO] 🎯 啟動 StatusWorker：['Bak4-1', 'Bak4-2']
+[15:20:37] [INFO] 🕒 檢查排程中...
+[15:20:37] [INFO] ⬅️ EncStatus Bak4-1: 
+[15:20:37] [INFO] 🕒 檢查排程中...
+[15:20:37] [INFO] ⬅️ EncStatus Bak4-1: OK: Bak4-1:Stopped
+[15:20:38] [INFO] 🕒 檢查排程中...
+[15:20:38] [INFO] 🕒 檢查排程中...
+[15:20:39] [INFO] ⬅️ EncStatus Bak4-2: 
+[15:20:39] [INFO] ⬅️ EncStatus Bak4-2: OK: Bak4-2:Stopped
+[15:20:39] [INFO] 🎯 啟動 StatusWorker：['Bak4-1', 'Bak4-2']
+[15:20:39] [INFO] 🕒 檢查排程中...
+[15:20:39] [INFO] 🕒 檢查排程中...
+[15:20:39] [INFO] ⬅️ EncStatus Bak4-2: OK: Bak4-2:Stopped
+
+OK: Bak4-2:Stopped
+
+OK: Bak4-2:Stopped
+[15:20:39] [INFO] ⬅️ EncStatus Bak4-2: OK: Bak4-2:Stopped
+[15:20:40] [INFO] 🎯 draw_grid encoder_names:['Bak4-1', 'Bak4-2']
+[15:20:40] [INFO] 🎯 draw_grid encoder_names:['Bak4-1', 'Bak4-2']
+[15:20:40] [INFO] 🎯 draw_grid encoder_names:['Bak4-1', 'Bak4-2']
+[15:20:40] [INFO] 🎯 draw_grid encoder_names:['Bak4-1', 'Bak4-2']
+[15:20:40] [INFO] 🎯 draw_grid encoder_names:['Bak4-1', 'Bak4-2']
+[15:20:40] [INFO] 🎯 draw_grid encoder_names:['Bak4-1', 'Bak4-2']
+[15:20:40] [INFO] 🎯 draw_grid encoder_names:['Bak4-1', 'Bak4-2']
+[15:20:40] [INFO] 🎯 draw_grid encoder_names:['Bak4-1', 'Bak4-2']
+[15:20:40] [INFO] 🎯 draw_grid encoder_names:['Bak4-1', 'Bak4-2']
+[15:20:40] [INFO] 🎯 draw_grid encoder_names:['Bak4-1', 'Bak4-2']
+[15:20:40] [INFO] 🎯 draw_grid encoder_names:['Bak4-1', 'Bak4-2']
+[15:20:40] [INFO] 🎯 啟動 StatusWorker：['Bak4-1', 'Bak4-2']
+[15:20:40] [INFO] 🕒 檢查排程中...
+[15:20:40] [INFO] 🕒 檢查排程中...
+[15:20:41] [INFO] ⬅️ EncStatus Bak4-1: 
+[15:20:41] [INFO] ⬅️ EncStatus Bak4-1: OK: Bak4-1:Stopped
+
+OK: Bak4-1:Stopped
+[15:20:41] [INFO] 🕒 檢查排程中...
+[15:20:41] [INFO] ⬅️ EncStatus Bak4-1: 
+[15:20:41] [INFO] 🕒 檢查排程中...
+[15:20:42] [INFO] ✅ 已儲存節目排程：Z:/schedule_project/schedule.json
+[15:20:42] [INFO] ✅ 已儲存節目排程：Z:/schedule_project/schedule.json
+[15:20:42] [INFO] ✅ 已儲存節目排程：Z:/schedule_project/schedule.json
+[15:20:42] [INFO] ✅ 已儲存節目排程：Z:/schedule_project/schedule.json
+[15:20:42] [INFO] ✅ 已儲存節目排程：Z:/schedule_project/schedule.json
+[15:20:42] [INFO] ✅ 已儲存節目排程：Z:/schedule_project/schedule.json
+[15:20:42] [INFO] ✅ 已儲存節目排程：Z:/schedule_project/schedule.json
+[15:20:42] [INFO] ✅ 已儲存節目排程：Z:/schedule_project/schedule.json
+[15:20:42] [INFO] ✅ 已儲存節目排程：Z:/schedule_project/schedule.json
+[15:20:42] [INFO] ✅ 已儲存節目排程：Z:/schedule_project/schedule.json
+[15:20:42] [INFO] ✅ 已儲存節目排程：Z:/schedule_project/schedule.json
+[15:20:42] [INFO] ✅ 已儲存節目排程：Z:/schedule_project/schedule.json
+[15:20:42] [INFO] ✅ 已儲存節目排程：Z:/schedule_project/schedule.json
+[15:20:42] [INFO] ✅ 已儲存節目排程：Z:/schedule_project/schedule.json
+[15:20:42] [INFO] ✅ 已儲存節目排程：Z:/schedule_project/schedule.json
+[15:20:42] [INFO] ✅ 已儲存節目排程：Z:/schedule_project/schedule.json
+[15:20:42] [INFO] ✅ 已儲存節目排程：Z:/schedule_project/schedule.json
+[15:20:42] [INFO] ✅ 已儲存節目排程：Z:/schedule_project/schedule.json
+[15:20:42] [INFO] ✅ 已儲存節目排程：Z:/schedule_project/schedule.json
+[15:20:42] [INFO] ✅ 已儲存節目排程：Z:/schedule_project/schedule.json
+[15:20:42] [INFO] ✅ 已儲存節目排程：Z:/schedule_project/schedule.json
+[15:20:42] [INFO] ✅ 已儲存節目排程：Z:/schedule_project/schedule.json
+[15:20:42] [INFO] 🕒 檢查排程中...
+[15:20:42] [INFO] ✅ 已儲存節目排程：Z:/schedule_project/schedule.json
+[15:20:42] [INFO] ✅ 已儲存節目排程：Z:/schedule_project/schedule.json
+[15:20:42] [INFO] 🕒 檢查排程中...
+[15:20:42] [INFO] ✅ 已儲存節目排程：Z:/schedule_project/schedule.json
+[15:20:42] [INFO] ✅ 已儲存節目排程：Z:/schedule_project/schedule.json
+[15:20:43] [INFO] ✅ 已儲存節目排程：Z:/schedule_project/schedule.json
+[15:20:43] [INFO] ✅ 已儲存節目排程：Z:/schedule_project/schedule.json
+[15:20:43] [INFO] ✅ 已儲存節目排程：Z:/schedule_project/schedule.json
+[15:20:43] [INFO] ✅ 已儲存節目排程：Z:/schedule_project/schedule.json
+[15:20:43] [INFO] ✅ 已儲存節目排程：Z:/schedule_project/schedule.json
+[15:20:43] [INFO] ✅ 已儲存節目排程：Z:/schedule_project/schedule.json
+[15:20:43] [INFO] ✅ 已儲存節目排程：Z:/schedule_project/schedule.json
+[15:20:43] [INFO] ✅ 已儲存節目排程：Z:/schedule_project/schedule.json
+[15:20:43] [INFO] ✅ 已儲存節目排程：Z:/schedule_project/schedule.json
+[15:20:43] [INFO] ✅ 已儲存節目排程：Z:/schedule_project/schedule.json
+[15:20:43] [INFO] ✅ 已儲存節目排程：Z:/schedule_project/schedule.json
+[15:20:43] [INFO] ✅ 已儲存節目排程：Z:/schedule_project/schedule.json
+[15:20:43] [INFO] ✅ 已儲存節目排程：Z:/schedule_project/schedule.json
+[15:20:43] [INFO] ✅ 已儲存節目排程：Z:/schedule_project/schedule.json
+[15:20:43] [INFO] ✅ 已儲存節目排程：Z:/schedule_project/schedule.json
+[15:20:43] [INFO] ✅ 已儲存節目排程：Z:/schedule_project/schedule.json
+[15:20:43] [INFO] 🔴 重疊偵測：與 222 發生重疊
+[15:20:43] [INFO] 🔴 重疊偵測：與 222 發生重疊
+[15:20:43] [INFO] 🔴 重疊偵測：與 222 發生重疊
+[15:20:43] [INFO] 🔴 重疊偵測：與 222 發生重疊
+[15:20:43] [INFO] 🔴 重疊偵測：與 222 發生重疊
+[15:20:43] [INFO] 🔴 重疊偵測：與 222 發生重疊
+[15:20:43] [INFO] 🔴 重疊偵測：與 222 發生重疊
+[15:20:43] [INFO] 🔴 重疊偵測：與 222 發生重疊
+[15:20:43] [INFO] 🔴 重疊偵測：與 222 發生重疊
+[15:20:43] [INFO] 🔴 重疊偵測：與 222 發生重疊
+[15:20:43] [INFO] 🔴 重疊偵測：與 222 發生重疊
+[15:20:43] [INFO] 🔴 重疊偵測：與 222 發生重疊
+[15:20:43] [INFO] 🔴 重疊偵測：與 222 發生重疊
+[15:20:43] [INFO] 🔴 重疊偵測：與 222 發生重疊
+[15:20:43] [INFO] 🔴 重疊偵測：與 222 發生重疊
+[15:20:43] [INFO] 🔴 重疊偵測：與 222 發生重疊
+[15:20:43] [INFO] ⬅️ EncStatus Bak4-1: OK: Bak4-1:Stopped
+
+OK: Bak4-1:Stopped
+
+OK: Bak4-1:Stopped
+[15:20:43] [INFO] 🎯 啟動 StatusWorker：['Bak4-1', 'Bak4-2']
+[15:20:43] [INFO] 🕒 檢查排程中...
+[15:20:43] [INFO] ⬅️ EncStatus Bak4-2: 
+[15:20:43] [INFO] 🕒 檢查排程中...
+[15:20:43] [INFO] ⬅️ EncStatus Bak4-1: OK: Bak4-1:Stopped
+[15:20:43] [INFO] ⬅️ EncStatus Bak4-2: OK: Bak4-2:Stopped
+
+OK: Bak4-2:Stopped
+[15:20:44] [INFO] 🕒 檢查排程中...
+[15:20:44] [INFO] 🕒 檢查排程中...
+[15:20:45] [INFO] ✅ 已儲存節目排程：Z:/schedule_project/schedule.json
+[15:20:45] [INFO] ✅ 已儲存節目排程：Z:/schedule_project/schedule.json
+[15:20:45] [INFO] 🔁 [同步] Runner block 數量：3
+[15:20:45] [INFO] ✅ 已儲存節目排程：Z:/schedule_project/schedule.json
+[15:20:45] [INFO] ✅ 已儲存節目排程：Z:/schedule_project/schedule.json
+[15:20:45] [INFO] 🔁 [同步] Runner block 數量：3
+[15:20:45] [INFO] ✅ 已儲存節目排程：Z:/schedule_project/schedule.json
+[15:20:45] [INFO] ✅ 已儲存節目排程：Z:/schedule_project/schedule.json
+[15:20:45] [INFO] 🔁 [同步] Runner block 數量：3
+[15:20:45] [INFO] ✅ 已儲存節目排程：Z:/schedule_project/schedule.json
+[15:20:45] [INFO] ✅ 已儲存節目排程：Z:/schedule_project/schedule.json
+[15:20:45] [INFO] 🔁 [同步] Runner block 數量：3
+[15:20:45] [INFO] 🕒 檢查排程中...
+[15:20:45] [INFO] 🕒 檢查排程中...
+[15:20:45] [INFO] ⬅️ EncStatus Bak4-2: OK: Bak4-2:Stopped
+[15:20:46] [INFO] 🎯 啟動 StatusWorker：['Bak4-1', 'Bak4-2']
+[15:20:46] [INFO] 🕒 檢查排程中...
+[15:20:46] [INFO] 🕒 檢查排程中...
+[15:20:47] [INFO] 🕒 檢查排程中...
+[15:20:47] [INFO] ⬅️ EncStatus Bak4-2: 
+[15:20:47] [INFO] 🕒 檢查排程中...
+[15:20:47] [INFO] ⬅️ EncStatus Bak4-2: OK: Bak4-2:Stopped
+
+OK: Bak4-2:Stopped
+[15:20:48] [INFO] ⬅️ EncStatus Bak4-1: OK: Bak4-1:Stopped
+[15:20:48] [INFO] 🕒 檢查排程中...
+[15:20:48] [INFO] 🕒 檢查排程中...
+[15:20:49] [INFO] ⬅️ EncStatus Bak4-2: OK: Bak4-2:Stopped
+[15:20:49] [INFO] ✅ 已儲存節目排程：Z:/schedule_project/schedule.json
+[15:20:49] [INFO] 🔁 [同步] Runner block 數量：3
+[15:20:49] [INFO] 🎯 啟動 StatusWorker：['Bak4-1', 'Bak4-2']
+[15:20:49] [INFO] 🎯 啟動 StatusWorker：['Bak4-1', 'Bak4-2']
+[15:20:49] [INFO] 📸 為 Bak4-1 拍照 ➜ 儲存預期路徑：Z:/preview\Bak4-1.png
+[15:20:49] [INFO] 📸 為 Bak4-2 拍照 ➜ 儲存預期路徑：Z:/preview\Bak4-2.png
+[15:20:49] [INFO] 🛰️ 傳給 encoder 的路徑（不含副檔名）：preview/Bak4-1
+[15:20:49] [INFO] 🛰️ 傳給 encoder 的路徑（不含副檔名）：preview/Bak4-2
+[15:20:49] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[15:20:49] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[15:20:49] [INFO] 🕒 檢查排程中...
+[15:20:49] [INFO] 🕒 檢查排程中...
+[15:20:49] [INFO] ⬅️ EncStatus Bak4-1: 
+[15:20:50] [INFO] 🕒 檢查排程中...
+[15:20:50] [INFO] 🕒 檢查排程中...
+[15:20:50] [INFO] ⬅️ EncStatus Bak4-2: OK: Bak4-2:Stopped
+[15:20:51] [INFO] ✅ 已儲存節目排程：Z:/schedule_project/schedule.json
+[15:20:51] [INFO] ✅ 已儲存節目排程：Z:/schedule_project/schedule.json
+[15:20:51] [INFO] ✅ 已儲存節目排程：Z:/schedule_project/schedule.json
+[15:20:51] [INFO] ✅ 已儲存節目排程：Z:/schedule_project/schedule.json
+[15:20:51] [INFO] ✅ 已儲存節目排程：Z:/schedule_project/schedule.json
+[15:20:51] [INFO] ✅ 已儲存節目排程：Z:/schedule_project/schedule.json
+[15:20:51] [INFO] ✅ 已儲存節目排程：Z:/schedule_project/schedule.json
+[15:20:51] [INFO] ✅ 已儲存節目排程：Z:/schedule_project/schedule.json
+[15:20:51] [INFO] ✅ 已儲存節目排程：Z:/schedule_project/schedule.json
+[15:20:51] [INFO] ✅ 已儲存節目排程：Z:/schedule_project/schedule.json
+[15:20:51] [INFO] ✅ 已儲存節目排程：Z:/schedule_project/schedule.json
+[15:20:51] [INFO] ✅ 已儲存節目排程：Z:/schedule_project/schedule.json
+[15:20:51] [INFO] ✅ 已儲存節目排程：Z:/schedule_project/schedule.json
+[15:20:51] [INFO] ✅ 已儲存節目排程：Z:/schedule_project/schedule.json
+[15:20:51] [INFO] ✅ 已儲存節目排程：Z:/schedule_project/schedule.json
+[15:20:51] [INFO] ✅ 已儲存節目排程：Z:/schedule_project/schedule.json
+[15:20:51] [INFO] ✅ 已儲存節目排程：Z:/schedule_project/schedule.json
+[15:20:51] [INFO] ✅ 已儲存節目排程：Z:/schedule_project/schedule.json
+[15:20:51] [INFO] ✅ 已儲存節目排程：Z:/schedule_project/schedule.json
+[15:20:51] [INFO] ✅ 已儲存節目排程：Z:/schedule_project/schedule.json
+[15:20:51] [INFO] ✅ 已儲存節目排程：Z:/schedule_project/schedule.json
+[15:20:51] [INFO] ✅ 已儲存節目排程：Z:/schedule_project/schedule.json
+[15:20:51] [INFO] ✅ 已儲存節目排程：Z:/schedule_project/schedule.json
+[15:20:51] [INFO] ✅ 已儲存節目排程：Z:/schedule_project/schedule.json
+[15:20:51] [INFO] ✅ 已儲存節目排程：Z:/schedule_project/schedule.json
+[15:20:51] [INFO] ✅ 已儲存節目排程：Z:/schedule_project/schedule.json
+[15:20:51] [INFO] ✅ 已儲存節目排程：Z:/schedule_project/schedule.json
+[15:20:51] [INFO] ✅ 已儲存節目排程：Z:/schedule_project/schedule.json
+[15:20:51] [INFO] ✅ 已儲存節目排程：Z:/schedule_project/schedule.json
+[15:20:51] [INFO] ✅ 已儲存節目排程：Z:/schedule_project/schedule.json
+[15:20:51] [INFO] ✅ 已儲存節目排程：Z:/schedule_project/schedule.json
+[15:20:51] [INFO] ✅ 已儲存節目排程：Z:/schedule_project/schedule.json
+[15:20:51] [INFO] ✅ 已儲存節目排程：Z:/schedule_project/schedule.json
+[15:20:51] [INFO] ✅ 已儲存節目排程：Z:/schedule_project/schedule.json
+[15:20:51] [INFO] ✅ 已儲存節目排程：Z:/schedule_project/schedule.json
+[15:20:51] [INFO] ✅ 已儲存節目排程：Z:/schedule_project/schedule.json
+[15:20:51] [INFO] ✅ 已儲存節目排程：Z:/schedule_project/schedule.json
+[15:20:51] [INFO] ✅ 已儲存節目排程：Z:/schedule_project/schedule.json
+[15:20:51] [INFO] ✅ 已儲存節目排程：Z:/schedule_project/schedule.json
+[15:20:51] [INFO] ✅ 已儲存節目排程：Z:/schedule_project/schedule.json
+[15:20:51] [INFO] ✅ 已儲存節目排程：Z:/schedule_project/schedule.json
+[15:20:51] [INFO] ✅ 已儲存節目排程：Z:/schedule_project/schedule.json
+[15:20:51] [INFO] ⛔ 無法縮到現在時間前結束（888）
+[15:20:51] [INFO] ⛔ 無法縮到現在時間前結束（888）
+[15:20:51] [INFO] ⛔ 無法縮到現在時間前結束（888）
+[15:20:51] [INFO] ⛔ 無法縮到現在時間前結束（888）
+[15:20:51] [INFO] ⛔ 無法縮到現在時間前結束（888）
+[15:20:51] [INFO] ⛔ 無法縮到現在時間前結束（888）
+[15:20:51] [INFO] ⛔ 無法縮到現在時間前結束（888）
+[15:20:51] [INFO] ⛔ 無法縮到現在時間前結束（888）
+[15:20:51] [INFO] ⛔ 無法縮到現在時間前結束（888）
+[15:20:51] [INFO] 🕒 檢查排程中...
+[15:20:51] [INFO] 🕒 檢查排程中...
+[15:20:51] [INFO] ⬅️ EncStatus Bak4-1: OK: Bak4-1:Stopped
+
+OK: Bak4-1:Stopped
+[15:20:51] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[15:20:51] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[15:20:52] [INFO] 🎯 啟動 StatusWorker：['Bak4-1', 'Bak4-2']
+[15:20:52] [INFO] 🕒 檢查排程中...
+[15:20:52] [INFO] 🕒 檢查排程中...
+[15:20:53] [INFO] 🔴 重疊偵測：與 222 發生重疊
+[15:20:53] [INFO] ❌ 拖曳後重疊，還原
+[15:20:53] [INFO] 🕒 檢查排程中...
+[15:20:53] [INFO] 🕒 檢查排程中...
+[15:20:53] [INFO] ⬅️ EncStatus Bak4-1: OK: Bak4-1:Stopped
+[15:20:54] [INFO] 📡 Snapshot 回應：OK: Snapshot has been taken.
+[15:20:54] [INFO] 📡 Snapshot 回應：OK: Snapshot has been taken.
+[15:20:54] [INFO] ✅ 已儲存：Z:/preview\Bak4-2.png
+[15:20:54] [INFO] 🔴 重疊偵測：與 222 發生重疊
+[15:20:54] [INFO] ❌ 拖曳後重疊，還原
+[15:20:54] [INFO] 🔍 查找最新快照：Z:/preview\Bak4-1*.png
+[15:20:54] [INFO] 🔍 查找最新快照：Z:/preview\Bak4-2*.png
+[15:20:54] [INFO] ⬅️ EncStatus Bak4-1: 
+[15:20:54] [INFO] 🕒 檢查排程中...
+[15:20:54] [INFO] 🕒 檢查排程中...
+[15:20:55] [INFO] ✅ 已儲存節目排程：Z:/schedule_project/schedule.json
+[15:20:55] [INFO] 🔁 [同步] Runner block 數量：3
+[15:20:55] [INFO] 🎯 啟動 StatusWorker：['Bak4-1', 'Bak4-2']
+[15:20:55] [INFO] 🕒 檢查排程中...
+[15:20:55] [INFO] 🕒 檢查排程中...
+[15:20:56] [INFO] 🕒 檢查排程中...
+[15:20:56] [INFO] 🕒 檢查排程中...
+[15:20:57] [INFO] 🕒 檢查排程中...
+[15:20:57] [INFO] 🕒 檢查排程中...
+[15:20:57] [INFO] 📝 點擊 block：888
+[15:20:57] [INFO] ⬅️ EncStatus Bak4-2: 
+[15:20:58] [INFO] 🎯 啟動 StatusWorker：['Bak4-1', 'Bak4-2']
+[15:20:58] [INFO] 🕒 檢查排程中...
+[15:20:58] [INFO] 🕒 檢查排程中...
+[15:20:59] [INFO] ⚠️ 檔案未生成，請檢查路徑或權限：Z:/preview\Bak4-1.png
+[15:20:59] [INFO] ⬅️ EncStatus Bak4-1: 
+[15:20:59] [INFO] 🎯 啟動 StatusWorker：['Bak4-1', 'Bak4-2']
+[15:20:59] [INFO] 🕒 檢查排程中...
+[15:20:59] [INFO] ⬅️ EncStatus Bak4-2: OK: Bak4-2:Stopped
+
+OK: Bak4-2:Stopped
+
+OK: Bak4-2:Stopped
+[15:20:59] [INFO] ⬅️ EncStatus Bak4-1: OK: Bak4-1:Stopped
+
+OK: Bak4-1:Stopped
+
+OK: Bak4-1:Stopped
+[15:20:59] [INFO] 🕒 檢查排程中...
+[15:21:00] [INFO] ✅ 已儲存節目排程：Z:/schedule_project/schedule.json
+[15:21:00] [INFO] 🔁 [同步] Runner block 數量：3
+[15:21:00] [INFO] 🕒 檢查排程中...
+[15:21:00] [INFO] 🕒 檢查排程中...
+[15:21:01] [INFO] 📝 點擊 block：888
+[15:21:01] [INFO] ⬅️ EncStatus Bak4-1: OK: Bak4-1:Stopped
+[15:21:01] [INFO] 🎯 啟動 StatusWorker：['Bak4-1', 'Bak4-2']
+[15:21:01] [INFO] 🕒 檢查排程中...
+[15:21:01] [INFO] 🕒 檢查排程中...
+[15:21:01] [INFO] ⬅️ EncStatus Bak4-2: OK: Bak4-2:Stopped
+
+OK: Bak4-2:Stopped
+
+OK: Bak4-2:Stopped
+[15:21:02] [INFO] 🕒 檢查排程中...
+[15:21:02] [INFO] 🕒 檢查排程中...
+[15:21:03] [INFO] ✅ 已儲存節目排程：Z:/schedule_project/schedule.json
+[15:21:03] [INFO] 🔁 [同步] Runner block 數量：3
+[15:21:03] [INFO] ⬅️ EncStatus Bak4-2: OK: Bak4-2:Stopped
+[15:21:03] [INFO] 🕒 檢查排程中...
+[15:21:03] [INFO] ⬅️ EncStatus Bak4-1: OK: Bak4-1:Stopped
+[15:21:03] [INFO] ⬅️ EncStatus Bak4-1: OK: Bak4-1:Stopped
+
+OK: Bak4-1:Stopped
+[15:21:03] [INFO] 🕒 檢查排程中...
+[15:21:04] [INFO] 🎯 啟動 StatusWorker：['Bak4-1', 'Bak4-2']
+[15:21:04] [INFO] 🕒 檢查排程中...
+[15:21:04] [INFO] 🕒 檢查排程中...
+[15:21:05] [INFO] ⬅️ EncStatus Bak4-2: 
+[15:21:05] [INFO] 🕒 檢查排程中...
+[15:21:05] [INFO] 🕒 檢查排程中...
+[15:21:05] [INFO] ⬅️ EncStatus Bak4-2: 
+[15:21:06] [INFO] ⬅️ EncStatus Bak4-2: OK: Bak4-2:Stopped
+[15:21:06] [INFO] ⬅️ EncStatus Bak4-2: OK: Bak4-2:Stopped
+
+OK: Bak4-2:Stopped
+
+OK: Bak4-2:Stopped
+[15:21:06] [INFO] 🕒 檢查排程中...
+[15:21:06] [INFO] 🕒 檢查排程中...
+[15:21:07] [INFO] ⬅️ EncStatus Bak4-1: 
+[15:21:07] [INFO] 🎯 啟動 StatusWorker：['Bak4-1', 'Bak4-2']
+[15:21:08] [INFO] ⬅️ EncStatus Bak4-1: OK: Bak4-1:Stopped
+[15:21:08] [INFO] 🕒 檢查排程中...
+[15:21:08] [INFO] 🕒 檢查排程中...
+[15:21:08] [INFO] 🕒 檢查排程中...
+[15:21:08] [INFO] 🕒 檢查排程中...
+[15:21:09] [INFO] ⬅️ EncStatus Bak4-2: OK: Bak4-2:Stopped
+
+OK: Bak4-2:Stopped
+[15:21:09] [INFO] 🎯 啟動 StatusWorker：['Bak4-1', 'Bak4-2']
+[15:21:10] [INFO] ⬅️ EncStatus Bak4-2: 
+[15:21:10] [INFO] ⬅️ EncStatus Bak4-1: 
+[15:21:10] [INFO] 🕒 檢查排程中...
+[15:21:10] [INFO] ⬅️ EncStatus Bak4-1: 
+[15:21:10] [INFO] ⬅️ EncStatus Bak4-1: OK: Bak4-1:Stopped
+
+OK: Bak4-1:Stopped
+
+OK: Bak4-1:Stopped
+
+OK: Bak4-1:Stopped
+[15:21:10] [INFO] 🕒 檢查排程中...
+[15:21:10] [INFO] ⬅️ EncStatus Bak4-1: OK: Bak4-1:Stopped
+[15:21:10] [INFO] 🎯 啟動 StatusWorker：['Bak4-1', 'Bak4-2']
+[15:21:10] [INFO] 🕒 檢查排程中...
+[15:21:10] [INFO] 🕒 檢查排程中...
+[15:21:11] [INFO] 🕒 檢查排程中...
+[15:21:11] [INFO] 🕒 檢查排程中...
+[15:21:12] [INFO] ⬅️ EncStatus Bak4-2: OK: Bak4-2:Stopped
+[15:21:12] [INFO] ⬅️ EncStatus Bak4-2: OK: Bak4-2:Stopped
+
+
+OK: Bak4-2:Stopped
+[15:21:12] [INFO] ⬅️ EncStatus Bak4-2: OK: Bak4-2:Stopped
+[15:21:12] [INFO] 🕒 檢查排程中...
+[15:21:12] [INFO] 🕒 檢查排程中...
+[15:21:13] [INFO] ⬅️ EncStatus Bak4-1: OK: Bak4-1:Stopped
+
+OK: Bak4-1:Stopped
+[15:21:13] [INFO] 🎯 啟動 StatusWorker：['Bak4-1', 'Bak4-2']
+[15:21:13] [INFO] 🕒 檢查排程中...
+[15:21:13] [INFO] 🕒 檢查排程中...
+[15:21:14] [INFO] ⬅️ EncStatus Bak4-1: 
+[15:21:14] [INFO] 🕒 檢查排程中...
+[15:21:14] [INFO] 🕒 檢查排程中...
+[15:21:15] [INFO] ⬅️ EncStatus Bak4-1: OK: Bak4-1:Stopped
+[15:21:15] [INFO] 🕒 檢查排程中...
+[15:21:15] [INFO] 🕒 檢查排程中...
+[15:21:16] [INFO] 🎯 啟動 StatusWorker：['Bak4-1', 'Bak4-2']
+[15:21:16] [INFO] 🕒 檢查排程中...
+[15:21:16] [INFO] 🕒 檢查排程中...
+[15:21:17] [INFO] ⬅️ EncStatus Bak4-1: 
+[15:21:17] [INFO] ⬅️ EncStatus Bak4-1: OK: Bak4-1:Stopped
+
+
+OK: Bak4-2:Stopped
+[15:21:17] [INFO] 🕒 檢查排程中...
+[15:21:17] [INFO] 🕒 檢查排程中...
+[15:21:18] [INFO] ⬅️ EncStatus Bak4-1: OK: Bak4-1:Stopped
+
+OK: Bak4-1:Stopped
+
+OK: Bak4-1:Stopped
+[15:21:18] [INFO] ⬅️ EncStatus Bak4-2: OK: Bak4-2:Stopped
+[15:21:18] [INFO] ⬅️ EncStatus Bak4-2: 
+[15:21:18] [INFO] 🕒 檢查排程中...
+[15:21:18] [INFO] 🕒 檢查排程中...
+[15:21:19] [INFO] ⬅️ EncStatus Bak4-1: OK: Bak4-1:Stopped
+[15:21:19] [INFO] ⬅️ EncStatus Bak4-2: OK: Bak4-2:Stopped
+[15:21:19] [INFO] 🎯 啟動 StatusWorker：['Bak4-1', 'Bak4-2']
+[15:21:19] [INFO] 🎯 啟動 StatusWorker：['Bak4-1', 'Bak4-2']
+[15:21:20] [INFO] 📸 為 Bak4-2 拍照 ➜ 儲存預期路徑：Z:/preview\Bak4-2.png
+[15:21:20] [INFO] ⬅️ EncStatus Bak4-1: 
+[15:21:20] [INFO] ⬅️ EncStatus Bak4-1: OK: Bak4-1:Stopped
+[15:21:20] [INFO] 📸 為 Bak4-1 拍照 ➜ 儲存預期路徑：Z:/preview\Bak4-1.png
+[15:21:20] [INFO] 🕒 檢查排程中...
+[15:21:20] [INFO] 🛰️ 傳給 encoder 的路徑（不含副檔名）：preview/Bak4-2
+[15:21:20] [INFO] 🛰️ 傳給 encoder 的路徑（不含副檔名）：preview/Bak4-1
+[15:21:20] [INFO] 🕒 檢查排程中...
+[15:21:20] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[15:21:20] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[15:21:20] [INFO] 🕒 檢查排程中...
+[15:21:20] [INFO] 🕒 檢查排程中...
+[15:21:21] [INFO] ⬅️ EncStatus Bak4-2: OK: Bak4-2:Stopped
+
+OK: Bak4-2:Stopped
+[15:21:21] [INFO] ⬅️ EncStatus Bak4-2: 
+[15:21:21] [INFO] 🕒 檢查排程中...
+[15:21:21] [INFO] 🕒 檢查排程中...
+[15:21:22] [INFO] ⬅️ EncStatus Bak4-1: OK: Bak4-1:Stopped
+
+OK: Bak4-1:Stopped
+[15:21:22] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[15:21:22] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[15:21:22] [INFO] 🎯 啟動 StatusWorker：['Bak4-1', 'Bak4-2']
+[15:21:22] [INFO] 🕒 檢查排程中...
+[15:21:23] [INFO] 🕒 檢查排程中...
+[15:21:23] [INFO] ⬅️ EncStatus Bak4-1: OK: Bak4-1:Stopped
+[15:21:23] [INFO] ⬅️ EncStatus Bak4-1: 
+[15:21:23] [INFO] 🕒 檢查排程中...
+[15:21:23] [INFO] 🕒 檢查排程中...
+[15:21:24] [INFO] ⬅️ EncStatus Bak4-1: OK: Bak4-1:Stopped
+[15:21:24] [INFO] ⬅️ EncStatus Bak4-2: OK: Bak4-2:Stopped
+
+OK: Bak4-2:Stopped
+
+OK: Bak4-2:Stopped
+
+OK: Bak4-2:Stopped
+[15:21:24] [INFO] 📡 Snapshot 回應：OK: Snapshot has been taken.
+[15:21:24] [INFO] ✅ 已儲存：Z:/preview\Bak4-2.png
+[15:21:24] [INFO] 📡 Snapshot 回應：OK: Snapshot has been taken.
+[15:21:24] [INFO] 🔍 查找最新快照：Z:/preview\Bak4-2*.png
+[15:21:24] [INFO] 🔍 查找最新快照：Z:/preview\Bak4-1*.png
+[15:21:24] [INFO] 🕒 檢查排程中...
+[15:21:24] [INFO] 🕒 檢查排程中...
+[15:21:25] [INFO] ⬅️ EncStatus Bak4-2: 
+[15:21:25] [INFO] ⬅️ EncStatus Bak4-2: OK: Bak4-2:Stopped
+[15:21:25] [INFO] 🎯 啟動 StatusWorker：['Bak4-1', 'Bak4-2']
+[15:21:25] [INFO] ⬅️ EncStatus Bak4-2: OK: Bak4-2:Stopped
+[15:21:25] [INFO] 🕒 檢查排程中...
+[15:21:25] [INFO] 🕒 檢查排程中...
+[15:21:26] [INFO] 🕒 檢查排程中...
+[15:21:26] [INFO] 🕒 檢查排程中...
+[15:21:27] [INFO] ⬅️ EncStatus Bak4-1: 
+[15:21:27] [INFO] 🕒 檢查排程中...
+[15:21:27] [INFO] 🕒 檢查排程中...
+[15:21:27] [INFO] ⬅️ EncStatus Bak4-1: OK: Bak4-1:Stopped
+
+OK: Bak4-1:Stopped
+[15:21:28] [INFO] ⬅️ EncStatus Bak4-1: OK: Bak4-1:Stopped
+[15:21:28] [INFO] 🎯 啟動 StatusWorker：['Bak4-1', 'Bak4-2']
+[15:21:28] [INFO] 🕒 檢查排程中...
+[15:21:28] [INFO] 🕒 檢查排程中...
+[15:21:29] [INFO] ⚠️ 檔案未生成，請檢查路徑或權限：Z:/preview\Bak4-1.png
+[15:21:29] [INFO] 🎯 啟動 StatusWorker：['Bak4-1', 'Bak4-2']
+[15:21:29] [INFO] ⬅️ EncStatus Bak4-2: 
+[15:21:29] [INFO] 🕒 檢查排程中...
+[15:21:29] [INFO] 🕒 檢查排程中...
+[15:21:30] [INFO] ⬅️ EncStatus Bak4-2: OK: Bak4-2:Stopped
+
+OK: Bak4-2:Stopped
+
+OK: Bak4-2:Stopped
+[15:21:30] [INFO] 🕒 檢查排程中...
+[15:21:30] [INFO] 🕒 檢查排程中...
+[15:21:31] [INFO] ⬅️ EncStatus Bak4-2: 
+[15:21:31] [INFO] ⬅️ EncStatus Bak4-2: OK: Bak4-2:Stopped
+[15:21:31] [INFO] 🎯 啟動 StatusWorker：['Bak4-1', 'Bak4-2']
+[15:21:31] [INFO] 🕒 檢查排程中...
+[15:21:31] [INFO] 🕒 檢查排程中...
+[15:21:32] [INFO] ⬅️ EncStatus Bak4-1: 
+[15:21:32] [INFO] ⬅️ EncStatus Bak4-1: OK: Bak4-1:Stopped
+
+OK: Bak4-1:Stopped
+[15:21:32] [INFO] 🕒 檢查排程中...
+[15:21:32] [INFO] 🕒 檢查排程中...
+[15:21:33] [INFO] 🕒 檢查排程中...
+[15:21:33] [INFO] 🕒 檢查排程中...
+[15:21:34] [INFO] ⬅️ EncStatus Bak4-1: 
+[15:21:34] [INFO] ⬅️ EncStatus Bak4-1: OK: Bak4-1:Stopped
+
+OK: Bak4-1:Stopped
+
+OK: Bak4-1:Stopped
+[15:21:34] [INFO] ⬅️ EncStatus Bak4-2: 
+[15:21:34] [INFO] ⬅️ EncStatus Bak4-2: OK: Bak4-2:Stopped
+
+OK: Bak4-2:Stopped
+[15:21:34] [INFO] 🎯 啟動 StatusWorker：['Bak4-1', 'Bak4-2']
+[15:21:34] [INFO] 🕒 檢查排程中...
+[15:21:34] [INFO] 🕒 檢查排程中...
+[15:21:35] [INFO] ⬅️ EncStatus Bak4-1: OK: Bak4-1:Stopped
+[15:21:35] [INFO] 🕒 檢查排程中...
+[15:21:35] [INFO] 🕒 檢查排程中...
+[15:21:36] [INFO] ⬅️ EncStatus Bak4-2: 
+[15:21:36] [INFO] ⬅️ EncStatus Bak4-2: OK: Bak4-2:Stopped
+
+OK: Bak4-2:Stopped
+
+OK: Bak4-2:Stopped
+[15:21:36] [INFO] 🕒 檢查排程中...
+[15:21:36] [INFO] 🕒 檢查排程中...
+[15:21:37] [INFO] ⬅️ EncStatus Bak4-1: 
+[15:21:37] [INFO] ⬅️ EncStatus Bak4-2: OK: Bak4-2:Stopped
+[15:21:37] [INFO] 🎯 啟動 StatusWorker：['Bak4-1', 'Bak4-2']
+[15:21:37] [INFO] ⬅️ EncStatus Bak4-1: OK: Bak4-1:Stopped
+
+OK: Bak4-1:Stopped
+
+OK: Bak4-1:Stopped
+[15:21:37] [INFO] 🕒 檢查排程中...
+[15:21:38] [INFO] 🕒 檢查排程中...
+[15:21:38] [INFO] 🕒 檢查排程中...
+[15:21:39] [INFO] ⬅️ EncStatus Bak4-1: OK: Bak4-1:Stopped
+[15:21:39] [INFO] ⬅️ EncStatus Bak4-2: OK: Bak4-2:Stopped
+[15:21:39] [INFO] 🎯 啟動 StatusWorker：['Bak4-1', 'Bak4-2']
+[15:21:39] [INFO] 🕒 檢查排程中...
+[15:21:39] [INFO] 🕒 檢查排程中...
+[15:21:40] [INFO] 🎯 啟動 StatusWorker：['Bak4-1', 'Bak4-2']
+[15:21:40] [INFO] 🕒 檢查排程中...
+[15:21:40] [INFO] 🕒 檢查排程中...
+[15:21:41] [INFO] ⬅️ EncStatus Bak4-1: OK: Bak4-1:Stopped
+[15:21:41] [INFO] ⬅️ EncStatus Bak4-1: 
+[15:21:41] [INFO] 🕒 檢查排程中...
+[15:21:41] [INFO] 🕒 檢查排程中...
+[15:21:41] [INFO] ⬅️ EncStatus Bak4-2: 
+[15:21:42] [INFO] ⬅️ EncStatus Bak4-1: OK: Bak4-1:Stopped
+
+OK: Bak4-1:Stopped
+[15:21:42] [INFO] 🕒 檢查排程中...
+[15:21:42] [INFO] 🕒 檢查排程中...
+[15:21:43] [INFO] ⬅️ EncStatus Bak4-1: OK: Bak4-1:Stopped
+[15:21:43] [INFO] ⬅️ EncStatus Bak4-2: OK: Bak4-2:Stopped
+
+OK: Bak4-2:Stopped
+[15:21:43] [INFO] 🎯 啟動 StatusWorker：['Bak4-1', 'Bak4-2']
+[15:21:43] [INFO] 🕒 檢查排程中...
+[15:21:43] [INFO] 🕒 檢查排程中...
+[15:21:44] [INFO] ⬅️ EncStatus Bak4-2: 
+[15:21:44] [INFO] 🕒 檢查排程中...
+[15:21:44] [INFO] 🕒 檢查排程中...
+[15:21:45] [INFO] ⬅️ EncStatus Bak4-2: 
+: Bak4-2:Stopped
+
+OK: Bak4-2:Stopped
+[15:21:45] [INFO] 🕒 檢查排程中...
+[15:21:45] [INFO] 🕒 檢查排程中...
+[15:21:46] [INFO] ⬅️ EncStatus Bak4-1: OK: Bak4-1:Stopped
+
+OK: Bak4-1:Stopped
+[15:21:46] [INFO] ⬅️ EncStatus Bak4-2: OK: Bak4-2:Stopped
+
+OK: Bak4-2:Stopped
+
+OK: Bak4-2:Stopped
+[15:21:46] [INFO] 🎯 啟動 StatusWorker：['Bak4-1', 'Bak4-2']
+[15:21:46] [INFO] 🕒 檢查排程中...
+[15:21:46] [INFO] 🕒 檢查排程中...
+[15:21:47] [INFO] ⬅️ EncStatus Bak4-1: OK: Bak4-1:Stopped
+[15:21:47] [INFO] 🕒 檢查排程中...
+[15:21:47] [INFO] 🕒 檢查排程中...
+[15:21:48] [INFO] 🕒 檢查排程中...
+[15:21:48] [INFO] 🕒 檢查排程中...
+[15:21:48] [INFO] ⬅️ EncStatus Bak4-1: 
+[15:21:49] [INFO] ⬅️ EncStatus Bak4-1: OK: Bak4-1:Stopped
+
+OK: Bak4-1:Stopped
+[15:21:49] [INFO] 🎯 啟動 StatusWorker：['Bak4-1', 'Bak4-2']
+[15:21:49] [INFO] 🎯 啟動 StatusWorker：['Bak4-1', 'Bak4-2']
+[15:21:49] [INFO] ⬅️ EncStatus Bak4-1: OK: Bak4-1:Stopped
+[15:21:49] [INFO] ⬅️ EncStatus Bak4-1: 
+[15:21:49] [INFO] 📸 為 Bak4-2 拍照 ➜ 儲存預期路徑：Z:/preview\Bak4-2.png
+[15:21:49] [INFO] 🕒 檢查排程中...
+[15:21:49] [INFO] 📸 為 Bak4-1 拍照 ➜ 儲存預期路徑：Z:/preview\Bak4-1.png
+[15:21:49] [INFO] 🛰️ 傳給 encoder 的路徑（不含副檔名）：preview/Bak4-2
+[15:21:49] [INFO] 🕒 檢查排程中...
+[15:21:49] [INFO] 🛰️ 傳給 encoder 的路徑（不含副檔名）：preview/Bak4-1
+[15:21:49] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[15:21:49] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[15:21:50] [INFO] 🕒 檢查排程中...
+[15:21:50] [INFO] 🕒 檢查排程中...
+[15:21:51] [INFO] ⬅️ EncStatus Bak4-2: 
+: Bak4-2:Stopped
+[15:21:51] [INFO] ⬅️ EncStatus Bak4-2: OK: Bak4-2:Stopped
+
+OK: Bak4-2:Stopped
+
+OK: Bak4-2:Stopped
+[15:21:51] [INFO] ⬅️ EncStatus Bak4-1: OK: Bak4-1:Stopped
+[15:21:51] [INFO] ⬅️ EncStatus Bak4-2: OK: Bak4-2:Stopped
+[15:21:51] [INFO] 🕒 檢查排程中...
+[15:21:51] [INFO] 🕒 檢查排程中...
+[15:21:52] [INFO] ⬅️ EncStatus Bak4-2: 
+[15:21:52] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[15:21:52] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[15:21:52] [INFO] ⬅️ EncStatus Bak4-2: OK: Bak4-2:Stopped
+
+OK: Bak4-2:Stopped
+[15:21:52] [INFO] 🎯 啟動 StatusWorker：['Bak4-1', 'Bak4-2']
+[15:21:52] [INFO] 🕒 檢查排程中...
+[15:21:52] [INFO] 🕒 檢查排程中...
+[15:21:53] [INFO] ⬅️ EncStatus Bak4-2: 
+[15:21:53] [INFO] ⬅️ EncStatus Bak4-2: OK: Bak4-2:Stopped
+[15:21:53] [INFO] 🕒 檢查排程中...
+[15:21:53] [INFO] 🕒 檢查排程中...
+[15:21:54] [INFO] ⬅️ EncStatus Bak4-1: OK: Bak4-1:Stopped
+
+OK: Bak4-1:Stopped
+[15:21:54] [INFO] 📡 Snapshot 回應：OK: Snapshot has been taken.
+[15:21:54] [INFO] ✅ 已儲存：Z:/preview\Bak4-2.png
+[15:21:54] [INFO] 📡 Snapshot 回應：OK: Snapshot has been taken.
+[15:21:54] [INFO] 🔍 查找最新快照：Z:/preview\Bak4-2*.png
+[15:21:55] [INFO] 🕒 檢查排程中...
+[15:21:55] [INFO] 🕒 檢查排程中...
+[15:21:55] [INFO] 🔍 查找最新快照：Z:/preview\Bak4-1*.png
+[15:21:55] [INFO] ⬅️ EncStatus Bak4-1: OK: Bak4-1:Stopped
+[15:21:55] [INFO] 🎯 啟動 StatusWorker：['Bak4-1', 'Bak4-2']
+[15:21:55] [INFO] 🕒 檢查排程中...
+[15:21:55] [INFO] 🕒 檢查排程中...
+[15:21:55] [INFO] ⬅️ EncStatus Bak4-1: OK: Bak4-1:Stopped
+
+OK: Bak4-1:Stopped
+[15:21:56] [INFO] ⬅️ EncStatus Bak4-2: 
+[15:21:56] [INFO] 🕒 檢查排程中...
+[15:21:56] [INFO] 🕒 檢查排程中...
+[15:21:57] [INFO] ⬅️ EncStatus Bak4-2: OK: Bak4-2:Stopped
+
+OK: Bak4-2:Stopped
+
+OK: Bak4-2:Stopped
+[15:21:57] [INFO] ⬅️ EncStatus Bak4-1: 
+[15:21:57] [INFO] 🕒 檢查排程中...
+[15:21:57] [INFO] 🕒 檢查排程中...
+[15:21:57] [INFO] ⬅️ EncStatus Bak4-1: 
+[15:21:57] [INFO] ⬅️ EncStatus Bak4-1: OK: Bak4-1:Stopped
+
+OK: Bak4-1:Stopped
+[15:21:58] [INFO] 🎯 啟動 StatusWorker：['Bak4-1', 'Bak4-2']
+[15:21:58] [INFO] 🕒 檢查排程中...
+[15:21:58] [INFO] 🕒 檢查排程中...
+[15:21:59] [INFO] ⬅️ EncStatus Bak4-2: OK: Bak4-2:Stopped
+
+OK: Bak4-2:Stopped
+[15:21:59] [INFO] ⚠️ 檔案未生成，請檢查路徑或權限：Z:/preview\Bak4-1.png
+[15:21:59] [INFO] 🎯 啟動 StatusWorker：['Bak4-1', 'Bak4-2']
+[15:21:59] [INFO] 🕒 檢查排程中...
+[15:21:59] [INFO] 🕒 檢查排程中...
+[15:22:00] [INFO] ⬅️ EncStatus Bak4-1: OK: Bak4-1:Stopped
+[15:22:00] [INFO] ⬅️ EncStatus Bak4-2: 
+[15:22:00] [INFO] ⬅️ EncStatus Bak4-2: OK: Bak4-2:Stopped
+[15:22:00] [INFO] 🛑 [主線程] 停止錄影：888 (932337a1-18e4-42bd-b044-d66c12ec4b5a) on Bak4-1
+[15:22:00] [INFO] 🛑 [主線程] 停止錄影：888 (932337a1-18e4-42bd-b044-d66c12ec4b5a) on Bak4-1
+[15:22:00] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[15:22:00] [INFO] ⬅️ EncStatus Bak4-1: 
+: Bak4-1:Stopped
+
+OK: Bak4-1:Stopped
+[15:22:01] [INFO] ⬅️ EncStatus Bak4-1: OK: Bak4-1:Stopped
+[15:22:02] [INFO] ⬅️ EncStatus Bak4-2: 
+[15:22:02] [INFO] ⬅️ EncStatus Bak4-2: OK: Bak4-2:Stopped
+
+OK: Bak4-2:Stopped
+[15:22:02] [INFO] ✅ 已儲存節目排程：Z:/schedule_project/schedule.json
+[15:22:02] [INFO] 🕒 檢查排程中...
+[15:22:02] [INFO] 🕒 檢查排程中...
+[15:22:02] [INFO] 🎯 啟動 StatusWorker：['Bak4-1', 'Bak4-2']
+[15:22:02] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[15:22:02] [INFO] ⬅️ EncStatus Bak4-2: 
+[15:22:03] [INFO] ⬅️ EncStatus Bak4-2: OK: Bak4-2:Stopped
+[15:22:04] [INFO] ✅ 已儲存節目排程：Z:/schedule_project/schedule.json
+[15:22:04] [INFO] 🕒 檢查排程中...
+[15:22:04] [INFO] 🕒 檢查排程中...
+[15:22:04] [INFO] 🎯 啟動 StatusWorker：['Bak4-1', 'Bak4-2']
+[15:22:04] [INFO] 🕒 檢查排程中...
+[15:22:04] [INFO] 🕒 檢查排程中...
+[15:22:05] [INFO] 🕒 檢查排程中...
+[15:22:05] [INFO] 🕒 檢查排程中...
+[15:22:06] [INFO] ⬅️ EncStatus Bak4-1: 
+[15:22:06] [INFO] ⬅️ EncStatus Bak4-1: OK: Bak4-1:Stopped
+
+OK: Bak4-1:Stopped
+[15:22:06] [INFO] 🕒 檢查排程中...
+[15:22:06] [INFO] 🕒 檢查排程中...
+[15:22:06] [INFO] ⬅️ EncStatus Bak4-1: OK: Bak4-1:Stopped
+[15:22:07] [INFO] 🎯 啟動 StatusWorker：['Bak4-1', 'Bak4-2']
+[15:22:07] [INFO] ⬅️ EncStatus Bak4-1: 
+[15:22:07] [INFO] 🕒 檢查排程中...
+[15:22:07] [INFO] 🕒 檢查排程中...
+[15:22:08] [INFO] 🕒 檢查排程中...
+[15:22:08] [INFO] 🕒 檢查排程中...
+[15:22:09] [INFO] ⬅️ EncStatus Bak4-1: OK: Bak4-1:Stopped
+[15:22:09] [INFO] 🎯 啟動 StatusWorker：['Bak4-1', 'Bak4-2']
+[15:22:09] [INFO] ⬅️ EncStatus Bak4-1: 
+[15:22:09] [INFO] ⬅️ EncStatus Bak4-2: 
+[15:22:09] [INFO] 🕒 檢查排程中...
+[15:22:09] [INFO] 🕒 檢查排程中...
+[15:22:10] [INFO] 🎯 啟動 StatusWorker：['Bak4-1', 'Bak4-2']
+[15:22:10] [INFO] 🕒 檢查排程中...
+[15:22:10] [INFO] 🕒 檢查排程中...
+[15:22:11] [INFO] ⬅️ EncStatus Bak4-2: OK: Bak4-2:Stopped
+
+OK: Bak4-2:Stopped
+
+OK: Bak4-2:Stopped
+[15:22:11] [INFO] 🕒 檢查排程中...
+[15:22:11] [INFO] 🕒 檢查排程中...
+[15:22:11] [INFO] ⬅️ EncStatus Bak4-2: OK: Bak4-2:Stopped
+[15:22:12] [INFO] 🕒 檢查排程中...
+[15:22:12] [INFO] 🕒 檢查排程中...
+[15:22:13] [INFO] 🎯 啟動 StatusWorker：['Bak4-1', 'Bak4-2']
+[15:22:14] [INFO] ⬅️ EncStatus Bak4-1: OK: Bak4-1:Stopped
+
+OK: Bak4-1:Stopped
+
+OK: Bak4-1:Stopped
+
+OK: Bak4-1:Stopped
+
+OK: Bak4-1:Stopped
+
+OK: Bak4-1:Stopped
+
+OK: Bak4-1:Stopped
+[15:22:14] [INFO] 🕒 檢查排程中...
+[15:22:14] [INFO] ⬅️ EncStatus Bak4-2: 
+[15:22:14] [INFO] ⬅️ EncStatus Bak4-2: OK: Bak4-2:Stopped
+
+OK: Bak4-2:Stopped
+[15:22:14] [INFO] 🕒 檢查排程中...
+[15:22:14] [INFO] 🕒 檢查排程中...
+[15:22:15] [INFO] 🕒 檢查排程中...
+[15:22:15] [INFO] 🕒 檢查排程中...
+[15:22:16] [INFO] ⬅️ EncStatus Bak4-2: 
+[15:22:16] [INFO] ⬅️ EncStatus Bak4-1: 
+[15:22:16] [INFO] ⬅️ EncStatus Bak4-1: 
+[15:22:16] [INFO] ⬅️ EncStatus Bak4-1: OK: Bak4-1:Stopped
+[15:22:16] [INFO] ⬅️ EncStatus Bak4-2: OK: Bak4-2:Stopped
+
+OK: Bak4-2:Stopped
+[15:22:16] [INFO] 🎯 啟動 StatusWorker：['Bak4-1', 'Bak4-2']
+[15:22:16] [INFO] 🕒 檢查排程中...
+[15:22:16] [INFO] 🕒 檢查排程中...
+[15:22:17] [INFO] 🕒 檢查排程中...
+[15:22:17] [INFO] 🕒 檢查排程中...
+[15:22:17] [INFO] ⬅️ EncStatus Bak4-1: 
+[15:22:18] [INFO] ⬅️ EncStatus Bak4-2: 
+[15:22:18] [INFO] ⬅️ EncStatus Bak4-1: OK: Bak4-1:Stopped
+
+OK: Bak4-1:Stopped
+
+OK: Bak4-1:Stopped
+[15:22:18] [INFO] 🕒 檢查排程中...
+[15:22:18] [INFO] 🕒 檢查排程中...
+[15:22:19] [INFO] ⬅️ EncStatus Bak4-1: OK: Bak4-1:Stopped
+[15:22:19] [INFO] ⬅️ EncStatus Bak4-2: 
+[15:22:19] [INFO] ⬅️ EncStatus Bak4-2: OK: Bak4-2:Stopped
+[15:22:19] [INFO] 🎯 啟動 StatusWorker：['Bak4-1', 'Bak4-2']
+[15:22:19] [INFO] 🎯 啟動 StatusWorker：['Bak4-1', 'Bak4-2']
+[15:22:19] [INFO] 🕒 檢查排程中...
+[15:22:19] [INFO] 🕒 檢查排程中...
+[15:22:19] [INFO] 📸 為 Bak4-2 拍照 ➜ 儲存預期路徑：Z:/preview\Bak4-2.png
+[15:22:19] [INFO] 📸 為 Bak4-1 拍照 ➜ 儲存預期路徑：Z:/preview\Bak4-1.png
+[15:22:20] [INFO] 🛰️ 傳給 encoder 的路徑（不含副檔名）：preview/Bak4-2
+
+OK: Bak4-2:Stopped
+
+OK: Bak4-2:Stopped
+[15:22:20] [INFO] 🛰️ 傳給 encoder 的路徑（不含副檔名）：preview/Bak4-1
+[15:22:20] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[15:22:20] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[15:22:20] [INFO] ⬅️ EncStatus Bak4-2: OK: Bak4-2:Stopped
+[15:22:20] [INFO] 🕒 檢查排程中...
+[15:22:20] [INFO] 🕒 檢查排程中...
+[15:22:21] [INFO] ⬅️ EncStatus Bak4-2: 
+[15:22:21] [INFO] ⬅️ EncStatus Bak4-2: OK: Bak4-2:Stopped
+[15:22:21] [INFO] 🕒 檢查排程中...
+[15:22:21] [INFO] 🕒 檢查排程中...
+[15:22:21] [INFO] ⬅️ EncStatus Bak4-1: 
+[15:22:22] [INFO] ⬅️ EncStatus Bak4-1: OK: Bak4-1:Stopped
+[15:22:22] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[15:22:22] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[15:22:22] [INFO] 🎯 啟動 StatusWorker：['Bak4-1', 'Bak4-2']
+[15:22:22] [INFO] 🕒 檢查排程中...
+[15:22:22] [INFO] 🕒 檢查排程中...
+[15:22:23] [INFO] ⬅️ EncStatus Bak4-1: 
+[15:22:23] [INFO] 🕒 檢查排程中...
+[15:22:23] [INFO] 🕒 檢查排程中...
+[15:22:23] [INFO] ⬅️ EncStatus Bak4-1: OK: Bak4-1:Stopped
+
+OK: Bak4-1:Stopped
+
+OK: Bak4-1:Stopped
+
+OK: Bak4-1:Stopped
+
+OK: Bak4-1:Stopped
+[15:22:24] [INFO] ⬅️ EncStatus Bak4-2: 
+[15:22:24] [INFO] 📡 Snapshot 回應：OK: Snapshot has been taken.
+[15:22:24] [INFO] ✅ 已儲存：Z:/preview\Bak4-2.png
+[15:22:24] [INFO] 📡 Snapshot 回應：OK: Snapshot has been taken.
+[15:22:24] [INFO] 🔍 查找最新快照：Z:/preview\Bak4-2*.png
+[15:22:24] [INFO] 🔍 查找最新快照：Z:/preview\Bak4-1*.png
+[15:22:24] [INFO] 🕒 檢查排程中...
+[15:22:24] [INFO] 🕒 檢查排程中...
+[15:22:25] [INFO] ⬅️ EncStatus Bak4-1: OK: Bak4-1:Stopped
+[15:22:25] [INFO] ⬅️ EncStatus Bak4-2: OK: Bak4-2:Stopped
+
+OK: Bak4-2:Stopped
+[15:22:25] [INFO] 🎯 啟動 StatusWorker：['Bak4-1', 'Bak4-2']
+[15:22:25] [INFO] ⬅️ EncStatus Bak4-2: OK: Bak4-2:Stopped
+
+OK: Bak4-2:Stopped
+
+OK: Bak4-2:Stopped
+[15:22:25] [INFO] 🕒 檢查排程中...
+[15:22:26] [INFO] ⬅️ EncStatus Bak4-2: OK: Bak4-2:Stopped
+[15:22:26] [INFO] 🕒 檢查排程中...
+[15:22:26] [INFO] 🕒 檢查排程中...
+[15:22:27] [INFO] 🕒 檢查排程中...
+[15:22:27] [INFO] 🕒 檢查排程中...
+[15:22:27] [INFO] ⬅️ EncStatus Bak4-2: 
+[15:22:28] [INFO] ⬅️ EncStatus Bak4-2: OK: Bak4-2:Stopped
+[15:22:28] [INFO] 🎯 啟動 StatusWorker：['Bak4-1', 'Bak4-2']
+[15:22:28] [INFO] 🕒 檢查排程中...
+[15:22:28] [INFO] 🕒 檢查排程中...
+[15:22:29] [INFO] ⬅️ EncStatus Bak4-1: 
+[15:22:29] [INFO] ⬅️ EncStatus Bak4-1: OK: Bak4-1:Stopped
+
+OK: Bak4-1:Stopped
+[15:22:29] [INFO] ⚠️ 檔案未生成，請檢查路徑或權限：Z:/preview\Bak4-1.png
+[15:22:29] [INFO] 🎯 啟動 StatusWorker：['Bak4-1', 'Bak4-2']
+[15:22:29] [INFO] 🕒 檢查排程中...
+[15:22:29] [INFO] 🕒 檢查排程中...
+[15:22:30] [INFO] ⬅️ EncStatus Bak4-1: OK: Bak4-1:Stopped
+[15:22:30] [INFO] 🕒 檢查排程中...
+[15:22:30] [INFO] 🕒 檢查排程中...
+[15:22:31] [INFO] ⬅️ EncStatus Bak4-2: 
+[15:22:31] [INFO] ⬅️ EncStatus Bak4-2: OK: Bak4-2:Stopped
+
+OK: Bak4-2:Stopped
+
+OK: Bak4-2:Stopped
+[15:22:31] [INFO] 🎯 啟動 StatusWorker：['Bak4-1', 'Bak4-2']
+[15:22:31] [INFO] ⬅️ EncStatus Bak4-1: 
+[15:22:31] [INFO] 🕒 檢查排程中...
+[15:22:31] [INFO] 🕒 檢查排程中...
+[15:22:32] [INFO] ⬅️ EncStatus Bak4-1: OK: Bak4-1:Stopped
+
+OK: Bak4-1:Stopped
+[15:22:32] [INFO] 🕒 檢查排程中...
+[15:22:32] [INFO] 🕒 檢查排程中...
+[15:22:33] [INFO] ⬅️ EncStatus Bak4-2: 
+[15:22:33] [INFO] ⬅️ EncStatus Bak4-2: OK: Bak4-2:Stopped
+[15:22:33] [INFO] 🕒 檢查排程中...
+[15:22:33] [INFO] 🕒 檢查排程中...
+[15:22:34] [INFO] ⬅️ EncStatus Bak4-1: OK: Bak4-1:Stopped
+
+
+OK: Bak4-2:Stopped
+[15:22:34] [INFO] ⬅️ EncStatus Bak4-2: 
+[15:22:34] [INFO] ⬅️ EncStatus Bak4-2: OK: Bak4-2:Stopped
+[15:22:34] [INFO] 🎯 啟動 StatusWorker：['Bak4-1', 'Bak4-2']
+[15:22:34] [INFO] 🕒 檢查排程中...
+[15:22:34] [INFO] 🕒 檢查排程中...
+[15:22:35] [INFO] ⬅️ EncStatus Bak4-1: OK: Bak4-1:Stopped
+
+OK: Bak4-1:Stopped
+[15:22:35] [INFO] 🕒 檢查排程中...
+[15:22:35] [INFO] 🕒 檢查排程中...
+[15:22:36] [INFO] ⬅️ EncStatus Bak4-1: OK: Bak4-1:Stopped
+[15:22:36] [INFO] 🕒 檢查排程中...
+[15:22:36] [INFO] 🕒 檢查排程中...
+[15:22:36] [INFO] ⬅️ EncStatus Bak4-1: 
+[15:22:37] [INFO] ⬅️ EncStatus Bak4-2: OK: Bak4-2:Stopped
+
+OK: Bak4-2:Stopped
+[15:22:37] [INFO] 🎯 啟動 StatusWorker：['Bak4-1', 'Bak4-2']
+[15:22:37] [INFO] 🕒 檢查排程中...
+[15:22:37] [INFO] 🕒 檢查排程中...
+[15:22:37] [INFO] ⬅️ EncStatus Bak4-1: 
+[15:22:38] [INFO] ⬅️ EncStatus Bak4-2: OK: Bak4-2:Stopped
+[15:22:38] [INFO] 🕒 檢查排程中...
+[15:22:38] [INFO] 🕒 檢查排程中...
+[15:22:39] [INFO] ⬅️ EncStatus Bak4-2: 
+[15:22:39] [INFO] ⬅️ EncStatus Bak4-2: OK: Bak4-2:Stopped
+
+OK: Bak4-2:Stopped
+[15:22:39] [INFO] ⬅️ EncStatus Bak4-1: OK: Bak4-1:Stopped
+[15:22:39] [INFO] 🎯 啟動 StatusWorker：['Bak4-1', 'Bak4-2']
+[15:22:39] [INFO] 🕒 檢查排程中...
+[15:22:39] [INFO] 🕒 檢查排程中...
+[15:22:40] [INFO] ⬅️ EncStatus Bak4-2: OK: Bak4-2:Stopped
+[15:22:40] [INFO] 🎯 啟動 StatusWorker：['Bak4-1', 'Bak4-2']
+[15:22:40] [INFO] 🕒 檢查排程中...
+[15:22:40] [INFO] 🕒 檢查排程中...
+[15:22:41] [INFO] ⬅️ EncStatus Bak4-2: OK: Bak4-2:Stopped
+[15:22:41] [INFO] ⬅️ EncStatus Bak4-2: 
+[15:22:41] [INFO] 🕒 檢查排程中...
+[15:22:41] [INFO] 🕒 檢查排程中...
+[15:22:41] [INFO] ⬅️ EncStatus Bak4-1: OK: Bak4-1:Stopped
+
+OK: Bak4-1:Stopped
+
+OK: Bak4-1:Stopped
+
+OK: Bak4-1:Stopped
+[15:22:42] [INFO] 🕒 檢查排程中...
+[15:22:42] [INFO] 🕒 檢查排程中...
+[15:22:42] [INFO] ⬅️ EncStatus Bak4-1: OK: Bak4-1:Stopped
+[15:22:43] [INFO] 🎯 啟動 StatusWorker：['Bak4-1', 'Bak4-2']
+[15:22:43] [INFO] ⬅️ EncStatus Bak4-1: 
+[15:22:43] [INFO] 🕒 檢查排程中...
+[15:22:43] [INFO] 🕒 檢查排程中...
+[15:22:44] [INFO] ⬅️ EncStatus Bak4-2: OK: Bak4-2:Stopped
+[15:22:44] [INFO] 🕒 檢查排程中...
+[15:22:44] [INFO] 🕒 檢查排程中...
+[15:22:45] [INFO] ⬅️ EncStatus Bak4-2: 
+[15:22:45] [INFO] ⬅️ EncStatus Bak4-2: OK: Bak4-2:Stopped
+[15:22:45] [INFO] 🕒 檢查排程中...
+[15:22:45] [INFO] 🕒 檢查排程中...
+[15:22:45] [INFO] ⬅️ EncStatus Bak4-2: OK: Bak4-2:Stopped
+
+OK: Bak4-2:Stopped
+
+OK: Bak4-2:Stopped
+[15:22:46] [INFO] ⬅️ EncStatus Bak4-2: OK: Bak4-2:Stopped
+[15:22:46] [INFO] ⬅️ EncStatus Bak4-1: OK: Bak4-1:Stopped
+
+OK: Bak4-1:Stopped
+[15:22:46] [INFO] 🎯 啟動 StatusWorker：['Bak4-1', 'Bak4-2']
+[15:22:46] [INFO] 🕒 檢查排程中...
+[15:22:46] [INFO] 🕒 檢查排程中...
+[15:22:47] [INFO] ⬅️ EncStatus Bak4-1: OK: Bak4-1:Stopped
+[15:22:47] [INFO] 🕒 檢查排程中...
+[15:22:47] [INFO] 🕒 檢查排程中...
+[15:22:48] [INFO] 🕒 檢查排程中...
+[15:22:48] [INFO] 🕒 檢查排程中...
+[15:22:48] [INFO] ⬅️ EncStatus Bak4-1: 
+[15:22:49] [INFO] ⬅️ EncStatus Bak4-1: OK: Bak4-1:Stopped
+
+OK: Bak4-1:Stopped
+
+OK: Bak4-1:Stopped
+[15:22:49] [INFO] 🎯 啟動 StatusWorker：['Bak4-1', 'Bak4-2']
+[15:22:49] [INFO] 🎯 啟動 StatusWorker：['Bak4-1', 'Bak4-2']
+[15:22:49] [INFO] ⬅️ EncStatus Bak4-2: 
+[15:22:49] [INFO] ⬅️ EncStatus Bak4-1: 
+[15:22:49] [INFO] 📸 為 Bak4-2 拍照 ➜ 儲存預期路徑：Z:/preview\Bak4-2.png
+[15:22:49] [INFO] 🕒 檢查排程中...
+� 儲存預期路徑：Z:/preview\Bak4-1.png
+[15:22:49] [INFO] 🛰️ 傳給 encoder 的路徑（不含副檔名）：preview/Bak4-2
+[15:22:50] [INFO] 🛰️ 傳給 encoder 的路徑（不含副檔名）：preview/Bak4-1
+[15:22:50] [INFO] 🕒 檢查排程中...
+[15:22:50] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[15:22:50] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[15:22:50] [INFO] ⬅️ EncStatus Bak4-1: OK: Bak4-1:Stopped
+[15:22:50] [INFO] 🕒 檢查排程中...
+[15:22:50] [INFO] 🕒 檢查排程中...
+[15:22:51] [INFO] ⬅️ EncStatus Bak4-2: OK: Bak4-2:Stopped
+
+OK: Bak4-2:Stopped
+
+OK: Bak4-2:Stopped
+[15:22:51] [INFO] 🕒 檢查排程中...
+[15:22:51] [INFO] 🕒 檢查排程中...
+[15:22:52] [INFO] ⬅️ EncStatus Bak4-1: 
+[15:22:52] [INFO] ⬅️ EncStatus Bak4-2: OK: Bak4-2:Stopped
+[15:22:52] [INFO] ⬅️ EncStatus Bak4-1: OK: Bak4-1:Stopped
+
+OK: Bak4-1:Stopped
+[15:22:52] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[15:22:52] [INFO] ⬅️ EncStatus Bak4-2: 
+[15:22:52] [INFO] 🎯 啟動 StatusWorker：['Bak4-1', 'Bak4-2']
+[15:22:52] [INFO] 🕒 檢查排程中...
+[15:22:52] [INFO] 🕒 檢查排程中...
+[15:22:53] [INFO] 🕒 檢查排程中...
+[15:22:53] [INFO] ⬅️ EncStatus Bak4-1: 
+[15:22:53] [INFO] 🕒 檢查排程中...
+[15:22:54] [INFO] ⬅️ EncStatus Bak4-2: OK: Bak4-2:Stopped
+
+OK: Bak4-2:Stopped
+
+OK: Bak4-2:Stopped
+
+OK: Bak4-2:Stopped
+[15:22:54] [INFO] 📡 Snapshot 回應：OK: Snapshot has been taken.
+[15:22:54] [INFO] ✅ 已儲存：Z:/preview\Bak4-2.png
+[15:22:54] [INFO] 📡 Snapshot 回應：OK: Snapshot has been taken.
+[15:22:54] [INFO] 🔍 查找最新快照：Z:/preview\Bak4-2*.png
+[15:22:54] [INFO] ✅ 已儲存節目排程：Z:/schedule_project/schedule.json
+[15:22:54] [INFO] 🔁 [同步] Runner block 數量：3
+[15:22:54] [INFO] 🔍 查找最新快照：Z:/preview\Bak4-1*.png
+[15:22:54] [INFO] 🕒 檢查排程中...
+[15:22:54] [INFO] 🕒 檢查排程中...
+[15:22:55] [INFO] ⬅️ EncStatus Bak4-1: OK: Bak4-1:Stopped
+[15:22:55] [INFO] 🎯 啟動 StatusWorker：['Bak4-1', 'Bak4-2']
+[15:22:55] [INFO] ⬅️ EncStatus Bak4-1: 
+[15:22:55] [INFO] 🕒 檢查排程中...
+[15:22:55] [INFO] 🕒 檢查排程中...
+[15:22:56] [INFO] ✅ 已儲存節目排程：Z:/schedule_project/schedule.json
+[15:22:56] [INFO] ✅ 已儲存節目排程：Z:/schedule_project/schedule.json
+[15:22:56] [INFO] 🔁 [同步] Runner block 數量：3
+[15:22:56] [INFO] ✅ 已儲存節目排程：Z:/schedule_project/schedule.json
+[15:22:56] [INFO] ✅ 已儲存節目排程：Z:/schedule_project/schedule.json
+[15:22:56] [INFO] 🔁 [同步] Runner block 數量：3
+[15:22:56] [INFO] 🕒 檢查排程中...
+[15:22:56] [INFO] 🕒 檢查排程中...
+[15:22:57] [INFO] 🕒 檢查排程中...
+[15:22:57] [INFO] 🕒 檢查排程中...
+[15:22:58] [INFO] ⬅️ EncStatus Bak4-1: 
+[15:22:58] [INFO] ⬅️ EncStatus Bak4-1: OK: Bak4-1:Stopped
+
+OK: Bak4-1:Stopped
+[15:22:58] [INFO] ⬅️ EncStatus Bak4-1: OK: Bak4-1:Stopped
+
+OK: Bak4-1:Stopped
+
+OK: Bak4-1:Stopped
+
+OK: Bak4-1:Stopped
+[15:22:58] [INFO] ⬅️ EncStatus Bak4-2: OK: Bak4-2:Stopped
+
+OK: Bak4-2:Stopped
+
+OK: Bak4-2:Stopped
+[15:22:58] [INFO] 🎯 啟動 StatusWorker：['Bak4-1', 'Bak4-2']
+[15:22:58] [INFO] 🕒 檢查排程中...
+[15:22:58] [INFO] 🕒 檢查排程中...
+[15:22:59] [INFO] ⬅️ EncStatus Bak4-1: 
+[15:22:59] [INFO] ⚠️ 檔案未生成，請檢查路徑或權限：Z:/preview\Bak4-1.png
+[15:22:59] [INFO] 🎯 啟動 StatusWorker：['Bak4-1', 'Bak4-2']
+[15:23:00] [INFO] 🕒 檢查排程中...
+[15:23:00] [INFO] 🕒 檢查排程中...
+[15:23:00] [INFO] ⬅️ EncStatus Bak4-2: 
+[15:23:00] [INFO] ⬅️ EncStatus Bak4-2: OK: Bak4-2:Stopped
+
+OK: Bak4-2:Stopped
+[15:23:00] [INFO] 🕒 檢查排程中...
+[15:23:00] [INFO] 🕒 檢查排程中...
+[15:23:01] [INFO] ⬅️ EncStatus Bak4-2: OK: Bak4-2:Stopped
+[15:23:01] [INFO] ⬅️ EncStatus Bak4-2: OK: Bak4-2:Stopped
+
+OK: Bak4-2:Stopped
+[15:23:01] [INFO] 🎯 啟動 StatusWorker：['Bak4-1', 'Bak4-2']
+[15:23:01] [INFO] 🕒 檢查排程中...
+[15:23:01] [INFO] 🕒 檢查排程中...
+[15:23:02] [INFO] ⬅️ EncStatus Bak4-2: OK: Bak4-2:Stopped
+[15:23:02] [INFO] ✅ 已儲存節目排程：Z:/schedule_project/schedule.json
+[15:23:02] [INFO] 🗑️ 已刪除 block：932337a1-18e4-42bd-b044-d66c12ec4b5a
+[15:23:02] [INFO] 🕒 檢查排程中...
+[15:23:02] [INFO] 🕒 檢查排程中...
+[15:23:03] [INFO] ⬅️ EncStatus Bak4-2: 
+[15:23:03] [INFO] ⬅️ EncStatus Bak4-2: OK: Bak4-2:Stopped
+[15:23:03] [INFO] 🕒 檢查排程中...
+[15:23:03] [INFO] ⬅️ EncStatus Bak4-1: OK: Bak4-1:Stopped
+[15:23:03] [INFO] ⬅️ EncStatus Bak4-1: OK: Bak4-1:Stopped
+
+OK: Bak4-1:Stopped
+[15:23:03] [INFO] 🕒 檢查排程中...
+[15:23:04] [INFO] ✅ 已儲存節目排程：Z:/schedule_project/schedule.json
+[15:23:04] [INFO] ↩️ 已復原 block：888
+[15:23:04] [INFO] 🎯 啟動 StatusWorker：['Bak4-1', 'Bak4-2']
+[15:23:04] [INFO] 🕒 檢查排程中...
+[15:23:04] [INFO] 🕒 檢查排程中...
+[15:23:05] [INFO] 🔁 [同步] Runner block 數量：3
+[15:23:05] [INFO] 🕒 檢查排程中...
+[15:23:05] [INFO] 🕒 檢查排程中...
+[15:23:05] [INFO] ⬅️ EncStatus Bak4-2: 
+[15:23:06] [INFO] ⬅️ EncStatus Bak4-2: OK: Bak4-2:Stopped
+
+OK: Bak4-2:Stopped
+
+OK: Bak4-2:Stopped
+[15:23:06] [INFO] 🕒 檢查排程中...
+[15:23:06] [INFO] 🕒 檢查排程中...
+[15:23:07] [INFO] ⬅️ EncStatus Bak4-2: 
+[15:23:07] [INFO] ⬅️ EncStatus Bak4-2: OK: Bak4-2:Stopped
+
+OK: Bak4-2:Stopped
+[15:23:07] [INFO] 🎯 啟動 StatusWorker：['Bak4-1', 'Bak4-2']
+[15:23:07] [INFO] 🕒 檢查排程中...
+[15:23:07] [INFO] 🕒 檢查排程中...
+[15:23:08] [INFO] 🕒 檢查排程中...
+[15:23:08] [INFO] 🕒 檢查排程中...
+[15:23:09] [INFO] ⬅️ EncStatus Bak4-1: 
+[15:23:09] [INFO] ⬅️ EncStatus Bak4-2: 
+[15:23:09] [INFO] ⬅️ EncStatus Bak4-2: OK: Bak4-2:Stopped
+
+OK: Bak4-2:Stopped
+[15:23:09] [INFO] 🎯 啟動 StatusWorker：['Bak4-1', 'Bak4-2']
+[15:23:09] [INFO] 🕒 檢查排程中...
+[15:23:09] [INFO] 🕒 檢查排程中...
+[15:23:09] [INFO] ⬅️ EncStatus Bak4-1: OK: Bak4-1:Stopped
+[15:23:10] [INFO] 🎯 啟動 StatusWorker：['Bak4-1', 'Bak4-2']
+[15:23:10] [INFO] 🕒 檢查排程中...
+[15:23:10] [INFO] 🕒 檢查排程中...
+[15:23:11] [INFO] ⬅️ EncStatus Bak4-1: OK: Bak4-1:Stopped
+
+OK: Bak4-1:Stopped
+
+OK: Bak4-1:Stopped
+
+OK: Bak4-1:Stopped
+[15:23:11] [INFO] 🕒 檢查排程中...
+[15:23:11] [INFO] 🕒 檢查排程中...
+[15:23:12] [INFO] ⬅️ EncStatus Bak4-1: OK: Bak4-1:Stopped
+[15:23:12] [INFO] ⬅️ EncStatus Bak4-2: 
+[15:23:12] [INFO] ⬅️ EncStatus Bak4-2: OK: Bak4-2:Stopped
+
+OK: Bak4-2:Stopped
+
+OK: Bak4-2:Stopped
+[15:23:12] [INFO] ✅ 已儲存節目排程：Z:/schedule_project/schedule.json
+[15:23:12] [INFO] 🗑️ 已刪除 block：70f74de2-367f-4454-b287-81b8cb5c36f8
+[15:23:12] [INFO] 🕒 檢查排程中...
+[15:23:12] [INFO] 🕒 檢查排程中...
+[15:23:13] [INFO] ⬅️ EncStatus Bak4-1: 
+[15:23:13] [INFO] ⬅️ EncStatus Bak4-2: 
+[15:23:13] [INFO] ✅ 已儲存節目排程：Z:/schedule_project/schedule.json
+[15:23:13] [INFO] ↩️ 已復原 block：222
+[15:23:13] [INFO] 🎯 啟動 StatusWorker：['Bak4-1', 'Bak4-2']
+[15:23:13] [INFO] 🕒 檢查排程中...
+[15:23:13] [INFO] 🕒 檢查排程中...
+[15:23:14] [INFO] ⬅️ EncStatus Bak4-2: OK: Bak4-2:Stopped
+
+OK: Bak4-2:Stopped
+[15:23:14] [INFO] 🕒 檢查排程中...
+[15:23:14] [INFO] 🕒 檢查排程中...
+[15:23:15] [INFO] 🔁 [同步] Runner block 數量：3
+[15:23:15] [INFO] ⬅️ EncStatus Bak4-1: OK: Bak4-1:Stopped
+
+OK: Bak4-1:Stopped
+
+OK: Bak4-1:Stopped
+[15:23:15] [INFO] ⬅️ EncStatus Bak4-2: 
+[15:23:15] [INFO] ⬅️ EncStatus Bak4-2: OK: Bak4-2:Stopped
+[15:23:15] [INFO] 🕒 檢查排程中...
+[15:23:15] [INFO] 🕒 檢查排程中...
+[15:23:15] [INFO] ⬅️ EncStatus Bak4-1: 
+[15:23:16] [INFO] 🎯 啟動 StatusWorker：['Bak4-1', 'Bak4-2']
+[15:23:17] [INFO] 🕒 檢查排程中...
+[15:23:17] [INFO] 🕒 檢查排程中...
+[15:23:17] [INFO] ⬅️ EncStatus Bak4-1: OK: Bak4-1:Stopped
+[15:23:17] [INFO] ⬅️ EncStatus Bak4-2: 
+[15:23:17] [INFO] ⬅️ EncStatus Bak4-1: 
+[15:23:17] [INFO] 🕒 檢查排程中...
+OK: Bak4-1:Stopped
+
+OK: Bak4-1:Stopped
+[15:23:17] [INFO] 🕒 檢查排程中...
+[15:23:18] [INFO] 📝 點擊 block：8889
+[15:23:18] [INFO] ⬅️ EncStatus Bak4-2: OK: Bak4-2:Stopped
+
+OK: Bak4-2:Stopped
+
+OK: Bak4-2:Stopped
+[15:23:18] [INFO] 🕒 檢查排程中...
+[15:23:18] [INFO] 🕒 檢查排程中...
+[15:23:19] [INFO] ⬅️ EncStatus Bak4-1: OK: Bak4-1:Stopped
+[15:23:19] [INFO] ⬅️ EncStatus Bak4-2: 
+[15:23:19] [INFO] ⬅️ EncStatus Bak4-2: OK: Bak4-2:Stopped
+
+OK: Bak4-2:Stopped
+[15:23:19] [INFO] 🎯 啟動 StatusWorker：['Bak4-1', 'Bak4-2']
+[15:23:19] [INFO] 🎯 啟動 StatusWorker：['Bak4-1', 'Bak4-2']
+[15:23:19] [INFO] 📸 為 Bak4-1 拍照 ➜ 儲存預期路徑：Z:/preview\Bak4-1.png
+[15:23:19] [INFO] 📸 為 Bak4-2 拍照 ➜ 儲存預期路徑：Z:/preview\Bak4-2.png
+[15:23:19] [INFO] 🕒 檢查排程中...
+[15:23:19] [INFO] 🛰️ 傳給 encoder 的路徑（不含副檔名）：preview/Bak4-2
+[15:23:19] [INFO] 🕒 檢查排程中...
+[15:23:19] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[15:23:19] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[15:23:20] [INFO] 🕒 檢查排程中...
+[15:23:20] [INFO] 🕒 檢查排程中...
+[15:23:21] [INFO] ⬅️ EncStatus Bak4-2: 
+[15:23:21] [INFO] 🕒 檢查排程中...
+[15:23:21] [INFO] 🕒 檢查排程中...
+[15:23:21] [INFO] ⬅️ EncStatus Bak4-1: 
+[15:23:22] [INFO] ⬅️ EncStatus Bak4-1: OK: Bak4-1:Stopped
+[15:23:22] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[15:23:22] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[15:23:22] [INFO] 🎯 啟動 StatusWorker：['Bak4-1', 'Bak4-2']
+[15:23:22] [INFO] 🕒 檢查排程中...
+[15:23:22] [INFO] 🕒 檢查排程中...
+[15:23:23] [INFO] ⬅️ EncStatus Bak4-1: 
+: Bak4-1:Stopped
+
+OK: Bak4-1:Stopped
+
+OK: Bak4-1:Stopped
+[15:23:23] [INFO] 🕒 檢查排程中...
+[15:23:23] [INFO] 🕒 檢查排程中...
+[15:23:24] [INFO] ⬅️ EncStatus Bak4-2: OK: Bak4-2:Stopped
+[15:23:24] [INFO] 📡 Snapshot 回應：OK: Snapshot has been taken.
+[15:23:24] [INFO] 📡 Snapshot 回應：OK: Snapshot has been taken.
+[15:23:24] [INFO] ✅ 已儲存：Z:/preview\Bak4-2.png
+[15:23:24] [INFO] 🔍 查找最新快照：Z:/preview\Bak4-1*.png
+[15:23:24] [INFO] 🔍 查找最新快照：Z:/preview\Bak4-2*.png
+[15:23:25] [INFO] 🕒 檢查排程中...
+[15:23:25] [INFO] 🕒 檢查排程中...
+[15:23:25] [INFO] ⬅️ EncStatus Bak4-2: 
+[15:23:25] [INFO] ⬅️ EncStatus Bak4-1: OK: Bak4-1:Stopped
+
+OK: Bak4-1:Stopped
+[15:23:25] [INFO] ⬅️ EncStatus Bak4-2: 
+[15:23:25] [INFO] ⬅️ EncStatus Bak4-2: OK: Bak4-2:Stopped
+
+OK: Bak4-2:Stopped
+
+OK: Bak4-2:Stopped
+
+OK: Bak4-2:Stopped
+[15:23:25] [INFO] 🎯 啟動 StatusWorker：['Bak4-1', 'Bak4-2']
+[15:23:25] [INFO] 🕒 檢查排程中...
+[15:23:25] [INFO] 🕒 檢查排程中...
+[15:23:26] [INFO] ⬅️ EncStatus Bak4-1: 
+[15:23:26] [INFO] 🕒 檢查排程中...
+[15:23:26] [INFO] 🕒 檢查排程中...
+[15:23:27] [INFO] ⬅️ EncStatus Bak4-1: OK: Bak4-1:Stopped
+[15:23:27] [INFO] ⬅️ EncStatus Bak4-1: 
+[15:23:27] [INFO] ⬅️ EncStatus Bak4-1: 
+[15:23:27] [INFO] 🕒 檢查排程中...
+[15:23:27] [INFO] 🕒 檢查排程中...
+[15:23:28] [INFO] 🎯 啟動 StatusWorker：['Bak4-1', 'Bak4-2']
+[15:23:29] [INFO] 🕒 檢查排程中...
+[15:23:29] [INFO] 🕒 檢查排程中...
+[15:23:29] [INFO] ⚠️ 檔案未生成，請檢查路徑或權限：Z:/preview\Bak4-1.png
+[15:23:29] [INFO] ⬅️ EncStatus Bak4-1: OK: Bak4-1:Stopped
+
+OK: Bak4-1:Stopped
+
+OK: Bak4-1:Stopped
+
+OK: Bak4-1:Stopped
+[15:23:29] [INFO] ⬅️ EncStatus Bak4-2: 
+: Bak4-2:Stopped
+[15:23:29] [INFO] 🎯 啟動 StatusWorker：['Bak4-1', 'Bak4-2']
+[15:23:29] [INFO] 🕒 檢查排程中...
+[15:23:29] [INFO] 🕒 檢查排程中...
+[15:23:30] [INFO] ⬅️ EncStatus Bak4-2: OK: Bak4-2:Stopped
+
+OK: Bak4-2:Stopped
+
+OK: Bak4-2:Stopped
+
+OK: Bak4-2:Stopped
+[15:23:30] [INFO] 🕒 檢查排程中...
+[15:23:30] [INFO] 🕒 檢查排程中...
+[15:23:31] [INFO] ⬅️ EncStatus Bak4-2: OK: Bak4-2:Stopped
+[15:23:31] [INFO] ⬅️ EncStatus Bak4-1: 
+[15:23:31] [INFO] 🎯 啟動 StatusWorker：['Bak4-1', 'Bak4-2']
+[15:23:31] [INFO] 🕒 檢查排程中...
+[15:23:31] [INFO] 🕒 檢查排程中...
+[15:23:31] [INFO] ⬅️ EncStatus Bak4-1: OK: Bak4-1:Stopped
+[15:23:32] [INFO] 🕒 檢查排程中...
+[15:23:32] [INFO] 🕒 檢查排程中...
+[15:23:33] [INFO] ⬅️ EncStatus Bak4-1: 
+[15:23:33] [INFO] 🕒 檢查排程中...
+[15:23:33] [INFO] ⬅️ EncStatus Bak4-1: OK: Bak4-1:Stopped
+[15:23:33] [INFO] 🕒 檢查排程中...
+[15:23:34] [INFO] 🎯 draw_grid encoder_names:['Bak4-1', 'Bak4-2']
+[15:23:34] [INFO] 🎯 draw_grid encoder_names:['Bak4-1', 'Bak4-2']
+[15:23:34] [INFO] 🎯 draw_grid encoder_names:['Bak4-1', 'Bak4-2']
+[15:23:34] [INFO] 🎯 draw_grid encoder_names:['Bak4-1', 'Bak4-2']
+[15:23:34] [INFO] 🎯 啟動 StatusWorker：['Bak4-1', 'Bak4-2']
+[15:23:34] [INFO] 🕒 檢查排程中...
+[15:23:34] [INFO] 🕒 檢查排程中...
+[15:23:35] [INFO] 🎯 draw_grid encoder_names:['Bak4-1', 'Bak4-2']
+[15:23:35] [INFO] 🎯 draw_grid encoder_names:['Bak4-1', 'Bak4-2']
+[15:23:35] [INFO] 🎯 draw_grid encoder_names:['Bak4-1', 'Bak4-2']
+[15:23:35] [INFO] ⬅️ EncStatus Bak4-1: OK: Bak4-1:Stopped
+
+OK: Bak4-1:Stopped
+
+OK: Bak4-1:Stopped
+
+OK: Bak4-1:Stopped
+
+OK: Bak4-1:Stopped
+[15:23:35] [INFO] 🕒 檢查排程中...
+[15:23:35] [INFO] 🕒 檢查排程中...
+[15:23:35] [INFO] ⬅️ EncStatus Bak4-2: 
+[15:23:36] [INFO] 🕒 檢查排程中...
+[15:23:36] [INFO] 🕒 檢查排程中...
+[15:23:37] [INFO] ⬅️ EncStatus Bak4-1: OK: Bak4-1:Stopped
+[15:23:37] [INFO] ⬅️ EncStatus Bak4-2: OK: Bak4-2:Stopped
+
+OK: Bak4-2:Stopped
+
+OK: Bak4-2:Stopped
+[15:23:37] [INFO] ⬅️ EncStatus Bak4-2: 
+[15:23:37] [INFO] 🎯 啟動 StatusWorker：['Bak4-1', 'Bak4-2']
+[15:23:37] [INFO] ⬅️ EncStatus Bak4-1: 
+[15:23:37] [INFO] ⬅️ EncStatus Bak4-1: OK: Bak4-1:Stopped
+
+OK: Bak4-1:Stopped
+[15:23:37] [INFO] 🕒 檢查排程中...
+[15:23:37] [INFO] 🕒 檢查排程中...
+[15:23:38] [INFO] 🕒 檢查排程中...
+[15:23:38] [INFO] 🕒 檢查排程中...
+[15:23:39] [INFO] ⬅️ EncStatus Bak4-1: OK: Bak4-1:Stopped
+[15:23:39] [INFO] 🎯 啟動 StatusWorker：['Bak4-1', 'Bak4-2']
+[15:23:40] [INFO] ⬅️ EncStatus Bak4-2: OK: Bak4-2:Stopped
+[15:23:39] [INFO] ⬅️ EncStatus Bak4-1: OK: Bak4-1:Stopped
+
+OK: Bak4-1:Stopped
+[15:23:40] [INFO] 🕒 檢查排程中...
+[15:23:40] [INFO] ⬅️ EncStatus Bak4-2: OK: Bak4-2:Stopped
+
+OK: Bak4-2:Stopped
+
+OK: Bak4-2:Stopped
+[15:23:40] [INFO] 🕒 檢查排程中...
+[15:23:40] [INFO] 🎯 啟動 StatusWorker：['Bak4-1', 'Bak4-2']
+[15:23:40] [INFO] 🕒 檢查排程中...
+[15:23:40] [INFO] 🕒 檢查排程中...
+[15:23:41] [INFO] ⬅️ EncStatus Bak4-1: 
+[15:23:41] [INFO] ⬅️ EncStatus Bak4-2: OK: Bak4-2:Stopped
+[15:23:41] [INFO] 🕒 檢查排程中...
+[15:23:41] [INFO] 🕒 檢查排程中...
+[15:23:42] [INFO] ⬅️ EncStatus Bak4-1: OK: Bak4-1:Stopped
+[15:23:42] [INFO] 🕒 檢查排程中...
+[15:23:42] [INFO] 🕒 檢查排程中...
+[15:23:43] [INFO] 🎯 啟動 StatusWorker：['Bak4-1', 'Bak4-2']
+[15:23:43] [INFO] ⬅️ EncStatus Bak4-1: 
+[15:23:43] [INFO] 🕒 檢查排程中...
+[15:23:43] [INFO] 🕒 檢查排程中...
+[15:23:44] [INFO] ⬅️ EncStatus Bak4-1: OK: Bak4-1:Stopped
+
+OK: Bak4-1:Stopped
+[15:23:44] [INFO] ⬅️ EncStatus Bak4-2: 
+[15:23:44] [INFO] 🕒 檢查排程中...
+[15:23:44] [INFO] 🕒 檢查排程中...
+[15:23:45] [INFO] ⬅️ EncStatus Bak4-1: OK: Bak4-1:Stopped
+[15:23:45] [INFO] 🕒 檢查排程中...
+[15:23:45] [INFO] 🕒 檢查排程中...
+[15:23:46] [INFO] 🎯 啟動 StatusWorker：['Bak4-1', 'Bak4-2']
+[15:23:46] [INFO] 🕒 檢查排程中...
+[15:23:46] [INFO] 🕒 檢查排程中...
+[15:23:47] [INFO] ⬅️ EncStatus Bak4-2: OK: Bak4-2:Stopped
+
+OK: Bak4-2:Stopped
+
+OK: Bak4-2:Stopped
+[15:23:47] [INFO] 🕒 檢查排程中...
+[15:23:47] [INFO] 🕒 檢查排程中...
+[15:23:48] [INFO] 🕒 檢查排程中...
+[15:23:48] [INFO] 🕒 檢查排程中...
+[15:23:49] [INFO] ⬅️ EncStatus Bak4-2: OK: Bak4-2:Stopped
+[15:23:49] [INFO] 🎯 啟動 StatusWorker：['Bak4-1', 'Bak4-2']
+[15:23:49] [INFO] 🎯 啟動 StatusWorker：['Bak4-1', 'Bak4-2']
+[15:23:49] [INFO] ⬅️ EncStatus Bak4-2: 
+[15:23:49] [INFO] 📸 為 Bak4-1 拍照 ➜ 儲存預期路徑：Z:/preview\Bak4-1.png
+[15:23:49] [INFO] 📸 為 Bak4-2 拍照 ➜ 儲存預期路徑：Z:/preview\Bak4-2.png
+[15:23:49] [INFO] 🕒 檢查排程中...
+[15:23:50] [INFO] 🛰️ 傳給 encoder 的路徑（不含副檔名）：preview/Bak4-1
+[15:23:50] [INFO] 🛰️ 傳給 encoder 的路徑（不含副檔名）：preview/Bak4-2
+[15:23:50] [INFO] 🕒 檢查排程中...
+[15:23:50] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[15:23:50] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[15:23:50] [INFO] ⬅️ EncStatus Bak4-2: OK: Bak4-2:Stopped
+
+OK: Bak4-2:Stopped
+
+OK: Bak4-2:Stopped
+[15:23:50] [INFO] 🕒 檢查排程中...
+[15:23:50] [INFO] 🕒 檢查排程中...
+[15:23:51] [INFO] ⬅️ EncStatus Bak4-1: 
+[15:23:51] [INFO] ⬅️ EncStatus Bak4-2: OK: Bak4-2:Stopped
+[15:23:51] [INFO] 🕒 檢查排程中...
+[15:23:51] [INFO] 🕒 檢查排程中...
+[15:23:52] [INFO] ⬅️ EncStatus Bak4-1: OK: Bak4-1:Stopped
+
+OK: Bak4-1:Stopped
+
+OK: Bak4-1:Stopped
+
+OK: Bak4-1:Stopped
+[15:23:52] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[15:23:52] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[15:23:52] [INFO] 🎯 啟動 StatusWorker：['Bak4-1', 'Bak4-2']
+[15:23:52] [INFO] 🕒 檢查排程中...
+[15:23:52] [INFO] 🕒 檢查排程中...
+[15:23:53] [INFO] ⬅️ EncStatus Bak4-1: 
+[15:23:53] [INFO] ⬅️ EncStatus Bak4-1: OK: Bak4-1:Stopped
+[15:23:53] [INFO] ⬅️ EncStatus Bak4-1: OK: Bak4-1:Stopped
+[15:23:53] [INFO] 🕒 檢查排程中...
+[15:23:53] [INFO] 🕒 檢查排程中...
+[15:23:54] [INFO] ⬅️ EncStatus Bak4-2: OK: Bak4-2:Stopped
+
+OK: Bak4-2:Stopped
+[15:23:54] [INFO] ⬅️ EncStatus Bak4-2: OK: Bak4-2:Stopped
+[15:23:54] [INFO] 📡 Snapshot 回應：OK: Snapshot has been taken.
+[15:23:54] [INFO] 📡 Snapshot 回應：OK: Snapshot has been taken.
+[15:23:54] [INFO] ✅ 已儲存：Z:/preview\Bak4-2.png
+[15:23:54] [INFO] 🔍 查找最新快照：Z:/preview\Bak4-1*.png
+[15:23:54] [INFO] 🔍 查找最新快照：Z:/preview\Bak4-2*.png
+[15:23:55] [INFO] 🕒 檢查排程中...
+[15:23:55] [INFO] 🕒 檢查排程中...
+[15:23:55] [INFO] ⬅️ EncStatus Bak4-2: 
+[15:23:55] [INFO] ⬅️ EncStatus Bak4-2: OK: Bak4-2:Stopped
+
+OK: Bak4-2:Stopped
+[15:23:55] [INFO] 🎯 啟動 StatusWorker：['Bak4-1', 'Bak4-2']
+[15:23:55] [INFO] ⬅️ EncStatus Bak4-2: OK: Bak4-2:Stopped
+[15:23:55] [INFO] ⬅️ EncStatus Bak4-2: 
+[15:23:55] [INFO] 🕒 檢查排程中...
+[15:23:55] [INFO] 🕒 檢查排程中...
+[15:23:56] [INFO] 🕒 檢查排程中...
+[15:23:56] [INFO] 🕒 檢查排程中...
+[15:23:57] [INFO] 🕒 檢查排程中...
+[15:23:57] [INFO] 🕒 檢查排程中...
+[15:23:58] [INFO] ⬅️ EncStatus Bak4-2: OK: Bak4-2:Stopped
+
+OK: Bak4-2:Stopped
+[15:23:58] [INFO] 🎯 啟動 StatusWorker：['Bak4-1', 'Bak4-2']
+[15:23:59] [INFO] 🕒 檢查排程中...
+[15:23:59] [INFO] 🕒 檢查排程中...
+[15:23:59] [INFO] 🚀 [主線程] 啟動錄影：8889 (83bd96e2-48b9-4c11-9d0d-78e897feda27) on Bak4-1
+[15:23:59] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[15:23:59] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[15:23:59] [INFO] ⚠️ 檔案未生成，請檢查路徑或權限：Z:/preview\Bak4-1.png
+[15:24:00] [INFO] ⬅️ EncStatus Bak4-2: 
+[15:24:00] [INFO] ⬅️ EncStatus Bak4-2: OK: Bak4-2:Stopped
+
+OK: Bak4-2:Stopped
+[15:24:01] [INFO] ⬅️ EncStatus Bak4-1: 
+[15:24:01] [INFO] ⬅️ EncStatus Bak4-1: OK: Bak4-1:Stopped
+
+OK: Bak4-1:Stopped
+[15:24:01] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[15:24:03] [INFO] ⬅️ EncStatus Bak4-2: 
+[15:24:03] [INFO] ⬅️ EncStatus Bak4-2: OK: Bak4-2:Stopped
+[15:24:03] [INFO] ⬅️ EncStatus Bak4-2: OK: Bak4-2:Stopped
+
+OK: Bak4-2:Stopped
+[15:24:03] [INFO] 📸 update_all_encoder_snapshots triggered at 15:24:03.135
+[15:24:03] [INFO] 📸 拍照中 - block: 8889 / encoder: Bak4-1
+[15:24:03] [INFO] 📂 儲存位置: Z:/08.19.2025\img\83bd96e2-48b9-4c11-9d0d-78e897feda27.png
+[15:24:03] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[15:24:03] [INFO] ✅ 已儲存節目排程：Z:/schedule_project/schedule.json
+[15:24:03] [INFO] 🎯 啟動 StatusWorker：['Bak4-1', 'Bak4-2']
+[15:24:03] [INFO] 🕒 檢查排程中...
+[15:24:03] [INFO] 🕒 檢查排程中...
+[15:24:03] [INFO] 🎯 啟動 StatusWorker：['Bak4-1', 'Bak4-2']
+[15:24:03] [INFO] ✅ 已儲存節目排程：Z:/schedule_project/schedule.json
+[15:24:03] [INFO] 🕒 檢查排程中...
+[15:24:03] [INFO] 🕒 檢查排程中...
+[15:24:04] [INFO] 🎯 啟動 StatusWorker：['Bak4-1', 'Bak4-2']
+[15:24:05] [INFO] 🕒 檢查排程中...
+[15:24:05] [INFO] 🕒 檢查排程中...
+[15:24:05] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[15:24:05] [INFO] ⬅️ EncStatus Bak4-1: OK: Bak4-1:Runned
+
+OK: Bak4-1:Runned
+[15:24:05] [INFO] ⬅️ EncStatus Bak4-1: 
+[15:24:05] [INFO] ⬅️ EncStatus Bak4-1: OK: Bak4-1:Runned
+[15:24:05] [INFO] 🕒 檢查排程中...
+[15:24:05] [INFO] 🕒 檢查排程中...
+[15:24:06] [INFO] 🕒 檢查排程中...
+[15:24:06] [INFO] 🕒 檢查排程中...
+[15:24:07] [INFO] 📡 SnapShot 指令回應: OK: Snapshot has been taken.
+[15:24:07] [INFO] ⬅️ EncStatus Bak4-2: 
+[15:24:07] [INFO] 🎯 啟動 StatusWorker：['Bak4-1', 'Bak4-2']
+[15:24:07] [INFO] ⬅️ EncStatus Bak4-1: OK: Bak4-1:Runned
+
+OK: Bak4-1:Runned
+
+OK: Bak4-1:Runned
+[15:24:07] [INFO] 🕒 檢查排程中...
+[15:24:07] [INFO] 🕒 檢查排程中...
+[15:24:08] [INFO] 🕒 檢查排程中...
+[15:24:08] [INFO] 🕒 檢查排程中...
+[15:24:09] [INFO] ⬅️ EncStatus Bak4-1: 
+[15:24:09] [INFO] 🎯 啟動 StatusWorker：['Bak4-1', 'Bak4-2']
+[15:24:09] [INFO] 🕒 檢查排程中...
+[15:24:09] [INFO] 🕒 檢查排程中...
+[15:24:10] [INFO] ⬅️ EncStatus Bak4-2: OK: Bak4-2:Stopped
+
+OK: Bak4-2:Stopped
+
+OK: Bak4-2:Stopped
+
+OK: Bak4-2:Stopped
+[15:24:10] [INFO] 🎯 啟動 StatusWorker：['Bak4-1', 'Bak4-2']
+[15:24:10] [INFO] 🕒 檢查排程中...
+[15:24:10] [INFO] 🕒 檢查排程中...
+[15:24:11] [INFO] ⬅️ EncStatus Bak4-2: 
+[15:24:11] [INFO] ⬅️ EncStatus Bak4-2: OK: Bak4-2:Stopped
+[15:24:11] [INFO] ⬅️ EncStatus Bak4-1: OK: Bak4-1:Runned
+
+OK: Bak4-1:Runned
+
+OK: Bak4-1:Runned
+[15:24:11] [INFO] 🕒 檢查排程中...
+[15:24:11] [INFO] 🕒 檢查排程中...
+[15:24:11] [INFO] ⬅️ EncStatus Bak4-1: 
+: Bak4-1:Runned
+[15:24:11] [INFO] ⬅️ EncStatus Bak4-1: 
+[15:24:12] [INFO] ⚠️ 檔案未生成，請檢查路徑或權限：Z:/08.19.2025\img\83bd96e2-48b9-4c11-9d0d-78e897feda27.png
+[15:24:12] [INFO] ⚠️ 拍照失敗或找不到 block：83bd96e2-48b9-4c11-9d0d-78e897feda27
+[15:24:12] [INFO] 🕒 檢查排程中...
+[15:24:12] [INFO] 🕒 檢查排程中...
+[15:24:13] [INFO] ⬅️ EncStatus Bak4-1: OK: Bak4-1:Runned
+[15:24:13] [INFO] 🎯 啟動 StatusWorker：['Bak4-1', 'Bak4-2']
+[15:24:13] [INFO] 🕒 檢查排程中...
+[15:24:13] [INFO] 🕒 檢查排程中...
+[15:24:14] [INFO] ⬅️ EncStatus Bak4-2: 
+[15:24:14] [INFO] ⬅️ EncStatus Bak4-2: OK: Bak4-2:Stopped
+[15:24:14] [INFO] 🕒 檢查排程中...
+[15:24:14] [INFO] 🕒 檢查排程中...
+[15:24:15] [INFO] ⬅️ EncStatus Bak4-2: OK: Bak4-2:Stopped
+
+OK: Bak4-2:Stopped
+
+OK: Bak4-2:Stopped
+
+OK: Bak4-2:Stopped
+[15:24:15] [INFO] 🕒 檢查排程中...
+[15:24:15] [INFO] 🕒 檢查排程中...
+[15:24:15] [INFO] ⬅️ EncStatus Bak4-1: 
+[15:24:15] [INFO] ⬅️ EncStatus Bak4-1: OK: Bak4-1:Runned
+
+OK: Bak4-1:Runned
+[15:24:16] [INFO] 🎯 啟動 StatusWorker：['Bak4-1', 'Bak4-2']
+[15:24:16] [INFO] 🕒 檢查排程中...
+[15:24:16] [INFO] 🕒 檢查排程中...
+[15:24:17] [INFO] ⬅️ EncStatus Bak4-1: OK: Bak4-1:Runned
+[15:24:17] [INFO] 🕒 檢查排程中...
+[15:24:17] [INFO] 🕒 檢查排程中...
+[15:24:18] [INFO] 🕒 檢查排程中...
+[15:24:18] [INFO] 🕒 檢查排程中...
+[15:24:19] [INFO] ⬅️ EncStatus Bak4-1: OK: Bak4-1:Runned
+
+OK: Bak4-1:Runned
+[15:24:19] [INFO] ⬅️ EncStatus Bak4-1: OK: Bak4-1:Runned
+[15:24:19] [INFO] 🎯 啟動 StatusWorker：['Bak4-1', 'Bak4-2']
+[15:24:19] [INFO] 🎯 啟動 StatusWorker：['Bak4-1', 'Bak4-2']
+[15:24:19] [INFO] ⬅️ EncStatus Bak4-1: 
+[15:24:19] [INFO] ⬅️ EncStatus Bak4-1: OK: Bak4-1:Runned
+[15:24:19] [INFO] 🕒 檢查排程中...
+[15:24:19] [INFO] 📸 為 Bak4-1 拍照 ➜ 儲存預期路徑：Z:/preview\Bak4-1.png
+[15:24:19] [INFO] 📸 為 Bak4-2 拍照 ➜ 儲存預期路徑：Z:/preview\Bak4-2.png
+[15:24:19] [INFO] 🕒 檢查排程中...
+[15:24:19] [INFO] 🛰️ 傳給 encoder 的路徑（不含副檔名）：preview/Bak4-1
+[15:24:19] [INFO] 🛰️ 傳給 encoder 的路徑（不含副檔名）：preview/Bak4-2
+[15:24:20] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[15:24:20] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[15:24:20] [INFO] 🕒 檢查排程中...
+[15:24:20] [INFO] 🕒 檢查排程中...
+[15:24:21] [INFO] ⬅️ EncStatus Bak4-2: OK: Bak4-2:Stopped
+
+OK: Bak4-2:Stopped
+[15:24:21] [INFO] ⬅️ EncStatus Bak4-1: OK: Bak4-1:Runned
+[15:24:21] [INFO] ⬅️ EncStatus Bak4-2: 
+[15:24:21] [INFO] 🕒 檢查排程中...
+[15:24:21] [INFO] 🕒 檢查排程中...
+[15:24:21] [INFO] ⬅️ EncStatus Bak4-2: 
+[15:24:21] [INFO] ⬅️ EncStatus Bak4-2: OK: Bak4-2:Stopped
+[15:24:21] [INFO] ⬅️ EncStatus Bak4-2: OK: Bak4-2:Stopped
+
+OK: Bak4-2:Stopped
+[15:24:22] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[15:24:22] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[15:24:22] [INFO] 🎯 啟動 StatusWorker：['Bak4-1', 'Bak4-2']
+[15:24:22] [INFO] 🕒 檢查排程中...
+[15:24:22] [INFO] 🕒 檢查排程中...
+[15:24:23] [INFO] 🕒 檢查排程中...
+[15:24:23] [INFO] 🕒 檢查排程中...
+[15:24:24] [INFO] ⬅️ EncStatus Bak4-2: OK: Bak4-2:Stopped
+
+OK: Bak4-2:Stopped
+[15:24:24] [INFO] 📡 Snapshot 回應：OK: Snapshot has been taken.
+[15:24:24] [INFO] ✅ 已儲存：Z:/preview\Bak4-2.png
+[15:24:24] [INFO] 📡 Snapshot 回應：OK: Snapshot has been taken.
+[15:24:24] [INFO] 🔍 查找最新快照：Z:/preview\Bak4-2*.png
+[15:24:24] [INFO] 🕒 檢查排程中...
+[15:24:24] [INFO] 🕒 檢查排程中...
+[15:24:25] [INFO] ⬅️ EncStatus Bak4-1: 
+: Bak4-1:Runned
+
+OK: Bak4-1:Runned
+[15:24:25] [INFO] 🔍 查找最新快照：Z:/preview\Bak4-1*.png
+[15:24:25] [INFO] ⬅️ EncStatus Bak4-1: OK: Bak4-1:Runned
+[15:24:25] [INFO] ⬅️ EncStatus Bak4-2: 
+[15:24:25] [INFO] ⬅️ EncStatus Bak4-2: OK: Bak4-2:Stopped
+[15:24:25] [INFO] 🎯 啟動 StatusWorker：['Bak4-1', 'Bak4-2']
+[15:24:25] [INFO] 🕒 檢查排程中...
+[15:24:25] [INFO] 🕒 檢查排程中...
+[15:24:26] [INFO] 🕒 檢查排程中...
+[15:24:26] [INFO] 🕒 檢查排程中...
+[15:24:27] [INFO] ⬅️ EncStatus Bak4-2: 
+[15:24:27] [INFO] ⬅️ EncStatus Bak4-2: OK: Bak4-2:Stopped
+[15:24:27] [INFO] ⬅️ EncStatus Bak4-1: 
+[15:24:27] [INFO] 🕒 檢查排程中...
+[15:24:27] [INFO] 🕒 檢查排程中...
+[15:24:28] [INFO] ⬅️ EncStatus Bak4-1: OK: Bak4-1:Runned
+
+OK: Bak4-1:Runned
+[15:24:28] [INFO] ⬅️ EncStatus Bak4-2: OK: Bak4-2:Stopped
+
+OK: Bak4-2:Stopped
+
+OK: Bak4-2:Stopped
+[15:24:28] [INFO] 🎯 啟動 StatusWorker：['Bak4-1', 'Bak4-2']
+[15:24:28] [INFO] 🕒 檢查排程中...
+[15:24:28] [INFO] 🕒 檢查排程中...
+[15:24:29] [INFO] ⬅️ EncStatus Bak4-1: OK: Bak4-1:Runned
+[15:24:29] [INFO] ⚠️ 檔案未生成，請檢查路徑或權限：Z:/preview\Bak4-1.png
+[15:24:29] [INFO] 🎯 啟動 StatusWorker：['Bak4-1', 'Bak4-2']
+[15:24:30] [INFO] 🕒 檢查排程中...
+[15:24:30] [INFO] 🕒 檢查排程中...
+[15:24:30] [INFO] 🕒 檢查排程中...
+[15:24:30] [INFO] 🕒 檢查排程中...
+[15:24:31] [INFO] ⬅️ EncStatus Bak4-2: 
+[15:24:31] [INFO] 🎯 啟動 StatusWorker：['Bak4-1', 'Bak4-2']
+[15:24:31] [INFO] 🕒 檢查排程中...
+[15:24:31] [INFO] 🕒 檢查排程中...
+[15:24:32] [INFO] ⬅️ EncStatus Bak4-1: OK: Bak4-1:Runned
+
+OK: Bak4-1:Runned
+
+OK: Bak4-1:Runned
+[15:24:32] [INFO] 🕒 檢查排程中...
+[15:24:32] [INFO] 🕒 檢查排程中...
+[15:24:33] [INFO] ⬅️ EncStatus Bak4-2: OK: Bak4-2:Stopped
+
+OK: Bak4-2:Stopped
+[15:24:33] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[15:24:33] [INFO] ⬅️ EncStatus Bak4-1: 
+[15:24:33] [INFO] ⬅️ EncStatus Bak4-2: OK: Bak4-2:Stopped
+[15:24:33] [INFO] ⬅️ EncStatus Bak4-1: OK: Bak4-1:Runned
+[15:24:35] [INFO] ✅ 已儲存節目排程：Z:/schedule_project/schedule.json
+[15:24:35] [INFO] ✅ 已儲存節目排程：Z:/schedule_project/schedule.json
+[15:24:35] [INFO] ⬅️ EncStatus Bak4-2: 
+[15:24:35] [INFO] ⬅️ EncStatus Bak4-2: OK: Bak4-2:Stopped
+[15:24:35] [INFO] ⬅️ EncStatus Bak4-2: 
+[15:24:35] [INFO] ⬅️ EncStatus Bak4-2: OK: Bak4-2:Stopped
+
+OK: Bak4-2:Stopped
+[15:24:37] [INFO] ⬅️ EncStatus Bak4-1: OK: Bak4-1:Stopped
+[15:24:39] [INFO] ⬅️ EncStatus Bak4-2: OK: Bak4-2:Stopped
+[15:24:39] [INFO] 🎯 draw_grid encoder_names:['Bak4-1', 'Bak4-2']
+[15:24:39] [INFO] 🔁 [同步] Runner block 數量：3
+[15:24:39] [INFO] 🕒 檢查排程中...
+[15:24:39] [INFO] 🕒 檢查排程中...
+[15:24:39] [INFO] 🎯 啟動 StatusWorker：['Bak4-1', 'Bak4-2']
+[15:24:39] [INFO] 🎯 啟動 StatusWorker：['Bak4-1', 'Bak4-2']
+[15:24:39] [INFO] 🕒 檢查排程中...
+[15:24:39] [INFO] 🕒 檢查排程中...
+[15:24:40] [INFO] 🎯 啟動 StatusWorker：['Bak4-1', 'Bak4-2']
+[15:24:40] [INFO] 🕒 檢查排程中...
+[15:24:40] [INFO] 🕒 檢查排程中...
+[15:24:41] [INFO] ⬅️ EncStatus Bak4-1: OK: Bak4-1:Stopped
+[15:24:41] [INFO] 🕒 檢查排程中...
+[15:24:41] [INFO] 🕒 檢查排程中...
+[15:24:42] [INFO] 🕒 檢查排程中...
+[15:24:42] [INFO] 🕒 檢查排程中...
+[15:24:43] [INFO] ⬅️ EncStatus Bak4-1: OK: Bak4-1:Stopped
+
+OK: Bak4-1:Stopped
+[15:24:43] [INFO] ⬅️ EncStatus Bak4-2: OK: Bak4-2:Stopped
+[15:24:43] [INFO] 🎯 啟動 StatusWorker：['Bak4-1', 'Bak4-2']
+[15:24:43] [INFO] 🕒 檢查排程中...
+[15:24:43] [INFO] 🕒 檢查排程中...
+[15:24:44] [INFO] ⬅️ EncStatus Bak4-2: OK: Bak4-2:Stopped
+
+OK: Bak4-2:Stopped
+[15:24:44] [INFO] 🕒 檢查排程中...
+[15:24:44] [INFO] 🕒 檢查排程中...
+[15:24:45] [INFO] ⬅️ EncStatus Bak4-1: OK: Bak4-1:Stopped
+[15:24:45] [INFO] ⬅️ EncStatus Bak4-1: 
+[15:24:45] [INFO] 🕒 檢查排程中...
+[15:24:45] [INFO] 🕒 檢查排程中...
+[15:24:46] [INFO] ⬅️ EncStatus Bak4-2: OK: Bak4-2:Stopped
+[15:24:46] [INFO] 🎯 啟動 StatusWorker：['Bak4-1', 'Bak4-2']
+[15:24:46] [INFO] 🕒 檢查排程中...
+[15:24:46] [INFO] 🕒 檢查排程中...
+[15:24:47] [INFO] ⬅️ EncStatus Bak4-1: 
+[15:24:47] [INFO] ⬅️ EncStatus Bak4-2: 
+[15:24:47] [INFO] ⬅️ EncStatus Bak4-2: OK: Bak4-2:Stopped
+[15:24:47] [INFO] ⬅️ EncStatus Bak4-1: OK: Bak4-1:Stopped
+[15:24:47] [INFO] 🕒 檢查排程中...
+[15:24:47] [INFO] 🕒 檢查排程中...
+[15:24:48] [INFO] 🕒 檢查排程中...
+[15:24:48] [INFO] 🕒 檢查排程中...
+[15:24:49] [INFO] ⬅️ EncStatus Bak4-1: OK: Bak4-1:Stopped
+
+OK: Bak4-1:Stopped
+
+OK: Bak4-1:Stopped
+[15:24:49] [INFO] 🎯 啟動 StatusWorker：['Bak4-1', 'Bak4-2']
+[15:24:49] [INFO] 🎯 啟動 StatusWorker：['Bak4-1', 'Bak4-2']
+[15:24:49] [INFO] ⬅️ EncStatus Bak4-2: 
+[15:24:49] [INFO] ⬅️ EncStatus Bak4-1: OK: Bak4-1:Stopped
+[15:24:49] [INFO] ⬅️ EncStatus Bak4-2: OK: Bak4-2:Stopped
+
+OK: Bak4-2:Stopped
+
+OK: Bak4-2:Stopped
+[15:24:50] [INFO] 📸 為 Bak4-1 拍照 ➜ 儲存預期路徑：Z:/preview\Bak4-1.png
+[15:24:50] [INFO] 📸 為 Bak4-2 拍照 ➜ 儲存預期路徑：Z:/preview\Bak4-2.png
+[15:24:50] [INFO] 🕒 檢查排程中...
+[15:24:50] [INFO] 🛰️ 傳給 encoder 的路徑（不含副檔名）：preview/Bak4-1
+[15:24:50] [INFO] 🛰️ 傳給 encoder 的路徑（不含副檔名）：preview/Bak4-2
+[15:24:50] [INFO] 🕒 檢查排程中...
+[15:24:50] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[15:24:50] [INFO] ✅ 連線成功 Bak4-2 (192.168.30.228:32108)
+[15:24:50] [INFO] 🕒 檢查排程中...
+[15:24:50] [INFO] 🕒 檢查排程中...
+[15:24:51] [INFO] ⬅️ EncStatus Bak4-2: 
+[15:24:51] [INFO] ⬅️ EncStatus Bak4-2: OK: Bak4-2:Stopped
+[15:24:51] [INFO] ⬅️ EncStatus Bak4-1: 
+[15:24:51] [INFO] 🕒 檢查排程中...
+[15:24:51] [INFO] 🕒 檢查排程中...
+[15:24:52] [INFO] ⬅️ EncStatus Bak4-2: 
+[15:24:52] [INFO] ⬅️ EncStatus Bak4-1: OK: Bak4-1:Stopped
+
+OK: Bak4-1:Stopped
+
+OK: Bak4-1:Stopped
+[15:24:52] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[15:24:52] [INFO] 🎯 啟動 StatusWorker：['Bak4-1', 'Bak4-2']
+[15:24:53] [INFO] 🕒 檢查排程中...
+[15:24:53] [INFO] 🕒 檢查排程中...
+[15:24:53] [INFO] ⬅️ EncStatus Bak4-1: OK: Bak4-1:Stopped
+[15:24:54] [INFO] 🕒 檢查排程中...
+[15:24:54] [INFO] 🕒 檢查排程中...
+[15:24:54] [INFO] ⬅️ EncStatus Bak4-2: 
+[15:24:54] [INFO] ⬅️ EncStatus Bak4-2: OK: Bak4-2:Stopped
+
+OK: Bak4-2:Stopped
+[15:24:54] [INFO] 📡 Snapshot 回應：OK: Snapshot has been taken.
+[15:24:54] [INFO] 📡 Snapshot 回應：OK: Snapshot has been taken.
+[15:24:54] [INFO] ✅ 已儲存：Z:/preview\Bak4-2.png
+[15:24:54] [INFO] 🔍 查找最新快照：Z:/preview\Bak4-1*.png
+[15:24:54] [INFO] 🕒 檢查排程中...
+[15:24:54] [INFO] 🕒 檢查排程中...
+[15:24:55] [INFO] ⬅️ EncStatus Bak4-1: OK: Bak4-1:Stopped
+
+OK: Bak4-1:Stopped
+[15:24:55] [INFO] 🔍 查找最新快照：Z:/preview\Bak4-2*.png
+[15:24:55] [INFO] 🎯 draw_grid encoder_names:['Bak4-1', 'Bak4-2']
+[15:24:55] [INFO] ⬅️ EncStatus Bak4-1: OK: Bak4-1:Stopped
+[15:24:55] [INFO] 🎯 啟動 StatusWorker：['Bak4-1', 'Bak4-2']
+[15:24:55] [INFO] 🕒 檢查排程中...
+[15:24:55] [INFO] 🕒 檢查排程中...
+[15:24:56] [INFO] ⬅️ EncStatus Bak4-2: 
+[15:24:56] [INFO] ⬅️ EncStatus Bak4-2: OK: Bak4-2:Stopped
+[15:24:57] [INFO] 🕒 檢查排程中...
+[15:24:57] [INFO] 🕒 檢查排程中...
+[15:24:57] [INFO] 🕒 檢查排程中...
+[15:24:57] [INFO] 🕒 檢查排程中...
+[15:24:57] [INFO] ⬅️ EncStatus Bak4-2: OK: Bak4-2:Stopped
+
+OK: Bak4-2:Stopped
+
+OK: Bak4-2:Stopped
+[15:24:58] [INFO] 🎯 啟動 StatusWorker：['Bak4-1', 'Bak4-2']
+[15:24:58] [INFO] 🕒 檢查排程中...
+[15:24:58] [INFO] 🕒 檢查排程中...
+[15:24:59] [INFO] ⬅️ EncStatus Bak4-1: 
+[15:24:59] [INFO] ⬅️ EncStatus Bak4-2: OK: Bak4-2:Stopped
+[15:24:59] [INFO] ⚠️ 檔案未生成，請檢查路徑或權限：Z:/preview\Bak4-1.png
+[15:24:59] [INFO] 🎯 啟動 StatusWorker：['Bak4-1', 'Bak4-2']
+[15:24:59] [INFO] 🕒 檢查排程中...
+[15:24:59] [INFO] 🕒 檢查排程中...
+[15:24:59] [INFO] ⬅️ EncStatus Bak4-1: OK: Bak4-1:Stopped
+[15:25:00] [INFO] 🕒 檢查排程中...
+[15:25:00] [INFO] 🕒 檢查排程中...
+[15:25:00] [INFO] ⬅️ EncStatus Bak4-1: 
+[15:25:00] [INFO] 🛑 [主線程] 停止錄影：8889 (83bd96e2-48b9-4c11-9d0d-78e897feda27) on Bak4-1
+[15:25:01] [INFO] 🛑 [主線程] 停止錄影：8889 (83bd96e2-48b9-4c11-9d0d-78e897feda27) on Bak4-1
+[15:25:01] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[15:25:01] [INFO] ⬅️ EncStatus Bak4-1: 
+[15:25:01] [INFO] ⬅️ EncStatus Bak4-1: OK: Bak4-1:Stopped
+
+OK: Bak4-1:Stopped
+
+OK: Bak4-1:Stopped
+
+OK: Bak4-1:Stopped
+[15:25:03] [INFO] ⬅️ EncStatus Bak4-2: 
+[15:25:03] [INFO] ✅ 已儲存節目排程：Z:/schedule_project/schedule.json
+[15:25:03] [INFO] 🎯 啟動 StatusWorker：['Bak4-1', 'Bak4-2']
+[15:25:03] [INFO] 🕒 檢查排程中...
+[15:25:03] [INFO] 🕒 檢查排程中...
+[15:25:03] [INFO] ✅ 連線成功 Bak4-1 (192.168.30.228:32108)
+[15:25:05] [INFO] ⬅️ EncStatus Bak4-1: OK: Bak4-1:Stopped
+[15:25:05] [INFO] ✅ 已儲存節目排程：Z:/schedule_project/schedule.json
+[15:25:05] [INFO] 🕒 檢查排程中...
+[15:25:05] [INFO] 🕒 檢查排程中...
+[15:25:05] [INFO] 🎯 啟動 StatusWorker：['Bak4-1', 'Bak4-2']
+[15:25:05] [INFO] 🕒 檢查排程中...
+[15:25:05] [INFO] 🕒 檢查排程中...
+[15:25:06] [INFO] 🕒 檢查排程中...
+[15:25:06] [INFO] 🕒 檢查排程中...
+[15:25:07] [INFO] ⬅️ EncStatus Bak4-1: OK: Bak4-1:Stopped
+[15:25:07] [INFO] 🎯 啟動 StatusWorker：['Bak4-1', 'Bak4-2']
+[15:25:07] [INFO] ⬅️ EncStatus Bak4-1: 
+[15:25:07] [INFO] ⬅️ EncStatus Bak4-1: OK: Bak4-1:Stopped
+
+OK: Bak4-1:Stopped
+[15:25:07] [INFO] 🕒 檢查排程中...
+[15:25:07] [INFO] 🕒 檢查排程中...
+[15:25:08] [INFO] 🕒 檢查排程中...
+[15:25:08] [INFO] 🕒 檢查排程中...
+[15:25:09] [INFO] ⛔ 已結束 block 不可拖動（8889）
+[15:25:09] [INFO] ⛔ 已結束排程不可編輯
+[15:25:09] [INFO] ⬅️ EncStatus Bak4-1: OK: Bak4-1:Stopped
+[15:25:09] [INFO] ⬅️ EncStatus Bak4-2: OK: Bak4-2:Stopped
+
+OK: Bak4-2:Stopped
+[15:25:09] [INFO] 🎯 啟動 StatusWorker：['Bak4-1', 'Bak4-2']
+[15:25:09] [INFO] 🕒 檢查排程中...
+[15:25:09] [INFO] 🕒 檢查排程中...
+[15:25:09] [INFO] ⬅️ EncStatus Bak4-2: 
+[15:25:10] [INFO] 🎯 啟動 StatusWorker：['Bak4-1', 'Bak4-2']
+[15:25:10] [INFO] 🕒 檢查排程中...
+[15:25:10] [INFO] 🕒 檢查排程中...
+[15:25:11] [INFO] ⬅️ EncStatus Bak4-2: OK: Bak4-2:Stopped
+
+OK: Bak4-2:Stopped
+
+OK: Bak4-2:Stopped
+[15:25:11] [INFO] 🕒 檢查排程中...
+[15:25:11] [INFO] 🕒 檢查排程中...
+[15:25:11] [INFO] ⬅️ EncStatus Bak4-1: 
+[15:25:12] [INFO] ⬅️ EncStatus Bak4-1: OK: Bak4-1:Stopped
+
+OK: Bak4-1:Stopped
+
+OK: Bak4-1:Stopped
+[15:25:12] [INFO] 👋 MainWindow 已關閉
