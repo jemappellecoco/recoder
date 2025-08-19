@@ -98,3 +98,75 @@ Traceback (most recent call last):
                 ^^^^^^^^^^^^^^^^^^^^
 NameError: name '_ceil_to_next_minute' is not defined
 
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\add_block_dialog.py", line 136, in accept
+    min_start = ceil_to_next_minute(now_dt.addSecs(self.MIN_LEAD_SECONDS))
+                                                   ^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'AddBlockDialog' object has no attribute 'MIN_LEAD_SECONDS'
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\add_block_dialog.py", line 136, in accept
+    min_start = ceil_to_next_minute(now_dt.addSecs(self.MIN_LEAD_SECONDS))
+                                                   ^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'AddBlockDialog' object has no attribute 'MIN_LEAD_SECONDS'
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\add_block_dialog.py", line 136, in accept
+    min_start = ceil_to_next_minute(now_dt.addSecs(self.MIN_LEAD_SECONDS))
+                                                   ^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'AddBlockDialog' object has no attribute 'MIN_LEAD_SECONDS'
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\add_block_dialog.py", line 136, in accept
+    min_start = ceil_to_next_minute(now_dt.addSecs(self.MIN_LEAD_SECONDS))
+                                                   ^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'AddBlockDialog' object has no attribute 'MIN_LEAD_SECONDS'
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\add_block_dialog.py", line 136, in accept
+    min_start = ceil_to_next_minute(now_dt.addSecs(self.MIN_LEAD_SECONDS))
+                                                   ^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'AddBlockDialog' object has no attribute 'MIN_LEAD_SECONDS'
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\add_block_dialog.py", line 136, in accept
+    min_start = ceil_to_next_minute(now_dt.addSecs(self.MIN_LEAD_SECONDS))
+                                                   ^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'AddBlockDialog' object has no attribute 'MIN_LEAD_SECONDS'
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\add_block_dialog.py", line 108, in format_time_input
+    min_start = ceil_to_next_minute(QDateTime.currentDateTime().addSecs(self.MIN_LEAD_SECONDS))
+                                                                        ^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'AddBlockDialog' object has no attribute 'MIN_LEAD_SECONDS'
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\add_block_dialog.py", line 136, in accept
+    min_start = ceil_to_next_minute(now_dt.addSecs(self.MIN_LEAD_SECONDS))
+                                                   ^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'AddBlockDialog' object has no attribute 'MIN_LEAD_SECONDS'
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\add_block_dialog.py", line 136, in accept
+    min_start = ceil_to_next_minute(now_dt.addSecs(self.MIN_LEAD_SECONDS))
+                                                   ^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'AddBlockDialog' object has no attribute 'MIN_LEAD_SECONDS'
+

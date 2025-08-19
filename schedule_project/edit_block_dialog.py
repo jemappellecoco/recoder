@@ -1,46 +1,172 @@
+# # edit_block_dialog.py
+# from PySide6.QtWidgets import QDialog, QFormLayout, QLineEdit, QDialogButtonBox, QLabel, QTimeEdit, QDoubleSpinBox, QComboBox, QDateEdit, QVBoxLayout
+# from PySide6.QtCore import QTime, QDate,QDateTime
+# from encoder_utils import get_encoder_display_name
+
+# class EditBlockDialog(QDialog):
+#     def __init__(self, block_data, encoder_names,readonly=False):
+#         super().__init__()
+#         self.setWindowTitle("編輯排程")
+#         self.block_data = block_data
+#         self.encoder_names = encoder_names
+#         self.overlap_checker = overlap_checker
+        
+#         self.name_input = QLineEdit(block_data["label"])
+        
+#         self.time_input = QTimeEdit()
+#         hour = int(block_data["start_hour"])
+#         minute = int((block_data["start_hour"] % 1) * 60)
+#         self.time_input.setTime(QTime(hour, minute))
+#         self.time_input.setDisplayFormat("HH:mm")
+#         start_qdate = block_data["qdate"]
+#         if isinstance(start_qdate, str):
+#             start_qdate = QDate.fromString(start_qdate, "yyyy-MM-dd")
+#         start_qtime = QTime(hour, minute)
+#         start_dt = QDateTime(start_qdate, start_qtime)
+
+#         if start_dt <= QDateTime.currentDateTime():
+#             readonly = True
+#         self.duration_input = QDoubleSpinBox()
+#         self.duration_input.setRange(0.25, 24.0)
+#         self.duration_input.setSingleStep(0.25)
+#         self.duration_input.setValue(block_data["duration"])
+
+#         self.encoder_selector = QComboBox()
+#         for name in encoder_names:
+#             display = get_encoder_display_name(name)
+#             self.encoder_selector.addItem(display, userData=name)
+#         if block_data.get("encoder_name") in encoder_names:
+#             idx = encoder_names.index(block_data["encoder_name"])
+#             self.encoder_selector.setCurrentIndex(idx)
+
+#         self.date_input = QDateEdit()
+#         self.date_input.setDate(block_data["qdate"])
+#         self.date_input.setCalendarPopup(True)
+
+#         form = QFormLayout()
+#         form.addRow("排程日期：", self.date_input)
+#         form.addRow("節目名稱：", self.name_input)
+#         form.addRow("開始時間：", self.time_input)
+#         form.addRow("持續時間（小時）：", self.duration_input)
+#         form.addRow("錄影設備：", self.encoder_selector)
+
+#         buttons = QDialogButtonBox(QDialogButtonBox.Ok | QDialogButtonBox.Cancel)
+#         buttons.accepted.connect(self.accept)
+#         buttons.rejected.connect(self.reject)
+
+#         layout = QVBoxLayout()
+#         layout.addLayout(form)
+        
+#         if readonly:
+#             warning_label = QLabel("⛔ 此排程已開始，僅可修改節目名稱與持續時間（不可早於現在）")
+#             warning_label.setStyleSheet("color: red; font-weight: bold")
+#             layout.addWidget(warning_label)
+
+#             # ✅ 鎖定不可修改的欄位
+#             self.date_input.setEnabled(False)
+#             self.time_input.setEnabled(False)
+#             self.encoder_selector.setEnabled(False)
+#         self.error_label = QLabel("")
+#         self.error_label.setStyleSheet("color: red; font-weight: bold")
+#         layout.addWidget(self.error_label)
+#         layout.addWidget(buttons)
+#         self.setLayout(layout)
+#     def accept(self):
+#         self.time_input.interpretText()  # 防止手動輸入沒轉換
+
+#         name = self.name_input.text().strip()
+#         if not name:
+#             self.error_label.setText("❌ 節目名稱不能空白")
+#             return
+
+#         time = self.time_input.time()
+#         qdate = self.date_input.date()
+#         duration = self.duration_input.value()
+        
+#         start_dt = QDateTime(qdate, time)
+#         end_dt = start_dt.addSecs(int(duration * 3600))
+#         now = QDateTime.currentDateTime()
+
+#         # 原始 start_dt 計算
+#         old_qdate = self.block_data["qdate"]
+#         if isinstance(old_qdate, str):
+#             old_qdate = QDate.fromString(old_qdate, "yyyy-MM-dd")
+#         old_hour = int(self.block_data["start_hour"])
+#         old_min = int((self.block_data["start_hour"] % 1) * 60)
+#         original_start_dt = QDateTime(old_qdate, QTime(old_hour, old_min))
+
+#         # ⛔ 只有當使用者手動把開始時間調到更早，才拒絕
+#         if start_dt < now and start_dt != original_start_dt:
+#             self.error_label.setText("❌ 開始時間不能早於現在")
+#             return
+
+#         if end_dt < now:
+#             self.error_label.setText("❌ 結束時間不能早於現在")
+#             return
+
+#         super().accept()
+#     def get_updated_data(self):
+#         time = self.time_input.time()
+#         return {
+#             "qdate": self.date_input.date(),
+#             "label": self.name_input.text().strip(),
+#             "start_hour":  round(time.hour() + time.minute() / 60, 4),
+#             "duration": self.duration_input.value(),
+#             "encoder_name": self.encoder_selector.currentData()
+#         }
 # edit_block_dialog.py
-from PySide6.QtWidgets import QDialog, QFormLayout, QLineEdit, QDialogButtonBox, QLabel, QTimeEdit, QDoubleSpinBox, QComboBox, QDateEdit, QVBoxLayout
-from PySide6.QtCore import QTime, QDate,QDateTime
+from PySide6.QtWidgets import (
+    QDialog, QFormLayout, QLineEdit, QDialogButtonBox, QLabel,
+    QTimeEdit, QDoubleSpinBox, QComboBox, QDateEdit, QVBoxLayout, QMessageBox
+)
+from PySide6.QtCore import QTime, QDate, QDateTime
 from encoder_utils import get_encoder_display_name
 
 class EditBlockDialog(QDialog):
-    def __init__(self, block_data, encoder_names,readonly=False):
+    def __init__(self, block_data, encoder_names, readonly=False, overlap_checker=None):
         super().__init__()
         self.setWindowTitle("編輯排程")
         self.block_data = block_data
         self.encoder_names = encoder_names
+        self.overlap_checker = overlap_checker    # ← 新增
 
         self.name_input = QLineEdit(block_data["label"])
-        self.time_input = QTimeEdit()
+
+        # ---- time/date ----
         hour = int(block_data["start_hour"])
         minute = int((block_data["start_hour"] % 1) * 60)
-        self.time_input.setTime(QTime(hour, minute))
-        self.time_input.setDisplayFormat("HH:mm")
+        start_qtime = QTime(hour, minute)
         start_qdate = block_data["qdate"]
         if isinstance(start_qdate, str):
             start_qdate = QDate.fromString(start_qdate, "yyyy-MM-dd")
-        start_qtime = QTime(hour, minute)
-        start_dt = QDateTime(start_qdate, start_qtime)
 
+        self.time_input = QTimeEdit()
+        self.time_input.setTime(start_qtime)
+        self.time_input.setDisplayFormat("HH:mm")
+
+        self.date_input = QDateEdit()
+        self.date_input.setDate(start_qdate)     # ← 用已轉好的 QDate
+        self.date_input.setCalendarPopup(True)
+
+        start_dt = QDateTime(start_qdate, start_qtime)
         if start_dt <= QDateTime.currentDateTime():
             readonly = True
+
+        # ---- duration ----
         self.duration_input = QDoubleSpinBox()
         self.duration_input.setRange(0.25, 24.0)
         self.duration_input.setSingleStep(0.25)
-        self.duration_input.setValue(block_data["duration"])
+        self.duration_input.setValue(float(block_data["duration"]))
 
+        # ---- encoder ----
         self.encoder_selector = QComboBox()
         for name in encoder_names:
             display = get_encoder_display_name(name)
             self.encoder_selector.addItem(display, userData=name)
         if block_data.get("encoder_name") in encoder_names:
-            idx = encoder_names.index(block_data["encoder_name"])
-            self.encoder_selector.setCurrentIndex(idx)
+            self.encoder_selector.setCurrentIndex(encoder_names.index(block_data["encoder_name"]))
 
-        self.date_input = QDateEdit()
-        self.date_input.setDate(block_data["qdate"])
-        self.date_input.setCalendarPopup(True)
-
+        # ---- form ----
         form = QFormLayout()
         form.addRow("排程日期：", self.date_input)
         form.addRow("節目名稱：", self.name_input)
@@ -54,23 +180,23 @@ class EditBlockDialog(QDialog):
 
         layout = QVBoxLayout()
         layout.addLayout(form)
-        
+
         if readonly:
             warning_label = QLabel("⛔ 此排程已開始，僅可修改節目名稱與持續時間（不可早於現在）")
             warning_label.setStyleSheet("color: red; font-weight: bold")
             layout.addWidget(warning_label)
-
-            # ✅ 鎖定不可修改的欄位
             self.date_input.setEnabled(False)
             self.time_input.setEnabled(False)
             self.encoder_selector.setEnabled(False)
+
         self.error_label = QLabel("")
         self.error_label.setStyleSheet("color: red; font-weight: bold")
         layout.addWidget(self.error_label)
         layout.addWidget(buttons)
         self.setLayout(layout)
+
     def accept(self):
-        self.time_input.interpretText()  # 防止手動輸入沒轉換
+        self.time_input.interpretText()
 
         name = self.name_input.text().strip()
         if not name:
@@ -79,36 +205,53 @@ class EditBlockDialog(QDialog):
 
         time = self.time_input.time()
         qdate = self.date_input.date()
-        duration = self.duration_input.value()
-        
+        duration = float(self.duration_input.value())
         start_dt = QDateTime(qdate, time)
         end_dt = start_dt.addSecs(int(duration * 3600))
         now = QDateTime.currentDateTime()
 
-        # 原始 start_dt 計算
+        # 原始開始時間（用於判斷是否把開始時間往「更早」改）
         old_qdate = self.block_data["qdate"]
         if isinstance(old_qdate, str):
             old_qdate = QDate.fromString(old_qdate, "yyyy-MM-dd")
-        old_hour = int(self.block_data["start_hour"])
-        old_min = int((self.block_data["start_hour"] % 1) * 60)
-        original_start_dt = QDateTime(old_qdate, QTime(old_hour, old_min))
+        old_h = int(self.block_data["start_hour"])
+        old_m = int((self.block_data["start_hour"] % 1) * 60)
+        original_start_dt = QDateTime(old_qdate, QTime(old_h, old_m))
 
-        # ⛔ 只有當使用者手動把開始時間調到更早，才拒絕
+        # 基本檢查
+        if end_dt <= start_dt:
+            self.error_label.setText("❌ 結束時間必須晚於開始時間")
+            return
         if start_dt < now and start_dt != original_start_dt:
             self.error_label.setText("❌ 開始時間不能早於現在")
             return
 
-        if end_dt < now:
-            self.error_label.setText("❌ 結束時間不能早於現在")
-            return
+        # ---- 重疊檢查（重點）----
+        if self.overlap_checker is not None:
+            encoder_name = self.encoder_selector.currentData()
+            try:
+                track_index = self.encoder_names.index(encoder_name) if encoder_name in self.encoder_names else 0
+            except Exception:
+                track_index = 0
+
+            start_hour = round(time.hour() + time.minute() / 60.0, 4)
+
+            # 排除自己：用 label（若你有 block_id，更好改成 exclude_id）
+            def overlap(qd, ti, sh, dur):
+                return self.overlap_checker(qd, ti, sh, dur)
+
+            if overlap(qdate, track_index, start_hour, duration):
+                QMessageBox.warning(self, "❌ 時段衝突", "該時段與現有排程重疊，請調整時間或設備。")
+                return
 
         super().accept()
+
     def get_updated_data(self):
-        time = self.time_input.time()
+        t = self.time_input.time()
         return {
             "qdate": self.date_input.date(),
             "label": self.name_input.text().strip(),
-            "start_hour":  round(time.hour() + time.minute() / 60, 4),
-            "duration": self.duration_input.value(),
-            "encoder_name": self.encoder_selector.currentData()
+            "start_hour": round(t.hour() + t.minute() / 60, 4),
+            "duration": float(self.duration_input.value()),
+            "encoder_name": self.encoder_selector.currentData(),
         }

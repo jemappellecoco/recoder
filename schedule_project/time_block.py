@@ -641,7 +641,14 @@ class TimeBlock(QGraphicsRectItem):
         #         "encoder_name": updated["encoder_name"]
         #     })
         #     parent_view.save_schedule()
+        # === ❶ 重點：建立 overlap_checker，並「排除自己」===
+        def overlap_checker(qdate, track_index, start_hour, duration):
+            # 你的 ScheduleView.is_overlap 簽名：(..., exclude_label=None)
+            return parent_view.is_overlap(qdate, track_index, start_hour, duration, exclude_label=self.label)
 
+        readonly = start_dt <= QDateTime.currentDateTime()
+        # ❷ 把 overlap_checker 傳給 EditBlockDialog（照我前一則回覆改好的版本）
+        dialog = EditBlockDialog(block_dict, encoder_names, readonly=readonly, overlap_checker=overlap_checker)
         # event.accept()
         if dialog.exec():
             updated = dialog.get_updated_data()
@@ -689,7 +696,7 @@ class TimeBlock(QGraphicsRectItem):
             #     parent_view.runner.schedule_data = parent_view.block_data
             #     parent_view.runner.blocks = getattr(parent_view, "blocks", [])
             # mw = parent_view.window()
-            # if hasattr(mw, "sync_runner_data"):
+            # if hasattr(mw, "sync_runner_data"):``
             #     mw.sync_runner_data()
 
 

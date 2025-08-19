@@ -3,12 +3,13 @@ from PySide6.QtWidgets import (
     QLabel, QDoubleSpinBox, QComboBox, QDateEdit,
 )
 import re
+
 from PySide6.QtCore import QTime, QDate, QDateTime
-from utils import log
+from utils import log,ceil_to_next_minute,MIN_LEAD_SECONDS
 from encoder_utils import get_encoder_display_name
 
 class AddBlockDialog(QDialog):
-    MIN_LEAD_SECONDS = 90  # 至少比現在晚 1 分 30 秒
+     # 至少比現在晚 1 分 30 秒
 
     def __init__(self, parent=None, encoder_names=None, overlap_checker=None):
         super().__init__(parent)
@@ -61,14 +62,14 @@ class AddBlockDialog(QDialog):
         layout.addWidget(self.status_label)
         layout.addWidget(self.buttons)
         self.setLayout(layout)
-
+        self.MIN_LEAD_SECONDS = int(MIN_LEAD_SECONDS)  
     # ---------- helpers ----------
-    def _ceil_to_next_minute(self, dt: QDateTime) -> QDateTime:
-        """把時間對齊到下一個整分（清掉秒/毫秒；若有秒/毫秒則進位到下一分）。"""
-        t = dt.time()
-        if t.second() == 0 and t.msec() == 0:
-            return dt
-        return dt.addSecs(60 - t.second()).addMSecs(-t.msec())
+    # def _ceil_to_next_minute(self, dt: QDateTime) -> QDateTime:
+    #     """把時間對齊到下一個整分（清掉秒/毫秒；若有秒/毫秒則進位到下一分）。"""
+    #     t = dt.time()
+    #     if t.second() == 0 and t.msec() == 0:
+    #         return dt
+    #     return dt.addSecs(60 - t.second()).addMSecs(-t.msec())
 
     def parse_time(self, raw):
         def to_half_width(s):
@@ -104,7 +105,7 @@ class AddBlockDialog(QDialog):
         # 只對「今天」做 +90 秒限制
         if self.date_input.date() == QDate.currentDate():
             start_dt = QDateTime(self.date_input.date(), QTime(time.hour(), time.minute(), 0))
-            min_start = self._ceil_to_next_minute(QDateTime.currentDateTime().addSecs(self.MIN_LEAD_SECONDS))
+            min_start = ceil_to_next_minute(QDateTime.currentDateTime().addSecs(self.MIN_LEAD_SECONDS))
             if start_dt < min_start:
                 fixed = min_start.time().toString("HH:mm")
                 self.time_input.setText(fixed)
@@ -132,7 +133,7 @@ class AddBlockDialog(QDialog):
 
         # 今日：至少「現在 + 90 秒」（對齊整分）
         if qdate == now_dt.date():
-            min_start = self._ceil_to_next_minute(now_dt.addSecs(self.MIN_LEAD_SECONDS))
+            min_start = ceil_to_next_minute(now_dt.addSecs(self.MIN_LEAD_SECONDS))
             if start_dt < min_start:
                 fixed_str = min_start.time().toString("HH:mm")
                 self.time_input.setText(fixed_str)
@@ -163,7 +164,7 @@ class AddBlockDialog(QDialog):
 
         # 若 overlap_checker 仍吃 float 小時，維持這行；（之後你改成 HH:MM/分鐘也能替換）
         start_hour = round(time.hour() + time.minute() / 60.0, 4)
-        if self.overlap_checker and self.overlap_checker(track_index, start_hour, duration, qdate):
+        if self.overlap_checker and self.overlap_checker(qdate, track_index, start_hour, duration):
             self.status_label.setText("⚠️ 時間重疊")
             self.status_label.setStyleSheet("color: red")
             return

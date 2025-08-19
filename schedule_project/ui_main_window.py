@@ -20,7 +20,7 @@ from block_manager import BlockManager
 from encoder_controller import EncoderController
 from add_block_dialog import AddBlockDialog
 from path_manager import PathManager
-from utils_conflict import find_conflict_blocks
+# from utils_conflict import find_conflict_blocks
 from capture import take_snapshot_from_block
 from check_schedule_manager import CheckScheduleManager
 CONFIG_FILE = "config.json"
@@ -769,7 +769,7 @@ class MainWindow(QMainWindow):
 
     
     def add_new_block(self):
-        def check_overlap(track_index, start_hour, duration, qdate):
+        def check_overlap(qdate, track_index, start_hour, duration):
             return self.view.is_overlap(qdate, track_index, start_hour, duration, exclude_label=None)
 
         dialog = AddBlockDialog(self, 
@@ -946,15 +946,12 @@ class MainWindow(QMainWindow):
         )
 
         if not already_exists:
-            conflicts = find_conflict_blocks(
-                "schedule.json", qdate, track_index, start_hour, duration
-            )
-            if conflicts:
+            if self.view.is_overlap(qdate, track_index, start_hour, duration, exclude_label=None):
                 QMessageBox.warning(
-                    self,
-                    "❌ 時段衝突",
-                    "⚠️ 無法錄影，該時段與以下排程衝突：\n" + "\n".join(conflicts),
-                )
+                self,
+                "❌ 時段衝突",
+                "⚠️ 無法錄影，該時段與現有排程重疊。",
+            )
                 return
 
         if not already_exists:

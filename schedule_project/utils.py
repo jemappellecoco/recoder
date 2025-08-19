@@ -10,6 +10,7 @@ _log_box = None
 _buffered_logs = []
 MAX_LOG_LINES = 500
 DEBUG_MODE = True
+MIN_LEAD_SECONDS = 90
 # 用訊號把任何執行緒的 log 丟回主執行緒處理
 
 class _LogBus(QObject):
@@ -19,7 +20,21 @@ _log_bus = None
 # ==== HH:MM <-> 分鐘 / QTime / 小時數 工具 ====
 
 DAY_MIN = 24 * 60
-
+def ceil_to_next_minute(dt: QDateTime) -> QDateTime:
+    t = dt.time()
+    if t.second() == 0 and t.msec() == 0:
+        return dt
+    return dt.addSecs(60 - t.second()).addMSecs(-t.msec())
+def normalize_hhmm(s: str) -> str:
+    try:
+        h, m = s.strip().split(":")
+        h, m = int(h), int(m)
+        if h < 0 or m < 0:  # 負值不合法
+            return "00:00"
+        total = (h * 60 + m) % DAY_MIN
+        return f"{total // 60:02d}:{total % 60:02d}"
+    except Exception:
+        return "00:00"
 def hhmm_to_min(s: str) -> int:
     """
     'HH:MM' -> 整數分鐘（0..1439，超出一律取模）
