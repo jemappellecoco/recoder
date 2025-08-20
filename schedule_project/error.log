@@ -413,3 +413,97 @@ TypeError: 'PySide6.QtCore.QDate.daysTo' called with wrong argument types:
 Supported signatures:
   PySide6.QtCore.QDate.daysTo(d: PySide6.QtCore.QDate, /)
 
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\main.py", line 46, in <module>
+    win = MainWindow()
+  File "c:\Users\coco\recoder\schedule_project\ui_main_window.py", line 242, in __init__
+    self.view.draw_grid()
+    ~~~~~~~~~~~~~~~~~~~^^
+  File "c:\Users\coco\recoder\schedule_project\schedule_view.py", line 278, in draw_grid
+    self.draw_blocks()
+    ~~~~~~~~~~~~~~~~^^
+  File "c:\Users\coco\recoder\schedule_project\schedule_view.py", line 314, in draw_blocks
+    block = TimeBlock(
+        data["qdate"],
+    ...<4 lines>...
+        block_id=data.get("id")
+    )
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 139, in __init__
+    self.set_state("FINISHED")   # 綠
+    ^^^^^^^^^^^^^^
+AttributeError: 'TimeBlock' object has no attribute 'set_state'
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\main.py", line 46, in <module>
+    win = MainWindow()
+  File "c:\Users\coco\recoder\schedule_project\ui_main_window.py", line 242, in __init__
+    self.view.draw_grid()
+    ~~~~~~~~~~~~~~~~~~~^^
+  File "c:\Users\coco\recoder\schedule_project\schedule_view.py", line 278, in draw_grid
+    self.draw_blocks()
+    ~~~~~~~~~~~~~~~~^^
+  File "c:\Users\coco\recoder\schedule_project\schedule_view.py", line 314, in draw_blocks
+    block = TimeBlock(
+        data["qdate"],
+    ...<4 lines>...
+        block_id=data.get("id")
+    )
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 140, in __init__
+    self.set_state("FINISHED")   # 綠
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 89, in set_state
+    self.status = STATUS_TEXT[key]
+                  ^^^^^^^^^^^
+NameError: name 'STATUS_TEXT' is not defined. Did you mean: 'self.STATUS_TEXT'?
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\main.py", line 46, in <module>
+    win = MainWindow()
+  File "c:\Users\coco\recoder\schedule_project\ui_main_window.py", line 242, in __init__
+    self.view.draw_grid()
+    ~~~~~~~~~~~~~~~~~~~^^
+  File "c:\Users\coco\recoder\schedule_project\schedule_view.py", line 278, in draw_grid
+    self.draw_blocks()
+    ~~~~~~~~~~~~~~~~^^
+  File "c:\Users\coco\recoder\schedule_project\schedule_view.py", line 314, in draw_blocks
+    block = TimeBlock(
+        data["qdate"],
+    ...<4 lines>...
+        block_id=data.get("id")
+    )
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 140, in __init__
+    self.set_state("FINISHED")   # 綠
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 91, in set_state
+    self.update_text_position()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 190, in update_text_position
+    if self.text is None or self.text.scene() is None:
+       ^^^^^^^^^
+AttributeError: 'TimeBlock' object has no attribute 'text'
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\main.py", line 46, in <module>
+    win = MainWindow()
+  File "c:\Users\coco\recoder\schedule_project\ui_main_window.py", line 242, in __init__
+    self.view.draw_grid()
+    ~~~~~~~~~~~~~~~~~~~^^
+  File "c:\Users\coco\recoder\schedule_project\schedule_view.py", line 278, in draw_grid
+    self.draw_blocks()
+    ~~~~~~~~~~~~~~~~^^
+  File "c:\Users\coco\recoder\schedule_project\schedule_view.py", line 331, in draw_blocks
+    block.update_status_by_time()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 619, in update_status_by_time
+    if self.status != STATUS_TEXT["FINISHED"]:
+                      ^^^^^^^^^^^
+NameError: name 'STATUS_TEXT' is not defined. Did you mean: 'self.STATUS_TEXT'?
+

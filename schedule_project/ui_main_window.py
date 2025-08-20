@@ -33,6 +33,7 @@ from encoder_utils import save_encoder_config, reload_encoder_config
 from encoder_status_manager import EncoderStatusManager
 from schedule_view import _TrackLabelWorker
 from utils import hours_to_hhmm, hhmm_to_hours
+
 def find_latest_snapshot_by_prefix(preview_dir, encoder_name):
     pattern = os.path.join(preview_dir,"preview", f"{encoder_name}*.png") 
     log(f"🔍 查找最新快照：{pattern}")
@@ -322,10 +323,10 @@ class MainWindow(QMainWindow):
         # self.encoder_status_timer = QTimer(self)
         # self.encoder_status_timer.timeout.connect(self.update_encoder_status_labels)
         # self.encoder_status_timer.start(2000)
-        self._left_workers = []
-        self._left_status_timer = QTimer(self)
-        self._left_status_timer.timeout.connect(self.refresh_left_status_async)
-        self._left_status_timer.start(2000)  # 跟右側一樣節奏
+        # self._left_workers = []
+        # self._left_status_timer = QTimer(self)
+        # self._left_status_timer.timeout.connect(self.refresh_left_status_async)
+        # self._left_status_timer.start(2000)  # 跟右側一樣節奏
 
         
         self.snapshot_timer = QTimer(self)
@@ -356,34 +357,34 @@ class MainWindow(QMainWindow):
                         log(f"📂 自動載入之前選的檔案：{schedule_file}")
         except Exception as e:
             log(f"⚠️ config.json 載入失敗：{e}")
-    def refresh_left_status_async(self):
-        worker = _TrackLabelWorker(self.encoder_names, self.encoder_status_manager)
-        self._left_workers.append(worker)  # ✅ 保存參照
-        worker.signals.done.connect(self._apply_left_statuses)
+    # def refresh_left_status_async(self):
+    #     worker = _TrackLabelWorker(self.encoder_names, self.encoder_status_manager)
+    #     self._left_workers.append(worker)  # ✅ 保存參照
+    #     worker.signals.done.connect(self._apply_left_statuses)
 
-        def _cleanup(_=None, w=worker):
-            try:
-                self._left_workers.remove(w)
-            except ValueError:
-                pass
-        worker.signals.done.connect(_cleanup)
+        # def _cleanup(_=None, w=worker):
+        #     try:
+        #         self._left_workers.remove(w)
+        #     except ValueError:
+        #         pass
+        # worker.signals.done.connect(_cleanup)
 
-        QThreadPool.globalInstance().start(worker)
+        # QThreadPool.globalInstance().start(worker)
     # def refresh_left_status_async(self):
     #         worker = _TrackLabelWorker(self.encoder_names, self.encoder_status_manager)
     #         worker.signals.done.connect(self._apply_left_statuses)  # 回主線程
     #         QThreadPool.globalInstance().start(worker)
 
-    def _apply_left_statuses(self, statuses: dict):
-        # statuses: {encoder_name: (status_text, color)}
-        for name, pair in statuses.items():
-            if not isinstance(pair, (tuple, list)) or len(pair) < 2:
-                continue
-            text, color = pair
-            lbl = self.encoder_status.get(name)  # 左側每台 encoder 的 QLabel
-            if lbl:
-                lbl.setText(f"狀態：{text}")
-                lbl.setStyleSheet(f"color: {color}")
+    # def _apply_left_statuses(self, statuses: dict):
+    #     # statuses: {encoder_name: (status_text, color)}
+    #     for name, pair in statuses.items():
+    #         if not isinstance(pair, (tuple, list)) or len(pair) < 2:
+    #             continue
+    #         text, color = pair
+    #         lbl = self.encoder_status.get(name)  # 左側每台 encoder 的 QLabel
+    #         if lbl:
+    #             lbl.setText(f"狀態：{text}")
+    #             lbl.setStyleSheet(f"color: {color}")
     def update_zoom(self, value):
         self.view.hour_width = value
         self.view.day_width = 24 * value
@@ -832,7 +833,7 @@ class MainWindow(QMainWindow):
                 copy_action = menu.addAction("📋 複製路徑")
                 delete_action = menu.addAction("🗑️ 刪除排程")
                  # ✅ 禁用已結束 block 的刪除功能
-                if getattr(item, 'has_ended', False) or item.status.strip() in ["✅ 錄影中", "⏹ 停止中"]:
+                if getattr(item, 'has_ended', False) or "錄影中" in item.status or "停止" in item.status:
                     delete_action.setEnabled(False)
                     delete_action.setText("🗑️ 已開始或完成，不可刪")
                 selected = menu.exec(self.view.mapToGlobal(pos))

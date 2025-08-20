@@ -1,5 +1,5 @@
 from PySide6.QtWidgets import QGraphicsRectItem, QGraphicsSimpleTextItem, QGraphicsPixmapItem, QDialog, QVBoxLayout, QLabel
-from PySide6.QtCore import Qt, QTimer, QDate,QDateTime,QTime,QEvent
+from PySide6.QtCore import Qt, QTimer, QDate,QDateTime,QTime,QEvent, QElapsedTimer
 from PySide6.QtGui import QBrush, QColor, QFont,QPixmap
 from edit_block_dialog import EditBlockDialog
 import logging
@@ -8,6 +8,7 @@ import os
 from utils import log
 from utils import hours_to_hhmm, hhmm_to_hours
 logging.basicConfig(level=logging.INFO)
+
 def _safe_pixmap_from_file(path: str) -> QPixmap | None:
     try:
         if not path or not os.path.isfile(path):
@@ -70,6 +71,38 @@ class TimeBlock(QGraphicsRectItem):
     HANDLE_WIDTH = 6
     BLOCK_HEIGHT = 100
     MIN_DURATION_HOURS = 0.1   
+    # ==== 統一的顏色與狀態常數 ====
+    COLORS = {
+        "WAITING":  QColor(180, 180, 180, 180),  # 等待：灰
+        "RECORDING": QColor(255, 0, 0, 180),     # 錄影：紅
+        "FINISHED": QColor(0, 200, 0, 180),      # 結束：綠
+        "WARNING": QColor(255, 215, 0, 200),     # 警告：黃（金黃好辨識）
+    }
+
+    STATUS_TEXT = {
+        "WAITING":  "狀態：⌛ 等待中",
+        "RECORDING":"狀態：✅ 錄影中",
+        "FINISHED": "狀態：✅ 已結束",
+    }
+    def set_state(self, key: str):
+            """統一設定區塊狀態（文字＋顏色），key ∈ {WAITING, RECORDING, FINISHED}"""
+            self.status = self.STATUS_TEXT[key]
+            self._base_brush = QBrush(self.COLORS[key])  # <- 記錄正常底色
+            self.setBrush(QBrush(self.COLORS[key]))
+            self.update_text_position()
+
+    def flash_warning(self, ms: int = 500):
+        """只閃顏色，不動文字/狀態；ms 後還原到 _base_brush。"""
+        if self._warning_flashing:
+            return  # 正在閃就不要再觸發，避免最後還原成黃色
+        self._warning_flashing = True
+
+        self.setBrush(QBrush(self.COLORS["WARNING"]))
+        QTimer.singleShot(ms, self._restore_warning)
+    def _restore_warning(self):
+        # 還原成當前「正常狀態」底色（不會被多次呼叫污染）
+        self.setBrush(self._base_brush)
+        self._warning_flashing = False
     def __init__(self, start_date: QDate, track_index, start_hour, duration_hours=4, label="節目名稱", block_id=None):
     
         super().__init__(0, 0, duration_hours * 20, self.BLOCK_HEIGHT)
@@ -82,22 +115,12 @@ class TimeBlock(QGraphicsRectItem):
         self.duration_hours = duration_hours
         self.label = label
         self.status = "等待中"
-
-        self.setBrush(QBrush(QColor(100, 150, 255, 180)))
+        # 等待中 → 灰色
+        self.setBrush(QBrush(QColor(180, 180, 180, 180)))
         start_dt = QDateTime(start_date, QTime(int(start_hour), int((start_hour % 1) * 60)))
         end_dt = start_dt.addSecs(int(duration_hours * 3600))
         now = QDateTime.currentDateTime()
         self.has_ended = now > end_dt  # ✅ 判斷是否已完成
-
-        # 顏色設定
-        if self.has_ended:
-            self.setBrush(QBrush(QColor(180, 180, 180, 180)))  # 灰色
-        else:
-            self.setBrush(QBrush(QColor(100, 150, 255, 180)))  # 原藍色
-        self.setFlag(QGraphicsRectItem.ItemIsMovable, False)
-        self.setFlag(QGraphicsRectItem.ItemIsSelectable, True)
-        self.setAcceptHoverEvents(True)
-
         self.text = QGraphicsSimpleTextItem("", self)
         self.status_text = QGraphicsSimpleTextItem(self.status, self)
         self.text.setFont(QFont("Arial", 9, QFont.Bold))
@@ -106,6 +129,23 @@ class TimeBlock(QGraphicsRectItem):
         # self.status_text.setPos(10, 45)
         self.status_text.setFont(QFont("Arial", 8)) 
         self.status_text.setPos(4, self.rect().height() - 18)
+        self._base_brush = QBrush(self.COLORS["WAITING"])  # 正常狀態底色
+        self._warning_flashing = False 
+        self._move_elapsed = QElapsedTimer()
+        self._move_elapsed.start()
+        self._THROTTLE_MS = 16  # 60fps 上限；覺得還卡可以改 24~33ms# 閃黃中旗標       
+        # ✅ 統一用 set_state
+        if self.has_ended:
+            self.set_state("FINISHED")   # 綠
+        elif now < start_dt:
+            self.set_state("WAITING")    # 灰
+        else:
+            self.set_state("RECORDING")  # 紅
+        self.setFlag(QGraphicsRectItem.ItemIsMovable, False)
+        self.setFlag(QGraphicsRectItem.ItemIsSelectable, True)
+        self.setAcceptHoverEvents(True)
+
+
         QTimer.singleShot(0, self.update_text_position)
 
         self.left_handle = QGraphicsRectItem(0, 0, self.HANDLE_WIDTH, self.BLOCK_HEIGHT, self)
@@ -282,6 +322,11 @@ class TimeBlock(QGraphicsRectItem):
                     break
 
     def mouseMoveEvent(self, event):
+    # === 一律節流：~60fps ===
+        if self._move_elapsed.isValid() and self._move_elapsed.elapsed() < self._THROTTLE_MS:
+            return
+        self._move_elapsed.restart()
+        
         if getattr(self, "prevent_drag", False):
             return
         parent_view = self.scene().parent()
@@ -301,31 +346,88 @@ class TimeBlock(QGraphicsRectItem):
             return
 
         now = QDateTime.currentDateTime()
-
         if self.dragging_handle == 'right':
-            delta = event.pos().x()
-            # new_duration = round(max(1.0, delta / 20), 2)
+            parent_view = self.scene().parent()
             hour_width = getattr(parent_view, 'hour_width', 20)
-            new_duration = round(max(self.MIN_DURATION_HOURS, delta / hour_width), 2)
-            new_end_dt = QDateTime(self.start_date, QTime(int(self.start_hour), int((self.start_hour % 1) * 60)))
-            new_end_dt = new_end_dt.addSecs(int(new_duration * 3600))
 
-            if new_end_dt < now:
-                log(f"⛔ 無法縮到現在時間前結束（{self.label}）")
-                self.flash_red()
+            # 用滑鼠相對於 block 的座標來算新寬度（避免場景/縮放誤差）
+            delta_px = self.mapFromScene(event.scenePos()).x()
+            cand_duration = round(max(self.MIN_DURATION_HOURS, delta_px / hour_width), 3)
+
+            # 目前起點 & 候選終點
+            start_dt = QDateTime(self.start_date,
+                                QTime(int(self.start_hour) % 24, int((self.start_hour % 1) * 60)))
+            cand_end_dt = start_dt.addSecs(int(cand_duration * 3600))
+
+            # 不得縮到現在之前
+            now = QDateTime.currentDateTime()
+            if cand_end_dt < now:
+                self.flash_warning(700)
                 return
 
-            if not parent_view.is_overlap(self.start_date, self.track_index, self.start_hour, new_duration, exclude_label=self.block_id):
-                self.duration_hours = new_duration
-                self.update_geometry(parent_view.base_date)
-                end_hour, end_qdate = self.compute_end_info()
-                self.update_block_data({
-                    "duration": self.duration_hours,
-                    "end_hour": end_hour,
-                    "end_qdate": end_qdate
-                })
-                parent_view.save_schedule()
+            # 跨日安全：找到同 track、在我右邊(開始時間 > 我的開始)的最近鄰居
+            def _dt(qd: QDate, hourf: float) -> QDateTime:
+                return QDateTime(qd, QTime(int(hourf) % 24, int((hourf % 1) * 60)))
 
+            nearest_right_start: QDateTime | None = None
+            for b in parent_view.block_data:
+                if b.get("id") == self.block_id or b["track_index"] != self.track_index:
+                    continue
+
+                qd = b["qdate"] if isinstance(b["qdate"], QDate) \
+                    else QDate.fromString(b["qdate"], "yyyy-MM-dd")
+                b_start = float(b["start_hour"])
+                b_start_dt = _dt(qd, b_start)
+
+                # 只關心「右邊」的，且取最近的
+                if b_start_dt <= start_dt:
+                    continue
+                if nearest_right_start is None or b_start_dt < nearest_right_start:
+                    nearest_right_start = b_start_dt
+
+            # 若有右邊鄰居，就把我的終點夾在鄰居開始前 1 分鐘，避免浮點貼齊誤判重疊
+            if nearest_right_start is not None and cand_end_dt >= nearest_right_start:
+                limit_dt = nearest_right_start.addSecs(-60)
+                if limit_dt <= start_dt:
+                    cand_duration = self.MIN_DURATION_HOURS
+                else:
+                    cand_duration = round(start_dt.secsTo(limit_dt) / 3600.0, 3)
+                self.flash_warning(300)
+
+            # 最後再用你的 overlap 做一次保險（排除自己）
+            if parent_view.is_overlap(self.start_date, self.track_index, self.start_hour,
+                                    cand_duration, exclude_label=self.block_id):
+                self.flash_warning(700)
+                return
+
+            # ✅ 只更新畫面；不寫 block_data、不存檔（存檔在 mouseReleaseEvent）
+            self.duration_hours = cand_duration
+            self.update_geometry(parent_view.base_date)
+            return
+        # if self.dragging_handle == 'right':
+        #     delta = event.pos().x()
+        #     # new_duration = round(max(1.0, delta / 20), 2)
+        #     hour_width = getattr(parent_view, 'hour_width', 20)
+        #     new_duration = round(max(self.MIN_DURATION_HOURS, delta / hour_width), 2)
+        #     new_end_dt = QDateTime(self.start_date, QTime(int(self.start_hour), int((self.start_hour % 1) * 60)))
+        #     new_end_dt = new_end_dt.addSecs(int(new_duration * 3600))
+
+        #     if new_end_dt < now:
+        #         log(f"⛔ 無法縮到現在時間前結束（{self.label}）")
+        #         self.flash_warning(700)
+        #         return
+
+        #     if not parent_view.is_overlap(self.start_date, self.track_index, self.start_hour, new_duration, exclude_label=self.block_id):
+        #         self.duration_hours = new_duration
+        #         self.update_geometry(parent_view.base_date)
+        #         # end_hour, end_qdate = self.compute_end_info()
+        #         # self.update_block_data({
+        #         #     "duration": self.duration_hours,
+        #         #     "end_hour": end_hour,
+        #         #     "end_qdate": end_qdate
+        #         # })
+        #         # parent_view.save_schedule()
+        #     return
         elif self.dragging_handle == 'left':
             parent_view = self.scene().parent()
             hour_width = getattr(parent_view, 'hour_width', 20)
@@ -350,7 +452,7 @@ class TimeBlock(QGraphicsRectItem):
 
             # 保證最短時長
             if cand_duration < min_dur:
-                self.flash_red()
+                self.flash_warning(700)
                 return
 
             # 允許跨日：把 <0 或 >=24 的小時數換算到正確日期
@@ -364,7 +466,7 @@ class TimeBlock(QGraphicsRectItem):
 
             # 不得把起點或終點拉到「現在」之前
             if self.is_start_or_end_in_past(cand_qdate, cand_start_hour, cand_duration):
-                self.flash_red()
+                self.flash_warning(700)
                 return
 
             # === 跨日安全的重疊檢查（用時間區間比對）===
@@ -397,7 +499,7 @@ class TimeBlock(QGraphicsRectItem):
                     break
 
             if has_overlap:
-                self.flash_red()
+                self.flash_warning(700)
                 return
 
             # ✅ 套用更新
@@ -406,16 +508,16 @@ class TimeBlock(QGraphicsRectItem):
             self.duration_hours = cand_duration
 
             self.update_geometry(parent_view.base_date)
-            end_hour, end_qdate = self.compute_end_info()
-            self.update_block_data({
-                "qdate":      self.start_date,
-                "start_hour": self.start_hour,
-                "duration":   self.duration_hours,
-                "end_hour":   end_hour,
-                "end_qdate":  end_qdate
-            })
-            parent_view.save_schedule()
-            _sync_runner(self) 
+            # end_hour, end_qdate = self.compute_end_info()
+            # self.update_block_data({
+            #     "qdate":      self.start_date,
+            #     "start_hour": self.start_hour,
+            #     "duration":   self.duration_hours,
+            #     "end_hour":   end_hour,
+            #     "end_qdate":  end_qdate
+            # })
+            # parent_view.save_schedule()
+            # _sync_runner(self) 
 
 
 
@@ -427,41 +529,44 @@ class TimeBlock(QGraphicsRectItem):
             return total_hour, self.start_date
 
 
-
     def mouseReleaseEvent(self, event):
         self.setFlag(QGraphicsRectItem.ItemIsMovable, False)
         self.prevent_drag = False
         parent_view = self.scene().parent()
-    
-        if not self.has_moved:
-            self.setFlag(QGraphicsRectItem.ItemIsMovable, False)
-            self.update_geometry(parent_view.base_date)
-            return  
-        scene_width = self.scene().sceneRect().width()
 
+        # ✅ 1) 先處理「拉把手」的情況（不看 has_moved）
         if self.dragging_handle is not None:
             self.dragging_handle = None
-            # ✅ 若是 handle 拖曳，這時 self.start_hour 或 self.duration_hours 已被更新
+
+            # 這裡 self.start_hour / self.duration_hours 已是最新值
+            end_hour, end_qdate = self.compute_end_info()
             for b in parent_view.block_data:
                 if b.get("id") == self.block_id:
-                    
-                    end_hour, end_qdate = self.compute_end_info()
                     b.update({
-                        "qdate": self.start_date,
-                        "track_index": self.track_index,
-                        "start_hour": self.start_hour,
-                        "end_hour": end_hour,
-                        "end_qdate": end_qdate,
-                        "duration": self.duration_hours,
-                        "label": self.label,
-                        "id": self.block_id,
-                        "encoder_name": parent_view.encoder_names[self.track_index]
+                        "qdate":        self.start_date,
+                        "track_index":  self.track_index,
+                        "start_hour":   self.start_hour,
+                        "end_hour":     end_hour,
+                        "end_qdate":    end_qdate,
+                        "duration":     self.duration_hours,
+                        "label":        self.label,
+                        "id":           self.block_id,
+                        "encoder_name": parent_view.encoder_names[self.track_index],
                     })
                     break
             parent_view.save_schedule()
             _sync_runner(self)
             self.setFlag(QGraphicsRectItem.ItemIsMovable, False)
             return
+
+        # ✅ 2) 再處理「整塊拖曳」：沒真的移動就還原並離開
+        if not self.has_moved:
+            self.setFlag(QGraphicsRectItem.ItemIsMovable, False)
+            self.update_geometry(parent_view.base_date)
+            return
+
+        # --------------- 以下維持你原本整塊拖曳的檢查邏輯 ---------------
+        scene_width = self.scene().sceneRect().width()
 
         if self.drag_start_offset is None:
             self.update_geometry(parent_view.base_date)
@@ -470,77 +575,181 @@ class TimeBlock(QGraphicsRectItem):
         scene_pos = self.scenePos()
         new_x = scene_pos.x()
         new_y = scene_pos.y()
-        hour_width = parent_view.hour_width  
-       
-        day_width = 24 * hour_width 
+        hour_width = parent_view.hour_width
+
+        day_width = 24 * hour_width
         hour_pixel = new_x % day_width
         new_hour = round(hour_pixel / hour_width, 2)
         new_date = parent_view.base_date.addDays(int(new_x // day_width))
-        # new_hour = round(hour_pixel / 20, 2)
-        new_track = int(new_y // self.BLOCK_HEIGHT)
+        offset_y = getattr(parent_view, "grid_top_offset", 0) 
+        new_track = int((new_y - offset_y) // self.BLOCK_HEIGHT) 
 
         max_track = len(parent_view.encoder_names)
 
-        # ✅ 四向邊界限制
+        # 邊界
         if new_hour < 0 or new_x < 0 or self.x() + self.rect().width() > scene_width or new_track < 0 or new_track >= max_track:
             log("❌ 拖曳越界，還原")
             self.update_geometry(parent_view.base_date)
             return
-        # ✅ 時間不可在過去
+
+        # 不可移到過去
         now = QDateTime.currentDateTime()
         start_dt = QDateTime(new_date, QTime(int(new_hour), int((new_hour % 1) * 60)))
-        if start_dt < now:
+        if start_dt < now or self.is_start_or_end_in_past(new_date, new_hour, self.duration_hours):
             log(f"⛔ 不可移動到過去（{self.label}）")
-            self.flash_red()
+            self.flash_warning(700)
             self.update_geometry(parent_view.base_date)
             return
-        if self.is_start_or_end_in_past(new_date, new_hour, self.duration_hours):
-            log(f"⛔ 不可移動到過去（{self.label}）")
-            self.flash_red()
-            self.update_geometry(parent_view.base_date)
-            parent_view.save_schedule()
-            _sync_runner(self) 
-            return
-        # ✅ 重疊檢查
 
+        # 重疊
         if parent_view.is_overlap(new_date, new_track, new_hour, self.duration_hours, exclude_label=self.block_id):
             log("❌ 拖曳後重疊，還原")
-            self.flash_red()
+            self.flash_warning(700)
             self.update_geometry(parent_view.base_date)
             return
 
-        # ✅ 更新 block 屬性
+        # 寫回屬性與幾何
         self.start_date = new_date
         self.start_hour = new_hour
         self.track_index = new_track
-        # self.duration_hours = round(self.rect().width() / 20, 2)
         self.duration_hours = round(self.rect().width() / hour_width, 2)
         self.update_geometry(parent_view.base_date)
-         # 🔁 加這段：處理 end_hour 與 end_qdate
-       
+
+        # end_hour / end_qdate
         end_hour, end_qdate = self.compute_end_info()
-        if self.dragging_handle is not None:
-            self.dragging_handle = None
+
         for b in parent_view.block_data:
             if b.get("id") == self.block_id:
                 b.update({
-                    "qdate": self.start_date,
-                    "track_index": self.track_index,
-                    "start_hour": self.start_hour,
-                    "duration": self.duration_hours,
-                    "end_hour": end_hour,           # ✅ 補這行
-                    "end_qdate": end_qdate,         # ✅ 補這行
-                    "label": self.label,
-                    "id": self.block_id,
-                    "encoder_name": parent_view.encoder_names[self.track_index]  # 對應 encoder
+                    "qdate":        self.start_date,
+                    "track_index":  self.track_index,
+                    "start_hour":   self.start_hour,
+                    "duration":     self.duration_hours,
+                    "end_hour":     end_hour,
+                    "end_qdate":    end_qdate,
+                    "label":        self.label,
+                    "id":           self.block_id,
+                    "encoder_name": parent_view.encoder_names[self.track_index],
                 })
                 break
 
-        
         super().mouseReleaseEvent(event)
         parent_view.save_schedule()
-        _sync_runner(self) 
-        self.setFlag(QGraphicsRectItem.ItemIsMovable, False)  
+        _sync_runner(self)
+        self.setFlag(QGraphicsRectItem.ItemIsMovable, False)
+    # def mouseReleaseEvent(self, event):
+    #     self.setFlag(QGraphicsRectItem.ItemIsMovable, False)
+    #     self.prevent_drag = False
+    #     parent_view = self.scene().parent()
+    
+    #     if not self.has_moved:
+    #         self.setFlag(QGraphicsRectItem.ItemIsMovable, False)
+    #         self.update_geometry(parent_view.base_date)
+    #         return  
+    #     scene_width = self.scene().sceneRect().width()
+
+    #     if self.dragging_handle is not None:
+    #         self.dragging_handle = None
+    #         # ✅ 若是 handle 拖曳，這時 self.start_hour 或 self.duration_hours 已被更新
+    #         for b in parent_view.block_data:
+    #             if b.get("id") == self.block_id:
+                    
+    #                 end_hour, end_qdate = self.compute_end_info()
+    #                 b.update({
+    #                     "qdate": self.start_date,
+    #                     "track_index": self.track_index,
+    #                     "start_hour": self.start_hour,
+    #                     "end_hour": end_hour,
+    #                     "end_qdate": end_qdate,
+    #                     "duration": self.duration_hours,
+    #                     "label": self.label,
+    #                     "id": self.block_id,
+    #                     "encoder_name": parent_view.encoder_names[self.track_index]
+    #                 })
+    #                 break
+    #         parent_view.save_schedule()
+    #         _sync_runner(self)
+    #         self.setFlag(QGraphicsRectItem.ItemIsMovable, False)
+    #         return
+
+    #     if self.drag_start_offset is None:
+    #         self.update_geometry(parent_view.base_date)
+    #         return
+
+    #     scene_pos = self.scenePos()
+    #     new_x = scene_pos.x()
+    #     new_y = scene_pos.y()
+    #     hour_width = parent_view.hour_width  
+       
+    #     day_width = 24 * hour_width 
+    #     hour_pixel = new_x % day_width
+    #     new_hour = round(hour_pixel / hour_width, 2)
+    #     new_date = parent_view.base_date.addDays(int(new_x // day_width))
+    #     # new_hour = round(hour_pixel / 20, 2)
+    #     new_track = int(new_y // self.BLOCK_HEIGHT)
+
+    #     max_track = len(parent_view.encoder_names)
+
+    #     # ✅ 四向邊界限制
+    #     if new_hour < 0 or new_x < 0 or self.x() + self.rect().width() > scene_width or new_track < 0 or new_track >= max_track:
+    #         log("❌ 拖曳越界，還原")
+    #         self.update_geometry(parent_view.base_date)
+    #         return
+    #     # ✅ 時間不可在過去
+    #     now = QDateTime.currentDateTime()
+    #     start_dt = QDateTime(new_date, QTime(int(new_hour), int((new_hour % 1) * 60)))
+    #     if start_dt < now:
+    #         log(f"⛔ 不可移動到過去（{self.label}）")
+    #         self.flash_warning(700)
+    #         self.update_geometry(parent_view.base_date)
+    #         return
+    #     if self.is_start_or_end_in_past(new_date, new_hour, self.duration_hours):
+    #         log(f"⛔ 不可移動到過去（{self.label}）")
+    #         # self.flash_red()
+    #         self.update_geometry(parent_view.base_date)
+    #         parent_view.save_schedule()
+    #         _sync_runner(self) 
+    #         return
+    #     # ✅ 重疊檢查
+
+    #     if parent_view.is_overlap(new_date, new_track, new_hour, self.duration_hours, exclude_label=self.block_id):
+    #         log("❌ 拖曳後重疊，還原")
+    #         self.flash_warning(700)
+    #         self.update_geometry(parent_view.base_date)
+    #         return
+
+    #     # ✅ 更新 block 屬性
+    #     self.start_date = new_date
+    #     self.start_hour = new_hour
+    #     self.track_index = new_track
+    #     # self.duration_hours = round(self.rect().width() / 20, 2)
+    #     self.duration_hours = round(self.rect().width() / hour_width, 2)
+    #     self.update_geometry(parent_view.base_date)
+    #      # 🔁 加這段：處理 end_hour 與 end_qdate
+       
+    #     end_hour, end_qdate = self.compute_end_info()
+    #     if self.dragging_handle is not None:
+    #         self.dragging_handle = None
+    #     for b in parent_view.block_data:
+    #         if b.get("id") == self.block_id:
+    #             b.update({
+    #                 "qdate": self.start_date,
+    #                 "track_index": self.track_index,
+    #                 "start_hour": self.start_hour,
+    #                 "duration": self.duration_hours,
+    #                 "end_hour": end_hour,           # ✅ 補這行
+    #                 "end_qdate": end_qdate,         # ✅ 補這行
+    #                 "label": self.label,
+    #                 "id": self.block_id,
+    #                 "encoder_name": parent_view.encoder_names[self.track_index]  # 對應 encoder
+    #             })
+    #             break
+
+        
+    #     super().mouseReleaseEvent(event)
+    #     parent_view.save_schedule()
+    #     _sync_runner(self) 
+    #     self.setFlag(QGraphicsRectItem.ItemIsMovable, False)  
     def update_status_by_time(self):
         # 🔧 最小修正：確保 self.start_date 是 QDate
         if isinstance(self.start_date, str):
@@ -548,15 +757,15 @@ class TimeBlock(QGraphicsRectItem):
             if not self.start_date.isValid():
                 self.start_date = QDate.currentDate()
 
-        # 🔧 保證型別正確（避免偶爾是字串）
-        try:
-            sh = float(self.start_hour)
-        except Exception:
-            sh = 0.0
-        try:
-            dur_h = float(self.duration_hours)
-        except Exception:
-            dur_h = 0.0
+        # # 🔧 保證型別正確（避免偶爾是字串）
+        # try:
+        #     sh = float(self.start_hour)
+        # except Exception:
+        #     sh = 0.0
+        # try:
+        #     dur_h = float(self.duration_hours)
+        # except Exception:
+        #     dur_h = 0.0
 
         start_dt = QDateTime(
             self.start_date,
@@ -568,26 +777,18 @@ class TimeBlock(QGraphicsRectItem):
 
         # ✅ 若已經結束，統一標記為「已結束」，不再讓硬體狀態蓋掉
         if now > end_dt:
-            if self.status != "狀態：✅ 已結束":
-                self.status = "狀態：✅ 已結束"
-                self.setBrush(QBrush(QColor(180, 180, 180, 180)))  # 灰色
-                self.update_text_position()
-            return  # ❗重要：已結束就 return，不再讓後續邏輯處理
-
-        # ✅ 還沒開始
-        if now < start_dt:
-            if self.status != "狀態：⌛ 等待中":
-                self.status = "狀態：⌛ 等待中"
-                self.setBrush(QBrush(QColor(200, 200, 255, 180)))  # 藍色
-                self.update_text_position()
+            if self.status != self.STATUS_TEXT["FINISHED"]:
+                self.set_state("FINISHED")           # 綠
             return
 
-        # ✅ 進行中：此時 UI 狀態應該依照硬體回報更新（例如 ScheduleRunner 寫入的狀態）
-        # ⚠️ 請勿在這裡修改成「錄影中 / 停止中」，由外部控制元件設定
-          # ✅ 進行中（fallback）：顯示錄影中（綠藍）
-        if self.status != "狀態：✅ 錄影中":
-            self.status = "狀態：✅ 錄影中"
-            self.setBrush(QBrush(QColor(120, 200, 160, 180)))
+        if now < start_dt:
+            if self.status !=  self.STATUS_TEXT["WAITING"]:
+                self.set_state("WAITING")            # 灰
+            return
+
+        # 進行中 fallback（若外部/硬體沒有另外設定）
+        if self.status !=  self.STATUS_TEXT["RECORDING"]:
+            self.set_state("RECORDING")              # 紅
             self.update_text_position()
     def mouseDoubleClickEvent(self, event):
        
@@ -653,9 +854,9 @@ class TimeBlock(QGraphicsRectItem):
             end_dt = QDateTime(end_qdate_q, QTime(int(end_hour % 24), int((end_hour % 1) * 60)))
             # end_qdate = updated["qdate"].addDays(1) if end_hour >= 24 else updated["qdate"]
             # end_dt = QDateTime(end_qdate, QTime(int(end_hour % 24), int((end_hour % 1) * 60)))
-            if end_dt < QDateTime.currentDateTime():
-                self.flash_red()
-                return
+            # if end_dt < QDateTime.currentDateTime():
+            #     self.flash_red()
+            #     return
 
             # 回寫到 TimeBlock 本體
             # self.start_date = updated["qdate"]
@@ -699,11 +900,11 @@ class TimeBlock(QGraphicsRectItem):
             #     mw.sync_runner_data()
 
 
-    def flash_red(self):
-        original_color = self.brush().color()
-        flash_color = QColor(255, 0, 0, 180)
-        self.setBrush(flash_color)
-        QTimer.singleShot(300, lambda: self.setBrush(QBrush(original_color)))
+    # def flash_red(self):
+    #     original_color = self.brush().color()
+    #     flash_color = QColor(255, 0, 0, 180)
+    #     self.setBrush(flash_color)
+    #     QTimer.singleShot(300, lambda: self.setBrush(QBrush(original_color)))
 
     def load_preview_images(self, image_folder):
         """安全載入 block 的縮圖；檔案不存在/壞掉就略過且隱藏舊縮圖。"""
