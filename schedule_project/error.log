@@ -507,3 +507,184 @@ Traceback (most recent call last):
                       ^^^^^^^^^^^
 NameError: name 'STATUS_TEXT' is not defined. Did you mean: 'self.STATUS_TEXT'?
 
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 444, in mouseMoveEvent
+    shift_px = max(-10**9, min(delta_px, max_shift_right_px + self.EPS_PX))
+                                                              ^^^^^^^^^^^
+AttributeError: 'TimeBlock' object has no attribute 'EPS_PX'
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 444, in mouseMoveEvent
+    shift_px = max(-10**9, min(delta_px, max_shift_right_px + self.EPS_PX))
+                                                              ^^^^^^^^^^^
+AttributeError: 'TimeBlock' object has no attribute 'EPS_PX'
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 444, in mouseMoveEvent
+    shift_px = max(-10**9, min(delta_px, max_shift_right_px + self.EPS_PX))
+                                                              ^^^^^^^^^^^
+AttributeError: 'TimeBlock' object has no attribute 'EPS_PX'
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 444, in mouseMoveEvent
+    shift_px = max(-10**9, min(delta_px, max_shift_right_px + self.EPS_PX))
+                                                              ^^^^^^^^^^^
+AttributeError: 'TimeBlock' object has no attribute 'EPS_PX'
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 444, in mouseMoveEvent
+    shift_px = max(-10**9, min(delta_px, max_shift_right_px + self.EPS_PX))
+                                                              ^^^^^^^^^^^
+AttributeError: 'TimeBlock' object has no attribute 'EPS_PX'
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 444, in mouseMoveEvent
+    shift_px = max(-10**9, min(delta_px, max_shift_right_px + self.EPS_PX))
+                                                              ^^^^^^^^^^^
+AttributeError: 'TimeBlock' object has no attribute 'EPS_PX'
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 444, in mouseMoveEvent
+    shift_px = max(-10**9, min(delta_px, max_shift_right_px + self.EPS_PX))
+                                                              ^^^^^^^^^^^
+AttributeError: 'TimeBlock' object has no attribute 'EPS_PX'
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 444, in mouseMoveEvent
+    shift_px = max(-10**9, min(delta_px, max_shift_right_px + self.EPS_PX))
+                                                              ^^^^^^^^^^^
+AttributeError: 'TimeBlock' object has no attribute 'EPS_PX'
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 444, in mouseMoveEvent
+    shift_px = max(-10**9, min(delta_px, max_shift_right_px + self.EPS_PX))
+                                                              ^^^^^^^^^^^
+AttributeError: 'TimeBlock' object has no attribute 'EPS_PX'
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 444, in mouseMoveEvent
+    shift_px = max(-10**9, min(delta_px, max_shift_right_px + self.EPS_PX))
+                                                              ^^^^^^^^^^^
+AttributeError: 'TimeBlock' object has no attribute 'EPS_PX'
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 444, in mouseMoveEvent
+    shift_px = max(-10**9, min(delta_px, max_shift_right_px + self.EPS_PX))
+                                                              ^^^^^^^^^^^
+AttributeError: 'TimeBlock' object has no attribute 'EPS_PX'
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 444, in mouseMoveEvent
+    shift_px = max(-10**9, min(delta_px, max_shift_right_px + self.EPS_PX))
+                                                              ^^^^^^^^^^^
+AttributeError: 'TimeBlock' object has no attribute 'EPS_PX'
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 444, in mouseMoveEvent
+    shift_px = max(-10**9, min(delta_px, max_shift_right_px + self.EPS_PX))
+                                                              ^^^^^^^^^^^
+AttributeError: 'TimeBlock' object has no attribute 'EPS_PX'
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 444, in mouseMoveEvent
+    shift_px = max(-10**9, min(delta_px, max_shift_right_px + self.EPS_PX))
+                                                              ^^^^^^^^^^^
+AttributeError: 'TimeBlock' object has no attribute 'EPS_PX'
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 444, in mouseMoveEvent
+    shift_px = max(-10**9, min(delta_px, max_shift_right_px + self.EPS_PX))
+                                                              ^^^^^^^^^^^
+AttributeError: 'TimeBlock' object has no attribute 'EPS_PX'
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 444, in mouseMoveEvent
+    shift_px = max(-10**9, min(delta_px, max_shift_right_px + self.EPS_PX))
+                                                              ^^^^^^^^^^^
+AttributeError: 'TimeBlock' object has no attribute 'EPS_PX'
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 444, in mouseMoveEvent
+    shift_px = max(-10**9, min(delta_px, max_shift_right_px + self.EPS_PX))
+                                                              ^^^^^^^^^^^
+AttributeError: 'TimeBlock' object has no attribute 'EPS_PX'
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 444, in mouseMoveEvent
+    shift_px = max(-10**9, min(delta_px, max_shift_right_px + self.EPS_PX))
+                                                              ^^^^^^^^^^^
+AttributeError: 'TimeBlock' object has no attribute 'EPS_PX'
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 444, in mouseMoveEvent
+    shift_px = max(-10**9, min(delta_px, max_shift_right_px + self.EPS_PX))
+                                                              ^^^^^^^^^^^
+AttributeError: 'TimeBlock' object has no attribute 'EPS_PX'
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 444, in mouseMoveEvent
+    shift_px = max(-10**9, min(delta_px, max_shift_right_px + self.EPS_PX))
+                                                              ^^^^^^^^^^^
+AttributeError: 'TimeBlock' object has no attribute 'EPS_PX'
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 444, in mouseMoveEvent
+    shift_px = max(-10**9, min(delta_px, max_shift_right_px + self.EPS_PX))
+                                                              ^^^^^^^^^^^
+AttributeError: 'TimeBlock' object has no attribute 'EPS_PX'
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\main.py", line 46, in <module>
+    win = MainWindow()
+  File "c:\Users\coco\recoder\schedule_project\ui_main_window.py", line 234, in __init__
+    self.view = ScheduleView()
+                ~~~~~~~~~~~~^^
+  File "c:\Users\coco\recoder\schedule_project\schedule_view.py", line 92, in __init__
+    self.setVerticalScrollMode(QGraphicsView.ScrollPerPixel)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'ScheduleView' object has no attribute 'setVerticalScrollMode'. Did you mean: 'setVerticalScrollBar'?
+

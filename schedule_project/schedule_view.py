@@ -89,6 +89,7 @@ class ScheduleView(QGraphicsView):
         self.block_status_timer.start(1000)  # 每秒更新一次（可改 2000/5000）
         self._pool = QThreadPool.globalInstance()
         self._bg_workers = []      # ✅ 保存背景任務，避免被 GC
+        
     def get_now_x(self) -> int | None:
         now = QDateTime.currentDateTime()
         days = self.base_date.daysTo(now.date())

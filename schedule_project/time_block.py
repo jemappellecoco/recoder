@@ -404,30 +404,7 @@ class TimeBlock(QGraphicsRectItem):
             self.duration_hours = cand_duration
             self.update_geometry(parent_view.base_date)
             return
-        # if self.dragging_handle == 'right':
-        #     delta = event.pos().x()
-        #     # new_duration = round(max(1.0, delta / 20), 2)
-        #     hour_width = getattr(parent_view, 'hour_width', 20)
-        #     new_duration = round(max(self.MIN_DURATION_HOURS, delta / hour_width), 2)
-        #     new_end_dt = QDateTime(self.start_date, QTime(int(self.start_hour), int((self.start_hour % 1) * 60)))
-        #     new_end_dt = new_end_dt.addSecs(int(new_duration * 3600))
-
-        #     if new_end_dt < now:
-        #         log(f"⛔ 無法縮到現在時間前結束（{self.label}）")
-        #         self.flash_warning(700)
-        #         return
-
-        #     if not parent_view.is_overlap(self.start_date, self.track_index, self.start_hour, new_duration, exclude_label=self.block_id):
-        #         self.duration_hours = new_duration
-        #         self.update_geometry(parent_view.base_date)
-        #         # end_hour, end_qdate = self.compute_end_info()
-        #         # self.update_block_data({
-        #         #     "duration": self.duration_hours,
-        #         #     "end_hour": end_hour,
-        #         #     "end_qdate": end_qdate
-        #         # })
-        #         # parent_view.save_schedule()
-        #     return
+       
         elif self.dragging_handle == 'left':
             parent_view = self.scene().parent()
             hour_width = getattr(parent_view, 'hour_width', 20)

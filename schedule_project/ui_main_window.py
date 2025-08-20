@@ -33,7 +33,7 @@ from encoder_utils import save_encoder_config, reload_encoder_config
 from encoder_status_manager import EncoderStatusManager
 from schedule_view import _TrackLabelWorker
 from utils import hours_to_hhmm, hhmm_to_hours
-
+from edit_block_dialog import EditBlockDialog
 def find_latest_snapshot_by_prefix(preview_dir, encoder_name):
     pattern = os.path.join(preview_dir,"preview", f"{encoder_name}*.png") 
     log(f"🔍 查找最新快照：{pattern}")
@@ -319,15 +319,7 @@ class MainWindow(QMainWindow):
         # 左側別主動搶寬（但保留你 preview_label 的 Preferred）
         scroll_area.setSizePolicy(QSizePolicy.Minimum, QSizePolicy.Expanding)
         scroll_area.setMinimumWidth(1)
-        # === 啟動時間器 ===
-        # self.encoder_status_timer = QTimer(self)
-        # self.encoder_status_timer.timeout.connect(self.update_encoder_status_labels)
-        # self.encoder_status_timer.start(2000)
-        # self._left_workers = []
-        # self._left_status_timer = QTimer(self)
-        # self._left_status_timer.timeout.connect(self.refresh_left_status_async)
-        # self._left_status_timer.start(2000)  # 跟右側一樣節奏
-
+    
         
         self.snapshot_timer = QTimer(self)
         self.snapshot_timer.timeout.connect(self.update_all_encoder_snapshots)
@@ -343,7 +335,7 @@ class MainWindow(QMainWindow):
         self.check_timer = QTimer(self)
         self.check_timer.timeout.connect(self.safe_check_schedule)
         self.check_timer.start(1000)
-        
+        self.copied_block_template = None
         QTimer.singleShot(3000, self.update_all_encoder_snapshots)
   
         try:
@@ -357,34 +349,7 @@ class MainWindow(QMainWindow):
                         log(f"📂 自動載入之前選的檔案：{schedule_file}")
         except Exception as e:
             log(f"⚠️ config.json 載入失敗：{e}")
-    # def refresh_left_status_async(self):
-    #     worker = _TrackLabelWorker(self.encoder_names, self.encoder_status_manager)
-    #     self._left_workers.append(worker)  # ✅ 保存參照
-    #     worker.signals.done.connect(self._apply_left_statuses)
-
-        # def _cleanup(_=None, w=worker):
-        #     try:
-        #         self._left_workers.remove(w)
-        #     except ValueError:
-        #         pass
-        # worker.signals.done.connect(_cleanup)
-
-        # QThreadPool.globalInstance().start(worker)
-    # def refresh_left_status_async(self):
-    #         worker = _TrackLabelWorker(self.encoder_names, self.encoder_status_manager)
-    #         worker.signals.done.connect(self._apply_left_statuses)  # 回主線程
-    #         QThreadPool.globalInstance().start(worker)
-
-    # def _apply_left_statuses(self, statuses: dict):
-    #     # statuses: {encoder_name: (status_text, color)}
-    #     for name, pair in statuses.items():
-    #         if not isinstance(pair, (tuple, list)) or len(pair) < 2:
-    #             continue
-    #         text, color = pair
-    #         lbl = self.encoder_status.get(name)  # 左側每台 encoder 的 QLabel
-    #         if lbl:
-    #             lbl.setText(f"狀態：{text}")
-    #             lbl.setStyleSheet(f"color: {color}")
+   
     def update_zoom(self, value):
         self.view.hour_width = value
         self.view.day_width = 24 * value
@@ -812,6 +777,86 @@ class MainWindow(QMainWindow):
             os.startfile(folder_path)
         else:
             QMessageBox.information(self, "📁 找不到資料夾", f"{folder_path} 不存在")
+# 放在 MainWindow 類別裡（例如 show_block_context_menu 的上方或下方都可）
+    def _edit_block_via_dialog(self, item):
+        # item 是 time_block.TimeBlock 的實例
+        from PySide6.QtCore import QDateTime, QTime
+        from utils import hours_to_hhmm, hhmm_to_hours
+
+        parent_view = self.view
+        now = QDateTime.currentDateTime()
+        start_dt = QDateTime(item.start_date, QTime(int(item.start_hour), int((item.start_hour % 1) * 60)))
+        end_dt = start_dt.addSecs(int(item.duration_hours * 3600))
+
+        # 已結束就不讓編輯（跟 TimeBlock.double click 一樣）
+        if now > end_dt:
+            log("⛔ 已結束排程不可編輯")
+            return
+
+        # 目前這個 block 的初始值
+        block_dict = {
+            "qdate": item.start_date,
+            "label": item.label,
+            "start_time": hours_to_hhmm(item.start_hour),
+            "duration_time": hours_to_hhmm(item.duration_hours),
+            "encoder_name": parent_view.encoder_names[item.track_index] if 0 <= item.track_index < len(parent_view.encoder_names) else None,
+            "id": item.block_id,
+        }
+
+        # 是否唯讀（已開始的情況）
+        readonly = start_dt <= now
+
+        # 排除自己做重疊檢查
+        def overlap_checker(qdate, track_index, start_hour, duration):
+            return parent_view.is_overlap(qdate, track_index, start_hour, duration, exclude_label=item.block_id)
+
+        dlg = EditBlockDialog(block_dict, parent_view.encoder_names, readonly=readonly, overlap_checker=overlap_checker)
+        if not dlg.exec():
+            return
+
+        updated = dlg.get_updated_data()
+
+        # 轉換時間
+        qdate_q = updated["qdate"]
+        new_start_hour = hhmm_to_hours(updated["start_time"])
+        new_duration   = hhmm_to_hours(updated["duration_time"])
+
+        # 回寫到 TimeBlock 本體
+        item.start_date = qdate_q
+        item.label = updated["label"]
+        item.start_hour = new_start_hour
+        item.duration_hours = new_duration
+        if updated.get("encoder_name") in parent_view.encoder_names:
+            item.track_index = parent_view.encoder_names.index(updated["encoder_name"])
+
+        # 更新幾何 & 顯示
+        item.update_geometry(parent_view.base_date)
+        item.update_text_position()
+
+        # 計算跨日的 end_hour / end_qdate
+        end_hour, end_qdate = item.compute_end_info()
+
+        # 回寫到 block_data
+        for b in parent_view.block_data:
+            if b.get("id") == item.block_id:
+                b.update({
+                    "qdate": item.start_date,
+                    "start_hour": item.start_hour,
+                    "duration": item.duration_hours,
+                    "end_hour": end_hour,
+                    "end_qdate": end_qdate,
+                    "label": item.label,
+                    "encoder_name": updated["encoder_name"],
+                    "start_time": hours_to_hhmm(item.start_hour),
+                    "duration_time": hours_to_hhmm(item.duration_hours),
+                    "track_index": item.track_index,
+                    "id": item.block_id,
+                })
+                break
+
+        # 存檔 + 同步 runner
+        parent_view.save_schedule()
+        self.sync_runner_data()
 
     def show_block_context_menu(self, pos):
         scene_pos = self.view.mapToScene(pos)
@@ -830,8 +875,9 @@ class MainWindow(QMainWindow):
 
                 menu.addAction(f"查看檔案名稱：{label}")
                 open_action = menu.addAction("📂 開啟資料夾")
-                copy_action = menu.addAction("📋 複製路徑")
+                copy_action = menu.addAction("📋 複製排程")
                 delete_action = menu.addAction("🗑️ 刪除排程")
+                edit_action = menu.addAction("✏️ 編輯排程…")  # ✏️ 新增
                  # ✅ 禁用已結束 block 的刪除功能
                 if getattr(item, 'has_ended', False) or "錄影中" in item.status or "停止" in item.status:
                     delete_action.setEnabled(False)
@@ -845,12 +891,90 @@ class MainWindow(QMainWindow):
                     else:
                         QMessageBox.information(self, "📁 找不到資料夾", f"{folder_path} 不存在")
                 elif selected == copy_action:
-                    clipboard = QApplication.clipboard()
-                    clipboard.setText(path)
+                    # 從 block_data 找到這個 block 的完整資料當作範本
+                    src = next((b for b in self.view.block_data if b.get("id") == getattr(item, "block_id", None)), None)
+                    if src is None:
+                        log("⚠️ 找不到來源 block，無法複製")
+                        return
+
+                    # 只保留貼上需要的欄位（名稱/時長）
+                    self.copied_block_template = {
+                        "label": src.get("label", ""),
+                        "duration": float(src.get("duration", src.get("duration_hours", 4.0))),
+                    }
+                    log(f"✅ 已複製行程：{self.copied_block_template['label']}（{self.copied_block_template['duration']}h）")
+                elif selected == edit_action:
+                        # 直接用被點到的圖元 item 當參數丟進去
+                    self._edit_block_via_dialog(item)
                 elif selected == delete_action:
                     self.block_manager.remove_block_by_id(item.block_id)
 
                 break
+            # === 若沒有點到任何 block，提供背景選單（貼上） ===
+# 只有當 self.copied_block_template 有東西才顯示
+            if not any(isinstance(it, PreviewImageItem) or (hasattr(it, 'label') and it.contains(it.mapFromScene(scene_pos)))
+                    for it in self.view.scene.items()):
+                if self.copied_block_template:
+                    bg_menu = QMenu(self)
+                    paste_action = bg_menu.addAction("📋 貼上行程")
+                    selected = bg_menu.exec(self.view.mapToGlobal(pos))
+                    if selected == paste_action:
+                        self._paste_block_at_scene_pos(scene_pos)
+    def _paste_block_at_scene_pos(self, scene_pos):
+        tpl = self.copied_block_template
+        if not tpl:
+            return
+
+        # === 1) 由座標換算 slot（日期、時段、track） ===
+        view = self.view
+        hour_width = getattr(view, "hour_width", 20)
+        day_width  = 24 * hour_width
+        offset_y   = getattr(view, "grid_top_offset", 0)
+
+        x = scene_pos.x()
+        y = scene_pos.y()
+
+        # 日期
+        day_idx   = int(max(0, min(6, x // day_width)))  # 週視圖 0..6
+        qdate     = view.base_date.addDays(day_idx)
+
+        # 小時（對齊 5 分鐘 = 1/12 小時；你也可以改成 0.25 小時）
+        hour_px   = x % day_width
+        raw_hour  = hour_px / hour_width
+        step      = 1/12  # 5 分鐘
+        start_hour = round(round(raw_hour / step) * step, 4)
+
+        # 軌道（encoder）
+        track_index = int((y - offset_y) // getattr(view, "BLOCK_HEIGHT", 100))
+        if track_index < 0 or track_index >= len(self.encoder_names):
+            log("⚠️ 貼上超出軌道範圍，取消")
+            return
+
+        duration = float(tpl.get("duration", 4.0))
+        label    = tpl.get("label", "").strip() or "複製的行程"
+        encoder_name = self.encoder_names[track_index]
+
+        # === 2) 基本檢查：不可在過去、不可重疊 ===
+        start_dt = QDateTime(qdate, QTime(int(start_hour), int((start_hour % 1) * 60)))
+        if start_dt < QDateTime.currentDateTime():
+            QMessageBox.warning(self, "❌ 無法貼上", "⚠️ 不能貼到過去的時間。")
+            return
+
+        if self.view.is_overlap(qdate, track_index, start_hour, duration, exclude_label=None):
+            QMessageBox.warning(self, "❌ 無法貼上", "⚠️ 與既有行程重疊。")
+            return
+
+        # === 3) 建立新 block（自動處理重名） ===
+        self.block_manager.add_block_with_unique_label(
+            label,
+            track_index=track_index,
+            start_hour=start_hour,
+            duration=duration,
+            encoder_name=encoder_name,
+            qdate=qdate
+        )
+        self.sync_runner_data()
+        log(f"📌 已貼上：{label} ➜ {qdate.toString('yyyy-MM-dd')} {start_hour:.2f}h @ {encoder_name}")
 
     def encoder_stop(self, encoder_name, status_label):
         # status_label.setText("狀態：🔁 停止中...")
@@ -873,7 +997,7 @@ class MainWindow(QMainWindow):
                 end_dt = start_dt.addSecs(int(block.duration_hours * 3600))
 
                 if start_dt <= now <= end_dt:
-                    block.status = "⏹ 停止中"
+                    block.status = "✅ 已結束"
                      # ⏱️ 依據停止時間更新長度與畫面
                     new_duration = max(0.0, round(start_dt.secsTo(now) / 3600, 2))
                     block.duration_hours = new_duration
