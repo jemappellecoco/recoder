@@ -688,3 +688,225 @@ Traceback (most recent call last):
     ^^^^^^^^^^^^^^^^^^^^^^^^^^
 AttributeError: 'ScheduleView' object has no attribute 'setVerticalScrollMode'. Did you mean: 'setVerticalScrollBar'?
 
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 416, in mouseMoveEvent
+    if abs(delta_px - self._last_left_px) < self.PIXEL_DEADBAND:
+                                            ^^^^^^^^^^^^^^^^^^^
+AttributeError: 'TimeBlock' object has no attribute 'PIXEL_DEADBAND'
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 416, in mouseMoveEvent
+    if abs(delta_px - self._last_left_px) < self.PIXEL_DEADBAND:
+                                            ^^^^^^^^^^^^^^^^^^^
+AttributeError: 'TimeBlock' object has no attribute 'PIXEL_DEADBAND'
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 416, in mouseMoveEvent
+    if abs(delta_px - self._last_left_px) < self.PIXEL_DEADBAND:
+                                            ^^^^^^^^^^^^^^^^^^^
+AttributeError: 'TimeBlock' object has no attribute 'PIXEL_DEADBAND'
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 416, in mouseMoveEvent
+    if abs(delta_px - self._last_left_px) < self.PIXEL_DEADBAND:
+                                            ^^^^^^^^^^^^^^^^^^^
+AttributeError: 'TimeBlock' object has no attribute 'PIXEL_DEADBAND'
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 416, in mouseMoveEvent
+    if abs(delta_px - self._last_left_px) < self.PIXEL_DEADBAND:
+                                            ^^^^^^^^^^^^^^^^^^^
+AttributeError: 'TimeBlock' object has no attribute 'PIXEL_DEADBAND'
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 416, in mouseMoveEvent
+    if abs(delta_px - self._last_left_px) < self.PIXEL_DEADBAND:
+                                            ^^^^^^^^^^^^^^^^^^^
+AttributeError: 'TimeBlock' object has no attribute 'PIXEL_DEADBAND'
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 416, in mouseMoveEvent
+    if abs(delta_px - self._last_left_px) < self.PIXEL_DEADBAND:
+                                            ^^^^^^^^^^^^^^^^^^^
+AttributeError: 'TimeBlock' object has no attribute 'PIXEL_DEADBAND'
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 416, in mouseMoveEvent
+    if abs(delta_px - self._last_left_px) < self.PIXEL_DEADBAND:
+                                            ^^^^^^^^^^^^^^^^^^^
+AttributeError: 'TimeBlock' object has no attribute 'PIXEL_DEADBAND'
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 416, in mouseMoveEvent
+    if abs(delta_px - self._last_left_px) < self.PIXEL_DEADBAND:
+                                            ^^^^^^^^^^^^^^^^^^^
+AttributeError: 'TimeBlock' object has no attribute 'PIXEL_DEADBAND'
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 416, in mouseMoveEvent
+    if abs(delta_px - self._last_left_px) < self.PIXEL_DEADBAND:
+                                            ^^^^^^^^^^^^^^^^^^^
+AttributeError: 'TimeBlock' object has no attribute 'PIXEL_DEADBAND'
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 416, in mouseMoveEvent
+    if abs(delta_px - self._last_left_px) < self.PIXEL_DEADBAND:
+                                            ^^^^^^^^^^^^^^^^^^^
+AttributeError: 'TimeBlock' object has no attribute 'PIXEL_DEADBAND'
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 421, in mouseMoveEvent
+    if abs(delta_px - self._last_left_px) < self.PIXEL_DEADBAND:
+                                            ^^^^^^^^^^^^^^^^^^^
+AttributeError: 'TimeBlock' object has no attribute 'PIXEL_DEADBAND'
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 421, in mouseMoveEvent
+    if abs(delta_px - self._last_left_px) < self.PIXEL_DEADBAND:
+                                            ^^^^^^^^^^^^^^^^^^^
+AttributeError: 'TimeBlock' object has no attribute 'PIXEL_DEADBAND'
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 421, in mouseMoveEvent
+    if abs(delta_px - self._last_left_px) < self.PIXEL_DEADBAND:
+                                            ^^^^^^^^^^^^^^^^^^^
+AttributeError: 'TimeBlock' object has no attribute 'PIXEL_DEADBAND'
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 421, in mouseMoveEvent
+    if abs(delta_px - self._last_left_px) < self.PIXEL_DEADBAND:
+                                            ^^^^^^^^^^^^^^^^^^^
+AttributeError: 'TimeBlock' object has no attribute 'PIXEL_DEADBAND'
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 421, in mouseMoveEvent
+    if abs(delta_px - self._last_left_px) < self.PIXEL_DEADBAND:
+                                            ^^^^^^^^^^^^^^^^^^^
+AttributeError: 'TimeBlock' object has no attribute 'PIXEL_DEADBAND'
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 421, in mouseMoveEvent
+    if abs(delta_px - self._last_left_px) < self.PIXEL_DEADBAND:
+                                            ^^^^^^^^^^^^^^^^^^^
+AttributeError: 'TimeBlock' object has no attribute 'PIXEL_DEADBAND'
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 421, in mouseMoveEvent
+    if abs(delta_px - self._last_left_px) < self.PIXEL_DEADBAND:
+                                            ^^^^^^^^^^^^^^^^^^^
+AttributeError: 'TimeBlock' object has no attribute 'PIXEL_DEADBAND'
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 421, in mouseMoveEvent
+    if abs(delta_px - self._last_left_px) < self.PIXEL_DEADBAND:
+                                            ^^^^^^^^^^^^^^^^^^^
+AttributeError: 'TimeBlock' object has no attribute 'PIXEL_DEADBAND'
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 421, in mouseMoveEvent
+    if abs(delta_px - self._last_left_px) < self.PIXEL_DEADBAND:
+                                            ^^^^^^^^^^^^^^^^^^^
+AttributeError: 'TimeBlock' object has no attribute 'PIXEL_DEADBAND'
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 421, in mouseMoveEvent
+    if abs(delta_px - self._last_left_px) < self.PIXEL_DEADBAND:
+                                            ^^^^^^^^^^^^^^^^^^^
+AttributeError: 'TimeBlock' object has no attribute 'PIXEL_DEADBAND'
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 421, in mouseMoveEvent
+    if abs(delta_px - self._last_left_px) < self.PIXEL_DEADBAND:
+                                            ^^^^^^^^^^^^^^^^^^^
+AttributeError: 'TimeBlock' object has no attribute 'PIXEL_DEADBAND'
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 421, in mouseMoveEvent
+    if abs(delta_px - self._last_left_px) < self.PIXEL_DEADBAND:
+                                            ^^^^^^^^^^^^^^^^^^^
+AttributeError: 'TimeBlock' object has no attribute 'PIXEL_DEADBAND'
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\ui_main_window.py", line 480, in safe_check_schedule
+    log("🕒 檢查排程中...")
+    ~~~^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\coco\recoder\schedule_project\utils.py", line 164, in log
+    ts = QDateTime.currentDateTime().toString("HH:mm:ss")
+         ~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 648, in mouseReleaseEvent
+    end_hour, end_qdate = self.compute_end_info()
+                          ^^^^^^^^^^^^^^^^^^^^^
+AttributeError: Error calling Python override of QGraphicsRectItem::mouseReleaseEvent(): 'TimeBlock' object has no attribute 'compute_end_info'. Did you mean: 'compute_end_dt'?
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 648, in mouseReleaseEvent
+    end_hour, end_qdate = self.compute_end_info()
+                          ^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'TimeBlock' object has no attribute 'compute_end_info'. Did you mean: 'compute_end_dt'?
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 648, in mouseReleaseEvent
+    end_hour, end_qdate = self.compute_end_dt()
+    ^^^^^^^^^^^^^^^^^^^
+TypeError: cannot unpack non-iterable PySide6.QtCore.QDateTime object
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 648, in mouseReleaseEvent
+    end_hour, end_qdate = self.compute_end_dt()
+    ^^^^^^^^^^^^^^^^^^^
+TypeError: cannot unpack non-iterable PySide6.QtCore.QDateTime object
+

@@ -104,7 +104,8 @@ class EditBlockDialog(QDialog):
         qdate = self.date_input.date()
         duration = float(self.duration_input.value())
         start_dt = QDateTime(qdate, time)
-        end_dt = start_dt.addSecs(int(duration * 3600))
+        # end_dt = start_dt.addSecs(int(duration * 3600))
+        end_dt = start_dt.addSecs(int((duration * 3600)))
         now = QDateTime.currentDateTime()
 
         # 原始開始時間（用於判斷是否把開始時間往「更早」改）
@@ -131,8 +132,8 @@ class EditBlockDialog(QDialog):
             except Exception:
                 track_index = 0
 
-            start_hour = round(time.hour() + time.minute() / 60.0, 4)
-
+            # start_hour = round(time.hour() + time.minute() / 60.0, 4)
+            start_hour = (time.hour() * 60 + time.minute()) / 60.0
             # 排除自己：用 label（若你有 block_id，更好改成 exclude_id）
             def overlap(qd, ti, sh, dur):
                 return self.overlap_checker(qd, ti, sh, dur)

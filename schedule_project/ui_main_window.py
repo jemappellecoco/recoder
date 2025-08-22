@@ -834,7 +834,7 @@ class MainWindow(QMainWindow):
         item.update_text_position()
 
         # 計算跨日的 end_hour / end_qdate
-        end_hour, end_qdate = item.compute_end_info()
+        end_hour, end_qdate = item.compute_end_dt()
 
         # 回寫到 block_data
         for b in parent_view.block_data:
@@ -857,69 +857,189 @@ class MainWindow(QMainWindow):
         # 存檔 + 同步 runner
         parent_view.save_schedule()
         self.sync_runner_data()
-
     def show_block_context_menu(self, pos):
+        from time_block import PreviewImageItem  # 避免頂端循環匯入
+        from PySide6.QtCore import QDateTime, QTime
+
         scene_pos = self.view.mapToScene(pos)
+
+        # 先找滑鼠下是否命中某個 block（跳過預覽圖片）
+        hit_item = None
         for item in self.view.scene.items():
             if isinstance(item, PreviewImageItem):
-                continue  # ✅ 避免圖片觸發右鍵選單
-            if hasattr(item, 'label') and item.contains(item.mapFromScene(scene_pos)):
-                menu = QMenu(self)
-                label = item.label
-                 # ➤ 嘗試取得檔案路徑（防止例外）
-                try:
-                    path = self.path_manager.get_full_path("", label)
-                except Exception as e:
-                    log(f"⚠️ get_full_path 錯誤: {e}",level="ERROR")
-                    path = ""
-
-                menu.addAction(f"查看檔案名稱：{label}")
-                open_action = menu.addAction("📂 開啟資料夾")
-                copy_action = menu.addAction("📋 複製排程")
-                delete_action = menu.addAction("🗑️ 刪除排程")
-                edit_action = menu.addAction("✏️ 編輯排程…")  # ✏️ 新增
-                 # ✅ 禁用已結束 block 的刪除功能
-                if getattr(item, 'has_ended', False) or "錄影中" in item.status or "停止" in item.status:
-                    delete_action.setEnabled(False)
-                    delete_action.setText("🗑️ 已開始或完成，不可刪")
-                selected = menu.exec(self.view.mapToGlobal(pos))
-
-                if selected == open_action:
-                    folder_path = os.path.dirname(path)
-                    if os.path.exists(folder_path):
-                        os.startfile(folder_path)
-                    else:
-                        QMessageBox.information(self, "📁 找不到資料夾", f"{folder_path} 不存在")
-                elif selected == copy_action:
-                    # 從 block_data 找到這個 block 的完整資料當作範本
-                    src = next((b for b in self.view.block_data if b.get("id") == getattr(item, "block_id", None)), None)
-                    if src is None:
-                        log("⚠️ 找不到來源 block，無法複製")
-                        return
-
-                    # 只保留貼上需要的欄位（名稱/時長）
-                    self.copied_block_template = {
-                        "label": src.get("label", ""),
-                        "duration": float(src.get("duration", src.get("duration_hours", 4.0))),
-                    }
-                    log(f"✅ 已複製行程：{self.copied_block_template['label']}（{self.copied_block_template['duration']}h）")
-                elif selected == edit_action:
-                        # 直接用被點到的圖元 item 當參數丟進去
-                    self._edit_block_via_dialog(item)
-                elif selected == delete_action:
-                    self.block_manager.remove_block_by_id(item.block_id)
-
+                continue
+            if hasattr(item, "label") and item.contains(item.mapFromScene(scene_pos)):
+                hit_item = item
                 break
-            # === 若沒有點到任何 block，提供背景選單（貼上） ===
-# 只有當 self.copied_block_template 有東西才顯示
-            if not any(isinstance(it, PreviewImageItem) or (hasattr(it, 'label') and it.contains(it.mapFromScene(scene_pos)))
-                    for it in self.view.scene.items()):
-                if self.copied_block_template:
-                    bg_menu = QMenu(self)
-                    paste_action = bg_menu.addAction("📋 貼上行程")
-                    selected = bg_menu.exec(self.view.mapToGlobal(pos))
-                    if selected == paste_action:
-                        self._paste_block_at_scene_pos(scene_pos)
+
+        # ========== 命中 block：顯示原本的右鍵選單 ==========
+        if hit_item:
+            # 右鍵彈出前，僅就地刷新這一個 block 的時間狀態（不重畫整個畫面）
+            try:
+                if hasattr(hit_item, "update_status_by_time"):
+                    changed = hit_item.update_status_by_time()
+                    if changed and hasattr(self.view, "save_schedule"):
+                        self.view.save_schedule()
+            except Exception:
+                pass
+
+            # 即時計算現在是否已開始/已結束（不要只靠 has_ended / 文字）
+            now = QDateTime.currentDateTime()
+            start_dt = QDateTime(
+                hit_item.start_date,
+                QTime(int(hit_item.start_hour) % 24, int((hit_item.start_hour % 1) * 60)),
+            )
+            try:
+                end_dt = hit_item.compute_end_dt()
+            except Exception:
+                end_dt = start_dt.addSecs(int(hit_item.duration_hours * 3600))
+
+            already_started = now >= start_dt
+            already_ended = now > end_dt
+
+            menu = QMenu(self)
+            label = hit_item.label
+
+            # 嘗試取得檔案路徑（防呆）
+            try:
+                path = self.path_manager.get_full_path("", label)
+            except Exception as e:
+                log(f"⚠️ get_full_path 錯誤: {e}", level="ERROR")
+                path = ""
+
+            menu.addAction(f"查看檔案名稱：{label}")
+            open_action = menu.addAction("📂 開啟資料夾")
+            copy_action = menu.addAction("📋 複製排程")
+            delete_action = menu.addAction("🗑️ 刪除排程")
+            edit_action = menu.addAction("✏️ 編輯排程…")
+
+            # 已開始或已完成的排程不可刪
+            if already_started or already_ended:
+                delete_action.setEnabled(False)
+                delete_action.setText("🗑️ 已開始或完成，不可刪")
+                        # ✅ 已結束：編輯選項灰掉，避免誤會
+            if already_ended:
+                edit_action.setEnabled(False)
+                edit_action.setText("✏️ 已結束（不可編輯）")
+            selected = menu.exec(self.view.mapToGlobal(pos))
+
+            if selected == open_action:
+                folder_path = os.path.dirname(path)
+                if os.path.exists(folder_path):
+                    try:
+                        os.startfile(folder_path)  # Windows
+                    except Exception:
+                        import subprocess, sys
+                        if sys.platform.startswith("darwin"):
+                            subprocess.call(["open", folder_path])
+                        else:
+                            subprocess.call(["xdg-open", folder_path])
+                else:
+                    QMessageBox.information(self, "📁 找不到資料夾", f"{folder_path} 不存在")
+
+            elif selected == copy_action:
+                # 從 block_data 找到此 block 的完整資料當範本
+                src = next(
+                    (b for b in self.view.block_data if b.get("id") == getattr(hit_item, "block_id", None)),
+                    None,
+                )
+                if src is None:
+                    log("⚠️ 找不到來源 block，無法複製")
+                    return
+
+                # 只保留貼上會用到的欄位
+                self.copied_block_template = {
+                    "label": src.get("label", ""),
+                    "duration": float(src.get("duration", src.get("duration_hours", 4.0))),
+                }
+                log(f"✅ 已複製行程：{self.copied_block_template['label']}（{self.copied_block_template['duration']}h）")
+
+            elif selected == edit_action:
+                self._edit_block_via_dialog(hit_item)
+
+            elif selected == delete_action:
+                now2 = QDateTime.currentDateTime()
+                if now2 >= start_dt or now2 > end_dt:
+                    QMessageBox.information(self, "無法刪除", "此排程已開始或已結束。")
+                    return
+                self.block_manager.remove_block_by_id(hit_item.block_id)
+
+            return  # 已處理，直接收工
+
+        # ========== 沒有命中任何 block：顯示「貼上」背景選單 ==========
+        bg_menu = QMenu(self)
+        paste_action = bg_menu.addAction("📋 貼上行程")
+        if not self.copied_block_template:
+            paste_action.setEnabled(False)
+            paste_action.setText("📋（尚未複製）")
+
+        selected = bg_menu.exec(self.view.mapToGlobal(pos))
+        if selected == paste_action:
+            self._paste_block_at_scene_pos(scene_pos)
+
+    #     def show_block_context_menu(self, pos):
+        
+#         scene_pos = self.view.mapToScene(pos)
+#         for item in self.view.scene.items():
+#             if isinstance(item, PreviewImageItem):
+#                 continue  # ✅ 避免圖片觸發右鍵選單
+#             if hasattr(item, 'label') and item.contains(item.mapFromScene(scene_pos)):
+#                 menu = QMenu(self)
+#                 label = item.label
+#                  # ➤ 嘗試取得檔案路徑（防止例外）
+#                 try:
+#                     path = self.path_manager.get_full_path("", label)
+#                 except Exception as e:
+#                     log(f"⚠️ get_full_path 錯誤: {e}",level="ERROR")
+#                     path = ""
+
+#                 menu.addAction(f"查看檔案名稱：{label}")
+#                 open_action = menu.addAction("📂 開啟資料夾")
+#                 copy_action = menu.addAction("📋 複製排程")
+#                 delete_action = menu.addAction("🗑️ 刪除排程")
+#                 edit_action = menu.addAction("✏️ 編輯排程…")  # ✏️ 新增
+#                  # ✅ 禁用已結束 block 的刪除功能
+#                 if getattr(item, 'has_ended', False) or "錄影中" in item.status or "停止" in item.status:
+#                     delete_action.setEnabled(False)
+#                     delete_action.setText("🗑️ 已開始或完成，不可刪")
+#                 selected = menu.exec(self.view.mapToGlobal(pos))
+
+#                 if selected == open_action:
+#                     folder_path = os.path.dirname(path)
+#                     if os.path.exists(folder_path):
+#                         os.startfile(folder_path)
+#                     else:
+#                         QMessageBox.information(self, "📁 找不到資料夾", f"{folder_path} 不存在")
+#                 elif selected == copy_action:
+#                     # 從 block_data 找到這個 block 的完整資料當作範本
+#                     src = next((b for b in self.view.block_data if b.get("id") == getattr(item, "block_id", None)), None)
+#                     if src is None:
+#                         log("⚠️ 找不到來源 block，無法複製")
+#                         return
+
+#                     # 只保留貼上需要的欄位（名稱/時長）
+#                     self.copied_block_template = {
+#                         "label": src.get("label", ""),
+#                         "duration": float(src.get("duration", src.get("duration_hours", 4.0))),
+#                     }
+#                     log(f"✅ 已複製行程：{self.copied_block_template['label']}（{self.copied_block_template['duration']}h）")
+#                 elif selected == edit_action:
+#                         # 直接用被點到的圖元 item 當參數丟進去
+#                     self._edit_block_via_dialog(item)
+#                 elif selected == delete_action:
+#                     self.block_manager.remove_block_by_id(item.block_id)
+
+#                 break
+#             # === 若沒有點到任何 block，提供背景選單（貼上） ===
+# # 只有當 self.copied_block_template 有東西才顯示
+#             if not any(isinstance(it, PreviewImageItem) or (hasattr(it, 'label') and it.contains(it.mapFromScene(scene_pos)))
+#                     for it in self.view.scene.items()):
+#                 if self.copied_block_template:
+#                     bg_menu = QMenu(self)
+#                     paste_action = bg_menu.addAction("📋 貼上行程")
+#                     selected = bg_menu.exec(self.view.mapToGlobal(pos))
+#                     if selected == paste_action:
+#                         self._paste_block_at_scene_pos(scene_pos)
     def _paste_block_at_scene_pos(self, scene_pos):
         tpl = self.copied_block_template
         if not tpl:
@@ -975,65 +1095,134 @@ class MainWindow(QMainWindow):
         )
         self.sync_runner_data()
         log(f"📌 已貼上：{label} ➜ {qdate.toString('yyyy-MM-dd')} {start_hour:.2f}h @ {encoder_name}")
-
     def encoder_stop(self, encoder_name, status_label):
-        # status_label.setText("狀態：🔁 停止中...")
-        # status_label.setStyleSheet("color: blue")
         QApplication.processEvents()
 
         ok = self.encoder_controller.stop_encoder(encoder_name)
-
         now = QDateTime.currentDateTime()
         encoder_index = self.encoder_names.index(encoder_name)
 
         if ok:
-            stopped_block_id = None  # 用來記錄有被停止的 block id
+            stopped_block_id = None
 
             for block in self.view.blocks:
                 if block.track_index != encoder_index:
                     continue
 
                 start_dt = QDateTime(block.start_date, QTime(int(block.start_hour), int((block.start_hour % 1) * 60)))
-                end_dt = start_dt.addSecs(int(block.duration_hours * 3600))
+                end_dt   = start_dt.addSecs(int(block.duration_hours * 3600))
 
                 if start_dt <= now <= end_dt:
-                    block.status = "✅ 已結束"
-                     # ⏱️ 依據停止時間更新長度與畫面
-                    new_duration = max(0.0, round(start_dt.secsTo(now) / 3600, 2))
+                    # ⏱ 根據實際停止時間修正時長
+                    new_duration = max(0.0, round(start_dt.secsTo(now) / 3600.0, 3))
                     block.duration_hours = new_duration
-                    block.update_geometry(self.view.base_date)
-                    end_hour, end_qdate = block.compute_end_info()
-                    block.update_block_data({
-                        "duration": block.duration_hours,
-                        "end_hour": end_hour,
-                        "end_qdate": end_qdate,
-                         "status": "狀態：✅ 已結束"
-                        
-                    })
-                    block.status = "狀態：✅ 已結束"
-                    block.setBrush(QBrush(QColor(180, 180, 180, 180)))  # 灰色背景
+
+                    # ✅ 統一用 set_state，顏色/文字一次到位（取代手動 status/setBrush）
+                    block.set_state("FINISHED")
+
+                    # 重新排版、幾何
                     block.update_geometry(self.view.base_date)
                     block.update_text_position()
-                    self.view.save_schedule()
-                    stopped_block_id = block.block_id
-                    break  # ✅ 只處理一個正在錄的 block
 
-            # ✅ 同步 runner 狀態：只加上那一個 block_id
+                    # 📌 回寫 block_data（務必把 status 一起寫回）
+                    try:
+                        end_hour, end_qdate = block.compute_end_dt()
+                    except Exception:
+                        # 若沒有 compute_end_info()，就自己算：
+                        end_dt_now = start_dt.addSecs(int(new_duration * 3600))
+                        end_hour   = end_dt_now.time().hour() + end_dt_now.time().minute() / 60.0
+                        end_qdate  = end_dt_now.date()
+
+                    block.update_block_data({
+                        "duration":   block.duration_hours,
+                        "end_hour":   end_hour,
+                        "end_qdate":  end_qdate,
+                        "status":     block.status,   # ⬅️ 關鍵：把 set_state 後的字串寫回
+                    })
+
+                    # 💾 立刻存檔（你的 save_schedule 已會把 block_data.status 寫進 JSON）
+                    self.view.save_schedule()
+
+                    stopped_block_id = block.block_id
+                    break  # 只處理一個正在錄的 block
+
+            # ✅ 同步 runner 狀態
             if stopped_block_id:
                 self.runner.already_stopped.add(stopped_block_id)
 
-            status_label.setText("狀態： 已結束")
+            status_label.setText("狀態：✅ 已結束")
             status_label.setStyleSheet("color: gray")
         else:
             status_label.setText("狀態：❌ 停止失敗")
             status_label.setStyleSheet("color: red")
-        
+
         self.runner.refresh_encoder_statuses()
+
+        # 建議：如果剛剛已 save 並且 draw_grid 會重建 blocks，可視需求保留或拿掉
+        # 保留的話，JSON 裡已經有 status，就不怕狀態遺失
         self.view.draw_grid()
+
         self.sync_runner_data()
-        
         QApplication.processEvents()
         self.view.update()
+    # def encoder_stop(self, encoder_name, status_label):
+    #     # status_label.setText("狀態：🔁 停止中...")
+    #     # status_label.setStyleSheet("color: blue")
+    #     QApplication.processEvents()
+
+    #     ok = self.encoder_controller.stop_encoder(encoder_name)
+
+    #     now = QDateTime.currentDateTime()
+    #     encoder_index = self.encoder_names.index(encoder_name)
+
+    #     if ok:
+    #         stopped_block_id = None  # 用來記錄有被停止的 block id
+
+    #         for block in self.view.blocks:
+    #             if block.track_index != encoder_index:
+    #                 continue
+
+    #             start_dt = QDateTime(block.start_date, QTime(int(block.start_hour), int((block.start_hour % 1) * 60)))
+    #             end_dt = start_dt.addSecs(int(block.duration_hours * 3600))
+
+    #             if start_dt <= now <= end_dt:
+    #                 block.status = "✅ 已結束"
+    #                  # ⏱️ 依據停止時間更新長度與畫面
+    #                 new_duration = max(0.0, round(start_dt.secsTo(now) / 3600, 2))
+    #                 block.duration_hours = new_duration
+    #                 block.update_geometry(self.view.base_date)
+    #                 end_hour, end_qdate = block.compute_end_info()
+    #                 block.update_block_data({
+    #                     "duration": block.duration_hours,
+    #                     "end_hour": end_hour,
+    #                     "end_qdate": end_qdate,
+    #                      "status": "狀態：✅ 已結束"
+                        
+    #                 })
+    #                 block.status = "狀態：✅ 已結束"
+    #                 block.setBrush(QBrush(QColor(180, 180, 180, 180)))  # 灰色背景
+    #                 block.update_geometry(self.view.base_date)
+    #                 block.update_text_position()
+    #                 self.view.save_schedule()
+    #                 stopped_block_id = block.block_id
+    #                 break  # ✅ 只處理一個正在錄的 block
+
+    #         # ✅ 同步 runner 狀態：只加上那一個 block_id
+    #         if stopped_block_id:
+    #             self.runner.already_stopped.add(stopped_block_id)
+
+    #         status_label.setText("狀態： 已結束")
+    #         status_label.setStyleSheet("color: gray")
+    #     else:
+    #         status_label.setText("狀態：❌ 停止失敗")
+    #         status_label.setStyleSheet("color: red")
+        
+    #     self.runner.refresh_encoder_statuses()
+    #     self.view.draw_grid()
+    #     self.sync_runner_data()
+        
+    #     QApplication.processEvents()
+    #     self.view.update()
     def encoder_start(self, encoder_name, entry_widget, status_label):
         filename = entry_widget.text().strip()
         if not filename:

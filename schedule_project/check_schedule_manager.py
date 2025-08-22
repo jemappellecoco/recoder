@@ -1,7 +1,7 @@
 # check_schedule_manager.py
 from PySide6.QtCore import QDateTime, QDate, QTime, QObject, Signal, QRunnable, QThreadPool
 from shiboken6 import isValid
-from utils import log
+from utils import log,MIN_LEAD_SECONDS,hourf_to_qtime
 from encoder_utils import get_encoder_display_name
 from encoder_status_manager import EncoderStatusManager
 
@@ -41,21 +41,21 @@ class _CheckWorker(QRunnable):
             start_hour = float(b["start_hour"])
             end_hour   = float(b.get("end_hour", b["start_hour"] + b["duration"]))
 
-            start_dt = QDateTime(qdate, QTime(int(start_hour), int((start_hour % 1) * 60)))
-            end_dt   = QDateTime(end_qdate, QTime(int(end_hour), int((end_hour % 1) * 60)))
-
+            start_dt = QDateTime(qdate,    hourf_to_qtime(float(start_hour)))
+            end_dt   = QDateTime(end_qdate, hourf_to_qtime(float(end_hour)))
             track_idx = b["track_index"]
             if not (0 <= track_idx < len(enc_names)):
                 continue
             encoder_name = enc_names[track_idx]
 
             # ➤ 自動開始
-            delta = start_dt.secsTo(now)  # start_dt -> now（到點=0）
-            if 0 <= delta <= 1 and block_id not in started:
+            delta_start = start_dt.secsTo(now)  # start_dt -> now（到點=0）
+            if 0 <= delta_start <= 1 and block_id not in started:
                 actions.append({"action": "start", "block_id": block_id, "encoder_name": encoder_name})
 
             # ➤ 自動停止
-            if now >= end_dt and block_id not in stopped:
+            delta_end = end_dt.secsTo(now)
+            if 0 <= delta_end <= 1 and block_id not in stopped:
                 actions.append({"action": "stop", "block_id": block_id, "encoder_name": encoder_name})
 
         self.signals.done.emit(actions)

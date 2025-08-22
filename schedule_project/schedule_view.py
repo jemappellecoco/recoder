@@ -8,9 +8,9 @@ from encoder_status_manager import EncoderStatusManager
 import os
 import uuid
 from shiboken6 import isValid
-from utils import hours_to_hhmm, hhmm_to_hours 
+from utils import hours_to_hhmm, hhmm_to_hours ,hourf_to_qtime
 # from utils import min_to_hhmm, hours_to_hhmm
-from utils import log
+from utils import log,hourf_to_qtime
 from encoder_utils import get_encoder_display_name
 from path_manager import PathManager 
 class _TrackLabelWorkerSignals(QObject):
@@ -186,17 +186,26 @@ class ScheduleView(QGraphicsView):
         self.now_time_label.setPos(x - 10, offset - 18)  # 🔴 新位置跟著 offset
         self.now_time_label.setZValue(1000)
         
+    # def update_all_blocks(self):
+    #         # 只更新畫面內的 block，省資源
+    #     visible_scene_rect = self.mapToScene(self.viewport().rect()).boundingRect()
+    #     for item in self.scene.items(visible_scene_rect):
+    #         if isinstance(item, TimeBlock):
+    #             item.update_status_by_time()
     def update_all_blocks(self):
-            # 只更新畫面內的 block，省資源
         visible_scene_rect = self.mapToScene(self.viewport().rect()).boundingRect()
+        any_changed = False
         for item in self.scene.items(visible_scene_rect):
             if isinstance(item, TimeBlock):
-                item.update_status_by_time()
-    # def refresh_track_labels(self):
-    #     # 啟動背景 worker 查詢所有 encoder 狀態
-    #     worker = _TrackLabelWorker(self.encoder_names, self.encoder_status_manager)
-    #     worker.signals.done.connect(self._apply_track_label_statuses)
-    #     self._pool.start(worker)
+                changed = item.update_status_by_time()
+                any_changed = any_changed or bool(changed)
+
+        # 節流（例如 10 秒內只存一次）
+        if any_changed:
+            now = QDateTime.currentDateTime()
+            if not hasattr(self, "_last_auto_save") or self._last_auto_save.msecsTo(now) > 10_000:
+                self.save_schedule()
+                self._last_auto_save = now   # ← 修正這行
     def refresh_track_labels(self):
         # 啟動背景 worker 查詢所有 encoder 狀態
         worker = _TrackLabelWorker(list(self.encoder_names), self.encoder_status_manager)
@@ -326,7 +335,14 @@ class ScheduleView(QGraphicsView):
                 block.update_geometry(self.base_date)
                 block.encoder_names = self.encoder_names
                 # block.status = data.get("status") or "狀態：⏳ 等待中"
-
+                # ⬇️ 這裡插入
+                stored = data.get("status")
+                if stored:
+                    block.status = stored
+                    block.update_text_position()
+                    block.update_status_by_time()
+                else:
+                    block.update_status_by_time()
                 block.update_text_position()
                 # ✅ 立刻依現在時間套狀態（等待中／已結束）
                 block.update_status_by_time()
@@ -352,36 +368,68 @@ class ScheduleView(QGraphicsView):
 
 
 
-
     def is_overlap(self, qdate, track_index, start_hour, duration, exclude_label=None):
-        new_start_dt = QDateTime(qdate, QTime(int(start_hour), int((start_hour % 1) * 60)))
-        end_hour = start_hour + duration
-        end_qdate = qdate.addDays(1) if end_hour >= 24 else qdate
-        new_end_dt = QDateTime(end_qdate, QTime(int(end_hour % 24), int(((end_hour % 1) * 60))))
+        # 允許傳進來的是 str / QDate
+        if isinstance(qdate, str):
+            qdate = QDate.fromString(qdate, "yyyy-MM-dd")
+
+        # 新區間：用 QDateTime + addSecs(round(...))，精確又可自動跨日
+        new_start_dt = QDateTime(qdate, hourf_to_qtime(float(start_hour)))
+        new_end_dt   = new_start_dt.addSecs(int(round(float(duration) * 3600)))
 
         for block in self.block_data:
             if block["track_index"] != track_index:
                 continue
 
-            # ✅ 用 exclude_label 當作 exclude_id（只要確定你傳的是 block["id"]）
+            # 若 exclude_label 是 block id，就跳過自己
             if exclude_label and block.get("id") == exclude_label:
-                continue  
+                continue
 
-            b_start_hour = float(block["start_hour"])
-            b_end_hour = float(block.get("end_hour", b_start_hour + block["duration"]))
             b_qdate = block["qdate"]
             if isinstance(b_qdate, str):
                 b_qdate = QDate.fromString(b_qdate, "yyyy-MM-dd")
-            b_end_qdate = block.get("end_qdate", b_qdate.addDays(1) if b_end_hour >= 24 else b_qdate)
 
-            b_start_dt = QDateTime(b_qdate, QTime(int(b_start_hour), int((b_start_hour % 1) * 60)))
-            b_end_dt = QDateTime(b_end_qdate, QTime(int(b_end_hour % 24), int((b_end_hour % 1) * 60)))
+            b_start_hour = float(block["start_hour"])
+            b_duration   = float(block["duration"])
 
+            b_start_dt = QDateTime(b_qdate, hourf_to_qtime(b_start_hour))
+            b_end_dt   = b_start_dt.addSecs(int(round(b_duration * 3600)))
+
+            # 區間交集： [new_start_dt, new_end_dt) 與 [b_start_dt, b_end_dt)
             if new_start_dt < b_end_dt and new_end_dt > b_start_dt:
                 log(f"🔴 重疊偵測：與 {block['label']} 發生重疊")
                 return True
 
         return False
+    # def is_overlap(self, qdate, track_index, start_hour, duration, exclude_label=None):
+    #     new_start_dt = QDateTime(qdate, QTime(int(start_hour), int((start_hour % 1) * 60)))
+    #     end_hour = start_hour + duration
+    #     end_qdate = qdate.addDays(1) if end_hour >= 24 else qdate
+    #     new_end_dt = QDateTime(end_qdate, QTime(int(end_hour % 24), int(((end_hour % 1) * 60))))
+
+    #     for block in self.block_data:
+    #         if block["track_index"] != track_index:
+    #             continue
+
+    #         # ✅ 用 exclude_label 當作 exclude_id（只要確定你傳的是 block["id"]）
+    #         if exclude_label and block.get("id") == exclude_label:
+    #             continue  
+
+    #         b_start_hour = float(block["start_hour"])
+    #         b_end_hour = float(block.get("end_hour", b_start_hour + block["duration"]))
+    #         b_qdate = block["qdate"]
+    #         if isinstance(b_qdate, str):
+    #             b_qdate = QDate.fromString(b_qdate, "yyyy-MM-dd")
+    #         b_end_qdate = block.get("end_qdate", b_qdate.addDays(1) if b_end_hour >= 24 else b_qdate)
+
+    #         b_start_dt = QDateTime(b_qdate, QTime(int(b_start_hour), int((b_start_hour % 1) * 60)))
+    #         b_end_dt = QDateTime(b_end_qdate, QTime(int(b_end_hour % 24), int((b_end_hour % 1) * 60)))
+
+    #         if new_start_dt < b_end_dt and new_end_dt > b_start_dt:
+    #             log(f"🔴 重疊偵測：與 {block['label']} 發生重疊")
+    #             return True
+
+    #     return False
     
 
     def add_time_block(self, qdate: QDate, track_index, start_hour, duration=4, label="節目", encoder_name=None, block_id=None):
@@ -415,8 +463,12 @@ class ScheduleView(QGraphicsView):
         self.draw_blocks()
     def can_delete_block(self, block):
         now = QDateTime.currentDateTime()
-        start_dt = QDateTime(block["qdate"], QTime(int(block["start_hour"]), int((block["start_hour"] % 1) * 60)))
-        return start_dt >= now    
+        start_dt = QDateTime(block["qdate"], hourf_to_qtime(float(block["start_hour"])))
+        return start_dt >= now
+    # def can_delete_block(self, block):
+    #     now = QDateTime.currentDateTime()
+    #     start_dt = QDateTime(block["qdate"], QTime(int(block["start_hour"]), int((block["start_hour"] % 1) * 60)))
+    #     return start_dt >= now    
     def remove_block_by_label(self, label):
         # 🔍 找出對應的 block 資料（從 block_data 查）
         block_to_remove = next((b for b in self.block_data if b["label"] == label), None)
@@ -460,33 +512,14 @@ class ScheduleView(QGraphicsView):
                 filename = os.path.join(documents_dir, "schedule.json")
 
             block_map = {b["id"]: b for b in self.block_data if b.get("id")}
-            now = QDateTime.currentDateTime()
-
+            # now = QDateTime.currentDateTime()
             for item in self.scene.items():
                 if isinstance(item, TimeBlock) and item.block_id in block_map:
-                    start_dt = QDateTime(item.start_date, QTime(int(item.start_hour), int((item.start_hour % 1) * 60)))
-                    if start_dt >= now:
-                        block_map[item.block_id]["status"] = item.status
-
+                    # 以畫面上 TimeBlock 的狀態為準，無條件回寫
+                    block_map[item.block_id]["status"] = item.status
+            
             with open(filename, "w", encoding="utf-8") as f:
-                # json.dump([
-                #     {
-                #         "qdate": b["qdate"].toString("yyyy-MM-dd"),
-                #         "track_index": b["track_index"],
-                #         "start_hour": b["start_hour"],
-                #         "duration": b["duration"],
-                #         "end_hour": b["end_hour"],
-                #         "end_qdate": (
-                #             b["end_qdate"].toString("yyyy-MM-dd") if isinstance(b["end_qdate"], QDate)
-                #             else b["end_qdate"]
-                #         ),
-                #         "label": b["label"],
-                #         "id": b.get("id"),
-                #         "encoder_name": b.get("encoder_name"),
-                #         "snapshot_path": b.get("snapshot_path", ""),
-                #         "status": b.get("status", "")
-                #     } for b in self.block_data
-                                # ], f, ensure_ascii=False, indent=2)
+                
                 json.dump([{
                     "qdate": b["qdate"].toString("yyyy-MM-dd"),
                     "track_index": b["track_index"],
@@ -508,61 +541,6 @@ class ScheduleView(QGraphicsView):
             log(f"❌ 儲存失敗: {e}",level="ERROR")
 
 
-
-    # def load_schedule(self, filename=None):
-    #     if filename is None:
-    #         # 嘗試從 config.json 讀取使用者設定的 schedule 檔案路徑
-    #         if os.path.exists("config.json"):
-    #             try:
-    #                 with open("config.json", "r", encoding="utf-8") as f:
-    #                     config = json.load(f)
-    #                     filename = config.get("schedule_file", "schedule.json")
-    #             except Exception as e:
-    #                 log(f"⚠️ 無法從 config.json 取得 schedule 檔：{e}",level="ERROR")
-    #                 filename = "schedule.json"
-    #         else:
-    #             filename = "schedule.json"
-
-    #     try:
-    #         with open(filename, "r", encoding="utf-8") as f:
-    #             raw = json.load(f)
-    #             # load_schedule
-    #             self.block_data = [{
-    #                  "qdate": b["qdate"].toString("yyyy-MM-dd"),
-    #                 "track_index": b["track_index"],
-    #                 "start_time": hours_to_hhmm(b["start_hour"]),     # HH:MM
-    #                 "duration_time": hours_to_hhmm(b["duration"]),    # HH:MM
-    #                 "end_time": hours_to_hhmm(b["end_hour"]),         # HH:MM
-    #                 "end_qdate": (
-    #                     b["end_qdate"].toString("yyyy-MM-dd")
-    #                     if isinstance(b["end_qdate"], QDate) else str(b["end_qdate"])
-    #                 ),
-    #                 "label": b["label"],
-    #                 "id": b.get("id"),
-    #                 "encoder_name": b.get("encoder_name"),
-    #                 "snapshot_path": b.get("snapshot_path",""),
-    #                 "status": b.get("status","")
-    #             } for b in raw]
-    #             # self.block_data = [
-    #             #     {
-    #             #         "qdate": QDate.fromString(b["qdate"], "yyyy-MM-dd"),
-    #             #         "track_index": b["track_index"],
-    #             #         "start_hour": b["start_hour"],
-    #             #         "duration": b["duration"],
-    #             #         "end_hour": b.get("end_hour", b["start_hour"] + b["duration"]),
-    #             #         "end_qdate": QDate.fromString(b.get("end_qdate"), "yyyy-MM-dd") if b.get("end_qdate") else None,
-    #             #         "label": b["label"],
-    #             #         "id": b.get("id"),
-    #             #         "encoder_name": b.get("encoder_name"),
-    #             #         # "snapshot_path": b.get("snapshot_path", ""),
-    #             #         "status": b.get("status", "")
-    #             #     } for b in raw
-    #             # ]
-    #         self.remap_block_tracks()
-    #         self.draw_grid()
-    #         log(f"📂 已載入節目排程 {filename}")
-    #     except FileNotFoundError:
-    #         log(f"🕘 無 {filename} 檔案，自動跳過載入。")
     def load_schedule(self, filename=None):
         if filename is None:
             # 嘗試從 config.json 讀取使用者設定的 schedule 檔案路徑

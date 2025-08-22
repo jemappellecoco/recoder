@@ -149,6 +149,7 @@ class AddBlockDialog(QDialog):
             return
 
         duration = float(self.duration_input.value())  # 小時
+        # end_dt = start_dt.addSecs(int(duration * 3600))
         end_dt = start_dt.addSecs(int(duration * 3600))
         if end_dt <= start_dt:
             self.status_label.setText("❌ 結束時間必須晚於開始時間")
@@ -163,7 +164,7 @@ class AddBlockDialog(QDialog):
             track_index = 0
 
         # 若 overlap_checker 仍吃 float 小時，維持這行；（之後你改成 HH:MM/分鐘也能替換）
-        start_hour = round(time.hour() + time.minute() / 60.0, 4)
+        start_hour = (time.hour() * 60 + time.minute()) / 60.0
         if self.overlap_checker and self.overlap_checker(qdate, track_index, start_hour, duration):
             self.status_label.setText("⚠️ 時間重疊")
             self.status_label.setStyleSheet("color: red")

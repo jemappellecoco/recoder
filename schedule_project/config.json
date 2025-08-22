@@ -1,1 +1,5 @@
-{"record_root": "Z:/", "schedule_file": "Z:/schedule_project/schedule.json", "preview_root": "Z:/"}
+{
+  "record_root": "Z:/",
+  "schedule_file": "C:/Users/coco/recoder/schedule.json",
+  "preview_root": "Z:/"
+}

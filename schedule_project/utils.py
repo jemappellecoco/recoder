@@ -11,6 +11,7 @@ _buffered_logs = []
 MAX_LOG_LINES = 500
 DEBUG_MODE = True
 MIN_LEAD_SECONDS = 90
+DAY_MIN = 24 * 60
 # 用訊號把任何執行緒的 log 丟回主執行緒處理
 
 class _LogBus(QObject):
@@ -20,6 +21,13 @@ _log_bus = None
 # ==== HH:MM <-> 分鐘 / QTime / 小時數 工具 ====
 
 DAY_MIN = 24 * 60
+def hourf_to_qtime(hourf: float) -> QTime:
+    """
+    小時(浮點) -> QTime（四捨五入到分鐘，含 24h 取模）
+    避免 49.999 分被 int() 截成 49 分。
+    """
+    total_min = int(round(float(hourf) * 60)) % DAY_MIN
+    return QTime(total_min // 60, total_min % 60)
 def ceil_to_next_minute(dt: QDateTime) -> QDateTime:
     t = dt.time()
     if t.second() == 0 and t.msec() == 0:
