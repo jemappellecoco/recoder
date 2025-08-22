@@ -36,6 +36,21 @@ from encoder_status_manager import EncoderStatusManager
 from schedule_view import _TrackLabelWorker
 from utils import hours_to_hhmm, hhmm_to_hours
 from edit_block_dialog import EditBlockDialog
+def _tag_toolbar_buttons_as_primary(tb):
+    from PySide6.QtWidgets import QToolButton
+    for act in tb.actions():
+        w = tb.widgetForAction(act)
+        if not isinstance(w, QToolButton):
+            continue
+        # 排除系統溢出按鈕（通常拿不到，但這行當雙保險）
+        if w.objectName() == "qt_toolbar_ext_button":
+            continue
+        # 打上屬性標籤，讓上面的 QSS 命中
+        w.setProperty("kind", "primary")
+        # 讓 QSS 立即生效
+        w.style().unpolish(w)
+        w.style().polish(w)
+        w.update()
 def find_latest_snapshot_by_prefix(preview_dir, encoder_name):
     pattern = os.path.join(preview_dir,"preview", f"{encoder_name}*.png") 
     log(f"🔍 查找最新快照：{pattern}")
@@ -177,8 +192,32 @@ class MainWindow(QMainWindow):
         zlay.setSpacing(6)
         # 管理 Encoder（QAction）
         self.manage_encoder_button = QAction("⚙️ 管理 Encoder", self)
+        self.manage_encoder_button.setObjectName("manageEncoderBtn")  # 指定名稱方便 QSS 定位
         self.manage_encoder_button.triggered.connect(self.open_encoder_manager)
         toolbar.addAction(self.manage_encoder_button)
+ 
+# 取得對應的 QToolButton，設定 objectName
+        btn = toolbar.widgetForAction(self.manage_encoder_button)
+        if btn is not None:
+            btn.setObjectName("manageEncoderBtn")
+
+        # 再設定樣式（可放在建好 toolbar 的最後）
+        toolbar.setStyleSheet("""
+    QToolBar QToolButton[kind="primary"] {
+        padding: 2px 8px;
+        margin-right: 4px;       /* 按鈕間距 */
+        border: 1px solid #aaa;
+        border-radius: 4px;
+        background: #f2f2f2;     /* 灰色背景 */
+        font-weight: 500;
+    }
+    QToolBar QToolButton[kind="primary"]:hover {
+        background: #e0e0e0;
+    }
+    QToolBar QToolButton[kind="primary"]:pressed {
+        background: #d6d6d6;
+    }
+        """)
         zoom_label = QLabel("Zoom：")
         self.zoom_slider = QSlider(Qt.Horizontal)
         self.zoom_slider.setRange(5, 100)
@@ -220,6 +259,12 @@ class MainWindow(QMainWindow):
         dl.addWidget(self.date_label); dl.addWidget(self.date_picker)
         date_act = QWidgetAction(self); date_act.setDefaultWidget(date_wrap)
         toolbar.addAction(date_act)
+        # 加一個小空白
+        gap = QWidget()
+        gap.setFixedWidth(10)   # 你要幾 px 就設幾 px
+        gap_act = QWidgetAction(self)
+        gap_act.setDefaultWidget(gap)
+        toolbar.addAction(gap_act)
 
         # 其他按鈕（純 QAction）
         toolbar.addAction(_mk_action("📅 今天", self.jump_to_today))
@@ -235,7 +280,7 @@ class MainWindow(QMainWindow):
         undo_act = QAction("↩️ 復原刪除", self)
         undo_act.triggered.connect(lambda: (self.block_manager.undo_last_delete(), self.sync_runner_data()))
         toolbar.addAction(undo_act)
-
+        _tag_toolbar_buttons_as_primary(toolbar)
         # 把 QToolBar 放進你的 right_layout（取代原本的 toolbar widget）
         right_layout.addWidget(toolbar)
 
@@ -252,7 +297,7 @@ class MainWindow(QMainWindow):
                 background-color: #111;
                 color: #00FF00;
                 font-family: Consolas, Courier, monospace;
-                font-size: 11px;
+                font-size: 12px;
                 border: 1px solid #333;
             }
         """)
