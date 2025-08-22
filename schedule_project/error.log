@@ -989,3 +989,493 @@ Traceback (most recent call last):
     ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^
 RuntimeError: Internal C++ object (PySide6.QtWidgets.QDateEdit) already deleted.
 
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 454, in mouseMoveEvent
+    start_dt = _dt(self.start_date, self.start_hour)
+               ^^^
+UnboundLocalError: cannot access local variable '_dt' where it is not associated with a value
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 454, in mouseMoveEvent
+    start_dt = _dt(self.start_date, self.start_hour)
+               ^^^
+UnboundLocalError: cannot access local variable '_dt' where it is not associated with a value
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 454, in mouseMoveEvent
+    start_dt = _dt(self.start_date, self.start_hour)
+               ^^^
+UnboundLocalError: cannot access local variable '_dt' where it is not associated with a value
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 454, in mouseMoveEvent
+    start_dt = _dt(self.start_date, self.start_hour)
+               ^^^
+UnboundLocalError: cannot access local variable '_dt' where it is not associated with a value
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\main.py", line 46, in <module>
+    win = MainWindow()
+  File "c:\Users\coco\recoder\schedule_project\ui_main_window.py", line 317, in __init__
+    self.view.draw_grid()
+    ~~~~~~~~~~~~~~~~~~~^^
+  File "c:\Users\coco\recoder\schedule_project\schedule_view.py", line 288, in draw_grid
+    self.draw_blocks()
+    ~~~~~~~~~~~~~~~~^^
+  File "c:\Users\coco\recoder\schedule_project\schedule_view.py", line 324, in draw_blocks
+    block = TimeBlock(
+        data["qdate"],
+    ...<4 lines>...
+        block_id=data.get("id")
+    )
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 144, in __init__
+    self.status_text = QGraphicsSimpleTextItem(self.status, self)
+                                               ^^^^^^^^^^^
+AttributeError: 'TimeBlock' object has no attribute 'status'
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\main.py", line 46, in <module>
+    win = MainWindow()
+  File "c:\Users\coco\recoder\schedule_project\ui_main_window.py", line 317, in __init__
+    self.view.draw_grid()
+    ~~~~~~~~~~~~~~~~~~~^^
+  File "c:\Users\coco\recoder\schedule_project\schedule_view.py", line 288, in draw_grid
+    self.draw_blocks()
+    ~~~~~~~~~~~~~~~~^^
+  File "c:\Users\coco\recoder\schedule_project\schedule_view.py", line 324, in draw_blocks
+    block = TimeBlock(
+        data["qdate"],
+    ...<4 lines>...
+        block_id=data.get("id")
+    )
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 146, in __init__
+    self.status_text.setFont(QFont("Arial", 9))
+    ^^^^^^^^^^^^^^^^
+AttributeError: 'TimeBlock' object has no attribute 'status_text'
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 454, in mouseMoveEvent
+    start_dt = _dt(self.start_date, self.start_hour)
+               ^^^
+UnboundLocalError: cannot access local variable '_dt' where it is not associated with a value
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 454, in mouseMoveEvent
+    start_dt = _dt(self.start_date, self.start_hour)
+               ^^^
+UnboundLocalError: cannot access local variable '_dt' where it is not associated with a value
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 454, in mouseMoveEvent
+    start_dt = _dt(self.start_date, self.start_hour)
+               ^^^
+UnboundLocalError: cannot access local variable '_dt' where it is not associated with a value
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 454, in mouseMoveEvent
+    start_dt = _dt(self.start_date, self.start_hour)
+               ^^^
+UnboundLocalError: cannot access local variable '_dt' where it is not associated with a value
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 454, in mouseMoveEvent
+    start_dt = _dt(self.start_date, self.start_hour)
+               ^^^
+UnboundLocalError: cannot access local variable '_dt' where it is not associated with a value
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 454, in mouseMoveEvent
+    start_dt = _dt(self.start_date, self.start_hour)
+               ^^^
+UnboundLocalError: cannot access local variable '_dt' where it is not associated with a value
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 454, in mouseMoveEvent
+    start_dt = _dt(self.start_date, self.start_hour)
+               ^^^
+UnboundLocalError: cannot access local variable '_dt' where it is not associated with a value
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\check_schedule_manager.py", line 177, in _apply_reconcile_on_main
+    block.flash_warning(600)
+    ~~~~~~~~~~~~~~~~~~~^^^^^
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 122, in flash_warning
+    self.setBrush(QBrush(self.COLORS["WARNING"]))
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: Internal C++ object (TimeBlock) already deleted.
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\check_schedule_manager.py", line 182, in _apply_reconcile_on_main
+    block.mark_aborted("編碼器非錄影狀態")
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 113, in mark_aborted
+    self.set_state("ABORTED")
+    ~~~~~~~~~~~~~~^^^^^^^^^^^
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 110, in set_state
+    self.setBrush(QBrush(self.COLORS[key]))
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: Internal C++ object (TimeBlock) already deleted.
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\check_schedule_manager.py", line 177, in _apply_reconcile_on_main
+    block.flash_warning(600)
+    ~~~~~~~~~~~~~~~~~~~^^^^^
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 122, in flash_warning
+    self.setBrush(QBrush(self.COLORS["WARNING"]))
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: Internal C++ object (TimeBlock) already deleted.
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\check_schedule_manager.py", line 182, in _apply_reconcile_on_main
+    block.mark_aborted("編碼器非錄影狀態")
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 113, in mark_aborted
+    self.set_state("ABORTED")
+    ~~~~~~~~~~~~~~^^^^^^^^^^^
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 110, in set_state
+    self.setBrush(QBrush(self.COLORS[key]))
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: Internal C++ object (TimeBlock) already deleted.
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\check_schedule_manager.py", line 182, in _apply_reconcile_on_main
+    block.mark_aborted("編碼器非錄影狀態")
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 113, in mark_aborted
+    self.set_state("ABORTED")
+    ~~~~~~~~~~~~~~^^^^^^^^^^^
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 110, in set_state
+    self.setBrush(QBrush(self.COLORS[key]))
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: Internal C++ object (TimeBlock) already deleted.
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\check_schedule_manager.py", line 182, in _apply_reconcile_on_main
+    block.mark_aborted("編碼器非錄影狀態")
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 113, in mark_aborted
+    self.set_state("ABORTED")
+    ~~~~~~~~~~~~~~^^^^^^^^^^^
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 110, in set_state
+    self.setBrush(QBrush(self.COLORS[key]))
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: Internal C++ object (TimeBlock) already deleted.
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\check_schedule_manager.py", line 182, in _apply_reconcile_on_main
+    block.mark_aborted("編碼器非錄影狀態")
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 113, in mark_aborted
+    self.set_state("ABORTED")
+    ~~~~~~~~~~~~~~^^^^^^^^^^^
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 110, in set_state
+    self.setBrush(QBrush(self.COLORS[key]))
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: Internal C++ object (TimeBlock) already deleted.
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\check_schedule_manager.py", line 182, in _apply_reconcile_on_main
+    block.mark_aborted("編碼器非錄影狀態")
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 113, in mark_aborted
+    self.set_state("ABORTED")
+    ~~~~~~~~~~~~~~^^^^^^^^^^^
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 110, in set_state
+    self.setBrush(QBrush(self.COLORS[key]))
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: Internal C++ object (TimeBlock) already deleted.
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\check_schedule_manager.py", line 182, in _apply_reconcile_on_main
+    block.mark_aborted("編碼器非錄影狀態")
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 113, in mark_aborted
+    self.set_state("ABORTED")
+    ~~~~~~~~~~~~~~^^^^^^^^^^^
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 110, in set_state
+    self.setBrush(QBrush(self.COLORS[key]))
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: Internal C++ object (TimeBlock) already deleted.
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\check_schedule_manager.py", line 182, in _apply_reconcile_on_main
+    block.mark_aborted("編碼器非錄影狀態")
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 113, in mark_aborted
+    self.set_state("ABORTED")
+    ~~~~~~~~~~~~~~^^^^^^^^^^^
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 110, in set_state
+    self.setBrush(QBrush(self.COLORS[key]))
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: Internal C++ object (TimeBlock) already deleted.
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\check_schedule_manager.py", line 182, in _apply_reconcile_on_main
+    block.mark_aborted("編碼器非錄影狀態")
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 113, in mark_aborted
+    self.set_state("ABORTED")
+    ~~~~~~~~~~~~~~^^^^^^^^^^^
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 110, in set_state
+    self.setBrush(QBrush(self.COLORS[key]))
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: Internal C++ object (TimeBlock) already deleted.
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\check_schedule_manager.py", line 182, in _apply_reconcile_on_main
+    block.mark_aborted("編碼器非錄影狀態")
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 113, in mark_aborted
+    self.set_state("ABORTED")
+    ~~~~~~~~~~~~~~^^^^^^^^^^^
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 110, in set_state
+    self.setBrush(QBrush(self.COLORS[key]))
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: Internal C++ object (TimeBlock) already deleted.
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\check_schedule_manager.py", line 182, in _apply_reconcile_on_main
+    block.mark_aborted("編碼器非錄影狀態")
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 113, in mark_aborted
+    self.set_state("ABORTED")
+    ~~~~~~~~~~~~~~^^^^^^^^^^^
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 110, in set_state
+    self.setBrush(QBrush(self.COLORS[key]))
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: Internal C++ object (TimeBlock) already deleted.
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\check_schedule_manager.py", line 182, in _apply_reconcile_on_main
+    block.mark_aborted("編碼器非錄影狀態")
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 113, in mark_aborted
+    self.set_state("ABORTED")
+    ~~~~~~~~~~~~~~^^^^^^^^^^^
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 110, in set_state
+    self.setBrush(QBrush(self.COLORS[key]))
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: Internal C++ object (TimeBlock) already deleted.
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\check_schedule_manager.py", line 182, in _apply_reconcile_on_main
+    block.mark_aborted("編碼器非錄影狀態")
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 113, in mark_aborted
+    self.set_state("ABORTED")
+    ~~~~~~~~~~~~~~^^^^^^^^^^^
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 110, in set_state
+    self.setBrush(QBrush(self.COLORS[key]))
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: Internal C++ object (TimeBlock) already deleted.
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\check_schedule_manager.py", line 182, in _apply_reconcile_on_main
+    block.mark_aborted("編碼器非錄影狀態")
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 113, in mark_aborted
+    self.set_state("ABORTED")
+    ~~~~~~~~~~~~~~^^^^^^^^^^^
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 110, in set_state
+    self.setBrush(QBrush(self.COLORS[key]))
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: Internal C++ object (TimeBlock) already deleted.
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\check_schedule_manager.py", line 182, in _apply_reconcile_on_main
+    block.mark_aborted("編碼器非錄影狀態")
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 113, in mark_aborted
+    self.set_state("ABORTED")
+    ~~~~~~~~~~~~~~^^^^^^^^^^^
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 110, in set_state
+    self.setBrush(QBrush(self.COLORS[key]))
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: Internal C++ object (TimeBlock) already deleted.
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\check_schedule_manager.py", line 182, in _apply_reconcile_on_main
+    block.mark_aborted("編碼器非錄影狀態")
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 113, in mark_aborted
+    self.set_state("ABORTED")
+    ~~~~~~~~~~~~~~^^^^^^^^^^^
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 110, in set_state
+    self.setBrush(QBrush(self.COLORS[key]))
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: Internal C++ object (TimeBlock) already deleted.
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\check_schedule_manager.py", line 182, in _apply_reconcile_on_main
+    block.mark_aborted("編碼器非錄影狀態")
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 113, in mark_aborted
+    self.set_state("ABORTED")
+    ~~~~~~~~~~~~~~^^^^^^^^^^^
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 110, in set_state
+    self.setBrush(QBrush(self.COLORS[key]))
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: Internal C++ object (TimeBlock) already deleted.
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\check_schedule_manager.py", line 182, in _apply_reconcile_on_main
+    block.mark_aborted("編碼器非錄影狀態")
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 113, in mark_aborted
+    self.set_state("ABORTED")
+    ~~~~~~~~~~~~~~^^^^^^^^^^^
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 110, in set_state
+    self.setBrush(QBrush(self.COLORS[key]))
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: Internal C++ object (TimeBlock) already deleted.
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\check_schedule_manager.py", line 182, in _apply_reconcile_on_main
+    block.mark_aborted("編碼器非錄影狀態")
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 113, in mark_aborted
+    self.set_state("ABORTED")
+    ~~~~~~~~~~~~~~^^^^^^^^^^^
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 110, in set_state
+    self.setBrush(QBrush(self.COLORS[key]))
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: Internal C++ object (TimeBlock) already deleted.
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\check_schedule_manager.py", line 182, in _apply_reconcile_on_main
+    block.mark_aborted("編碼器非錄影狀態")
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 113, in mark_aborted
+    self.set_state("ABORTED")
+    ~~~~~~~~~~~~~~^^^^^^^^^^^
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 110, in set_state
+    self.setBrush(QBrush(self.COLORS[key]))
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: Internal C++ object (TimeBlock) already deleted.
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\check_schedule_manager.py", line 182, in _apply_reconcile_on_main
+    block.mark_aborted("編碼器非錄影狀態")
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 113, in mark_aborted
+    self.set_state("ABORTED")
+    ~~~~~~~~~~~~~~^^^^^^^^^^^
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 110, in set_state
+    self.setBrush(QBrush(self.COLORS[key]))
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: Internal C++ object (TimeBlock) already deleted.
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\check_schedule_manager.py", line 182, in _apply_reconcile_on_main
+    block.mark_aborted("編碼器非錄影狀態")
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 113, in mark_aborted
+    self.set_state("ABORTED")
+    ~~~~~~~~~~~~~~^^^^^^^^^^^
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 110, in set_state
+    self.setBrush(QBrush(self.COLORS[key]))
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: Internal C++ object (TimeBlock) already deleted.
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\check_schedule_manager.py", line 182, in _apply_reconcile_on_main
+    block.mark_aborted("編碼器非錄影狀態")
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 113, in mark_aborted
+    self.set_state("ABORTED")
+    ~~~~~~~~~~~~~~^^^^^^^^^^^
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 110, in set_state
+    self.setBrush(QBrush(self.COLORS[key]))
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: Internal C++ object (TimeBlock) already deleted.
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\check_schedule_manager.py", line 182, in _apply_reconcile_on_main
+    block.mark_aborted("編碼器非錄影狀態")
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 113, in mark_aborted
+    self.set_state("ABORTED")
+    ~~~~~~~~~~~~~~^^^^^^^^^^^
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 110, in set_state
+    self.setBrush(QBrush(self.COLORS[key]))
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: Internal C++ object (TimeBlock) already deleted.
+

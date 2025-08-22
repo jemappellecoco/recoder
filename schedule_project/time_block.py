@@ -8,7 +8,19 @@ import os
 from utils import log
 from utils import hours_to_hhmm, hhmm_to_hours,MIN_LEAD_SECONDS,hourf_to_qtime
 logging.basicConfig(level=logging.INFO)
+def _dt(qd, hourf):
+    """qd 可為 QDate 或 'yyyy-MM-dd'；hourf 可為 float 或 'HH:MM'。"""
+    if isinstance(qd, str):
+        qd = QDate.fromString(qd, "yyyy-MM-dd")
+    if not isinstance(qd, QDate) or not qd.isValid():
+        qd = QDate.currentDate()
 
+    try:
+        hf = float(hourf)
+    except Exception:
+        hf = hhmm_to_hours(str(hourf))
+
+    return QDateTime(qd, hourf_to_qtime(hf))
 def _safe_pixmap_from_file(path: str) -> QPixmap | None:
     try:
         if not path or not os.path.isfile(path):
@@ -77,12 +89,14 @@ class TimeBlock(QGraphicsRectItem):
         "RECORDING": QColor(255, 0, 0, 180),     # 錄影：紅
         "FINISHED": QColor(0, 200, 0, 180),      # 結束：綠
         "WARNING": QColor(255, 215, 0, 200),     # 警告：黃（金黃好辨識）
+        "ABORTED":   QColor(255, 165, 0, 220),   # 🟠 異常中斷（橘）
     }
 
     STATUS_TEXT = {
         "WAITING":  "狀態：⌛ 等待中",
         "RECORDING":"狀態：✅ 錄影中",
         "FINISHED": "狀態：✅ 已結束",
+        "ABORTED":   "狀態：❌ 異常中斷",       # 新增
     }
         # —— 這三個是你 left 分支會用到的 —— 
     NOW_BUFFER_SEC = MIN_LEAD_SECONDS   # 與全域設定一致（建議 90s）
@@ -95,7 +109,10 @@ class TimeBlock(QGraphicsRectItem):
             self._base_brush = QBrush(self.COLORS[key])  # <- 記錄正常底色
             self.setBrush(QBrush(self.COLORS[key]))
             self.update_text_position()
-
+    def mark_aborted(self, reason: str | None = None):
+        self.set_state("ABORTED")
+        if reason:
+            self.set_live_status(f"⚠️ {reason}")      
     def flash_warning(self, ms: int = 500):
         """只閃顏色，不動文字/狀態；ms 後還原到 _base_brush。"""
         if self._warning_flashing:
@@ -121,9 +138,11 @@ class TimeBlock(QGraphicsRectItem):
         self.label = label
         self.status = "等待中"
         # 等待中 → 灰色
-        self.setBrush(QBrush(QColor(180, 180, 180, 180)))
-        start_dt = QDateTime(start_date, QTime(int(start_hour), int((start_hour % 1) * 60)))
-        end_dt = start_dt.addSecs(int(duration_hours * 3600))
+        # self.setBrush(QBrush(QColor(180, 180, 180, 180)))
+        start_dt = QDateTime(start_date, hourf_to_qtime(start_hour))
+        end_dt   = start_dt.addSecs(int(duration_hours * 3600))
+        # start_dt = QDateTime(start_date, QTime(int(start_hour), int((start_hour % 1) * 60)))
+        # end_dt = start_dt.addSecs(int(duration_hours * 3600))
         now = QDateTime.currentDateTime()
         self.has_ended = now > end_dt  # ✅ 判斷是否已完成
         self.text = QGraphicsSimpleTextItem("", self)
@@ -305,10 +324,10 @@ class TimeBlock(QGraphicsRectItem):
         local_pos = self.mapFromScene(event.scenePos())
 
         # 小工具：把 (QDate, 小時float) 轉 QDateTime
-        def _dt(qd, hourf):
-            if isinstance(qd, str):
-                qd = QDate.fromString(qd, "yyyy-MM-dd")
-            return QDateTime(qd, QTime(int(hourf) % 24, int((hourf % 1) * 60)))
+        # def _dt(qd, hourf):
+        #     if isinstance(qd, str):
+        #         qd = QDate.fromString(qd, "yyyy-MM-dd")
+        #     return QDateTime(qd, QTime(int(hourf) % 24, int((hourf % 1) * 60)))
 
         # 預設清空快取（避免舊值殘留）
         self._nearest_left_end = None
@@ -437,8 +456,9 @@ class TimeBlock(QGraphicsRectItem):
             cand_duration = round(max(self.MIN_DURATION_HOURS, delta_px / hour_width), 3)
 
             # 目前起點 & 候選終點
-            start_dt = QDateTime(self.start_date,
-                                QTime(int(self.start_hour) % 24, int((self.start_hour % 1) * 60)))
+            start_dt = _dt(self.start_date, self.start_hour)
+            # start_dt = QDateTime(self.start_date,
+            #                     QTime(int(self.start_hour) % 24, int((self.start_hour % 1) * 60)))
             cand_end_dt = start_dt.addSecs(int(cand_duration * 3600))
 
             # 不得縮到現在之前
@@ -448,8 +468,8 @@ class TimeBlock(QGraphicsRectItem):
                 return
 
             # 跨日安全：找到同 track、在我右邊(開始時間 > 我的開始)的最近鄰居
-            def _dt(qd: QDate, hourf: float) -> QDateTime:
-                return QDateTime(qd, QTime(int(hourf) % 24, int((hourf % 1) * 60)))
+            # def _dt(qd: QDate, hourf: float) -> QDateTime:
+            #     return QDateTime(qd, QTime(int(hourf) % 24, int((hourf % 1) * 60)))
 
             nearest_right_start: QDateTime | None = None
             for b in parent_view.block_data:
@@ -513,8 +533,8 @@ class TimeBlock(QGraphicsRectItem):
                 cand_qdate = cand_qdate.addDays(+1)
                 cand_start_hour -= 24.0
 
-            def _dt(qd: QDate, hourf: float) -> QDateTime:
-                return QDateTime(qd, QTime(int(hourf) % 24, int((hourf % 1) * 60)))
+            # def _dt(qd: QDate, hourf: float) -> QDateTime:
+            #     return QDateTime(qd, QTime(int(hourf) % 24, int((hourf % 1) * 60)))
 
             # 固定 end（不要因右鄰而變）
             fixed_end = getattr(self, "_fixed_end_dt", None)
@@ -581,7 +601,7 @@ class TimeBlock(QGraphicsRectItem):
     def mouseReleaseEvent(self, event):
         self.setFlag(QGraphicsRectItem.ItemIsMovable, False)
         self.prevent_drag = False
-        parent_view = self.scene().parent()
+        # parent_view = self.scene().parent()
         self._fixed_end_dt = None
         parent_view = self.scene().parent()
         # ✅ 1) 先處理「拉把手」的情況（不看 has_moved）
@@ -648,7 +668,8 @@ class TimeBlock(QGraphicsRectItem):
 
         # 不可移到過去
         now = QDateTime.currentDateTime()
-        start_dt = QDateTime(new_date, QTime(int(new_hour), int((new_hour % 1) * 60)))
+        start_dt = _dt(new_date, new_hour)
+        # start_dt = QDateTime(new_date, QTime(int(new_hour), int((new_hour % 1) * 60)))
         if start_dt < now or self.is_start_or_end_in_past(new_date, new_hour, self.duration_hours):
             log(f"⛔ 不可移動到過去（{self.label}）")
             self.flash_warning(700)
@@ -697,7 +718,8 @@ class TimeBlock(QGraphicsRectItem):
     
 # time_block.py
     def update_status_by_time(self):
-        # 確保 QDate
+        if getattr(self, "status", "").startswith("狀態：❌"):
+            return False
         if isinstance(self.start_date, str):
             self.start_date = QDate.fromString(self.start_date, "yyyy-MM-dd")
             if not self.start_date.isValid():
@@ -944,8 +966,12 @@ class TimeBlock(QGraphicsRectItem):
     def is_start_or_end_in_past(self, qdate, start_hour, duration):
         # now = QDateTime.currentDateTime()
         now = QDateTime.currentDateTime()
-        start_dt = QDateTime(qdate, QTime(int(start_hour), int((start_hour % 1) * 60)))
-        end_hour = start_hour + duration
+        start_dt = _dt(qdate, start_hour)
+        end_hour = float(start_hour) + float(duration)
         end_qdate = qdate.addDays(1) if end_hour >= 24 else qdate
-        end_dt = QDateTime(end_qdate, QTime(int(end_hour % 24), int((end_hour % 1) * 60)))
+        end_dt = _dt(end_qdate, end_hour % 24)
+        # start_dt = QDateTime(qdate, QTime(int(start_hour), int((start_hour % 1) * 60)))
+        # end_hour = start_hour + duration
+        # end_qdate = qdate.addDays(1) if end_hour >= 24 else qdate
+        # end_dt = QDateTime(end_qdate, QTime(int(end_hour % 24), int((end_hour % 1) * 60)))
         return start_dt < now or end_dt < now

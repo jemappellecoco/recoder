@@ -3,12 +3,12 @@ from PySide6.QtCore import Qt,QSize
 from PySide6.QtWidgets import (
     QMainWindow, QWidget, QPushButton, QLabel, QDateEdit, QSlider,QDialog,QFrame,QScrollArea,QSplitter,QTextEdit,
     QVBoxLayout, QHBoxLayout, QLineEdit, QApplication, QSizePolicy, QMessageBox, QMenu, QFileDialog,
-     QToolBar, QToolButton, QWidgetAction
+     QToolBar, QToolButton, QWidgetAction,
 
 )
 from shiboken6 import isValid
 from time_block import PreviewImageItem
-from PySide6.QtGui import QPixmap,QBrush ,QColor  ,QAction 
+from PySide6.QtGui import QPixmap,QBrush ,QColor  ,QAction ,QUndoStack, QUndoCommand, QKeySequence
 from PySide6.QtCore import QDate, Qt,QDateTime,QTime,QTimer,QThreadPool
 from schedule_view import ScheduleView
 from encoder_utils import list_encoders_with_alias
@@ -354,6 +354,9 @@ class MainWindow(QMainWindow):
             runner=self.runner,
             parent_view_getter=lambda: self.view
         )
+        self.mismatch_timer = QTimer(self)
+        self.mismatch_timer.timeout.connect(self.schedule_manager.reconcile_async)
+        self.mismatch_timer.start(10_000)
         self.schedule_manager.schedule_data = self.view.block_data
         self.schedule_manager.blocks = self.view.blocks
         self.check_timer = QTimer(self)

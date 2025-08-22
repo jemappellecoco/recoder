@@ -1,10 +1,54 @@
 # check_schedule_manager.py
-from PySide6.QtCore import QDateTime, QDate, QTime, QObject, Signal, QRunnable, QThreadPool
+from PySide6.QtCore import QDateTime, QDate, QTimer, QObject, Signal, QRunnable, QThreadPool
 from shiboken6 import isValid
 from utils import log,MIN_LEAD_SECONDS,hourf_to_qtime
 from encoder_utils import get_encoder_display_name
 from encoder_status_manager import EncoderStatusManager
+class _ReconSignals(QObject):
+    done = Signal(list)  # [{action, block_id, encoder_name, reason, end_now_sec}]
 
+class _ReconWorker(QRunnable):
+    """
+    每 10 秒跑一次的『狀態一致性』檢查：
+    - 現在在時間範圍內的 block 如果標示「錄影中」，但 Encoder 實況不是錄影，就回報 mismatch/aborted
+    """
+    def __init__(self, snapshot):
+        super().__init__()
+        self.snapshot = snapshot
+        self.signals = _ReconSignals()
+
+    def run(self):
+        now = QDateTime.currentDateTime()
+        enc_names = self.snapshot["encoder_names"]
+        actions = []
+
+        # 將 today_blocks 以 encoder track 分組，稍後可用
+        for b in self.snapshot["today_blocks"]:
+            block_id = b["id"]
+            if not block_id:
+                continue
+
+            start_dt = QDateTime(b["qdate"], hourf_to_qtime(float(b["start_hour"])))
+            end_dt   = QDateTime(b["end_qdate"], hourf_to_qtime(float(b["end_hour"])))
+            if not (start_dt <= now <= end_dt):
+                continue  # 只處理「應該正在錄」的時段
+
+            track_idx = int(b["track_index"])
+            if not (0 <= track_idx < len(enc_names)):
+                continue
+            encoder_name = enc_names[track_idx]
+
+            # 用 status_text 推論是否為「應該在錄」的 UI 狀態（保守以 UI/JSON 為準）
+            expected_recording = True  # 我們只挑時間命中的；UI若不是錄也要提示
+            actions.append({
+                "action": "check",
+                "block_id": block_id,
+                "encoder_name": encoder_name,
+                "start_dt": start_dt.toSecsSinceEpoch(),
+                "end_dt":   end_dt.toSecsSinceEpoch(),
+            })
+
+        self.signals.done.emit(actions)
 # ---------------- Worker ----------------
 class _CheckWorkerSignals(QObject):
     done = Signal(list)   # [{'action': 'start'|'stop', 'block_id': str, 'encoder_name': str}]
@@ -80,7 +124,122 @@ class CheckScheduleManager(QObject):
         self.encoder_status_manager = EncoderStatusManager()
         self._pool = QThreadPool.globalInstance()
 
+                # ➕ 新增：每 10 秒做一次一致性檢查
+        self._recon_timer = QTimer()
+        self._recon_timer.setInterval(10_000)
+        self._recon_timer.timeout.connect(self.reconcile_async)
+        self._recon_timer.start()
     # --- 將必要資料快照化，避免在 worker 內存取 Qt 物件 ---
+    def reconcile_async(self):
+        try:
+            snap = self._make_snapshot()
+            worker = _ReconWorker(snap)
+            worker.signals.done.connect(self._apply_reconcile_on_main)
+            self._pool.start(worker)
+        except Exception as e:
+            log(f"❌ reconcile_async error: {e}")
+
+    def _apply_reconcile_on_main(self, actions: list):
+        """
+        在主執行緒：
+        - 查 Encoder 實況（使用 encoder_status_manager）
+        - 如果本該錄影中的 block，Encoder 卻不是「錄影中」，就：
+            1) 先在 block 上顯示 live_status 提示（黃閃）
+            2) 若判定為『停止/未連線/錯誤/暫停』，直接標記為 ABORTED，並把 end 修正為 now（不中斷其它流程）
+        """
+        if not actions:
+            return
+
+        parent_view = self.get_parent_view()
+        if not parent_view:
+            return
+
+        now = QDateTime.currentDateTime()
+
+        for act in actions:
+            blk_id = act.get("block_id")
+            enc    = act.get("encoder_name")
+            if not blk_id or not enc:
+                continue
+
+            # 先找一次
+            block = self.find_block_by_id(blk_id)
+            if not block:
+                continue
+
+            # ✅ 舊物件可能已被 draw_blocks() 重建或刪掉
+            #    確認還有效；不行就再找一次最新的，仍不行就放掉
+            if (not isValid(block)) or (block.scene() is None):
+                block = self.find_block_by_id(blk_id)
+                if (not block) or (not isValid(block)) or (block.scene() is None):
+                    continue
+
+            # 讀 Encoder 實況
+            stat = self.encoder_status_manager.get_status(enc)
+            stat_text = stat[0] if stat else ""
+
+            # 關鍵判斷（依你的文字對應）
+            not_recording = any(k in stat_text for k in ["未連線", "停止", "錯誤", "暫停"])
+            is_recording  = ("錄影中" in stat_text)
+
+            # 不是錄影中：先給即時提示（不寫入 JSON）
+            if not is_recording:
+                try:
+                    reason = f"{enc} 實況：{stat_text or '未知'}"
+                    block.set_live_status(f"⚠️ 與實況不一致：{reason}")
+                    block.flash_warning(600)
+                except RuntimeError:
+                    # 物件在這瞬間被換掉就跳過
+                    continue
+
+                if not_recording:
+                    # 標記為異常中斷 + 修 end 為 now，並同步 block_data
+                    try:
+                        # 這裡用你自己的 API；若有 mark_aborted/mark_error 皆可
+                        if hasattr(block, "mark_aborted"):
+                            block.mark_aborted("編碼器非錄影狀態")
+                        else:
+                            # 沒有 mark_aborted 時，至少把顏色/狀態設成「警告」或你定義的異常
+                            if hasattr(block, "set_state"):
+                                # 退而求其次：變黃或灰；依你的 TimeBlock 設計微調
+                                block.set_state("WAITING")
+                                block.flash_warning(600)
+
+                        block.update_text_position()
+                    except RuntimeError:
+                        continue
+
+                    # 同步回 JSON（把 end 修到 now）
+                    try:
+                        start_dt = QDateTime(block.start_date, hourf_to_qtime(block.start_hour))
+                        new_duration_h = max(0.0, round(start_dt.secsTo(now) / 3600.0, 3))
+                        block.duration_hours = new_duration_h
+
+                        end_dt = block.compute_end_dt()
+                        end_qdate = end_dt.date()
+                        et = end_dt.time()
+                        end_hour = round(et.hour() + et.minute()/60 + et.second()/3600, 4)
+
+                        # 若 block.status 是字串（TimeBlock 內部維護），把它一起寫回
+                        block.update_block_data({
+                            "duration":   block.duration_hours,
+                            "end_hour":   end_hour,
+                            "end_qdate":  end_qdate,
+                            "status":     getattr(block, "status", ""),  # 例如 "狀態：❌ 異常中斷"
+                        })
+                    except RuntimeError:
+                        # 若在這一步又被重建，略過這個循環
+                        continue
+                    except Exception:
+                        # 寫 JSON 失敗不影響後續其它 block
+                        pass
+
+        # 儲存並刷新畫面（安全包一層）
+        try:
+            parent_view.save_schedule()
+            parent_view.update()
+        except Exception:
+            pass
     def _make_snapshot(self):
         today = QDate.currentDate()
         today_blocks = []
@@ -167,7 +326,15 @@ class CheckScheduleManager(QObject):
             parent_view.update()
 
     def find_block_by_id(self, block_id):
-        for blk in self.blocks:
-            if blk.block_id == block_id:
-                return blk
+        pv = self.get_parent_view()
+        if not pv:
+            return None
+        for blk in getattr(pv, "blocks", []):
+            if getattr(blk, "block_id", None) == block_id:
+                # 活體檢查，避免剛好重建中
+                try:
+                    if isValid(blk) and blk.scene() is not None:
+                        return blk
+                except RuntimeError:
+                    return None
         return None
