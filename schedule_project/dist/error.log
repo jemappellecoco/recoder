@@ -1,0 +1,6 @@
+Traceback (most recent call last):
+  File "main.py", line 37, in <module>
+  File "ui_main_window.py", line 48, in __init__
+  File "ui_main_window.py", line 335, in ensure_valid_preview_root
+  File "ui_main_window.py", line 579, in select_preview_root
+AttributeError: 'MainWindow' object has no attribute 'view'

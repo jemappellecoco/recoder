@@ -1171,6 +1171,21 @@ class MainWindow(QMainWindow):
             encoder_name=encoder_name,
             qdate=qdate
         )
+        new_bd = next((
+            b for b in self.view.block_data
+            if b.get("label") == label
+            and b.get("qdate") == qdate
+            and b.get("track_index") == track_index
+            and abs(float(b.get("start_hour", -999)) - start_hour) < 1e-6
+        ), None)
+
+        if new_bd is not None:
+            new_bd["status"] = ""  # JSON 清空
+            # 重畫並把活體物件也設回等待中
+            self.view.draw_grid()
+            blk = next((x for x in self.view.blocks if getattr(x, "block_id", None) == new_bd.get("id")), None)
+            if blk:
+                blk.set_state("WAITING")
         self.sync_runner_data()
         log(f"📌 已貼上：{label} ➜ {qdate.toString('yyyy-MM-dd')} {start_hour:.2f}h @ {encoder_name}")
     def encoder_stop(self, encoder_name, status_label):

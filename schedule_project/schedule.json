@@ -1,2 +1,41 @@
 [
+  {
+    "qdate": "2025-08-22",
+    "track_index": 0,
+    "start_time": "17:31",
+    "duration_time": "00:01",
+    "end_time": "17:32",
+    "end_qdate": "2025-08-22",
+    "label": "222",
+    "id": "f1c2f042-f01c-4533-a7ad-3cac4777e0fe",
+    "encoder_name": "Bak4-1",
+    "snapshot_path": "",
+    "status": "狀態：✅ 已結束"
+  },
+  {
+    "qdate": "2025-08-22",
+    "track_index": 0,
+    "start_time": "16:31",
+    "duration_time": "00:15",
+    "end_time": "17:00",
+    "end_qdate": "2025-08-22",
+    "label": "222",
+    "id": "f1c2f042-f01c-4533-a7ad-3cac4777e0f1",
+    "encoder_name": "Bak4-1",
+    "snapshot_path": "",
+    "status": "狀態：✅ 已結束"
+  },
+  {
+    "qdate": "2025-08-22",
+    "track_index": 1,
+    "start_time": "18:45",
+    "duration_time": "00:01",
+    "end_time": "18:46",
+    "end_qdate": "2025-08-22",
+    "label": "222",
+    "id": "64d6fadb-dee2-4af8-83e7-5ffb7031f682",
+    "encoder_name": "Bak4-2",
+    "snapshot_path": "",
+    "status": "狀態：⌛ 等待中"
+  }
 ]

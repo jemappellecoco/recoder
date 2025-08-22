@@ -98,17 +98,20 @@ class TimeBlock(QGraphicsRectItem):
         "FINISHED": "狀態：✅ 已結束",
         "ABORTED":   "狀態：❌ 異常中斷",       # 新增
     }
+    
         # —— 這三個是你 left 分支會用到的 —— 
     NOW_BUFFER_SEC = MIN_LEAD_SECONDS   # 與全域設定一致（建議 90s）
     PIXEL_DEADBAND = 3                  # 滑鼠位移 < 3px 就忽略
     HOUR_EPS = 1.0 / 720    
     GAP_SEC = 90# ~5 秒 (1/720 小時) 才算時間真的改變
     def set_state(self, key: str):
-            """統一設定區塊狀態（文字＋顏色），key ∈ {WAITING, RECORDING, FINISHED}"""
-            self.status = self.STATUS_TEXT[key]
-            self._base_brush = QBrush(self.COLORS[key])  # <- 記錄正常底色
-            self.setBrush(QBrush(self.COLORS[key]))
-            self.update_text_position()
+        """統一設定區塊狀態（文字＋顏色），key ∈ {WAITING, RECORDING, FINISHED}"""
+        if getattr(self, "status", "").startswith("狀態：❌") and key != "ABORTED":
+            return
+        self.status = self.STATUS_TEXT[key]
+        self._base_brush = QBrush(self.COLORS[key])  # <- 記錄正常底色
+        self.setBrush(QBrush(self.COLORS[key]))
+        self.update_text_position()
     def mark_aborted(self, reason: str | None = None):
         self.set_state("ABORTED")
         if reason:
@@ -136,7 +139,7 @@ class TimeBlock(QGraphicsRectItem):
         self.start_hour = start_hour
         self.duration_hours = duration_hours
         self.label = label
-        self.status = "等待中"
+        self.status = self.STATUS_TEXT["WAITING"]
         # 等待中 → 灰色
         # self.setBrush(QBrush(QColor(180, 180, 180, 180)))
         start_dt = QDateTime(start_date, hourf_to_qtime(start_hour))
@@ -161,6 +164,44 @@ class TimeBlock(QGraphicsRectItem):
         # ✅ 統一用 set_state
         self._THROTTLE_MS = 24       # 由 16ms 放鬆到 24~33ms 會更滑順
         self._SNAP_STEP_H = 5 / 60.0 # 5 分鐘一格（小時）
+        def _apply_stored_status_if_any():
+            try:
+                pv = self.scene().parent()
+            except Exception:
+                pv = None
+            if not pv:
+                return
+
+            # 找到自己
+            rec = None
+            for b in getattr(pv, "block_data", []):
+                if b.get("id") == self.block_id:
+                    rec = b
+                    break
+            if not rec:
+                return
+
+            stored = rec.get("status", "")
+            if not (isinstance(stored, str) and stored.startswith("狀態：❌")):
+                return
+
+            start_dt = QDateTime(self.start_date, hourf_to_qtime(self.start_hour))
+            now = QDateTime.currentDateTime()
+
+            if now < start_dt:
+                # 未來：清掉異常，回到等待
+                rec.pop("status", None)
+                self.set_state("WAITING")
+                try:
+                    pv.save_schedule()
+                except Exception:
+                    pass
+            else:
+                # 已到/過開始時間：保留異常
+                self.set_state("ABORTED")
+
+    # scene 尚未掛好時，用 0ms 補一次
+        QTimer.singleShot(0, _apply_stored_status_if_any)
         if self.has_ended:
             self.set_state("FINISHED")   # 綠
         elif now < start_dt:
@@ -716,8 +757,8 @@ class TimeBlock(QGraphicsRectItem):
         _sync_runner(self)
         self.setFlag(QGraphicsRectItem.ItemIsMovable, False)
     
-# time_block.py
     def update_status_by_time(self):
+
         if getattr(self, "status", "").startswith("狀態：❌"):
             return False
         if isinstance(self.start_date, str):
