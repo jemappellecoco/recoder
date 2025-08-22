@@ -1,12 +1,14 @@
 from header_view import HeaderView  
-from PySide6.QtCore import Qt
+from PySide6.QtCore import Qt,QSize
 from PySide6.QtWidgets import (
     QMainWindow, QWidget, QPushButton, QLabel, QDateEdit, QSlider,QDialog,QFrame,QScrollArea,QSplitter,QTextEdit,
-    QVBoxLayout, QHBoxLayout, QLineEdit, QApplication, QSizePolicy, QMessageBox, QMenu, QFileDialog
+    QVBoxLayout, QHBoxLayout, QLineEdit, QApplication, QSizePolicy, QMessageBox, QMenu, QFileDialog,
+     QToolBar, QToolButton, QWidgetAction
+
 )
 from shiboken6 import isValid
 from time_block import PreviewImageItem
-from PySide6.QtGui import QPixmap,QBrush ,QColor   
+from PySide6.QtGui import QPixmap,QBrush ,QColor  ,QAction 
 from PySide6.QtCore import QDate, Qt,QDateTime,QTime,QTimer,QThreadPool
 from schedule_view import ScheduleView
 from encoder_utils import list_encoders_with_alias
@@ -158,59 +160,87 @@ class MainWindow(QMainWindow):
         right_layout = QVBoxLayout(right_panel)
         right_layout.setAlignment(Qt.AlignTop)
 
-        # --- Toolbar ---
-        toolbar = QWidget()
-        toolbar_layout = QHBoxLayout(toolbar)
+        # === 工具列 ===
+        toolbar = QToolBar("主工具列", self)
+        toolbar.setMovable(False)
+        toolbar.setFloatable(False)
+        toolbar.setIconSize(QSize(16,16))       # 你也可以調 18、20
+        toolbar.setToolButtonStyle(Qt.ToolButtonTextBesideIcon)
+        # 讓整排在窄時自動出現 ">>" 溢出按鈕
+        toolbar.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
+        toolbar.setFixedHeight(40)
+        
+        # 左側 Zoom 群組（做成一個小 QWidget 打包，放進 QWidgetAction）
+        zoom_group = QWidget()
+        zlay = QHBoxLayout(zoom_group)
+        zlay.setContentsMargins(6, 4, 6, 4)
+        zlay.setSpacing(6)
+        # 管理 Encoder（QAction）
+        self.manage_encoder_button = QAction("⚙️ 管理 Encoder", self)
+        self.manage_encoder_button.triggered.connect(self.open_encoder_manager)
+        toolbar.addAction(self.manage_encoder_button)
+        zoom_label = QLabel("Zoom：")
         self.zoom_slider = QSlider(Qt.Horizontal)
-        self.zoom_slider.setMinimum(5)
-        self.zoom_slider.setMaximum(100)
-        self.zoom_slider.setValue(20)  # 初始值與 hour_width 一樣
+        self.zoom_slider.setRange(5, 100)
+        self.zoom_slider.setValue(20)
         self.zoom_slider.valueChanged.connect(self.update_zoom)
-        toolbar_layout.addWidget(QLabel("Zoom："))
-        toolbar_layout.addWidget(self.zoom_slider)
-        undo_button = QPushButton("↩️ 復原刪除")
-        undo_button.clicked.connect(lambda: (self.block_manager.undo_last_delete(), self.sync_runner_data()))
+        self.zoom_slider.setFixedWidth(220)
+        self.zoom_slider.setFixedHeight(20)
+
+        zlay.addWidget(zoom_label)
+        zlay.addWidget(self.zoom_slider)
+
+        zoom_act = QWidgetAction(self)
+        zoom_act.setDefaultWidget(zoom_group)
+        toolbar.addAction(zoom_act)
+
+        # 加一個彈性空白，把右邊推到右側
+        spacer = QWidget()
+        spacer.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
+        spacer_act = QWidgetAction(self)
+        spacer_act.setDefaultWidget(spacer)
+        toolbar.addAction(spacer_act)
+
+        # 右側一串按鈕：用 QAction（或需要複雜內容時用 QWidgetAction）
+        def _mk_action(text, handler):
+            act = QAction(text, self)
+            act.triggered.connect(handler)
+            return act
+
+
+
+        # 起始日期（需要小控件 → QWidgetAction）
+        date_wrap = QWidget()
+        dl = QHBoxLayout(date_wrap); dl.setContentsMargins(0,0,0,0); dl.setSpacing(6)
         self.date_label = QLabel("起始日期：")
         self.date_picker = QDateEdit(QDate.currentDate())
         self.date_picker.setCalendarPopup(True)
+        self.date_picker.setFixedWidth(130)
         self.date_picker.dateChanged.connect(self.update_start_date)
-        self.select_schedule_button = QPushButton("📄 選擇排程檔")
-        self.select_schedule_button.clicked.connect(self.select_schedule_json)
-        self.add_button = QPushButton("➕ 新增排程")
-        self.add_button.clicked.connect(self.add_new_block)
-        self.root_button = QPushButton("📁 設定影片儲存路徑")
-        self.root_button.clicked.connect(self.select_record_root)
-        self.preview_root_button = QPushButton("📁 設定預覽儲存路徑")
-        self.preview_root_button.clicked.connect(self.select_preview_root)
-        self.save_button = QPushButton("💾 儲存")
-        self.save_button.clicked.connect(lambda: self.view.save_schedule())
-        self.load_button = QPushButton("📂 載入")
-        self.load_button.clicked.connect(lambda: (self.view.load_schedule(), self.sync_runner_data()))
-        self.prev_button = QPushButton("⬅️ 前一週")
-        self.prev_button.clicked.connect(lambda: self.shift_date(-7))
-        self.next_button = QPushButton("➡️ 下一週")
-        self.next_button.clicked.connect(lambda: self.shift_date(+7))
-        self.today_button = QPushButton("📅 今天")
-        self.today_button.clicked.connect(self.jump_to_today)
-        self.manage_encoder_button = QPushButton("⚙️ 管理 Encoder")
-        self.manage_encoder_button.clicked.connect(self.open_encoder_manager)
-        
+        dl.addWidget(self.date_label); dl.addWidget(self.date_picker)
+        date_act = QWidgetAction(self); date_act.setDefaultWidget(date_wrap)
+        toolbar.addAction(date_act)
 
-        toolbar_layout.addWidget(self.manage_encoder_button)
+        # 其他按鈕（純 QAction）
+        toolbar.addAction(_mk_action("📅 今天", self.jump_to_today))
+        toolbar.addAction(_mk_action("📄 選擇排程檔", self.select_schedule_json))
+        toolbar.addAction(_mk_action("📁 設定影片儲存路徑", self.select_record_root))
+        toolbar.addAction(_mk_action("📁 設定預覽儲存路徑", self.select_preview_root))
+        toolbar.addAction(_mk_action("⬅️ 前一週", lambda: self.shift_date(-7)))
+        toolbar.addAction(_mk_action("➡️ 下一週", lambda: self.shift_date(+7)))
+        toolbar.addAction(_mk_action("➕ 新增排程", self.add_new_block))
+        toolbar.addAction(_mk_action("💾 儲存", lambda: self.view.save_schedule()))
+        toolbar.addAction(_mk_action("📂 載入", lambda: (self.view.load_schedule(), self.sync_runner_data())))
 
-        toolbar_layout.addWidget(self.date_label)
-        toolbar_layout.addWidget(self.date_picker)
-        toolbar_layout.addStretch()
-        toolbar_layout.addWidget(self.today_button)
-        toolbar_layout.addWidget(self.select_schedule_button)
-        toolbar_layout.addWidget(self.root_button)
-        toolbar_layout.addWidget(self.preview_root_button)
-        toolbar_layout.addWidget(self.prev_button)
-        toolbar_layout.addWidget(self.next_button)
-        toolbar_layout.addWidget(self.add_button)
-        toolbar_layout.addWidget(self.save_button)
-        toolbar_layout.addWidget(self.load_button)
-        toolbar_layout.addWidget(undo_button)
+        undo_act = QAction("↩️ 復原刪除", self)
+        undo_act.triggered.connect(lambda: (self.block_manager.undo_last_delete(), self.sync_runner_data()))
+        toolbar.addAction(undo_act)
+
+        # 把 QToolBar 放進你的 right_layout（取代原本的 toolbar widget）
+        right_layout.addWidget(toolbar)
+
+
+
 
         # --- Log box ---
         self.log_box = QTextEdit()

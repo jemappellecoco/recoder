@@ -910,3 +910,82 @@ Traceback (most recent call last):
     ^^^^^^^^^^^^^^^^^^^
 TypeError: cannot unpack non-iterable PySide6.QtCore.QDateTime object
 
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\main.py", line 46, in <module>
+    win = MainWindow()
+  File "c:\Users\coco\recoder\schedule_project\ui_main_window.py", line 168, in __init__
+    self.zoom_slider.va
+AttributeError: 'PySide6.QtWidgets.QSlider' object has no attribute 'va'
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\main.py", line 46, in <module>
+    win = MainWindow()
+  File "c:\Users\coco\recoder\schedule_project\ui_main_window.py", line 204, in __init__
+    toolbar.setIconSize(QSize(16,16))       # 你也可以調 18、20
+                        ^^^^^
+NameError: name 'QSize' is not defined. Did you mean: 'QTime'?
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\main.py", line 46, in <module>
+    win = MainWindow()
+  File "c:\Users\coco\recoder\schedule_project\ui_main_window.py", line 245, in __init__
+    self.manage_encoder_button = QAction("⚙️ 管理 Encoder", self)
+                                 ^^^^^^^
+NameError: name 'QAction' is not defined
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\main.py", line 46, in <module>
+    win = MainWindow()
+  File "c:\Users\coco\recoder\schedule_project\ui_main_window.py", line 280, in __init__
+    self.date_picker.setDate(self.base_date)  # ➤ UI 同步更新日期選擇器
+    ^^^^^^^^^^^^^^^^
+AttributeError: 'MainWindow' object has no attribute 'date_picker'
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\main.py", line 46, in <module>
+    win = MainWindow()
+  File "c:\Users\coco\recoder\schedule_project\ui_main_window.py", line 290, in __init__
+    self.date_picker.setDate(self.base_date)  # ➤ UI 同步更新日期選擇器
+    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^
+RuntimeError: Internal C++ object (PySide6.QtWidgets.QDateEdit) already deleted.
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\main.py", line 46, in <module>
+    win = MainWindow()
+  File "c:\Users\coco\recoder\schedule_project\ui_main_window.py", line 290, in __init__
+    self.date_picker.setDate(self.base_date)  # ➤ UI 同步更新日期選擇器
+    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^
+RuntimeError: Internal C++ object (PySide6.QtWidgets.QDateEdit) already deleted.
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\main.py", line 46, in <module>
+    win = MainWindow()
+  File "c:\Users\coco\recoder\schedule_project\ui_main_window.py", line 290, in __init__
+    self.date_picker.setDate(self.base_date)  # ➤ UI 同步更新日期選擇器
+    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^
+RuntimeError: Internal C++ object (PySide6.QtWidgets.QDateEdit) already deleted.
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\main.py", line 46, in <module>
+    win = MainWindow()
+  File "c:\Users\coco\recoder\schedule_project\ui_main_window.py", line 290, in __init__
+    self.date_picker.setDate(self.base_date)  # ➤ UI 同步更新日期選擇器
+    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^
+RuntimeError: Internal C++ object (PySide6.QtWidgets.QDateEdit) already deleted.
+
