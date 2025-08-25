@@ -1120,6 +1120,11 @@ class MainWindow(QMainWindow):
 #                         self._paste_block_at_scene_pos(scene_pos)
     def _paste_block_at_scene_pos(self, scene_pos):
         tpl = self.copied_block_template
+        tpl.pop("status", None)      # 不複製舊狀態
+        tpl.pop("live_status", None) # 也不要帶即時提示
+        # 另外別忘了換新的 id
+        tpl["id"] = str(uuid4())
+        
         if not tpl:
             return
 

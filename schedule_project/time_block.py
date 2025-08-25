@@ -104,14 +104,15 @@ class TimeBlock(QGraphicsRectItem):
     PIXEL_DEADBAND = 3                  # 滑鼠位移 < 3px 就忽略
     HOUR_EPS = 1.0 / 720    
     GAP_SEC = 90# ~5 秒 (1/720 小時) 才算時間真的改變
-    def set_state(self, key: str):
+    def set_state(self, key: str, *, force: bool = False):
         """統一設定區塊狀態（文字＋顏色），key ∈ {WAITING, RECORDING, FINISHED}"""
-        if getattr(self, "status", "").startswith("狀態：❌") and key != "ABORTED":
+        if (not force) and getattr(self, "status", "").startswith("狀態：❌") and key != "ABORTED":
             return
         self.status = self.STATUS_TEXT[key]
-        self._base_brush = QBrush(self.COLORS[key])  # <- 記錄正常底色
+        self._base_brush = QBrush(self.COLORS[key])
         self.setBrush(QBrush(self.COLORS[key]))
         self.update_text_position()
+            
     def mark_aborted(self, reason: str | None = None):
         self.set_state("ABORTED")
         if reason:
@@ -131,6 +132,7 @@ class TimeBlock(QGraphicsRectItem):
     def __init__(self, start_date: QDate, track_index, start_hour, duration_hours=4, label="節目名稱", block_id=None):
     
         super().__init__(0, 0, duration_hours * 20, self.BLOCK_HEIGHT)
+       
         self.has_moved = False
 
         self.block_id = block_id
@@ -164,50 +166,52 @@ class TimeBlock(QGraphicsRectItem):
         # ✅ 統一用 set_state
         self._THROTTLE_MS = 24       # 由 16ms 放鬆到 24~33ms 會更滑順
         self._SNAP_STEP_H = 5 / 60.0 # 5 分鐘一格（小時）
+# === 這兩個 helper 放在 __init__ 裡 ===
         def _apply_stored_status_if_any():
-            try:
-                pv = self.scene().parent()
-            except Exception:
-                pv = None
+            pv = self.scene().parent() if self.scene() else None
             if not pv:
                 return
-
-            # 找到自己
-            rec = None
-            for b in getattr(pv, "block_data", []):
-                if b.get("id") == self.block_id:
-                    rec = b
-                    break
+            rec = next((b for b in getattr(pv, "block_data", []) if b.get("id") == self.block_id), None)
             if not rec:
                 return
-
             stored = rec.get("status", "")
-            if not (isinstance(stored, str) and stored.startswith("狀態：❌")):
-                return
+            _now = QDateTime.currentDateTime()
+            _start_dt = QDateTime(self.start_date, hourf_to_qtime(self.start_hour))
 
-            start_dt = QDateTime(self.start_date, hourf_to_qtime(self.start_hour))
-            now = QDateTime.currentDateTime()
+            if isinstance(stored, str) and stored.startswith("狀態：❌"):
+                if _now >= _start_dt:
+                    # 到/過開始時間 → 保留異常
+                    self.set_state("ABORTED", force=True)
+                else:
+                    # 🚩 未來：強制改回 WAITING（即使 JSON 是異常中斷）
+                    self.set_state("WAITING", force=True)
+                    rec["status"] = self.STATUS_TEXT["WAITING"]
+                    try:
+                        pv.save_schedule()
+                    except Exception:
+                        pass
 
-            if now < start_dt:
-                # 未來：清掉異常，回到等待
-                rec.pop("status", None)
-                self.set_state("WAITING")
-                try:
-                    pv.save_schedule()
-                except Exception:
-                    pass
-            else:
-                # 已到/過開始時間：保留異常
-                self.set_state("ABORTED")
-
+        def _init_state_if_not_aborted():
+            # 重新計算現在與起止
+            _now = QDateTime.currentDateTime()
+            _start_dt = QDateTime(self.start_date, hourf_to_qtime(self.start_hour))
+            _end_dt = self.compute_end_dt()
+            # 若目前不是異常（或 force），才由時間推狀態
+            if not getattr(self, "status", "").startswith("狀態：❌"):
+                if _now > _end_dt:
+                    self.set_state("FINISHED", force=True)
+                elif _now < _start_dt:
+                    self.set_state("WAITING", force=True)
+                else:
+                    self.set_state("RECORDING", force=True)
     # scene 尚未掛好時，用 0ms 補一次
-        QTimer.singleShot(0, _apply_stored_status_if_any)
-        if self.has_ended:
-            self.set_state("FINISHED")   # 綠
-        elif now < start_dt:
-            self.set_state("WAITING")    # 灰
-        else:
-            self.set_state("RECORDING")  # 紅
+      
+        # if self.has_ended:
+        #     self.set_state("FINISHED")   # 綠
+        # elif now < start_dt:
+        #     self.set_state("WAITING")    # 灰
+        # else:
+        #     self.set_state("RECORDING")  # 紅
         self.setFlag(QGraphicsRectItem.ItemIsMovable, False)
         self.setFlag(QGraphicsRectItem.ItemIsSelectable, True)
         self.setAcceptHoverEvents(True)
@@ -220,8 +224,10 @@ class TimeBlock(QGraphicsRectItem):
         self.drag_start_offset = None
         self.setAcceptedMouseButtons(Qt.LeftButton)
         self.setFlag(QGraphicsRectItem.ItemIsFocusable, True)
-        self.status = "狀態：等待中"  # 這個從 JSON 來，可儲存
+        # self.status = "狀態：等待中"  # 這個從 JSON 來，可儲存
+        self.status = self.STATUS_TEXT["WAITING"]
         self.live_status = ""        # 這個只顯示，不儲存
+        self._base_brush = QBrush(self.COLORS["WAITING"])
         self.preview_item = None
         self._fixed_end_dt = None
         self._nearest_left_end = None
@@ -233,6 +239,8 @@ class TimeBlock(QGraphicsRectItem):
         self.dragging_handle = None
        
         self.prevent_drag = False
+        QTimer.singleShot(0, _apply_stored_status_if_any)
+        QTimer.singleShot(0, _init_state_if_not_aborted)
     def _snap_hour(self, hour_f: float) -> float:
         step = getattr(self, "_SNAP_STEP_H", 5/60)
         return round((hour_f / step) * step, 3)
@@ -758,22 +766,23 @@ class TimeBlock(QGraphicsRectItem):
         self.setFlag(QGraphicsRectItem.ItemIsMovable, False)
     
     def update_status_by_time(self):
-
-        if getattr(self, "status", "").startswith("狀態：❌"):
-            return False
         if isinstance(self.start_date, str):
             self.start_date = QDate.fromString(self.start_date, "yyyy-MM-dd")
-            if not self.start_date.isValid():
-                self.start_date = QDate.currentDate()
 
-        # start_dt = QDateTime(self.start_date, QTime(int(self.start_hour), int((self.start_hour % 1) * 60)))
+        if self.start_date.isValid() and self.start_date < QDate.currentDate():
+            return False
+
+        now = QDateTime.currentDateTime()
         start_dt = QDateTime(self.start_date, hourf_to_qtime(self.start_hour))
         end_dt   = self.compute_end_dt()
-        # start_dt = QDateTime(self.start_date, hourf_to_qtime(self.start_hour))
-        # end_dt   = start_dt.addSecs(int(self.duration_hours * 3600))
-        now      = QDateTime.currentDateTime()
 
-        prev = self.status  # ← 記錄舊狀態文字
+        if isinstance(self.status, str) and self.status.startswith("狀態：❌"):
+            if now < start_dt:
+                self.set_state("WAITING", force=True)  # ← 關鍵：貼到未來自動回等待
+                return True
+            return False  # 已開始/過去就凍結
+
+        prev = self.status
 
         if now > end_dt:
             if self.status != self.STATUS_TEXT["FINISHED"]:

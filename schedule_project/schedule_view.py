@@ -284,8 +284,19 @@ class ScheduleView(QGraphicsView):
 
             if encoder_name is not None:
                 self.encoder_labels[encoder_name] = label_item  # 之後 refresh 用
-
+        
         self.draw_blocks()
+        for blk in getattr(self, "blocks", []):
+            bd = next((b for b in self.block_data if b.get("id") == blk.block_id), None)
+            if not bd:
+                continue
+            s = str(bd.get("status", "") or "")
+            if s.startswith("狀態：❌"):
+                blk.set_state("ABORTED", force=True)
+                blk.update_text_position()
+            elif s == blk.STATUS_TEXT["FINISHED"]:
+                blk.set_state("FINISHED", force=True)
+                blk.update_text_position()
         self.update_now_line()
         self.verticalScrollBar().setValue(self.verticalScrollBar().minimum())
 
@@ -302,8 +313,11 @@ class ScheduleView(QGraphicsView):
         self.setSceneRect(-120, 0, scene_width, scene_height)
     def draw_blocks(self):
             # 建立舊 block 映射（label → block）以便繼承狀態
-        old_block_map = {block.label: block for block in self.blocks}
-
+        # old_block_map = {block.label: block for block in self.blocks}
+        old_block_map = {}
+        for block in self.blocks:
+            key = getattr(block, "block_id", None) or block.label
+            old_block_map[key] = block
         # 清除舊的 TimeBlock（但不刪除其他 scene 內容）
         for item in self.scene.items():
             if isinstance(item, TimeBlock):
@@ -339,15 +353,16 @@ class ScheduleView(QGraphicsView):
                 stored = data.get("status")
                 if stored:
                     block.status = stored
-                    block.update_text_position()
-                    block.update_status_by_time()
+                    # block.update_text_position()
+                    # block.update_status_by_time()
                 else:
                     block.update_status_by_time()
                 block.update_text_position()
-                # ✅ 立刻依現在時間套狀態（等待中／已結束）
-                block.update_status_by_time()
+                # # ✅ 立刻依現在時間套狀態（等待中／已結束）
+                # block.update_status_by_time()
                 # 從舊 block 繼承狀態與圖片
-                old_block = old_block_map.get(data["label"])
+                # old_block = old_block_map.get(data["label"])
+                old_block = old_block_map.get(data.get("id")) or old_block_map.get(data["label"])
                 if old_block:
                     block.status = old_block.status
                     if hasattr(old_block, "status_text") and old_block.status_text:

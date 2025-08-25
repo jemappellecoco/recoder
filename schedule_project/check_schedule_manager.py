@@ -192,19 +192,29 @@ class CheckScheduleManager(QObject):
                     # 物件在這瞬間被換掉就跳過
                     continue
 
+# ========== 兩道守門條件，避免誤標未來/等待中的區塊 ==========
+                try:
+                    if "錄影中" not in getattr(block, "status", ""):
+                        continue
+                except RuntimeError:
+                    continue
+                # 守門 (B)：now 必須在 block 時段內
+                start_dt_chk = QDateTime(block.start_date, hourf_to_qtime(block.start_hour))
+                end_dt_chk   = block.compute_end_dt()
+                now_chk      = QDateTime.currentDateTime()
+                if not (start_dt_chk <= now_chk <= end_dt_chk):
+                    continue
+                # =========================================================
+
                 if not_recording:
                     # 標記為異常中斷 + 修 end 為 now，並同步 block_data
                     try:
-                        # 這裡用你自己的 API；若有 mark_aborted/mark_error 皆可
                         if hasattr(block, "mark_aborted"):
                             block.mark_aborted("編碼器非錄影狀態")
                         else:
-                            # 沒有 mark_aborted 時，至少把顏色/狀態設成「警告」或你定義的異常
                             if hasattr(block, "set_state"):
-                                # 退而求其次：變黃或灰；依你的 TimeBlock 設計微調
                                 block.set_state("WAITING")
                                 block.flash_warning(600)
-
                         block.update_text_position()
                     except RuntimeError:
                         continue
@@ -220,18 +230,15 @@ class CheckScheduleManager(QObject):
                         et = end_dt.time()
                         end_hour = round(et.hour() + et.minute()/60 + et.second()/3600, 4)
 
-                        # 若 block.status 是字串（TimeBlock 內部維護），把它一起寫回
                         block.update_block_data({
                             "duration":   block.duration_hours,
                             "end_hour":   end_hour,
                             "end_qdate":  end_qdate,
-                            "status":     getattr(block, "status", ""),  # 例如 "狀態：❌ 異常中斷"
+                            "status":     getattr(block, "status", ""),  # "狀態：❌ 異常中斷"
                         })
                     except RuntimeError:
-                        # 若在這一步又被重建，略過這個循環
                         continue
                     except Exception:
-                        # 寫 JSON 失敗不影響後續其它 block
                         pass
 
         # 儲存並刷新畫面（安全包一層）

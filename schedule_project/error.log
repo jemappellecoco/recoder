@@ -1479,3 +1479,1207 @@ Traceback (most recent call last):
     ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
 RuntimeError: Internal C++ object (TimeBlock) already deleted.
 
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 207, in _init_state_if_not_aborted
+    self.set_state("FINISHED")
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 113, in set_state
+    self.setBrush(QBrush(self.COLORS[key]))
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: Internal C++ object (TimeBlock) already deleted.
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 209, in _init_state_if_not_aborted
+    self.set_state("WAITING")
+    ~~~~~~~~~~~~~~^^^^^^^^^^^
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 113, in set_state
+    self.setBrush(QBrush(self.COLORS[key]))
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: Internal C++ object (TimeBlock) already deleted.
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 209, in _init_state_if_not_aborted
+    self.set_state("WAITING")
+    ~~~~~~~~~~~~~~^^^^^^^^^^^
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 113, in set_state
+    self.setBrush(QBrush(self.COLORS[key]))
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: Internal C++ object (TimeBlock) already deleted.
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 209, in _init_state_if_not_aborted
+    self.set_state("WAITING")
+    ~~~~~~~~~~~~~~^^^^^^^^^^^
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 113, in set_state
+    self.setBrush(QBrush(self.COLORS[key]))
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: Internal C++ object (TimeBlock) already deleted.
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 207, in _init_state_if_not_aborted
+    self.set_state("FINISHED")
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 113, in set_state
+    self.setBrush(QBrush(self.COLORS[key]))
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: Internal C++ object (TimeBlock) already deleted.
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 209, in _init_state_if_not_aborted
+    self.set_state("WAITING")
+    ~~~~~~~~~~~~~~^^^^^^^^^^^
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 113, in set_state
+    self.setBrush(QBrush(self.COLORS[key]))
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: Internal C++ object (TimeBlock) already deleted.
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 209, in _init_state_if_not_aborted
+    self.set_state("WAITING")
+    ~~~~~~~~~~~~~~^^^^^^^^^^^
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 113, in set_state
+    self.setBrush(QBrush(self.COLORS[key]))
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: Internal C++ object (TimeBlock) already deleted.
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 171, in _apply_stored_status_if_any
+    pv = self.scene().parent() if self.scene() else None
+                                  ~~~~~~~~~~^^
+RuntimeError: Internal C++ object (TimeBlock) already deleted.
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 171, in _apply_stored_status_if_any
+    pv = self.scene().parent() if self.scene() else None
+                                  ~~~~~~~~~~^^
+RuntimeError: Internal C++ object (TimeBlock) already deleted.
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 171, in _apply_stored_status_if_any
+    pv = self.scene().parent() if self.scene() else None
+                                  ~~~~~~~~~~^^
+RuntimeError: Internal C++ object (TimeBlock) already deleted.
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 171, in _apply_stored_status_if_any
+    pv = self.scene().parent() if self.scene() else None
+                                  ~~~~~~~~~~^^
+RuntimeError: Internal C++ object (TimeBlock) already deleted.
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 171, in _apply_stored_status_if_any
+    pv = self.scene().parent() if self.scene() else None
+                                  ~~~~~~~~~~^^
+RuntimeError: Internal C++ object (TimeBlock) already deleted.
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 171, in _apply_stored_status_if_any
+    pv = self.scene().parent() if self.scene() else None
+                                  ~~~~~~~~~~^^
+RuntimeError: Internal C++ object (TimeBlock) already deleted.
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 171, in _apply_stored_status_if_any
+    pv = self.scene().parent() if self.scene() else None
+                                  ~~~~~~~~~~^^
+RuntimeError: Internal C++ object (TimeBlock) already deleted.
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 203, in _init_state_if_not_aborted
+    self.set_state("FINISHED", force=True)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 113, in set_state
+    self.setBrush(QBrush(self.COLORS[key]))
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: Internal C++ object (TimeBlock) already deleted.
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 171, in _apply_stored_status_if_any
+    pv = self.scene().parent() if self.scene() else None
+                                  ~~~~~~~~~~^^
+RuntimeError: Internal C++ object (TimeBlock) already deleted.
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 205, in _init_state_if_not_aborted
+    self.set_state("WAITING", force=True)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 113, in set_state
+    self.setBrush(QBrush(self.COLORS[key]))
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: Internal C++ object (TimeBlock) already deleted.
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 171, in _apply_stored_status_if_any
+    pv = self.scene().parent() if self.scene() else None
+                                  ~~~~~~~~~~^^
+RuntimeError: Internal C++ object (TimeBlock) already deleted.
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 205, in _init_state_if_not_aborted
+    self.set_state("WAITING", force=True)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 113, in set_state
+    self.setBrush(QBrush(self.COLORS[key]))
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: Internal C++ object (TimeBlock) already deleted.
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 171, in _apply_stored_status_if_any
+    pv = self.scene().parent() if self.scene() else None
+                                  ~~~~~~~~~~^^
+RuntimeError: Internal C++ object (TimeBlock) already deleted.
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 171, in _apply_stored_status_if_any
+    pv = self.scene().parent() if self.scene() else None
+                                  ~~~~~~~~~~^^
+RuntimeError: Internal C++ object (TimeBlock) already deleted.
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 171, in _apply_stored_status_if_any
+    pv = self.scene().parent() if self.scene() else None
+                                  ~~~~~~~~~~^^
+RuntimeError: Internal C++ object (TimeBlock) already deleted.
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 203, in _init_state_if_not_aborted
+    self.set_state("FINISHED", force=True)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 113, in set_state
+    self.setBrush(QBrush(self.COLORS[key]))
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: Internal C++ object (TimeBlock) already deleted.
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 171, in _apply_stored_status_if_any
+    pv = self.scene().parent() if self.scene() else None
+                                  ~~~~~~~~~~^^
+RuntimeError: Internal C++ object (TimeBlock) already deleted.
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 205, in _init_state_if_not_aborted
+    self.set_state("WAITING", force=True)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 113, in set_state
+    self.setBrush(QBrush(self.COLORS[key]))
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: Internal C++ object (TimeBlock) already deleted.
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 171, in _apply_stored_status_if_any
+    pv = self.scene().parent() if self.scene() else None
+                                  ~~~~~~~~~~^^
+RuntimeError: Internal C++ object (TimeBlock) already deleted.
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 205, in _init_state_if_not_aborted
+    self.set_state("WAITING", force=True)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 113, in set_state
+    self.setBrush(QBrush(self.COLORS[key]))
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: Internal C++ object (TimeBlock) already deleted.
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 171, in _apply_stored_status_if_any
+    pv = self.scene().parent() if self.scene() else None
+                                  ~~~~~~~~~~^^
+RuntimeError: Internal C++ object (TimeBlock) already deleted.
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 171, in _apply_stored_status_if_any
+    pv = self.scene().parent() if self.scene() else None
+                                  ~~~~~~~~~~^^
+RuntimeError: Internal C++ object (TimeBlock) already deleted.
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 171, in _apply_stored_status_if_any
+    pv = self.scene().parent() if self.scene() else None
+                                  ~~~~~~~~~~^^
+RuntimeError: Internal C++ object (TimeBlock) already deleted.
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 171, in _apply_stored_status_if_any
+    pv = self.scene().parent() if self.scene() else None
+                                  ~~~~~~~~~~^^
+RuntimeError: Internal C++ object (TimeBlock) already deleted.
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 171, in _apply_stored_status_if_any
+    pv = self.scene().parent() if self.scene() else None
+                                  ~~~~~~~~~~^^
+RuntimeError: Internal C++ object (TimeBlock) already deleted.
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 171, in _apply_stored_status_if_any
+    pv = self.scene().parent() if self.scene() else None
+                                  ~~~~~~~~~~^^
+RuntimeError: Internal C++ object (TimeBlock) already deleted.
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 171, in _apply_stored_status_if_any
+    pv = self.scene().parent() if self.scene() else None
+                                  ~~~~~~~~~~^^
+RuntimeError: Internal C++ object (TimeBlock) already deleted.
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 203, in _init_state_if_not_aborted
+    self.set_state("FINISHED", force=True)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 113, in set_state
+    self.setBrush(QBrush(self.COLORS[key]))
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: Internal C++ object (TimeBlock) already deleted.
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 171, in _apply_stored_status_if_any
+    pv = self.scene().parent() if self.scene() else None
+                                  ~~~~~~~~~~^^
+RuntimeError: Internal C++ object (TimeBlock) already deleted.
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 205, in _init_state_if_not_aborted
+    self.set_state("WAITING", force=True)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 113, in set_state
+    self.setBrush(QBrush(self.COLORS[key]))
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: Internal C++ object (TimeBlock) already deleted.
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 171, in _apply_stored_status_if_any
+    pv = self.scene().parent() if self.scene() else None
+                                  ~~~~~~~~~~^^
+RuntimeError: Internal C++ object (TimeBlock) already deleted.
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 205, in _init_state_if_not_aborted
+    self.set_state("WAITING", force=True)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 113, in set_state
+    self.setBrush(QBrush(self.COLORS[key]))
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: Internal C++ object (TimeBlock) already deleted.
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 171, in _apply_stored_status_if_any
+    pv = self.scene().parent() if self.scene() else None
+                                  ~~~~~~~~~~^^
+RuntimeError: Internal C++ object (TimeBlock) already deleted.
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 171, in _apply_stored_status_if_any
+    pv = self.scene().parent() if self.scene() else None
+                                  ~~~~~~~~~~^^
+RuntimeError: Internal C++ object (TimeBlock) already deleted.
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 171, in _apply_stored_status_if_any
+    pv = self.scene().parent() if self.scene() else None
+                                  ~~~~~~~~~~^^
+RuntimeError: Internal C++ object (TimeBlock) already deleted.
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 171, in _apply_stored_status_if_any
+    pv = self.scene().parent() if self.scene() else None
+                                  ~~~~~~~~~~^^
+RuntimeError: Internal C++ object (TimeBlock) already deleted.
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 171, in _apply_stored_status_if_any
+    pv = self.scene().parent() if self.scene() else None
+                                  ~~~~~~~~~~^^
+RuntimeError: Internal C++ object (TimeBlock) already deleted.
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 171, in _apply_stored_status_if_any
+    pv = self.scene().parent() if self.scene() else None
+                                  ~~~~~~~~~~^^
+RuntimeError: Internal C++ object (TimeBlock) already deleted.
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 171, in _apply_stored_status_if_any
+    pv = self.scene().parent() if self.scene() else None
+                                  ~~~~~~~~~~^^
+RuntimeError: Internal C++ object (TimeBlock) already deleted.
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 202, in _init_state_if_not_aborted
+    self.set_state("FINISHED", force=True)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 113, in set_state
+    self.setBrush(QBrush(self.COLORS[key]))
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: Internal C++ object (TimeBlock) already deleted.
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 171, in _apply_stored_status_if_any
+    pv = self.scene().parent() if self.scene() else None
+                                  ~~~~~~~~~~^^
+RuntimeError: Internal C++ object (TimeBlock) already deleted.
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 204, in _init_state_if_not_aborted
+    self.set_state("WAITING", force=True)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 113, in set_state
+    self.setBrush(QBrush(self.COLORS[key]))
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: Internal C++ object (TimeBlock) already deleted.
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 171, in _apply_stored_status_if_any
+    pv = self.scene().parent() if self.scene() else None
+                                  ~~~~~~~~~~^^
+RuntimeError: Internal C++ object (TimeBlock) already deleted.
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 204, in _init_state_if_not_aborted
+    self.set_state("WAITING", force=True)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 113, in set_state
+    self.setBrush(QBrush(self.COLORS[key]))
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: Internal C++ object (TimeBlock) already deleted.
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 171, in _apply_stored_status_if_any
+    pv = self.scene().parent() if self.scene() else None
+                                  ~~~~~~~~~~^^
+RuntimeError: Internal C++ object (TimeBlock) already deleted.
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 171, in _apply_stored_status_if_any
+    pv = self.scene().parent() if self.scene() else None
+                                  ~~~~~~~~~~^^
+RuntimeError: Internal C++ object (TimeBlock) already deleted.
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 171, in _apply_stored_status_if_any
+    pv = self.scene().parent() if self.scene() else None
+                                  ~~~~~~~~~~^^
+RuntimeError: Internal C++ object (TimeBlock) already deleted.
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 171, in _apply_stored_status_if_any
+    pv = self.scene().parent() if self.scene() else None
+                                  ~~~~~~~~~~^^
+RuntimeError: Internal C++ object (TimeBlock) already deleted.
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 171, in _apply_stored_status_if_any
+    pv = self.scene().parent() if self.scene() else None
+                                  ~~~~~~~~~~^^
+RuntimeError: Internal C++ object (TimeBlock) already deleted.
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 171, in _apply_stored_status_if_any
+    pv = self.scene().parent() if self.scene() else None
+                                  ~~~~~~~~~~^^
+RuntimeError: Internal C++ object (TimeBlock) already deleted.
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 204, in _init_state_if_not_aborted
+    self.set_state("WAITING", force=True)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 113, in set_state
+    self.setBrush(QBrush(self.COLORS[key]))
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: Internal C++ object (TimeBlock) already deleted.
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 171, in _apply_stored_status_if_any
+    pv = self.scene().parent() if self.scene() else None
+                                  ~~~~~~~~~~^^
+RuntimeError: Internal C++ object (TimeBlock) already deleted.
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 171, in _apply_stored_status_if_any
+    pv = self.scene().parent() if self.scene() else None
+                                  ~~~~~~~~~~^^
+RuntimeError: Internal C++ object (TimeBlock) already deleted.
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 204, in _init_state_if_not_aborted
+    self.set_state("WAITING", force=True)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 113, in set_state
+    self.setBrush(QBrush(self.COLORS[key]))
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: Internal C++ object (TimeBlock) already deleted.
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 171, in _apply_stored_status_if_any
+    pv = self.scene().parent() if self.scene() else None
+                                  ~~~~~~~~~~^^
+RuntimeError: Internal C++ object (TimeBlock) already deleted.
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 204, in _init_state_if_not_aborted
+    self.set_state("WAITING", force=True)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 113, in set_state
+    self.setBrush(QBrush(self.COLORS[key]))
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: Internal C++ object (TimeBlock) already deleted.
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 171, in _apply_stored_status_if_any
+    pv = self.scene().parent() if self.scene() else None
+                                  ~~~~~~~~~~^^
+RuntimeError: Internal C++ object (TimeBlock) already deleted.
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 171, in _apply_stored_status_if_any
+    pv = self.scene().parent() if self.scene() else None
+                                  ~~~~~~~~~~^^
+RuntimeError: Internal C++ object (TimeBlock) already deleted.
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 204, in _init_state_if_not_aborted
+    self.set_state("WAITING", force=True)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 113, in set_state
+    self.setBrush(QBrush(self.COLORS[key]))
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: Internal C++ object (TimeBlock) already deleted.
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 171, in _apply_stored_status_if_any
+    pv = self.scene().parent() if self.scene() else None
+                                  ~~~~~~~~~~^^
+RuntimeError: Internal C++ object (TimeBlock) already deleted.
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 204, in _init_state_if_not_aborted
+    self.set_state("WAITING", force=True)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 113, in set_state
+    self.setBrush(QBrush(self.COLORS[key]))
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: Internal C++ object (TimeBlock) already deleted.
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 171, in _apply_stored_status_if_any
+    pv = self.scene().parent() if self.scene() else None
+                                  ~~~~~~~~~~^^
+RuntimeError: Internal C++ object (TimeBlock) already deleted.
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 171, in _apply_stored_status_if_any
+    pv = self.scene().parent() if self.scene() else None
+                                  ~~~~~~~~~~^^
+RuntimeError: Internal C++ object (TimeBlock) already deleted.
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 204, in _init_state_if_not_aborted
+    self.set_state("WAITING", force=True)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 113, in set_state
+    self.setBrush(QBrush(self.COLORS[key]))
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: Internal C++ object (TimeBlock) already deleted.
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 171, in _apply_stored_status_if_any
+    pv = self.scene().parent() if self.scene() else None
+                                  ~~~~~~~~~~^^
+RuntimeError: Internal C++ object (TimeBlock) already deleted.
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 204, in _init_state_if_not_aborted
+    self.set_state("WAITING", force=True)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 113, in set_state
+    self.setBrush(QBrush(self.COLORS[key]))
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: Internal C++ object (TimeBlock) already deleted.
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 171, in _apply_stored_status_if_any
+    pv = self.scene().parent() if self.scene() else None
+                                  ~~~~~~~~~~^^
+RuntimeError: Internal C++ object (TimeBlock) already deleted.
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 204, in _init_state_if_not_aborted
+    self.set_state("WAITING", force=True)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 113, in set_state
+    self.setBrush(QBrush(self.COLORS[key]))
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: Internal C++ object (TimeBlock) already deleted.
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 171, in _apply_stored_status_if_any
+    pv = self.scene().parent() if self.scene() else None
+                                  ~~~~~~~~~~^^
+RuntimeError: Internal C++ object (TimeBlock) already deleted.
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 171, in _apply_stored_status_if_any
+    pv = self.scene().parent() if self.scene() else None
+                                  ~~~~~~~~~~^^
+RuntimeError: Internal C++ object (TimeBlock) already deleted.
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 204, in _init_state_if_not_aborted
+    self.set_state("WAITING", force=True)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 113, in set_state
+    self.setBrush(QBrush(self.COLORS[key]))
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: Internal C++ object (TimeBlock) already deleted.
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 171, in _apply_stored_status_if_any
+    pv = self.scene().parent() if self.scene() else None
+                                  ~~~~~~~~~~^^
+RuntimeError: Internal C++ object (TimeBlock) already deleted.
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 204, in _init_state_if_not_aborted
+    self.set_state("WAITING", force=True)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 113, in set_state
+    self.setBrush(QBrush(self.COLORS[key]))
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: Internal C++ object (TimeBlock) already deleted.
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 171, in _apply_stored_status_if_any
+    pv = self.scene().parent() if self.scene() else None
+                                  ~~~~~~~~~~^^
+RuntimeError: Internal C++ object (TimeBlock) already deleted.
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 204, in _init_state_if_not_aborted
+    self.set_state("WAITING", force=True)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 113, in set_state
+    self.setBrush(QBrush(self.COLORS[key]))
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: Internal C++ object (TimeBlock) already deleted.
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 171, in _apply_stored_status_if_any
+    pv = self.scene().parent() if self.scene() else None
+                                  ~~~~~~~~~~^^
+RuntimeError: Internal C++ object (TimeBlock) already deleted.
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 204, in _init_state_if_not_aborted
+    self.set_state("WAITING", force=True)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 113, in set_state
+    self.setBrush(QBrush(self.COLORS[key]))
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: Internal C++ object (TimeBlock) already deleted.
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 171, in _apply_stored_status_if_any
+    pv = self.scene().parent() if self.scene() else None
+                                  ~~~~~~~~~~^^
+RuntimeError: Internal C++ object (TimeBlock) already deleted.
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 171, in _apply_stored_status_if_any
+    pv = self.scene().parent() if self.scene() else None
+                                  ~~~~~~~~~~^^
+RuntimeError: Internal C++ object (TimeBlock) already deleted.
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 204, in _init_state_if_not_aborted
+    self.set_state("WAITING", force=True)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 113, in set_state
+    self.setBrush(QBrush(self.COLORS[key]))
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: Internal C++ object (TimeBlock) already deleted.
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 171, in _apply_stored_status_if_any
+    pv = self.scene().parent() if self.scene() else None
+                                  ~~~~~~~~~~^^
+RuntimeError: Internal C++ object (TimeBlock) already deleted.
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 204, in _init_state_if_not_aborted
+    self.set_state("WAITING", force=True)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 113, in set_state
+    self.setBrush(QBrush(self.COLORS[key]))
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: Internal C++ object (TimeBlock) already deleted.
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 171, in _apply_stored_status_if_any
+    pv = self.scene().parent() if self.scene() else None
+                                  ~~~~~~~~~~^^
+RuntimeError: Internal C++ object (TimeBlock) already deleted.
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 204, in _init_state_if_not_aborted
+    self.set_state("WAITING", force=True)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 113, in set_state
+    self.setBrush(QBrush(self.COLORS[key]))
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: Internal C++ object (TimeBlock) already deleted.
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 171, in _apply_stored_status_if_any
+    pv = self.scene().parent() if self.scene() else None
+                                  ~~~~~~~~~~^^
+RuntimeError: Internal C++ object (TimeBlock) already deleted.
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 204, in _init_state_if_not_aborted
+    self.set_state("WAITING", force=True)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 113, in set_state
+    self.setBrush(QBrush(self.COLORS[key]))
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: Internal C++ object (TimeBlock) already deleted.
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 171, in _apply_stored_status_if_any
+    pv = self.scene().parent() if self.scene() else None
+                                  ~~~~~~~~~~^^
+RuntimeError: Internal C++ object (TimeBlock) already deleted.
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 171, in _apply_stored_status_if_any
+    pv = self.scene().parent() if self.scene() else None
+                                  ~~~~~~~~~~^^
+RuntimeError: Internal C++ object (TimeBlock) already deleted.
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 204, in _init_state_if_not_aborted
+    self.set_state("WAITING", force=True)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 113, in set_state
+    self.setBrush(QBrush(self.COLORS[key]))
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: Internal C++ object (TimeBlock) already deleted.
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 171, in _apply_stored_status_if_any
+    pv = self.scene().parent() if self.scene() else None
+                                  ~~~~~~~~~~^^
+RuntimeError: Internal C++ object (TimeBlock) already deleted.
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 204, in _init_state_if_not_aborted
+    self.set_state("WAITING", force=True)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 113, in set_state
+    self.setBrush(QBrush(self.COLORS[key]))
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: Internal C++ object (TimeBlock) already deleted.
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 171, in _apply_stored_status_if_any
+    pv = self.scene().parent() if self.scene() else None
+                                  ~~~~~~~~~~^^
+RuntimeError: Internal C++ object (TimeBlock) already deleted.
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 204, in _init_state_if_not_aborted
+    self.set_state("WAITING", force=True)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 113, in set_state
+    self.setBrush(QBrush(self.COLORS[key]))
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: Internal C++ object (TimeBlock) already deleted.
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 171, in _apply_stored_status_if_any
+    pv = self.scene().parent() if self.scene() else None
+                                  ~~~~~~~~~~^^
+RuntimeError: Internal C++ object (TimeBlock) already deleted.
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 204, in _init_state_if_not_aborted
+    self.set_state("WAITING", force=True)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 113, in set_state
+    self.setBrush(QBrush(self.COLORS[key]))
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: Internal C++ object (TimeBlock) already deleted.
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 171, in _apply_stored_status_if_any
+    pv = self.scene().parent() if self.scene() else None
+                                  ~~~~~~~~~~^^
+RuntimeError: Internal C++ object (TimeBlock) already deleted.
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 171, in _apply_stored_status_if_any
+    pv = self.scene().parent() if self.scene() else None
+                                  ~~~~~~~~~~^^
+RuntimeError: Internal C++ object (TimeBlock) already deleted.
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 204, in _init_state_if_not_aborted
+    self.set_state("WAITING", force=True)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 113, in set_state
+    self.setBrush(QBrush(self.COLORS[key]))
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: Internal C++ object (TimeBlock) already deleted.
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 171, in _apply_stored_status_if_any
+    pv = self.scene().parent() if self.scene() else None
+                                  ~~~~~~~~~~^^
+RuntimeError: Internal C++ object (TimeBlock) already deleted.
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 204, in _init_state_if_not_aborted
+    self.set_state("WAITING", force=True)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 113, in set_state
+    self.setBrush(QBrush(self.COLORS[key]))
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: Internal C++ object (TimeBlock) already deleted.
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 171, in _apply_stored_status_if_any
+    pv = self.scene().parent() if self.scene() else None
+                                  ~~~~~~~~~~^^
+RuntimeError: Internal C++ object (TimeBlock) already deleted.
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 204, in _init_state_if_not_aborted
+    self.set_state("WAITING", force=True)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 113, in set_state
+    self.setBrush(QBrush(self.COLORS[key]))
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: Internal C++ object (TimeBlock) already deleted.
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 171, in _apply_stored_status_if_any
+    pv = self.scene().parent() if self.scene() else None
+                                  ~~~~~~~~~~^^
+RuntimeError: Internal C++ object (TimeBlock) already deleted.
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 204, in _init_state_if_not_aborted
+    self.set_state("WAITING", force=True)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 113, in set_state
+    self.setBrush(QBrush(self.COLORS[key]))
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: Internal C++ object (TimeBlock) already deleted.
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 171, in _apply_stored_status_if_any
+    pv = self.scene().parent() if self.scene() else None
+                                  ~~~~~~~~~~^^
+RuntimeError: Internal C++ object (TimeBlock) already deleted.
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 171, in _apply_stored_status_if_any
+    pv = self.scene().parent() if self.scene() else None
+                                  ~~~~~~~~~~^^
+RuntimeError: Internal C++ object (TimeBlock) already deleted.
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 204, in _init_state_if_not_aborted
+    self.set_state("WAITING", force=True)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 113, in set_state
+    self.setBrush(QBrush(self.COLORS[key]))
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: Internal C++ object (TimeBlock) already deleted.
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 171, in _apply_stored_status_if_any
+    pv = self.scene().parent() if self.scene() else None
+                                  ~~~~~~~~~~^^
+RuntimeError: Internal C++ object (TimeBlock) already deleted.
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 204, in _init_state_if_not_aborted
+    self.set_state("WAITING", force=True)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 113, in set_state
+    self.setBrush(QBrush(self.COLORS[key]))
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: Internal C++ object (TimeBlock) already deleted.
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 171, in _apply_stored_status_if_any
+    pv = self.scene().parent() if self.scene() else None
+                                  ~~~~~~~~~~^^
+RuntimeError: Internal C++ object (TimeBlock) already deleted.
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 204, in _init_state_if_not_aborted
+    self.set_state("WAITING", force=True)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 113, in set_state
+    self.setBrush(QBrush(self.COLORS[key]))
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: Internal C++ object (TimeBlock) already deleted.
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 171, in _apply_stored_status_if_any
+    pv = self.scene().parent() if self.scene() else None
+                                  ~~~~~~~~~~^^
+RuntimeError: Internal C++ object (TimeBlock) already deleted.
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 204, in _init_state_if_not_aborted
+    self.set_state("WAITING", force=True)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 113, in set_state
+    self.setBrush(QBrush(self.COLORS[key]))
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: Internal C++ object (TimeBlock) already deleted.
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 171, in _apply_stored_status_if_any
+    pv = self.scene().parent() if self.scene() else None
+                                  ~~~~~~~~~~^^
+RuntimeError: Internal C++ object (TimeBlock) already deleted.
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 171, in _apply_stored_status_if_any
+    pv = self.scene().parent() if self.scene() else None
+                                  ~~~~~~~~~~^^
+RuntimeError: Internal C++ object (TimeBlock) already deleted.
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 204, in _init_state_if_not_aborted
+    self.set_state("WAITING", force=True)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 113, in set_state
+    self.setBrush(QBrush(self.COLORS[key]))
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: Internal C++ object (TimeBlock) already deleted.
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 171, in _apply_stored_status_if_any
+    pv = self.scene().parent() if self.scene() else None
+                                  ~~~~~~~~~~^^
+RuntimeError: Internal C++ object (TimeBlock) already deleted.
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 204, in _init_state_if_not_aborted
+    self.set_state("WAITING", force=True)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 113, in set_state
+    self.setBrush(QBrush(self.COLORS[key]))
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: Internal C++ object (TimeBlock) already deleted.
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 171, in _apply_stored_status_if_any
+    pv = self.scene().parent() if self.scene() else None
+                                  ~~~~~~~~~~^^
+RuntimeError: Internal C++ object (TimeBlock) already deleted.
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 204, in _init_state_if_not_aborted
+    self.set_state("WAITING", force=True)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 113, in set_state
+    self.setBrush(QBrush(self.COLORS[key]))
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: Internal C++ object (TimeBlock) already deleted.
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 171, in _apply_stored_status_if_any
+    pv = self.scene().parent() if self.scene() else None
+                                  ~~~~~~~~~~^^
+RuntimeError: Internal C++ object (TimeBlock) already deleted.
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 204, in _init_state_if_not_aborted
+    self.set_state("WAITING", force=True)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 113, in set_state
+    self.setBrush(QBrush(self.COLORS[key]))
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: Internal C++ object (TimeBlock) already deleted.
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 171, in _apply_stored_status_if_any
+    pv = self.scene().parent() if self.scene() else None
+                                  ~~~~~~~~~~^^
+RuntimeError: Internal C++ object (TimeBlock) already deleted.
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 204, in _init_state_if_not_aborted
+    self.set_state("WAITING", force=True)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 113, in set_state
+    self.setBrush(QBrush(self.COLORS[key]))
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: Internal C++ object (TimeBlock) already deleted.
+

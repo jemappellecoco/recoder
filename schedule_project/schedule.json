@@ -37,5 +37,83 @@
     "encoder_name": "Bak4-2",
     "snapshot_path": "",
     "status": "狀態：⌛ 等待中"
+  },
+  {
+    "qdate": "2025-08-25",
+    "track_index": 0,
+    "start_time": "09:25",
+    "duration_time": "00:06",
+    "end_time": "09:31",
+    "end_qdate": "2025-08-25",
+    "label": "555",
+    "id": "fa06777e-432a-47a1-891b-e07eb00df82b",
+    "encoder_name": "Bak4-1",
+    "snapshot_path": "",
+    "status": "狀態：❌ 異常中斷"
+  },
+  {
+    "qdate": "2025-08-25",
+    "track_index": 0,
+    "start_time": "12:59",
+    "duration_time": "04:27",
+    "end_time": "17:26",
+    "end_qdate": "2025-08-25",
+    "label": "555",
+    "id": "bf541339-7533-4c9f-b6cf-0670c889490f",
+    "encoder_name": "Bak4-1",
+    "snapshot_path": "",
+    "status": "狀態：⌛ 等待中"
+  },
+  {
+    "qdate": "2025-08-25",
+    "track_index": 0,
+    "start_time": "11:05",
+    "duration_time": "01:53",
+    "end_time": "12:58",
+    "end_qdate": "2025-08-25",
+    "label": "555",
+    "id": "2c5463ed-e6ff-4213-813d-79a81f13d99b",
+    "encoder_name": "Bak4-1",
+    "snapshot_path": "",
+    "status": "狀態：⌛ 等待中"
+  },
+  {
+    "qdate": "2025-08-25",
+    "track_index": 1,
+    "start_time": "12:05",
+    "duration_time": "01:53",
+    "end_time": "13:58",
+    "end_qdate": "2025-08-25",
+    "label": "555",
+    "id": "59d644fa-909d-4045-866d-c0740fc6ec83",
+    "encoder_name": "Bak4-2",
+    "snapshot_path": "",
+    "status": "狀態：⌛ 等待中"
+  },
+  {
+    "qdate": "2025-08-25",
+    "track_index": 1,
+    "start_time": "15:10",
+    "duration_time": "01:53",
+    "end_time": "17:03",
+    "end_qdate": "2025-08-25",
+    "label": "555",
+    "id": "5d0ca446-d2a6-4cac-9d22-17ed2cda4422",
+    "encoder_name": "Bak4-2",
+    "snapshot_path": "",
+    "status": "狀態：⌛ 等待中"
+  },
+  {
+    "qdate": "2025-08-25",
+    "track_index": 1,
+    "start_time": "22:05",
+    "duration_time": "04:27",
+    "end_time": "02:32",
+    "end_qdate": "2025-08-26",
+    "label": "555",
+    "id": "9360c755-b0c4-4430-b335-eaf2ac92b0a9",
+    "encoder_name": "Bak4-2",
+    "snapshot_path": "",
+    "status": "狀態：⌛ 等待中"
   }
 ]
