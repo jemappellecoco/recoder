@@ -351,13 +351,23 @@ class ScheduleView(QGraphicsView):
                 # block.status = data.get("status") or "狀態：⏳ 等待中"
                 # ⬇️ 這裡插入
                 stored = data.get("status")
-                if stored:
-                    block.status = stored
-                    # block.update_text_position()
-                    # block.update_status_by_time()
+                stored = data.get("status") or ""
+                if "❌" in stored:
+                    block.set_state("ABORTED",   force=True)
+                elif "已結束" in stored:
+                    block.set_state("FINISHED",  force=True)
+                elif "錄影中" in stored:
+                    block.set_state("RECORDING", force=True)
                 else:
-                    block.update_status_by_time()
+                    block.update_status_by_time()  # 讓時間自行判定 WAITING/RECORDING/FINISHED
                 block.update_text_position()
+                # if stored:
+                #     block.status = stored
+                #     # block.update_text_position()
+                #     # block.update_status_by_time()
+                # else:
+                #     block.update_status_by_time()
+                # block.update_text_position()
                 # # ✅ 立刻依現在時間套狀態（等待中／已結束）
                 # block.update_status_by_time()
                 # 從舊 block 繼承狀態與圖片

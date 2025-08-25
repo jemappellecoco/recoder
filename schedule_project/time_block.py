@@ -6,6 +6,7 @@ import logging
 from path_manager import PathManager
 import os
 from utils import log
+from shiboken6 import isValid
 from utils import hours_to_hhmm, hhmm_to_hours,MIN_LEAD_SECONDS,hourf_to_qtime
 logging.basicConfig(level=logging.INFO)
 def _dt(qd, hourf):
@@ -106,6 +107,8 @@ class TimeBlock(QGraphicsRectItem):
     GAP_SEC = 90# ~5 秒 (1/720 小時) 才算時間真的改變
     def set_state(self, key: str, *, force: bool = False):
         """統一設定區塊狀態（文字＋顏色），key ∈ {WAITING, RECORDING, FINISHED}"""
+        # if self.scene() is None:
+        #     return
         if (not force) and getattr(self, "status", "").startswith("狀態：❌") and key != "ABORTED":
             return
         self.status = self.STATUS_TEXT[key]
@@ -124,7 +127,8 @@ class TimeBlock(QGraphicsRectItem):
         self._warning_flashing = True
 
         self.setBrush(QBrush(self.COLORS["WARNING"]))
-        QTimer.singleShot(ms, self._restore_warning)
+        QTimer.singleShot(ms,  self._restore_warning)
+        # QTimer.singleShot(ms, self._restore_warning)
     def _restore_warning(self):
         # 還原成當前「正常狀態」底色（不會被多次呼叫污染）
         self.setBrush(self._base_brush)
@@ -152,6 +156,7 @@ class TimeBlock(QGraphicsRectItem):
         self.has_ended = now > end_dt  # ✅ 判斷是否已完成
         self.text = QGraphicsSimpleTextItem("", self)
         self.status_text = QGraphicsSimpleTextItem(self.status, self)
+        
         self.text.setFont(QFont("Arial", 9, QFont.Bold))
         self.status_text.setFont(QFont("Arial", 9))
         self.status_text.setBrush(Qt.black)
@@ -162,12 +167,17 @@ class TimeBlock(QGraphicsRectItem):
         self._warning_flashing = False 
         self._move_elapsed = QElapsedTimer()
         self._move_elapsed.start()
+        self._base_brush = QBrush(self.COLORS["WAITING"])
+        
+        self.setBrush(self._base_brush)   # ← 立刻給灰色，避免初始無色
         # self._THROTTLE_MS = 16  # 60fps 上限；覺得還卡可以改 24~33ms# 閃黃中旗標       
         # ✅ 統一用 set_state
         self._THROTTLE_MS = 24       # 由 16ms 放鬆到 24~33ms 會更滑順
         self._SNAP_STEP_H = 5 / 60.0 # 5 分鐘一格（小時）
 # === 這兩個 helper 放在 __init__ 裡 ===
         def _apply_stored_status_if_any():
+            if (not isValid(self)) or (self.scene() is None):
+                return
             pv = self.scene().parent() if self.scene() else None
             if not pv:
                 return
@@ -192,7 +202,11 @@ class TimeBlock(QGraphicsRectItem):
                         pass
 
         def _init_state_if_not_aborted():
+            if (not isValid(self)) or (self.scene() is None):
+                return
             # 重新計算現在與起止
+            if self.scene() is None:
+                return
             _now = QDateTime.currentDateTime()
             _start_dt = QDateTime(self.start_date, hourf_to_qtime(self.start_hour))
             _end_dt = self.compute_end_dt()
@@ -239,8 +253,10 @@ class TimeBlock(QGraphicsRectItem):
         self.dragging_handle = None
        
         self.prevent_drag = False
-        QTimer.singleShot(0, _apply_stored_status_if_any)
-        QTimer.singleShot(0, _init_state_if_not_aborted)
+        _apply_stored_status_if_any()
+        _init_state_if_not_aborted()    
+        # QTimer.singleShot(0, _apply_stored_status_if_any)
+        # QTimer.singleShot(0, _init_state_if_not_aborted)
     def _snap_hour(self, hour_f: float) -> float:
         step = getattr(self, "_SNAP_STEP_H", 5/60)
         return round((hour_f / step) * step, 3)
@@ -678,6 +694,7 @@ class TimeBlock(QGraphicsRectItem):
                     })
                     break
             parent_view.save_schedule()
+            
             _sync_runner(self)
             self.setFlag(QGraphicsRectItem.ItemIsMovable, False)
             return
