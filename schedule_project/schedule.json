@@ -26,19 +26,6 @@
     "status": "狀態：✅ 已結束"
   },
   {
-    "qdate": "2025-08-22",
-    "track_index": 1,
-    "start_time": "18:45",
-    "duration_time": "00:01",
-    "end_time": "18:46",
-    "end_qdate": "2025-08-22",
-    "label": "222",
-    "id": "64d6fadb-dee2-4af8-83e7-5ffb7031f682",
-    "encoder_name": "Bak4-2",
-    "snapshot_path": "",
-    "status": "狀態：⌛ 等待中"
-  },
-  {
     "qdate": "2025-08-25",
     "track_index": 0,
     "start_time": "09:25",
@@ -105,15 +92,15 @@
   },
   {
     "qdate": "2025-08-25",
-    "track_index": 1,
-    "start_time": "14:55",
-    "duration_time": "00:17",
-    "end_time": "15:12",
+    "track_index": 0,
+    "start_time": "15:18",
+    "duration_time": "04:00",
+    "end_time": "19:18",
     "end_qdate": "2025-08-25",
-    "label": "sloy",
-    "id": "0b4378a0-4c7d-4d63-bcbb-62c289d1a1c1",
-    "encoder_name": "Bak4-2",
+    "label": "測試 EXE",
+    "id": "f87a4c4b-25e1-4261-be9e-c0fa6385fbde",
+    "encoder_name": "Bak4-1",
     "snapshot_path": "",
-    "status": "狀態：✅ 已結束"
+    "status": "狀態：✅ 錄影中"
   }
 ]
