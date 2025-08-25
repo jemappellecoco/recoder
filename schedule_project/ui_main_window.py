@@ -557,7 +557,7 @@ class MainWindow(QMainWindow):
     def safe_check_schedule(self):
         log("🕒 檢查排程中...")
         try:
-            # 改成非同步：丟給 worker，避免主線程卡住
+            # 改成非同步：丟給 worker，避免卡住
             self.schedule_manager.tick_async()
         except Exception as e:
             log(f"❌ [Timer] check_schedule 錯誤：{e}",level="ERROR")
