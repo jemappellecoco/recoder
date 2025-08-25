@@ -505,48 +505,164 @@ class MainWindow(QMainWindow):
             self.reload_encoder_list()
     def reload_encoder_list(self):
         log("🔄 重新載入 Encoder 列表")
+
+    # 1) 讀新清單
         encoders = list_encoders_with_alias()
-        self.encoder_names = [name for name, _ in encoders]
+        self.encoder_names   = [name for name, _ in encoders]
         self.encoder_aliases = {name: alias for name, alias in encoders}
-        # self.encoder_status = {}
+
+        # 2) 清空所有映射（含 start/stop）
         self.encoder_status.clear()
         self.encoder_entries = {}
         self.encoder_preview_labels = {}
+        self.start_buttons = {}
+        self.stop_buttons  = {}
 
+        # 3) 更新 runner/schedule_manager 的名稱
         self.runner.encoder_names = self.encoder_names
         self.schedule_manager.encoder_names = self.encoder_names
-        self.runner.encoder_status = self.encoder_status
-        self.schedule_manager.encoder_status = self.encoder_status
-        # ✅ 清空 encoder_panel UI 區塊
+
+        # 4) 清空左側 encoder_panel，改用「一開始那套」現場組 UI
         encoder_panel = self.findChild(QWidget, "encoder_panel")
         if encoder_panel:
             layout = encoder_panel.layout()
             if layout:
                 while layout.count():
                     item = layout.takeAt(0)
-                    widget = item.widget()
-                    if widget:
-                        widget.setParent(None)
+                    w = item.widget()
+                    if w:
+                        w.setParent(None)
 
                 for name in self.encoder_names:
-                    widget = self.build_encoder_widget(name)
-                    layout.addWidget(widget)
-                    
-        # ✅ 更新 Header & View 需要的 encoder info
-        self.view.encoder_names = self.encoder_names
+                    display = self.encoder_aliases.get(name, name)
+
+                    # 外框
+                    encoder_widget = QWidget()
+                    encoder_widget.setSizePolicy(QSizePolicy.Preferred, QSizePolicy.Fixed)
+                    vbox = QVBoxLayout(encoder_widget)
+                    vbox.setContentsMargins(0, 0, 0, 0)
+
+                    # 🖼️ 預覽
+                    preview_label = QLabel(f"🖼️ {display} 預覽載入中...")
+                    preview_label.setMinimumHeight(160)
+                    preview_label.setAlignment(Qt.AlignCenter)
+                    preview_label.setStyleSheet("border: 1px solid gray; background-color: black; color: white;")
+                    self.encoder_preview_labels[name] = preview_label
+                    vbox.addWidget(preview_label)
+
+                    # 控制列
+                    row = QHBoxLayout()
+                    label = QLabel(display)
+                    label.setFixedWidth(60)
+                    label.setMinimumHeight(32)
+                    label.setAlignment(Qt.AlignRight | Qt.AlignVCenter)
+
+                    entry = QLineEdit()
+                    entry.setFixedHeight(32)
+                    entry.setMaximumWidth(100)
+
+                    start_btn = QPushButton("▶️")
+                    stop_btn  = QPushButton("⏹")
+                    for btn in (start_btn, stop_btn):
+                        btn.setSizePolicy(QSizePolicy.MinimumExpanding, QSizePolicy.Fixed)
+                        btn.setMinimumWidth(15)
+                        btn.setMaximumWidth(60)
+                        btn.setFixedHeight(28)
+
+                    status = QLabel("狀態：+++")
+                    status.setFixedWidth(100)
+                    status.setAlignment(Qt.AlignVCenter)
+
+                    row.addWidget(label)
+                    row.addWidget(entry)
+                    row.addWidget(start_btn)
+                    row.addWidget(stop_btn)
+                    row.addWidget(status)
+                    vbox.addLayout(row)
+
+                    # 綁定
+                    start_btn.clicked.connect(lambda _, n=name, e=entry, s=status: self.encoder_start(n, e, s))
+                    stop_btn.clicked.connect(lambda _, n=name, s=status: self.encoder_stop(n, s))
+
+                    # 註冊到 mapping（🔑 關鍵：給 ScheduleRunner 用）
+                    self.encoder_entries[name] = entry
+                    self.encoder_status[name]  = status
+                    self.start_buttons[name]   = start_btn
+                    self.stop_buttons[name]    = stop_btn
+
+                    status.setText(f"狀態：{self.get_encoder_status(name)}")
+
+                    layout.addWidget(encoder_widget)
+
+        # 5) 把最新的 mapping 回填給 runner（🔑 讓開始鍵能自動變灰）
+        self.runner.encoder_status   = self.encoder_status
+        self.runner.start_buttons    = self.start_buttons
+        self.runner.stop_buttons     = self.stop_buttons
+        self.runner.filename_inputs  = self.encoder_entries
+
+        # 6) 右側視圖同步 & 重畫
+        self.view.encoder_names  = self.encoder_names
         self.view.encoder_status = self.encoder_status
         self.header.set_encoder_names(self.encoder_names)
 
-        # ✅ 修正 block 對應 encoder track
         self.view.restore_orphan_blocks()
         self.view.remap_block_tracks()
         self.view.rebuild_tracks()
-        self.view.draw_grid()  # ←❗別漏這個
+        self.view.draw_grid()
+
         orphan_count = len(self.view.orphan_blocks)
         if orphan_count:
             log(f"⚠️ {orphan_count} 個節目沒有對應的 encoder")
+
+        # 7) 立即刷新一次狀態（讓開始鍵立刻依狀態變灰）
         self.sync_runner_data()
         QTimer.singleShot(0, self.update_encoder_status_labels)
+        QTimer.singleShot(0, getattr(self.runner, "_refresh_status_async"))
+      
+    # def reload_encoder_list(self):
+    #     log("🔄 重新載入 Encoder 列表")
+    #     encoders = list_encoders_with_alias()
+    #     self.encoder_names = [name for name, _ in encoders]
+    #     self.encoder_aliases = {name: alias for name, alias in encoders}
+    #     # self.encoder_status = {}
+    #     self.encoder_status.clear()
+    #     self.encoder_entries = {}
+    #     self.encoder_preview_labels = {}
+
+    #     self.runner.encoder_names = self.encoder_names
+    #     self.schedule_manager.encoder_names = self.encoder_names
+    #     self.runner.encoder_status = self.encoder_status
+    #     self.schedule_manager.encoder_status = self.encoder_status
+    #     # ✅ 清空 encoder_panel UI 區塊
+    #     encoder_panel = self.findChild(QWidget, "encoder_panel")
+    #     if encoder_panel:
+    #         layout = encoder_panel.layout()
+    #         if layout:
+    #             while layout.count():
+    #                 item = layout.takeAt(0)
+    #                 widget = item.widget()
+    #                 if widget:
+    #                     widget.setParent(None)
+
+    #             for name in self.encoder_names:
+    #                 widget = self.build_encoder_widget(name)
+    #                 layout.addWidget(widget)
+                    
+    #     # ✅ 更新 Header & View 需要的 encoder info
+    #     self.view.encoder_names = self.encoder_names
+    #     self.view.encoder_status = self.encoder_status
+    #     self.header.set_encoder_names(self.encoder_names)
+
+    #     # ✅ 修正 block 對應 encoder track
+    #     self.view.restore_orphan_blocks()
+    #     self.view.remap_block_tracks()
+    #     self.view.rebuild_tracks()
+    #     self.view.draw_grid()  # ←❗別漏這個
+    #     orphan_count = len(self.view.orphan_blocks)
+    #     if orphan_count:
+    #         log(f"⚠️ {orphan_count} 個節目沒有對應的 encoder")
+    #     self.sync_runner_data()
+    #     QTimer.singleShot(0, self.update_encoder_status_labels)
 
     def jump_to_today(self):
         today = QDate.currentDate()
@@ -562,73 +678,74 @@ class MainWindow(QMainWindow):
         except Exception as e:
             log(f"❌ [Timer] check_schedule 錯誤：{e}",level="ERROR")
         
-    def build_encoder_widget(self, name):
-        display = self.encoder_aliases.get(name, name)
-        encoder_widget = QWidget()
-        encoder_widget.setSizePolicy(QSizePolicy.Preferred, QSizePolicy.Fixed)
-        encoder_box = QVBoxLayout(encoder_widget)
-        encoder_box.setContentsMargins(0, 0, 0, 0)
+    # def build_encoder_widget(self, name):
+    #     display = self.encoder_aliases.get(name, name)
+    #     encoder_widget = QWidget()
+    #     encoder_widget.setSizePolicy(QSizePolicy.Preferred, QSizePolicy.Fixed)
+    #     encoder_box = QVBoxLayout(encoder_widget)
+    #     encoder_box.setContentsMargins(0, 0, 0, 0)
 
-        # 🖼️ 預覽圖
-        preview_label = QLabel(f"🖼️ {display} 預覽載入中...")
-        preview_label.setMinimumHeight(160)
-        preview_label.setStyleSheet("border: 1px solid gray; background-color: black; color: white;")
-        preview_label.setAlignment(Qt.AlignCenter)
-        self.encoder_preview_labels[name] = preview_label
-        encoder_box.addWidget(preview_label)
+    #     # 🖼️ 預覽圖
+    #     preview_label = QLabel(f"🖼️ {display} 預覽載入中...")
+    #     preview_label.setMinimumHeight(160)
+    #     preview_label.setStyleSheet("border: 1px solid gray; background-color: black; color: white;")
+    #     preview_label.setAlignment(Qt.AlignCenter)
+    #     self.encoder_preview_labels[name] = preview_label
+    #     encoder_box.addWidget(preview_label)
 
-        # 📏 控制列（整排）
-        control_row = QHBoxLayout()
+    #     # 📏 控制列（整排）
+    #     control_row = QHBoxLayout()
 
-        label = QLabel(display)
-        label.setFixedWidth(60)
-        label.setMinimumHeight(32)
-        label.setAlignment(Qt.AlignRight | Qt.AlignVCenter)
+    #     label = QLabel(display)
+    #     label.setFixedWidth(60)
+    #     label.setMinimumHeight(32)
+    #     label.setAlignment(Qt.AlignRight | Qt.AlignVCenter)
         
-        entry = QLineEdit()
-        entry.setFixedHeight(32)
-        entry.setMaximumWidth(100)
+    #     entry = QLineEdit()
+    #     entry.setFixedHeight(32)
+    #     entry.setMaximumWidth(100)
         
-        # stop_btn.setFixedHeight(32)
-        # path_btn.setFixedHeight(32)
-        # status.setFixedHeight(32)
-
-        
+    #     # stop_btn.setFixedHeight(32)
+    #     # path_btn.setFixedHeight(32)
+    #     # status.setFixedHeight(32)
 
         
 
-        start_btn = QPushButton("▶️")
-        stop_btn = QPushButton("⏹")
-        # path_btn = QPushButton("📁")
-        status = QLabel("狀態：+++")
-        for btn in [start_btn, stop_btn]:
-        # for btn in [start_btn, stop_btn, path_btn]:
-            btn.setSizePolicy(QSizePolicy.MinimumExpanding, QSizePolicy.Fixed)
-            btn.setMinimumWidth(15)
-            btn.setMaximumWidth(60)
-            btn.setFixedHeight(28)
         
-        status.setFixedWidth(100)
-        status.setAlignment(Qt.AlignVCenter)
 
-        control_row.addWidget(label)
-        control_row.addWidget(entry)
-        control_row.addWidget(start_btn)
-        control_row.addWidget(stop_btn)
-        # control_row.addWidget(path_btn)
-        control_row.addWidget(status)
+    #     start_btn = QPushButton("▶️")
+    #     stop_btn = QPushButton("⏹")
+    #     # path_btn = QPushButton("📁")
+    #     status = QLabel("狀態：+++")
+    #     for btn in [start_btn, stop_btn]:
+    #     # for btn in [start_btn, stop_btn, path_btn]:
+    #         btn.setSizePolicy(QSizePolicy.MinimumExpanding, QSizePolicy.Fixed)
+    #         btn.setMinimumWidth(15)
+    #         btn.setMaximumWidth(60)
+    #         btn.setFixedHeight(28)
+        
+    #     status.setFixedWidth(100)
+    #     status.setAlignment(Qt.AlignVCenter)
 
-        encoder_box.addLayout(control_row)
+    #     control_row.addWidget(label)
+    #     control_row.addWidget(entry)
+    #     control_row.addWidget(start_btn)
+    #     control_row.addWidget(stop_btn)
+    #     # control_row.addWidget(path_btn)
+    #     control_row.addWidget(status)
 
-        # 📎 綁定與註冊
-        start_btn.clicked.connect(lambda _, n=name, e=entry, s=status: self.encoder_start(n, e, s))
-        stop_btn.clicked.connect(lambda _, n=name, s=status: self.encoder_stop(n, s))
-        # path_btn.clicked.connect(lambda _, n=name, e=entry: self.show_file_path(n, e))
+    #     encoder_box.addLayout(control_row)
 
-        self.encoder_entries[name] = entry
-        self.encoder_status[name] = status
-        status.setText(f"狀態：{self.get_encoder_status(name)}")
-        return encoder_widget
+    #     # 📎 綁定與註冊
+    #     start_btn.clicked.connect(lambda _, n=name, e=entry, s=status: self.encoder_start(n, e, s))
+    #     stop_btn.clicked.connect(lambda _, n=name, s=status: self.encoder_stop(n, s))
+    #     # path_btn.clicked.connect(lambda _, n=name, e=entry: self.show_file_path(n, e))
+
+    #     self.encoder_entries[name] = entry
+    #     self.encoder_status[name] = status
+        
+    #     status.setText(f"狀態：{self.get_encoder_status(name)}")
+    #     return encoder_widget
     # def update_preview_scaled(self, name):
     #     label = self.encoder_preview_labels.get(name)
     #     pixmap = self.encoder_pixmaps.get(name)
