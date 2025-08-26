@@ -1,1 +1,5 @@
-{"record_root": "Z:/", "preview_root": "Z:/", "schedule_file": "//192.168.30.110/vlcode/schedule_project/schedule.json"}
+{
+  "record_root": "Z:/",
+  "preview_root": "Z:/",
+  "schedule_file": "C:/Users/coco/recoder/schedule.json"
+}

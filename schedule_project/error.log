@@ -97,3 +97,25 @@ Traceback (most recent call last):
     ^^^^^^^^^^^^^^^^^^^^^^^
 AttributeError: 'ScheduleRunner' object has no attribute 'reset_flags'
 
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\ui_main_window.py", line 505, in open_encoder_manager
+    self.reload_encoder_list()
+    ~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "c:\Users\coco\recoder\schedule_project\ui_main_window.py", line 539, in reload_encoder_list
+    widget = self.build_encoder_widget(name)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'MainWindow' object has no attribute 'build_encoder_widget'
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\ui_main_window.py", line 505, in open_encoder_manager
+    self.reload_encoder_list()
+    ~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "c:\Users\coco\recoder\schedule_project\ui_main_window.py", line 542, in reload_encoder_list
+    w = self.build_encoder_widget(name)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'MainWindow' object has no attribute 'build_encoder_widget'
+

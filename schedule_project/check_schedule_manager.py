@@ -4,6 +4,7 @@ from shiboken6 import isValid
 from utils import log,MIN_LEAD_SECONDS,hourf_to_qtime
 from encoder_utils import get_encoder_display_name
 from encoder_status_manager import EncoderStatusManager
+import time
 class _ReconSignals(QObject):
     done = Signal(list)  # [{action, block_id, encoder_name, reason, end_now_sec}]
 
@@ -159,6 +160,9 @@ class CheckScheduleManager(QObject):
             1) 先在 block 上顯示 live_status 提示（黃閃）
             2) 若判定為『停止/未連線/錯誤/暫停』，直接標記為 ABORTED，並把 end 修正為 now（不中斷其它流程）
         """
+        deadline = getattr(self, "_reconcile_cooldown_until", None)
+        if deadline and QDateTime.currentDateTime() < deadline:
+            return
         if not actions:
             return
 

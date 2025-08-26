@@ -1,13 +1,52 @@
-Traceback (most recent call last):
-  File "c:\Users\coco\recoder\schedule_project\schedule_view.py", line 27, in run
-    self.signals.done.emit(result)
-    ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^
-RuntimeError: Signal source has been deleted
 
-During handling of the above exception, another exception occurred:
-
+==== 未捕捉例外 ====
 Traceback (most recent call last):
-  File "c:\Users\coco\recoder\schedule_project\schedule_view.py", line 29, in run
-    self.signals.done.emit({})
-    ~~~~~~~~~~~~~~~~~~~~~~^^^^
-RuntimeError: Signal source has been deleted
+  File "c:\Users\coco\recoder\schedule_project\main.py", line 46, in <module>
+    win = MainWindow()
+  File "c:\Users\coco\recoder\schedule_project\ui_main_window.py", line 380, in __init__
+    right_layout.addWidget(self.log_box)
+                           ^^^^^^^^^^^^
+AttributeError: 'MainWindow' object has no attribute 'log_box'
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\main.py", line 46, in <module>
+    win = MainWindow()
+  File "c:\Users\coco\recoder\schedule_project\ui_main_window.py", line 428, in __init__
+    wrapper_layout.addWidget(self.header)
+    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+RuntimeError: Internal C++ object (HeaderView) already deleted.
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\main.py", line 46, in <module>
+    win = MainWindow()
+  File "c:\Users\coco\recoder\schedule_project\ui_main_window.py", line 131, in __init__
+    preview_label.setContentsMargins(0, 20, 0, 0)
+    ^^^^^^^^^^^^^
+UnboundLocalError: cannot access local variable 'preview_label' where it is not associated with a value
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\ui_main_window.py", line 1065, in show_block_context_menu
+    self._edit_block_via_dialog(hit_item)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "c:\Users\coco\recoder\schedule_project\ui_main_window.py", line 944, in _edit_block_via_dialog
+    end_hour, end_qdate = item.compute_end_dt()
+    ^^^^^^^^^^^^^^^^^^^
+TypeError: cannot unpack non-iterable PySide6.QtCore.QDateTime object
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\ui_main_window.py", line 1065, in show_block_context_menu
+    self._edit_block_via_dialog(hit_item)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "c:\Users\coco\recoder\schedule_project\ui_main_window.py", line 944, in _edit_block_via_dialog
+    end_hour, end_qdate = item.compute_end_dt()
+    ^^^^^^^^^^^^^^^^^^^
+TypeError: cannot unpack non-iterable PySide6.QtCore.QDateTime object
+

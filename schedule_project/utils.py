@@ -2,8 +2,7 @@
 import sys
 import os
 from PySide6.QtCore import QDateTime, QObject, Signal,Qt,QDate, QTime
-
-from PySide6.QtGui import QTextCursor
+from PySide6.QtGui import QTextCursor,QPixmap
 from PySide6.QtCore import QTimer
 import traceback
 _log_box = None
@@ -193,3 +192,4 @@ def resource_path(relative_path):
     if hasattr(sys, "_MEIPASS"):
         return os.path.join(sys._MEIPASS, relative_path)
     return os.path.abspath(relative_path)
+

@@ -1,8 +1,8 @@
-from PySide6.QtWidgets import QGraphicsView, QGraphicsScene
+from PySide6.QtWidgets import QGraphicsView, QGraphicsScene,QLabel
 from PySide6.QtCore import Qt, QDate, QTimer,QDateTime, QTime,QObject, Signal, QRunnable, QThreadPool
  # 若上面沒 import 到就補上
 from PySide6.QtGui import QPainter, QFont,QPen,QColor
-from time_block import TimeBlock
+from time_block import TimeBlock 
 import json
 from encoder_status_manager import EncoderStatusManager
 import os
@@ -89,7 +89,27 @@ class ScheduleView(QGraphicsView):
         self.block_status_timer.start(1000)  # 每秒更新一次（可改 2000/5000）
         self._pool = QThreadPool.globalInstance()
         self._bg_workers = []      # ✅ 保存背景任務，避免被 GC
-        
+        self.track_height = TimeBlock.BLOCK_HEIGHT
+        self.corner_clock = QLabel(self.viewport())
+        self.corner_clock.setObjectName("cornerClock")
+        self.corner_clock.setStyleSheet(
+            "background: rgba(0,0,0,120); color: #fff; padding: 2px 6px; "
+            "border-radius: 4px; font-weight: 600;font-size: 52px;"
+        )
+        self.corner_clock.setAttribute(Qt.WA_TransparentForMouseEvents, True)
+        self.corner_clock.hide()
+    def _reposition_clock(self):
+        if not hasattr(self, "corner_clock"):
+            return
+        m = 8  # 邊距
+        s = self.corner_clock.sizeHint()
+        vp = self.viewport()
+        self.corner_clock.move(vp.width() - s.width() - m,
+                            vp.height() - s.height() - m)
+
+    def resizeEvent(self, e):
+        super().resizeEvent(e)
+        self._reposition_clock()
     def get_now_x(self) -> int | None:
         now = QDateTime.currentDateTime()
         days = self.base_date.daysTo(now.date())
@@ -167,7 +187,7 @@ class ScheduleView(QGraphicsView):
             self.now_line_item = None
 
         self.now_line_item = self.scene.addLine(
-            x, offset, x, offset + self.tracks * 100, QPen(Qt.red, 2)
+            x, offset, x, offset + self.tracks *  self.track_height, QPen(Qt.red, 2)
         )
         self.now_line_item.setZValue(1000)
 
@@ -185,13 +205,15 @@ class ScheduleView(QGraphicsView):
         self.now_time_label.setDefaultTextColor(Qt.red)
         self.now_time_label.setPos(x - 10, offset - 18)  # 🔴 新位置跟著 offset
         self.now_time_label.setZValue(1000)
-        
-    # def update_all_blocks(self):
-    #         # 只更新畫面內的 block，省資源
-    #     visible_scene_rect = self.mapToScene(self.viewport().rect()).boundingRect()
-    #     for item in self.scene.items(visible_scene_rect):
-    #         if isinstance(item, TimeBlock):
-    #             item.update_status_by_time()
+        # 既有：計算 now、更新紅線與場景中的時間標籤之後…
+        txt = QDateTime.currentDateTime().toString("HH:mm:ss")
+        if self.corner_clock.text() != txt:
+            self.corner_clock.setText(txt)
+            # 文字變動可能寬度改變，順手重新定位
+            self._reposition_clock()
+        if not self.corner_clock.isVisible():
+            self.corner_clock.show()
+
     def update_all_blocks(self):
         visible_scene_rect = self.mapToScene(self.viewport().rect()).boundingRect()
         any_changed = False
@@ -255,16 +277,16 @@ class ScheduleView(QGraphicsView):
         for day in range(self.days):
             for hour in range(24):
                 x = day * self.day_width + hour * self.hour_width
-                self.scene.addLine(x, offset, x, offset + self.tracks * 100, Qt.DotLine)
+                self.scene.addLine(x, offset, x, offset + self.tracks *  self.track_height, Qt.DotLine)
 
         for day in range(self.days):
             x = day * self.day_width
-            self.scene.addRect(x, offset, self.day_width, self.tracks * 100)
+            self.scene.addRect(x, offset, self.day_width, self.tracks *  self.track_height)
 
         # 🔄 每個 track 標籤（改成占位，不同步查 EncStatus）
         self.encoder_labels.clear()  # 先清一次，避免殘留舊 mapping
         for track in range(self.tracks):
-            y = offset + track * 100
+            y = offset + track *  self.track_height
             self.scene.addLine(0, y, self.days * self.day_width, y)
 
             if track < len(self.encoder_names):
@@ -426,35 +448,6 @@ class ScheduleView(QGraphicsView):
                 return True
 
         return False
-    # def is_overlap(self, qdate, track_index, start_hour, duration, exclude_label=None):
-    #     new_start_dt = QDateTime(qdate, QTime(int(start_hour), int((start_hour % 1) * 60)))
-    #     end_hour = start_hour + duration
-    #     end_qdate = qdate.addDays(1) if end_hour >= 24 else qdate
-    #     new_end_dt = QDateTime(end_qdate, QTime(int(end_hour % 24), int(((end_hour % 1) * 60))))
-
-    #     for block in self.block_data:
-    #         if block["track_index"] != track_index:
-    #             continue
-
-    #         # ✅ 用 exclude_label 當作 exclude_id（只要確定你傳的是 block["id"]）
-    #         if exclude_label and block.get("id") == exclude_label:
-    #             continue  
-
-    #         b_start_hour = float(block["start_hour"])
-    #         b_end_hour = float(block.get("end_hour", b_start_hour + block["duration"]))
-    #         b_qdate = block["qdate"]
-    #         if isinstance(b_qdate, str):
-    #             b_qdate = QDate.fromString(b_qdate, "yyyy-MM-dd")
-    #         b_end_qdate = block.get("end_qdate", b_qdate.addDays(1) if b_end_hour >= 24 else b_qdate)
-
-    #         b_start_dt = QDateTime(b_qdate, QTime(int(b_start_hour), int((b_start_hour % 1) * 60)))
-    #         b_end_dt = QDateTime(b_end_qdate, QTime(int(b_end_hour % 24), int((b_end_hour % 1) * 60)))
-
-    #         if new_start_dt < b_end_dt and new_end_dt > b_start_dt:
-    #             log(f"🔴 重疊偵測：與 {block['label']} 發生重疊")
-    #             return True
-
-    #     return False
     
 
     def add_time_block(self, qdate: QDate, track_index, start_hour, duration=4, label="節目", encoder_name=None, block_id=None):

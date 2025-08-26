@@ -82,7 +82,7 @@ class PreviewImageItem(QGraphicsPixmapItem):
 
 class TimeBlock(QGraphicsRectItem):
     HANDLE_WIDTH = 6
-    BLOCK_HEIGHT = 100
+    BLOCK_HEIGHT = 180
     MIN_DURATION_HOURS = 0.1   
     # ==== 統一的顏色與狀態常數 ====
     COLORS = {
@@ -988,8 +988,10 @@ class TimeBlock(QGraphicsRectItem):
             # 放在文字右側
             block_pos = self.scenePos()
             text_rect = self.text.boundingRect() if self.text else None
-            x_offset = block_pos.x() + (text_rect.width() + 8 if text_rect else 8)
-            y_offset = block_pos.y() + 2
+            # x_offset = block_pos.x() + (text_rect.width() + 8 if text_rect else 8)
+            # y_offset = block_pos.y() + 2
+            x_offset = block_pos.x() + 4   # 與左邊對齊，或你想要的水平偏移
+            y_offset = block_pos.y() + (text_rect.height() + 30 if text_rect else 8)
             self.preview_item.setPos(x_offset, y_offset)
 
             # 標記 block_id
@@ -1042,3 +1044,4 @@ class TimeBlock(QGraphicsRectItem):
         # end_qdate = qdate.addDays(1) if end_hour >= 24 else qdate
         # end_dt = QDateTime(end_qdate, QTime(int(end_hour % 24), int((end_hour % 1) * 60)))
         return start_dt < now or end_dt < now
+    
