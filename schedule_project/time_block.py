@@ -7,7 +7,7 @@ from path_manager import PathManager
 import os
 from utils import log
 from shiboken6 import isValid
-from utils import hours_to_hhmm, hhmm_to_hours,MIN_LEAD_SECONDS,hourf_to_qtime
+from utils import hours_to_hhmm, hhmm_to_hours,MIN_LEAD_SECONDS,MIN_DURATION_HOURS,hourf_to_qtime
 logging.basicConfig(level=logging.INFO)
 def _dt(qd, hourf):
     """qd 可為 QDate 或 'yyyy-MM-dd'；hourf 可為 float 或 'HH:MM'。"""
@@ -83,7 +83,7 @@ class PreviewImageItem(QGraphicsPixmapItem):
 class TimeBlock(QGraphicsRectItem):
     HANDLE_WIDTH = 6
     BLOCK_HEIGHT = 180
-    MIN_DURATION_HOURS = 0.1   
+    # MIN_DURATION_HOURS = 0.25   
     # ==== 統一的顏色與狀態常數 ====
     COLORS = {
         "WAITING":  QColor(180, 180, 180, 180),  # 等待：灰
@@ -101,10 +101,10 @@ class TimeBlock(QGraphicsRectItem):
     }
     
         # —— 這三個是你 left 分支會用到的 —— 
-    NOW_BUFFER_SEC = MIN_LEAD_SECONDS   # 與全域設定一致（建議 90s）
+    NOW_BUFFER_SEC = MIN_LEAD_SECONDS   # 與全域設定一致
     PIXEL_DEADBAND = 3                  # 滑鼠位移 < 3px 就忽略
     HOUR_EPS = 1.0 / 720    
-    GAP_SEC = 90# ~5 秒 (1/720 小時) 才算時間真的改變
+    GAP_SEC = 60# ~5 秒 (1/720 小時) 才算時間真的改變
     def set_state(self, key: str, *, force: bool = False):
         """統一設定區塊狀態（文字＋顏色），key ∈ {WAITING, RECORDING, FINISHED}"""
         # if self.scene() is None:
@@ -138,7 +138,7 @@ class TimeBlock(QGraphicsRectItem):
         super().__init__(0, 0, duration_hours * 20, self.BLOCK_HEIGHT)
        
         self.has_moved = False
-
+        self.has_started = False
         self.block_id = block_id
         self.start_date = start_date
         self.track_index = track_index
@@ -497,7 +497,7 @@ class TimeBlock(QGraphicsRectItem):
             return
         parent_view = self.scene().parent()
 
-        if not self.has_started and self.dragging_handle is None:
+        if (not getattr(self, "has_started", False)) and self.dragging_handle is None:
             if self.drag_start_offset is not None:
                 distance = (event.scenePos() - self.drag_start_offset).manhattanLength()
                 if distance < 10:
@@ -518,7 +518,7 @@ class TimeBlock(QGraphicsRectItem):
 
             # 用滑鼠相對於 block 的座標來算新寬度（避免場景/縮放誤差）
             delta_px = self.mapFromScene(event.scenePos()).x()
-            cand_duration = round(max(self.MIN_DURATION_HOURS, delta_px / hour_width), 3)
+            cand_duration = round(max(MIN_DURATION_HOURS, delta_px / hour_width), 3)
 
             # 目前起點 & 候選終點
             start_dt = _dt(self.start_date, self.start_hour)
@@ -556,7 +556,7 @@ class TimeBlock(QGraphicsRectItem):
             if nearest_right_start is not None and cand_end_dt >= nearest_right_start:
                 limit_dt = nearest_right_start.addSecs(-60)
                 if limit_dt <= start_dt:
-                    cand_duration = self.MIN_DURATION_HOURS
+                    cand_duration = MIN_DURATION_HOURS
                 else:
                     cand_duration = round(start_dt.secsTo(limit_dt) / 3600.0, 3)
                 self.flash_warning(300)
@@ -623,7 +623,7 @@ class TimeBlock(QGraphicsRectItem):
             # 只看「左邊最近鄰的 end」＋ GAP 夾住
             left_end = getattr(self, "_nearest_left_end", None)
             if left_end is not None:
-                limit_left_dt = max(now_plus, left_end.addSecs(self.GAP_SEC if hasattr(self, "GAP_SEC") else 90))
+                limit_left_dt = max(now_plus, left_end.addSecs(self.GAP_SEC if hasattr(self, "GAP_SEC") else MIN_LEAD_SECONDS))
             else:
                 limit_left_dt = now_plus
 

@@ -1,15 +1,16 @@
 from header_view import HeaderView  
-from PySide6.QtCore import Qt,QSize
+
 from PySide6.QtWidgets import (
     QMainWindow, QWidget, QPushButton, QLabel, QDateEdit, QSlider,QDialog,QFrame,QScrollArea,QSplitter,QTextEdit,
     QVBoxLayout, QHBoxLayout, QLineEdit, QApplication, QSizePolicy, QMessageBox, QMenu, QFileDialog,
      QToolBar, QToolButton, QWidgetAction,
 
 )
+from time_block import TimeBlock
 from shiboken6 import isValid
 from time_block import PreviewImageItem
 from PySide6.QtGui import QPixmap,QBrush ,QColor  ,QAction ,QUndoStack, QUndoCommand, QKeySequence
-from PySide6.QtCore import QDate, Qt,QDateTime,QTime,QTimer,QThreadPool
+from PySide6.QtCore import QDate, Qt,QDateTime,QTime,QTimer,Qt,QSize
 from schedule_view import ScheduleView
 from encoder_utils import list_encoders_with_alias
 from capture import take_snapshot_by_encoder
@@ -36,6 +37,7 @@ from encoder_status_manager import EncoderStatusManager
 from schedule_view import _TrackLabelWorker
 from utils import hours_to_hhmm, hhmm_to_hours
 from edit_block_dialog import EditBlockDialog
+
 def _tag_toolbar_buttons_as_primary(tb):
     from PySide6.QtWidgets import QToolButton
     for act in tb.actions():
@@ -72,7 +74,7 @@ class MainWindow(QMainWindow):
         self.encoder_names = [name for name, _ in encoders]
         self.encoder_aliases = {name: alias for name, alias in encoders}
         self.encoder_controller = EncoderController(self.record_root)
-
+        
         if not self.encoder_names:
             log("⚠️ 沒有從 socket 抓到 encoder，使用預設值")
             self.encoder_names = ["encoder1", "encoder2"]
@@ -373,9 +375,9 @@ class MainWindow(QMainWindow):
         self.mismatch_timer.start(10_000)
         self.schedule_manager.schedule_data = self.view.block_data
         self.schedule_manager.blocks = self.view.blocks
-        self.check_timer = QTimer(self)
-        self.check_timer.timeout.connect(self.safe_check_schedule)
-        self.check_timer.start(1000)
+        # self.check_timer = QTimer(self)
+        # self.check_timer.timeout.connect(self.safe_check_schedule)
+        # self.check_timer.start(1000)
         self.schedule_manager._reconcile_cooldown_until = QDateTime.currentDateTime().addSecs(15)
         self.schedule_manager.schedule_data = self.view.block_data
         self.schedule_manager.blocks = self.view.blocks
@@ -430,6 +432,7 @@ class MainWindow(QMainWindow):
         self.check_timer.timeout.connect(self.safe_check_schedule)
         self.check_timer.start(1000)
         self.copied_block_template = None
+        self.track_height = TimeBlock.BLOCK_HEIGHT
         QTimer.singleShot(3000, self.update_all_encoder_snapshots)
   
         try:
@@ -443,7 +446,7 @@ class MainWindow(QMainWindow):
                         log(f"📂 自動載入之前選的檔案：{schedule_file}")
         except Exception as e:
             log(f"⚠️ config.json 載入失敗：{e}")
-   
+        
     def update_zoom(self, value):
         self.view.hour_width = value
         self.view.day_width = 24 * value
@@ -654,7 +657,8 @@ class MainWindow(QMainWindow):
 
         self.encoder_entries[name] = entry
         self.encoder_status[name] = status
-        
+        self.start_buttons[name]   = start_btn   # ← 新增
+        self.stop_buttons[name]    = stop_btn  
         status.setText(f"狀態：{self.get_encoder_status(name)}")
         return encoder_widget
     # def update_preview_scaled(self, name):
@@ -851,19 +855,37 @@ class MainWindow(QMainWindow):
                 encoder_names=self.encoder_names, 
                 overlap_checker=check_overlap)
         if dialog.exec() == QDialog.Accepted:
-            name, qdate, time_obj, duration, encoder_name = dialog.get_values()
+            vals = dialog.get_values()
+
+            # 相容：5 值（舊版）或 6 值（新版，多回傳 end_qtime）
+            if len(vals) == 6:
+                name, qdate, time_obj, duration, encoder_name, end_qtime = vals
+            else:
+                name, qdate, time_obj, duration, encoder_name = vals
+                end_qtime = None
+
             track_index = self.encoder_names.index(encoder_name)
+
+            # start_hour 以 HH:mm 轉 float 小時
             start_hour = hhmm_to_hours(time_obj.toString("HH:mm"))
-            # start_time = time_obj.toString("HH:mm")
+
+            # duration 可能已是 float；若是字串（理論上新版不是），也支援
             duration_hours = hhmm_to_hours(duration) if isinstance(duration, str) else float(duration)
+
             self.block_manager.add_block_with_unique_label(
-                name, 
-                track_index=track_index, 
-                start_hour=start_hour, 
-                duration=duration_hours, 
+                name,
+                track_index=track_index,
+                start_hour=start_hour,
+                duration=duration_hours,
                 encoder_name=encoder_name,
                 qdate=qdate
-                )
+            )
+
+            # 如果你之後要儲存 end_hour，可在這裡計算（選擇性）
+            # if end_qtime is not None:
+            #     end_hour = hhmm_to_hours(end_qtime.toString("HH:mm"))
+            #     # TODO: 視你的資料結構決定如何保存 end_hour
+
             self.sync_runner_data()
             
     def update_start_date(self, qdate):
@@ -1115,7 +1137,8 @@ class MainWindow(QMainWindow):
         start_hour = round(round(raw_hour / step) * step, 4)
 
         # 軌道（encoder）
-        track_index = int((y - offset_y) // getattr(view, "BLOCK_HEIGHT", 100))
+        track_index = int((y - offset_y) //self.track_height)
+        # track_index = int((y - offset_y) // getattr(view, "BLOCK_HEIGHT", 100))
         if track_index < 0 or track_index >= len(self.encoder_names):
             log("⚠️ 貼上超出軌道範圍，取消")
             return

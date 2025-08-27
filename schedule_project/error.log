@@ -119,3 +119,135 @@ Traceback (most recent call last):
         ^^^^^^^^^^^^^^^^^^^^^^^^^
 AttributeError: 'MainWindow' object has no attribute 'build_encoder_widget'
 
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\ui_main_window.py", line 854, in add_new_block
+    dialog = AddBlockDialog(self,
+            encoder_names=self.encoder_names,
+            overlap_checker=check_overlap)
+  File "c:\Users\coco\recoder\schedule_project\add_block_dialog.py", line 28, in __init__
+    self.timestart_time_input_input.setText(QTime(next_hour, 0).toString("HH:mm"))
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'AddBlockDialog' object has no attribute 'timestart_time_input_input'
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\add_block_dialog.py", line 96, in format_time_input
+    time = self.parse_time(self.time_input.text())
+                           ^^^^^^^^^^^^^^^
+AttributeError: 'AddBlockDialog' object has no attribute 'time_input'. Did you mean: 'name_input'?
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\add_block_dialog.py", line 98, in format_time_input
+    time = self.parse_time(self.time_input.text())
+                           ^^^^^^^^^^^^^^^
+AttributeError: 'AddBlockDialog' object has no attribute 'time_input'. Did you mean: 'name_input'?
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\ui_main_window.py", line 858, in add_new_block
+    name, qdate, time_obj, duration, encoder_name = dialog.get_values()
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: too many values to unpack (expected 5)
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\ui_main_window.py", line 858, in add_new_block
+    name, qdate, time_obj, duration, encoder_name = dialog.get_values()
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: too many values to unpack (expected 5)
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\time_block.py", line 500, in mouseMoveEvent
+    if not self.has_started and self.dragging_handle is None:
+           ^^^^^^^^^^^^^^^^
+AttributeError: 'TimeBlock' object has no attribute 'has_started'
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\edit_block_dialog.py", line 218, in accept
+    if duration < self.MIN_DURATION_HOURS:
+                  ^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'EditBlockDialog' object has no attribute 'MIN_DURATION_HOURS'
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\edit_block_dialog.py", line 218, in accept
+    if duration < self.MIN_DURATION_HOURS:
+                  ^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'EditBlockDialog' object has no attribute 'MIN_DURATION_HOURS'
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\edit_block_dialog.py", line 218, in accept
+    if duration < self.MIN_DURATION_HOURS:
+                  ^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'EditBlockDialog' object has no attribute 'MIN_DURATION_HOURS'
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\edit_block_dialog.py", line 218, in accept
+    if duration < self.MIN_DURATION_HOURS:
+                  ^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'EditBlockDialog' object has no attribute 'MIN_DURATION_HOURS'
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\edit_block_dialog.py", line 218, in accept
+    if duration < self.MIN_DURATION_HOURS:
+                  ^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'EditBlockDialog' object has no attribute 'MIN_DURATION_HOURS'
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\add_block_dialog.py", line 504, in _on_end_time_finished
+    end_qt = self._normalize_time_field(self.end_time_input, ceil_to_step=True)
+  File "c:\Users\coco\recoder\schedule_project\add_block_dialog.py", line 448, in _normalize_time_field
+    qt = self._ceil_time_to_step(qt)
+         ^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'AddBlockDialog' object has no attribute '_ceil_time_to_step'
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\add_block_dialog.py", line 467, in _on_start_time_finished
+    start_qt = self._normalize_time_field(self.start_time_input, ceil_to_step=True)
+  File "c:\Users\coco\recoder\schedule_project\add_block_dialog.py", line 448, in _normalize_time_field
+    qt = self._ceil_time_to_step(qt)
+         ^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'AddBlockDialog' object has no attribute '_ceil_time_to_step'
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\add_block_dialog.py", line 504, in _on_end_time_finished
+    end_qt = self._normalize_time_field(self.end_time_input, ceil_to_step=True)
+  File "c:\Users\coco\recoder\schedule_project\add_block_dialog.py", line 448, in _normalize_time_field
+    qt = self._ceil_time_to_step(qt)
+         ^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'AddBlockDialog' object has no attribute '_ceil_time_to_step'
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\main.py", line 46, in <module>
+    win = MainWindow()
+  File "c:\Users\coco\recoder\schedule_project\ui_main_window.py", line 373, in __init__
+    self.mismatch_timer = QTimer(self)
+                          ^^^^^^
+UnboundLocalError: cannot access local variable 'QTimer' where it is not associated with a value
+
