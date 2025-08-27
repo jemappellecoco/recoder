@@ -361,16 +361,28 @@ class TimeBlock(QGraphicsRectItem):
         
 
     def mousePressEvent(self, event):
-        if "已結束" in self.status:
-            log(f"⛔ 已結束 block 不可拖動（{self.label}）")
+        # if "已結束" in self.status:
+        #     log(f"⛔ 已結束 block 不可拖動（{self.label}）")
+        #     self.prevent_drag = True
+        #     return
+
+        # self.has_moved = False
+        # self.drag_start_offset = event.scenePos()
+        # self.prevent_drag = False  # 每次按下都先重置
+        # now = QDateTime.currentDateTime()
+        # start_dt_now = QDateTime(self.start_date, hourf_to_qtime(self.start_hour))
+        # self.has_started = now >= start_dt_now  # ⏱️ 判斷是否已開始錄影
+        now = QDateTime.currentDateTime()
+        start_dt_now = QDateTime(self.start_date, hourf_to_qtime(self.start_hour))
+        end_dt = start_dt_now.addSecs(int(self.duration_hours * 3600))
+        if now >= end_dt or (isinstance(self.status, str) and self.status.startswith("狀態：❌")):
+            log(f"⛔ 已結束或異常 block 不可拖動（{self.label}）")
             self.prevent_drag = True
             return
 
         self.has_moved = False
         self.drag_start_offset = event.scenePos()
         self.prevent_drag = False  # 每次按下都先重置
-        now = QDateTime.currentDateTime()
-        start_dt_now = QDateTime(self.start_date, hourf_to_qtime(self.start_hour))
         self.has_started = now >= start_dt_now  # ⏱️ 判斷是否已開始錄影
 
         # 清除其他 block 的拖曳狀態

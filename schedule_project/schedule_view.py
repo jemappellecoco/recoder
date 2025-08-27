@@ -37,6 +37,30 @@ class _TrackLabelWorker(QRunnable):
             except Exception:
                 # signals 已不存在就安靜結束
                 pass
+class _SaveScheduleWorkerSignals(QObject):
+    finished = Signal(bool, str)  # (success, filename or error)
+
+
+class SaveScheduleWorker(QRunnable):
+    def __init__(self, data, filename):
+        super().__init__()
+        self.data = data
+        self.filename = filename
+        self.signals = _SaveScheduleWorkerSignals()
+
+    def run(self):
+        try:
+            os.makedirs(os.path.dirname(self.filename), exist_ok=True)
+            with open(self.filename, "w", encoding="utf-8") as f:
+                json.dump(self.data, f, ensure_ascii=False, indent=2)
+            if self.signals and isValid(self.signals):
+                self.signals.finished.emit(True, self.filename)
+        except Exception as e:
+            try:
+                if self.signals and isValid(self.signals):
+                    self.signals.finished.emit(False, str(e))
+            except Exception:
+                pass
 class ScheduleView(QGraphicsView):
     def __init__(self):
         super().__init__()
@@ -89,6 +113,10 @@ class ScheduleView(QGraphicsView):
         self.block_status_timer.start(1000)  # 每秒更新一次（可改 2000/5000）
         self._pool = QThreadPool.globalInstance()
         self._bg_workers = []      # ✅ 保存背景任務，避免被 GC
+        self._save_timer = QTimer(self)
+        self._save_timer.setSingleShot(True)
+        self._save_timer.timeout.connect(self._do_save_schedule)
+        self._pending_save = None
         self.track_height = TimeBlock.BLOCK_HEIGHT
         self.corner_clock = QLabel(self.viewport())
         self.corner_clock.setObjectName("cornerClock")
@@ -515,48 +543,104 @@ class ScheduleView(QGraphicsView):
         self.base_date = qdate
         self.draw_grid()
    
-
-    
+    def _on_save_finished(self, success: bool, info: str):
+            if success:
+                log(f"✅ 已儲存節目排程：{info}")
+            else:
+                log(f"❌ 儲存失敗: {info}", level="ERROR")
     def save_schedule(self, filename=None):
-        try:
-            # ✅ 如果使用者選過排程檔，優先使用該路徑
-            if filename is None and hasattr(self, "schedule_file"):
-                filename = self.schedule_file
+        # ✅ 如果使用者選過排程檔，優先使用該路徑
+        if filename is None and hasattr(self, "schedule_file"):
+            filename = self.schedule_file
 
-            # ✅ fallback：使用 Documents 預設儲存路徑
-            if filename is None:
-                documents_dir = os.path.join(os.path.expanduser("~"), "Documents", "schedule_saved")
-                os.makedirs(documents_dir, exist_ok=True)
-                filename = os.path.join(documents_dir, "schedule.json")
+        # ✅ fallback：使用 Documents 預設儲存路徑
+        if filename is None:
+            documents_dir = os.path.join(os.path.expanduser("~"), "Documents", "schedule_saved")
+            os.makedirs(documents_dir, exist_ok=True)
+            filename = os.path.join(documents_dir, "schedule.json")
 
-            block_map = {b["id"]: b for b in self.block_data if b.get("id")}
-            # now = QDateTime.currentDateTime()
-            for item in self.scene.items():
-                if isinstance(item, TimeBlock) and item.block_id in block_map:
-                    # 以畫面上 TimeBlock 的狀態為準，無條件回寫
-                    block_map[item.block_id]["status"] = item.status
+        block_map = {b["id"]: b for b in self.block_data if b.get("id")}
+        for item in self.scene.items():
+            if isinstance(item, TimeBlock) and item.block_id in block_map:
+                block_map[item.block_id]["status"] = item.status
+
+        data = [{
+            "qdate": b["qdate"].toString("yyyy-MM-dd"),
+            "track_index": b["track_index"],
+            "start_time": hours_to_hhmm(b["start_hour"]),
+            "duration_time": hours_to_hhmm(b["duration"]),
+            "end_time": hours_to_hhmm(b["end_hour"]),
+            "end_qdate": (
+                b["end_qdate"].toString("yyyy-MM-dd")
+                if isinstance(b["end_qdate"], QDate) else str(b["end_qdate"])
+            ),
+            "label": b["label"],
+            "id": b.get("id"),
+            "encoder_name": b.get("encoder_name"),
+            "snapshot_path": b.get("snapshot_path", ""),
+            "status": b.get("status", "")
+        } for b in self.block_data]
+
+        self._pending_save = (data, filename)
+        self._save_timer.start(300)
+    def _do_save_schedule(self):
+        if not self._pending_save:
+            return
+        data, filename = self._pending_save
+        worker = SaveScheduleWorker(data, filename)
+        self._bg_workers.append(worker)
+
+        def _on_done(success, info, w=worker):
+            self._on_save_finished(success, info)
+            try:
+                self._bg_workers.remove(w)
+            except ValueError:
+                pass
+
+        worker.signals.finished.connect(_on_done)
+        self._pool.start(worker)
+        self._pending_save = None
+    
+    # def save_schedule(self, filename=None):
+    #     try:
+    #         # ✅ 如果使用者選過排程檔，優先使用該路徑
+    #         if filename is None and hasattr(self, "schedule_file"):
+    #             filename = self.schedule_file
+
+    #         # ✅ fallback：使用 Documents 預設儲存路徑
+    #         if filename is None:
+    #             documents_dir = os.path.join(os.path.expanduser("~"), "Documents", "schedule_saved")
+    #             os.makedirs(documents_dir, exist_ok=True)
+    #             filename = os.path.join(documents_dir, "schedule.json")
+
+    #         block_map = {b["id"]: b for b in self.block_data if b.get("id")}
+    #         # now = QDateTime.currentDateTime()
+    #         for item in self.scene.items():
+    #             if isinstance(item, TimeBlock) and item.block_id in block_map:
+    #                 # 以畫面上 TimeBlock 的狀態為準，無條件回寫
+    #                 block_map[item.block_id]["status"] = item.status
             
-            with open(filename, "w", encoding="utf-8") as f:
+    #         with open(filename, "w", encoding="utf-8") as f:
                 
-                json.dump([{
-                    "qdate": b["qdate"].toString("yyyy-MM-dd"),
-                    "track_index": b["track_index"],
-                    "start_time": hours_to_hhmm(b["start_hour"]),     # HH:MM
-                    "duration_time": hours_to_hhmm(b["duration"]),    # HH:MM
-                    "end_time": hours_to_hhmm(b["end_hour"]),         # HH:MM
-                    "end_qdate": (
-                        b["end_qdate"].toString("yyyy-MM-dd")
-                        if isinstance(b["end_qdate"], QDate) else str(b["end_qdate"])
-                    ),
-                    "label": b["label"],
-                    "id": b.get("id"),
-                    "encoder_name": b.get("encoder_name"),
-                    "snapshot_path": b.get("snapshot_path",""),
-                    "status": b.get("status","")
-                } for b in self.block_data], f, ensure_ascii=False, indent=2)
-            log(f"✅ 已儲存節目排程：{filename}")
-        except Exception as e:
-            log(f"❌ 儲存失敗: {e}",level="ERROR")
+    #             json.dump([{
+    #                 "qdate": b["qdate"].toString("yyyy-MM-dd"),
+    #                 "track_index": b["track_index"],
+    #                 "start_time": hours_to_hhmm(b["start_hour"]),     # HH:MM
+    #                 "duration_time": hours_to_hhmm(b["duration"]),    # HH:MM
+    #                 "end_time": hours_to_hhmm(b["end_hour"]),         # HH:MM
+    #                 "end_qdate": (
+    #                     b["end_qdate"].toString("yyyy-MM-dd")
+    #                     if isinstance(b["end_qdate"], QDate) else str(b["end_qdate"])
+    #                 ),
+    #                 "label": b["label"],
+    #                 "id": b.get("id"),
+    #                 "encoder_name": b.get("encoder_name"),
+    #                 "snapshot_path": b.get("snapshot_path",""),
+    #                 "status": b.get("status","")
+    #             } for b in self.block_data], f, ensure_ascii=False, indent=2)
+    #         log(f"✅ 已儲存節目排程：{filename}")
+    #     except Exception as e:
+    #         log(f"❌ 儲存失敗: {e}",level="ERROR")
 
 
     def load_schedule(self, filename=None):
