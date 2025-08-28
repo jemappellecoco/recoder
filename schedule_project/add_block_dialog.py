@@ -464,7 +464,7 @@ class AddBlockDialog(QDialog):
 
     def _on_start_time_finished(self):
         # 開始時間：先解析 → 以 STEP_MIN 進位對齊
-        start_qt = self._normalize_time_field(self.start_time_input, ceil_to_step=True)
+        start_qt = self._normalize_time_field(self.start_time_input, ceil_to_step=False)
         if not start_qt:
             self._error("❌ 時間格式錯誤（開始）例如 0930、9:30、198")
             self.start_time_input.setFocus()

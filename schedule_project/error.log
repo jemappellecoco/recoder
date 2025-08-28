@@ -251,3 +251,19 @@ Traceback (most recent call last):
                           ^^^^^^
 UnboundLocalError: cannot access local variable 'QTimer' where it is not associated with a value
 
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\check_schedule_manager.py", line 341, in _apply_actions_on_main
+    self.action == "start" and block_id not in self
+    ^^^^^^^^^^^
+AttributeError: 'CheckScheduleManager' object has no attribute 'action'
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\check_schedule_manager.py", line 341, in _apply_actions_on_main
+    action == "start" and block_id not in self
+                          ^^^^^^^^^^^^^^^^^^^^
+TypeError: argument of type 'CheckScheduleManager' is not iterable
+

@@ -142,6 +142,7 @@ class CheckScheduleManager(QObject):
         self._recon_timer.setInterval(10_000)
         self._recon_timer.timeout.connect(self.reconcile_async)
         self._recon_timer.start()
+        
     # --- 將必要資料快照化，避免在 worker 內存取 Qt 物件 ---
     def reconcile_async(self):
         try:
