@@ -307,7 +307,7 @@ class TimeBlock(QGraphicsRectItem):
         # start_dt = QDateTime(self.start_date, QTime(int(self.start_hour), int((self.start_hour % 1) * 60)))
         # end_dt   = start_dt.addSecs(int(round(self.duration_hours * 3600)))
         start_dt = QDateTime(self.start_date, hourf_to_qtime(self.start_hour))
-        end_dt   = start_dt.addSecs(int((self.duration_hours * 3600)))
+        end_dt   = self.compute_end_dt() 
         start_str = start_dt.toString("MM/dd HH:mm")
         end_str = end_dt.toString("MM/dd HH:mm")
 
@@ -671,7 +671,8 @@ class TimeBlock(QGraphicsRectItem):
 
     def compute_end_dt(self) -> QDateTime:
         start_dt = QDateTime(self.start_date, hourf_to_qtime(self.start_hour))
-        return start_dt.addSecs(int((self.duration_hours * 3600)))
+        mins = int(round(float(self.duration_hours) * 60))   # ← 以分鐘四捨五入
+        return start_dt.addSecs(mins * 60)
 
 
 

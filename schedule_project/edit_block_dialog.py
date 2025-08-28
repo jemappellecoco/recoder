@@ -22,18 +22,28 @@ class EditBlockDialog(QDialog):
 
         # ====== 開始日期/時間 ======
         # 讀開始時間（相容 start_hour 或 start_time）
-        start_hour = block_data.get("start_hour")
-        if start_hour is None:
-            start_str = block_data.get("start_time", "00:00")
-            start_hour = hhmm_to_hours(start_str)
+        # start_hour = block_data.get("start_hour")
+        # if start_hour is None:
+        #     start_str = block_data.get("start_time", "00:00")
+        #     start_hour = hhmm_to_hours(start_str)
 
+        # start_qdate = block_data.get("qdate")
         start_qdate = block_data.get("qdate")
         if isinstance(start_qdate, str):
             start_qdate = QDate.fromString(start_qdate, "yyyy-MM-dd")
         if not isinstance(start_qdate, QDate) or not start_qdate.isValid():
             start_qdate = QDate.currentDate()
-
-        start_qtime = QTime(int(start_hour), int(round((float(start_hour) % 1) * 60)))
+       
+        start_str = block_data.get("start_time")
+        if start_str:
+            # 直接吃字串時間，顯示不抖動
+            start_qtime = hhmm_to_qtime(start_str)
+            start_hour = (start_qtime.hour()*60 + start_qtime.minute()) / 60.0
+        else:
+            # 沒字串才退回小數，分鐘用 int()（floor），避免 round() 回跳 1 分鐘
+            start_hour = float(block_data.get("start_hour", 0.0))
+            start_qtime = QTime(int(start_hour) % 24, int((float(start_hour) % 1) * 60))
+        # start_qtime = QTime(int(start_hour), int(round((float(start_hour) % 1) * 60)))
 
         self.date_input = QDateEdit()
         self.date_input.setCalendarPopup(True)
@@ -57,19 +67,32 @@ class EditBlockDialog(QDialog):
         
 
         # ====== 結束日期/時間（新） ======
-        # 若 block_data 內已有 end_hour/end_qdate 就用；否則以 start + duration 推
+        # # 若 block_data 內已有 end_hour/end_qdate 就用；否則以 start + duration 推
+        # end_qdate = block_data.get("end_qdate", start_qdate)
         end_qdate = block_data.get("end_qdate", start_qdate)
-        if isinstance(end_qdate, str):
-            end_qdate = QDate.fromString(end_qdate, "yyyy-MM-dd")
-        if not isinstance(end_qdate, QDate) or not end_qdate.isValid():
-            # 用 start + duration 推
-            tmp_end = QDateTime(start_qdate, start_qtime).addSecs(int(float(duration_hours) * 3600))
-            end_qdate = tmp_end.date()
-            end_qtime = tmp_end.time()
+        # if isinstance(end_qdate, str):
+        #     end_qdate = QDate.fromString(end_qdate, "yyyy-MM-dd")
+        # if not isinstance(end_qdate, QDate) or not end_qdate.isValid():
+        #     # 用 start + duration 推
+        #     tmp_end = QDateTime(start_qdate, start_qtime).addSecs(int(float(duration_hours) * 3600))
+        #     end_qdate = tmp_end.date()
+        #     end_qtime = tmp_end.time()
+        # else:
+        #     eh = float(block_data.get("end_hour", start_hour + float(duration_hours)))
+        #     end_qtime = QTime(int(eh) % 24, int(round((eh % 1) * 60)))
+        end_str = block_data.get("end_time")
+        if end_str:
+            # 直接吃字串（若有），避免還原誤差
+            end_qtime = hhmm_to_qtime(end_str)
         else:
-            eh = float(block_data.get("end_hour", start_hour + float(duration_hours)))
-            end_qtime = QTime(int(eh) % 24, int(round((eh % 1) * 60)))
-
+            # 沒字串：沒有 end_hour 就用 start+duration 推；有的話分鐘用 int()（floor）
+            if (block_data.get("end_hour") is None) or (not isinstance(end_qdate, QDate) or not end_qdate.isValid()):
+                tmp_end = QDateTime(start_qdate, start_qtime).addSecs(int(float(duration_hours) * 3600))
+                end_qdate = tmp_end.date()
+                end_qtime = tmp_end.time()
+            else:
+                eh = float(block_data.get("end_hour", start_hour + float(duration_hours)))
+                end_qtime = QTime(int(eh) % 24, int((eh % 1) * 60))  # 不要 round()
         self.end_date_input = QDateEdit()
         self.end_date_input.setCalendarPopup(True)
         self.end_date_input.setDate(end_qdate)
@@ -107,14 +130,12 @@ class EditBlockDialog(QDialog):
         # ====== 事件連動（雙向同步）======
         self.duration_input.valueChanged.connect(self._sync_end_from_duration)
         self.time_input.editingFinished.connect(self._sync_end_from_duration) 
-        # self.time_input.timeChanged.connect(self._sync_end_from_duration)
+      
         self.date_input.dateChanged.connect(self._sync_end_from_duration)
         self.end_time_input.editingFinished.connect(self._sync_duration_from_end) 
-        # self.end_time_input.timeChanged.connect(self._sync_duration_from_end)
+
         self.end_date_input.dateChanged.connect(self._sync_duration_from_end)
-        # self.time_input.editingFinished.connect(lambda: self._normalize_time_field(self.time_input))
-        # self.end_time_input.editingFinished.connect(lambda: self._normalize_time_field(self.end_time_input))
-        # 先做一次帶值，避免顯示不一致
+        
         self.time_input.editingFinished.connect(self._on_start_edit_finished)
         self.end_time_input.editingFinished.connect(self._on_end_edit_finished)
         self.end_date_input.dateChanged.connect(self._sync_duration_from_end)
@@ -200,7 +221,9 @@ class EditBlockDialog(QDialog):
         if not start_qt:
             return
         start_dt = QDateTime(self.date_input.date(), start_qt)
-        end_dt = start_dt.addSecs(int(float(self.duration_input.value()) * 3600))
+        mins = int(round(float(self.duration_input.value()) * 60))
+        end_dt = start_dt.addSecs(mins * 60)
+        # end_dt = start_dt.addSecs(int(float(self.duration_input.value()) * 3600))
 
         # 避免循環訊號
         self.end_time_input.blockSignals(True)
@@ -235,8 +258,8 @@ class EditBlockDialog(QDialog):
             self.end_date_input.setDate(end_dt.date())
             self.end_time_input.blockSignals(False)
             self.end_date_input.blockSignals(False)
-
-        dur_h = round(start_dt.secsTo(end_dt) / 3600.0, 3)
+        mins = start_dt.secsTo(end_dt) // 60
+        dur_h = mins / 60.0
         self.duration_input.blockSignals(True)
         self.duration_input.setValue(dur_h)
         self.duration_input.blockSignals(False)
@@ -285,9 +308,10 @@ class EditBlockDialog(QDialog):
         if start_dt < now and start_dt != original_start_dt:
             self.error_label.setText("❌ 開始時間不能早於現在")
             return
-
-        # 重新計算 duration 並檢查最短時長
-        duration = round(start_dt.secsTo(end_dt) / 3600.0, 3)
+        mins = start_dt.secsTo(end_dt) // 60
+        duration = mins / 60.0
+        # # 重新計算 duration 並檢查最短時長
+        # duration = round(start_dt.secsTo(end_dt) / 3600.0, 3)
         if duration < MIN_DURATION_HOURS:
             self.error_label.setText(f"❌ 持續時間不可小於 {MIN_DURATION_HOURS} 小時")
             return
@@ -321,6 +345,6 @@ class EditBlockDialog(QDialog):
             "duration_time": hours_to_hhmm(duration_h),
             "encoder_name": self.encoder_selector.currentData(),
             # 需要的話也可回填：
-            # "end_qdate": self.end_date_input.date().toString("yyyy-MM-dd"),
-            # "end_time": self.end_time_input.text(),
+            "end_qdate": self.end_date_input.date().toString("yyyy-MM-dd"),
+            "end_time": self.end_time_input.text()
         }

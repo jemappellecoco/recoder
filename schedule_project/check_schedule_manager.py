@@ -1,16 +1,18 @@
 # check_schedule_manager.py
 from PySide6.QtCore import QDateTime, QDate, QTimer, QObject, Signal, QRunnable, QThreadPool
 from shiboken6 import isValid
-from utils import log,MIN_LEAD_SECONDS,hourf_to_qtime
+from utils import log, hourf_to_qtime
 from encoder_utils import get_encoder_display_name
 from encoder_status_manager import EncoderStatusManager
-import time
+class _ReconSignals(QObject):
+    done = Signal(list)  # [{action, block_id, encoder_name, start_dt, end_dt, status}]
 class _ReconSignals(QObject):
     done = Signal(list)  # [{action, block_id, encoder_name, reason, end_now_sec}]
 
 class _ReconWorker(QRunnable):
     """
-    每 10 秒跑一次的『狀態一致性』檢查：
+     每 10 秒跑一次的『狀態一致性』檢查：
+    - 在背景批量查詢 Encoder 狀態
     - 現在在時間範圍內的 block 如果標示「錄影中」，但 Encoder 實況不是錄影，就回報 mismatch/aborted
     """
     def __init__(self, snapshot):
@@ -40,7 +42,7 @@ class _ReconWorker(QRunnable):
             encoder_name = enc_names[track_idx]
 
             # 用 status_text 推論是否為「應該在錄」的 UI 狀態（保守以 UI/JSON 為準）
-            expected_recording = True  # 我們只挑時間命中的；UI若不是錄也要提示
+            # expected_recording = True  # 我們只挑時間命中的；UI若不是錄也要提示
             actions.append({
                 "action": "check",
                 "block_id": block_id,
@@ -48,7 +50,12 @@ class _ReconWorker(QRunnable):
                 "start_dt": start_dt.toSecsSinceEpoch(),
                 "end_dt":   end_dt.toSecsSinceEpoch(),
             })
-
+                # 批量查詢 Encoder 狀態
+        stat_mgr = EncoderStatusManager()
+        enc_set = {act["encoder_name"] for act in actions}
+        enc_stats = stat_mgr.refresh_all(enc_set)
+        for act in actions:
+            act["status"] = enc_stats.get(act["encoder_name"])
         self.signals.done.emit(actions)
 # ---------------- Worker ----------------
 class _CheckWorkerSignals(QObject):
@@ -134,7 +141,7 @@ class CheckScheduleManager(QObject):
         self.already_started = set()
         self.already_stopped = set()
         self.last_saved_ts = None
-        self.encoder_status_manager = EncoderStatusManager()
+        # self.encoder_status_manager = EncoderStatusManager()
         self._pool = QThreadPool.globalInstance()
 
                 # ➕ 新增：每 10 秒做一次一致性檢查
@@ -156,7 +163,7 @@ class CheckScheduleManager(QObject):
     def _apply_reconcile_on_main(self, actions: list):
         """
         在主執行緒：
-        - 查 Encoder 實況（使用 encoder_status_manager）
+        - 根據背景 worker 已查得的 Encoder 狀態
         - 如果本該錄影中的 block，Encoder 卻不是「錄影中」，就：
             1) 先在 block 上顯示 live_status 提示（黃閃）
             2) 若判定為『停止/未連線/錯誤/暫停』，直接標記為 ABORTED，並把 end 修正為 now（不中斷其它流程）
@@ -192,7 +199,8 @@ class CheckScheduleManager(QObject):
                     continue
 
             # 讀 Encoder 實況
-            stat = self.encoder_status_manager.get_status(enc)
+            # stat = self.encoder_status_manager.get_status(enc)
+            stat = act.get("status")
             stat_text = stat[0] if stat else ""
 
             # 關鍵判斷（依你的文字對應）

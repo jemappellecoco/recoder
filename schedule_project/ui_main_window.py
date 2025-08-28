@@ -916,8 +916,8 @@ class MainWindow(QMainWindow):
         parent_view = self.view
         now = QDateTime.currentDateTime()
         start_dt = QDateTime(item.start_date, QTime(int(item.start_hour), int((item.start_hour % 1) * 60)))
-        end_dt = start_dt.addSecs(int(item.duration_hours * 3600))
-
+        # end_dt = start_dt.addSecs(int(item.duration_hours * 3600))
+        end_dt = start_dt.addSecs(int(round(item.duration_hours * 60)) * 60)
         # 已結束就不讓編輯（跟 TimeBlock.double click 一樣）
         if now > end_dt:
             log("⛔ 已結束排程不可編輯")
