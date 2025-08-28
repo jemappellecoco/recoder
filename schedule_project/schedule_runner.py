@@ -4,7 +4,7 @@ from encoder_controller import EncoderController
 from PySide6.QtCore import QObject, QRunnable, QThreadPool, QTimer, QDateTime, QDate, QTime, Signal
 from encoder_utils import connect_socket, send_encoder_command, send_persistent_command
 from encoder_status_manager import EncoderStatusManager
-import os
+import os,re
 import logging
 import threading
 from PySide6.QtWidgets import QApplication,QGraphicsOpacityEffect
@@ -224,65 +224,83 @@ class ScheduleRunner(QObject):
         except Exception as e:
             log(f"❌ 更新預覽圖錯誤：{e}")
 
+
+
     def start_encoder(self, encoder_name, filename, status_label, block_id=None):
         if status_label and not isValid(status_label):
             log(f"⚠️ QLabel for {encoder_name} no longer exists; skipping label update")
             status_label = None
 
-        # 先拿到 block（之後才用 block.start_date）
+    # 先拿到 block（之後才用 block.start_date）
         block = self.find_block_by_id(block_id) if block_id else None
 
-        # 用 block 的日期，避免跨日不一致
-        base_date = block.start_date if block else QDate.currentDate()
-        date_folder = base_date.toString("MM.dd.yyyy")
-        date_prefix = base_date.toString("MMdd")
+        # # 用 block 的日期，避免跨日不一致
+        # base_date = block.start_date if block else QDate.currentDate()
+        # date_prefix = base_date.toString("MMdd")
 
-        full_path = os.path.abspath(os.path.join(self.record_root, date_folder, f"{date_prefix}_{filename}"))
-        rel_path = os.path.relpath(full_path, start=self.record_root)
+        # # ✅ 交給 EncoderController，確保拿到「最終檔名（含自動尾碼）」的相對路徑
+        # desired = filename
+        ok, rel_path = self.encoder_controller.start_encoder(encoder_name, filename)
 
-        sock = connect_socket(encoder_name)
-        if not sock:
-            safe_set_label(status_label, "❌ 無法連線", "color: red;")
+        if ok:
+            final_name = os.path.basename(rel_path).replace("\\", "/") if rel_path else filename
+            raw_name = os.path.basename(rel_path).replace("\\", "/") if rel_path else filename
+            stem, _  = os.path.splitext(raw_name)
+            display  = re.sub(r'^\d{4}_', '', stem)
+            # UI 狀態
+            safe_set_label(status_label, f"✅ 錄影中\n檔名：{display}", "color: green;")
+
+            # 取得最終實際檔名（例如 節目A_001.mp4）
+            
+            
+            # 1) 更新畫面上的 TimeBlock 標籤
+            if block:
+                try:
+                    block.label = display
+                    block.update_text_position()
+                except RuntimeError:
+                    pass
+
+            # 2) 更新 schedule_data（之後存 JSON 會一致）
+            try:
+                for b in self.schedule_data:
+                    if b.get("id") == (block.block_id if block else None):
+                        b["label"] = display
+                        b["file_relpath"] = rel_path  # 可選：保留相對路徑做查詢
+                        break
+            except Exception as e:
+                log(f"⚠️ 回寫最終檔名到 schedule_data 失敗：{e}")
+
+            # ✅ 保留你原本的「第一次啟動時才拍照」邏輯（不變）
+            if block_id and block_id not in self.already_started:
+                self.already_started.add(block_id)
+                log(f"📸 update_all_encoder_snapshots triggered at {QDateTime.currentDateTime().toString('HH:mm:ss.zzz')}")
+                window = QApplication.instance().activeWindow()
+                if window and not getattr(window, "is_closing", False) and block:
+                    def worker():
+                        try:
+                            future = take_snapshot_from_block(
+                                block, self.encoder_names, snapshot_root=self.record_root
+                            )
+                            snapshot_path = None
+                            if future is not None:
+                                try:
+                                    snapshot_path = future.result(timeout=6)
+                                except Exception as e:
+                                    log(f"⚠️ snapshot future error/timeout：{e}")
+                                    snapshot_path = None
+                            self.snapshot_result.emit(block.block_id, snapshot_path)
+                        except Exception as e:
+                            log(f"❌ snapshot thread error：{e}")
+                            self.snapshot_result.emit(block.block_id if block else "", None)
+                    threading.Thread(target=worker, daemon=True).start()
+                else:
+                    log("🛑 無視拍照：UI 已關閉或找不到 activeWindow")
+
         else:
-            sock.close()
-        res1 = send_encoder_command(encoder_name, f'Setfile "{encoder_name}" 1 "{rel_path}"')
-        # res1 = send_encoder_command(encoder_name, f'Setfile "{encoder_name}" 1 {rel_path}')
-        res2 = send_encoder_command(encoder_name, f'Start "{encoder_name}" 1')
-
-        if "OK" in res1 and "OK" in res2:
-            safe_set_label(status_label, "✅ 錄影中", "color: green;")
-        else:
-            # 啟動失敗就不要拍照，以免誤判
             safe_set_label(status_label, "狀態：❌ 啟動失敗", "color: red;")
             return
-
-        # ✅ 只在第一次啟動時拍照，避免 check_schedule 觸發多次
-        if block_id and block_id not in self.already_started:
-            self.already_started.add(block_id)
-            log(f"📸 update_all_encoder_snapshots triggered at {QDateTime.currentDateTime().toString('HH:mm:ss.zzz')}")
-            window = QApplication.instance().activeWindow()
-            if window and not getattr(window, "is_closing", False) and block:
-                def worker():
-                    try:
-                        future = take_snapshot_from_block(
-                            block, self.encoder_names, snapshot_root=self.record_root
-                        )
-                        snapshot_path = None
-                        if future is not None:
-                            try:
-                                snapshot_path = future.result(timeout=6)  # _wait_for_file 預設 5 秒
-                            except Exception as e:
-                                log(f"⚠️ snapshot future error/timeout：{e}")
-                                snapshot_path = None
-                        self.snapshot_result.emit(block.block_id, snapshot_path)
-                    except Exception as e:
-                        log(f"❌ snapshot thread error：{e}")
-                        self.snapshot_result.emit(block.block_id if block else "", None)
-                threading.Thread(target=worker, daemon=True).start()
-            else:
-                log("🛑 無視拍照：UI 已關閉或找不到 activeWindow")
-
-        
+     
     def stop_encoder(self, encoder_name, status_label):
         if status_label and not isValid(status_label):
             log(f"⚠️ QLabel for {encoder_name} no longer exists; skipping label update")

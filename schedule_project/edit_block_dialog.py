@@ -133,6 +133,7 @@ class EditBlockDialog(QDialog):
             warn = QLabel("⛔ 此排程已開始：不可改日期/開始時間/設備；可調整結束或持續時間（不可早於現在）。")
             warn.setStyleSheet("color: red; font-weight: bold")
             layout.addWidget(warn)
+            self.name_input.setEnabled(False)
             self.date_input.setEnabled(False)
             self.time_input.setEnabled(False)
             self.encoder_selector.setEnabled(False)
