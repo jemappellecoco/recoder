@@ -267,3 +267,235 @@ Traceback (most recent call last):
                           ^^^^^^^^^^^^^^^^^^^^
 TypeError: argument of type 'CheckScheduleManager' is not iterable
 
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\check_schedule_manager.py", line 189, in _apply_reconcile_on_main
+    new_text = f"⚠️ 與實況不一致：{reason}"
+                                   ^^^^^^
+NameError: name 'reason' is not defined
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\check_schedule_manager.py", line 189, in _apply_reconcile_on_main
+    new_text = f"⚠️ 與實況不一致：{reason}"
+                                   ^^^^^^
+NameError: name 'reason' is not defined
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\check_schedule_manager.py", line 189, in _apply_reconcile_on_main
+    new_text = f"⚠️ 與實況不一致：{reason}"
+                                   ^^^^^^
+NameError: name 'reason' is not defined
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\check_schedule_manager.py", line 189, in _apply_reconcile_on_main
+    new_text = f"⚠️ 與實況不一致：{reason}"
+                                   ^^^^^^
+NameError: name 'reason' is not defined
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\check_schedule_manager.py", line 189, in _apply_reconcile_on_main
+    new_text = f"⚠️ 與實況不一致：{reason}"
+                                   ^^^^^^
+NameError: name 'reason' is not defined
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\check_schedule_manager.py", line 189, in _apply_reconcile_on_main
+    new_text = f"⚠️ 與實況不一致：{reason}"
+                                   ^^^^^^
+NameError: name 'reason' is not defined
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\check_schedule_manager.py", line 189, in _apply_reconcile_on_main
+    new_text = f"⚠️ 與實況不一致：{reason}"
+                                   ^^^^^^
+NameError: name 'reason' is not defined
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\check_schedule_manager.py", line 189, in _apply_reconcile_on_main
+    new_text = f"⚠️ 與實況不一致：{reason}"
+                                   ^^^^^^
+NameError: name 'reason' is not defined
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\check_schedule_manager.py", line 189, in _apply_reconcile_on_main
+    new_text = f"⚠️ 與實況不一致：{reason}"
+                                   ^^^^^^
+NameError: name 'reason' is not defined
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\check_schedule_manager.py", line 269, in _apply_reconcile_on_main
+    self._mismatch_counts.pop(blk_id, None)
+    ^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'CheckScheduleManager' object has no attribute '_mismatch_counts'
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\check_schedule_manager.py", line 269, in _apply_reconcile_on_main
+    self._mismatch_counts.pop(blk_id, None)
+    ^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'CheckScheduleManager' object has no attribute '_mismatch_counts'
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\check_schedule_manager.py", line 269, in _apply_reconcile_on_main
+    self._mismatch_counts.pop(blk_id, None)
+    ^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'CheckScheduleManager' object has no attribute '_mismatch_counts'
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\check_schedule_manager.py", line 269, in _apply_reconcile_on_main
+    self._mismatch_counts.pop(blk_id, None)
+    ^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'CheckScheduleManager' object has no attribute '_mismatch_counts'
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\check_schedule_manager.py", line 269, in _apply_reconcile_on_main
+    self._mismatch_counts.pop(blk_id, None)
+    ^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'CheckScheduleManager' object has no attribute '_mismatch_counts'
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\check_schedule_manager.py", line 269, in _apply_reconcile_on_main
+    self._mismatch_counts.pop(blk_id, None)
+    ^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'CheckScheduleManager' object has no attribute '_mismatch_counts'
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\check_schedule_manager.py", line 269, in _apply_reconcile_on_main
+    self._mismatch_counts.pop(blk_id, None)
+    ^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'CheckScheduleManager' object has no attribute '_mismatch_counts'
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\check_schedule_manager.py", line 269, in _apply_reconcile_on_main
+    self._mismatch_counts.pop(blk_id, None)
+    ^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'CheckScheduleManager' object has no attribute '_mismatch_counts'
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\check_schedule_manager.py", line 269, in _apply_reconcile_on_main
+    self._mismatch_counts.pop(blk_id, None)
+    ^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'CheckScheduleManager' object has no attribute '_mismatch_counts'
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\check_schedule_manager.py", line 269, in _apply_reconcile_on_main
+    self._mismatch_counts.pop(blk_id, None)
+    ^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'CheckScheduleManager' object has no attribute '_mismatch_counts'
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\check_schedule_manager.py", line 269, in _apply_reconcile_on_main
+    self._mismatch_counts.pop(blk_id, None)
+    ^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'CheckScheduleManager' object has no attribute '_mismatch_counts'
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\check_schedule_manager.py", line 269, in _apply_reconcile_on_main
+    self._mismatch_counts.pop(blk_id, None)
+    ^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'CheckScheduleManager' object has no attribute '_mismatch_counts'
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\check_schedule_manager.py", line 269, in _apply_reconcile_on_main
+    self._mismatch_counts.pop(blk_id, None)
+    ^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'CheckScheduleManager' object has no attribute '_mismatch_counts'
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\check_schedule_manager.py", line 269, in _apply_reconcile_on_main
+    self._mismatch_counts.pop(blk_id, None)
+    ^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'CheckScheduleManager' object has no attribute '_mismatch_counts'
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\check_schedule_manager.py", line 269, in _apply_reconcile_on_main
+    self._mismatch_counts.pop(blk_id, None)
+    ^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'CheckScheduleManager' object has no attribute '_mismatch_counts'
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\check_schedule_manager.py", line 269, in _apply_reconcile_on_main
+    self._mismatch_counts.pop(blk_id, None)
+    ^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'CheckScheduleManager' object has no attribute '_mismatch_counts'
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\check_schedule_manager.py", line 269, in _apply_reconcile_on_main
+    self._mismatch_counts.pop(blk_id, None)
+    ^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'CheckScheduleManager' object has no attribute '_mismatch_counts'
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\check_schedule_manager.py", line 269, in _apply_reconcile_on_main
+    self._mismatch_counts.pop(blk_id, None)
+    ^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'CheckScheduleManager' object has no attribute '_mismatch_counts'
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\check_schedule_manager.py", line 269, in _apply_reconcile_on_main
+    self._mismatch_counts.pop(blk_id, None)
+    ^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'CheckScheduleManager' object has no attribute '_mismatch_counts'
+
+
+==== 未捕捉例外 ====
+Traceback (most recent call last):
+  File "c:\Users\coco\recoder\schedule_project\check_schedule_manager.py", line 269, in _apply_reconcile_on_main
+    self._mismatch_counts.pop(blk_id, None)
+    ^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'CheckScheduleManager' object has no attribute '_mismatch_counts'
+
