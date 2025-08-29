@@ -13,22 +13,36 @@ class EncoderStatusManager:
         self._log_every_s = log_every_s
 
     def _parse(self, res: str):
-        """把回應字串轉成 (text, color)，永遠保底回傳 tuple"""
+        """把 EncStatus 回應字串轉成 (text, color)，永遠保底回傳 tuple"""
         if not isinstance(res, str):
             return "❌ 無回應", "red"
 
-        # 正規化：去控制字元、trim、轉小寫
         r = re.sub(r'[\x00-\x1f]+', ' ', res).strip().lower()
 
-        if "running" in r or "runned" in r:
+        # ✅ 錄影中
+        if "running" in r or "runned" in r or "splitting" in r or "splitted" in r:
             return "✅ 錄影中", "green"
+
+        # ⏳ 轉態中（不當異常，不累計）
+        if "stopping" in r or "pausing" in r:
+            return "⏳ 轉態中", "orange"
+
+        # ⏸ / 🟡 可恢復的非錄影（不當異常，不累計）
         if "paused" in r:
-            return "⏸ 暫停中", "orange"
-        if "stopped" in r or " none" in r or r == "none" or "idle" in r:
-            return "⏹ 停止中", "gray"
-        if "prepared" in r or "preparing" in r or "ready" in r:
+            return "⏸ 已暫停", "blue"
+        if "preparing" in r:
             return "🟡 準備中", "blue"
-        if "error" in r or "disconnect" in r or "timeout" in r:
+        if "prepared" in r:
+            return "🟡 已就緒", "blue"
+
+        # ⛔/❌ 硬否定（要列入異常累計）
+        if "stopped" in r:
+            return "⛔ 已停止", "red"
+        if "none" == r or " none" in r:  # disposed
+            return "⛔ 已釋放(編碼器已處置)", "red"
+        if "no encoder exists" in r:
+            return "⛔ 尚未建立編碼器", "red"
+        if "error" in r:
             return "❌ 錯誤", "red"
 
         return "❓ 未知", "gray"

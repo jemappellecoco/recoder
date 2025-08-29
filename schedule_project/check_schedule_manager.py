@@ -144,6 +144,8 @@ class CheckScheduleManager(QObject):
         self._mismatch_counts = {}   # {block_id: count}
         self.MISMATCH_THRESHOLD = 3  # 連續 3 次(每 10s 檢查一次 ≈ 30s)才判定異常
         self.recon_flagged = set()
+        self._soft_warn_counts = {}      # {block_id: count}
+        self.SOFT_WARN_THRESHOLD = 2     # 軟狀態連續2次才提示      
     # --- 將必要資料快照化，避免在 worker 內存取 Qt 物件 ---
     def reconcile_async(self):
         try:
@@ -156,8 +158,9 @@ class CheckScheduleManager(QObject):
     def _apply_reconcile_on_main(self, actions: list):
         """
         依背景查到 Encoder 實況：
-        - 未達門檻：僅顯示「⚠️ 不一致 (x/門檻)」+ tooltip，不黃閃、不動 JSON
-        - 達門檻(MISMATCH_THRESHOLD)：mark_aborted() + 修 end=now + 回寫 JSON + 短暫黃閃
+        - 綠色(錄影中)：清除提示/計數
+        - 藍/橘/灰(暫停/準備/轉態/未知...)：只提示，不累計、不動 JSON
+        - 紅色(Stopped/None/No encoder exists/Error)：連續達門檻 → ABORTED + end 切到 now + 寫 suppress_auto_stop
         """
         if not actions:
             return
@@ -174,7 +177,8 @@ class CheckScheduleManager(QObject):
             block = self.find_block_by_id(blk_id)
             if not block or not isValid(block) or block.scene() is None:
                 continue
-            # ✅ 新增：確認 block.encoder_name 與這次檢查的 enc 是否一致
+
+            # ✅ 確認 block.encoder_name 與這次檢查的 enc 是否一致
             blk_enc = getattr(block, "encoder_name", None)
             if blk_enc and blk_enc != enc:
                 try:
@@ -184,38 +188,22 @@ class CheckScheduleManager(QObject):
                     pass
                 self._mismatch_counts.pop(blk_id, None)
                 continue
+
             # --- 讀 Encoder 實況（tuple: (text, color)）---
             stat = act.get("status") or ("", "")
             stat_text  = (stat[0] or "").strip()
             stat_color = (stat[1] or "").strip().lower()
-            t = stat_text.lower()
-
-            # 是否錄影中
-            is_recording = (stat_color == "green") or ("running" in t or "record" in t)
-
-            # 統一理由（給 tooltip）
-            if is_recording:
-                reason = "編碼器回報：錄影中"
-            else:
-                if   "error" in t:       reason = "編碼器回報：錯誤"
-                elif "disconnect" in t:  reason = "編碼器回報：連線中斷"
-                elif "timeout" in t:     reason = "編碼器回報：逾時"
-                elif "stopped" in t:     reason = "編碼器回報：已停止"
-                elif "paused" in t:      reason = "編碼器回報：暫停"
-                elif "idle" in t:        reason = "編碼器回報：待命"
-                elif "none" in t:        reason = "編碼器回報：未知"
-                elif stat_text:          reason = f"編碼器回報：{stat_text}"
-                else:                    reason = "編碼器回報：未知"
 
             # ===== 守門：僅在「UI 顯示錄影中」且「時間命中」時處理 =====
             try:
+                # UI 不是「錄影中」→ 清提示與計數、跳過
                 if "錄影中" not in getattr(block, "status", ""):
                     self._mismatch_counts.pop(blk_id, None)
-                    # 若不是「錄影中」，也順手清掉殘留提示
                     if getattr(block, "live_status", ""):
                         block.set_live_status("")
                         block.setToolTip("")
                     continue
+
                 start_dt = QDateTime(block.start_date, hourf_to_qtime(block.start_hour))
                 end_dt   = block.compute_end_dt()
                 now_dt   = QDateTime.currentDateTime()
@@ -228,10 +216,11 @@ class CheckScheduleManager(QObject):
             except RuntimeError:
                 continue
 
-            # ===== 錄影狀態處理 =====
-            if is_recording:
-                # 恢復錄影 → 清除提示與計數
+            # ===== 顏色分類處理 =====
+            # ✅ 錄影中（綠）：清空所有計數＋清空提示
+            if stat_color == "green":
                 self._mismatch_counts.pop(blk_id, None)
+                self._soft_warn_counts.pop(blk_id, None)
                 try:
                     if getattr(block, "live_status", ""):
                         block.set_live_status("")
@@ -239,71 +228,79 @@ class CheckScheduleManager(QObject):
                 except RuntimeError:
                     pass
                 continue
-            # 不是錄影中 → 進行計數
-            # 不是錄影中 → 進行計數
+
+            # 🟡/🔵/灰/空：過渡或未知 → 完全忽略（不提示、不計數、不動 JSON）
+            if stat_color in ("blue", "orange", "gray", ""):
+                # 確保不殘留舊的軟計數或泡泡
+                self._soft_warn_counts.pop(blk_id, None)
+                try:
+                    if getattr(block, "live_status", "") in ("⚠️ 與實況可能不一致",):
+                        block.set_live_status("")
+                        block.setToolTip("")
+                except RuntimeError:
+                    pass
+                continue
+
+            # ⛔/❌ 紅色：硬否定 → 異常累計（維持原本邏輯）
             cnt = self._mismatch_counts.get(blk_id, 0) + 1
             self._mismatch_counts[blk_id] = cnt
             threshold = getattr(self, "MISMATCH_THRESHOLD", 3)
 
-            if cnt == 1:
-                # 第一次：完全忽略（避免時間差誤會）
-                continue  # 或 continue，依你的 for 迴圈寫法
-
-            elif cnt == 2:
-                # 第二次：只提示，不動 JSON、不閃黃、且不顯示 (2/3)
+            if cnt < threshold:
                 try:
                     msg = "⚠️ 與實況不一致"
                     if getattr(block, "live_status", "") != msg:
                         block.set_live_status(msg)
-                    block.setToolTip(reason)
+                    block.setToolTip(stat_text or "裝置回報：異常")
                 except RuntimeError:
                     pass
-                continue  # 或 continue
-
-            elif cnt >= threshold:
-                self._mismatch_counts.pop(blk_id, None)
-                self.recon_flagged.add(blk_id)
-
-                try:
-                    # 1) UI：長亮橘 + 理由
-                    if hasattr(block, "mark_aborted"):
-                        block.mark_aborted(reason or "編碼器非錄影狀態")
-                    else:
-                        if hasattr(block, "set_state"):
-                            block.set_state("ABORTED")
-                        block.set_live_status(f"⚠️ {reason}")
-
-                    # 2) 時間切到「現在」→ 立刻更新寬度（UI）
-                    now_dt    = QDateTime.currentDateTime()
-                    start_dt2 = QDateTime(block.start_date, hourf_to_qtime(block.start_hour))
-                    new_dur_h = max(0.0, round(start_dt2.secsTo(now_dt) / 3600.0, 3))
-                    block.duration_hours = new_dur_h
-                    block.update_geometry(parent_view.base_date)   # ← UI 立刻縮到現在
-                    block.update_text_position()
-
-                    # 3) 重新計算 end_*，寫回 JSON，並加抑制旗標
-                    end_dt2   = block.compute_end_dt()
-                    end_qdate = end_dt2.date()
-                    et        = end_dt2.time()
-                    end_hour  = round(et.hour() + et.minute()/60 + et.second()/3600, 4)
-
-                    block.update_block_data({
-                        "duration":            new_dur_h,
-                        "end_hour":            end_hour,
-                        "end_qdate":           end_qdate,
-                        "status":              getattr(block, "STATUS_TEXT", {}).get("ABORTED", "狀態：❌ 異常中斷"),
-                        "abnormal":            True,
-                        "abnormal_reason":     reason,
-                        "abnormal_encoder":    enc,
-                        "suppress_auto_stop":  True,   # ← 關鍵：禁止自動 stop
-                    })
-
-                    parent_view.save_schedule()
-                    parent_view.update()
-                except Exception:
-                    pass
-
                 continue
+
+            # ===== 達門檻：標記 ABORTED + end 切到 now + 寫 suppress_auto_stop =====
+            self._mismatch_counts.pop(blk_id, None)
+            self.recon_flagged.add(blk_id)
+
+            try:
+                reason = f"編碼器回報：{stat_text or '異常'}"
+
+                # 1) UI：長亮橘 + 理由
+                if hasattr(block, "mark_aborted"):
+                    block.mark_aborted(reason)
+                else:
+                    if hasattr(block, "set_state"):
+                        block.set_state("ABORTED")
+                    block.set_live_status(f"⚠️ {reason}")
+
+                # 2) 時間切到「現在」→ 立刻更新寬度（UI）
+                now_dt    = QDateTime.currentDateTime()
+                start_dt2 = QDateTime(block.start_date, hourf_to_qtime(block.start_hour))
+                new_dur_h = max(0.0, round(start_dt2.secsTo(now_dt) / 3600.0, 3))
+                block.duration_hours = new_dur_h
+                block.update_geometry(parent_view.base_date)
+                block.update_text_position()
+
+                # 3) 重新計算 end_*，寫回 JSON，並加抑制旗標
+                end_dt2   = block.compute_end_dt()
+                end_qdate = end_dt2.date()
+                et        = end_dt2.time()
+                end_hour  = round(et.hour() + et.minute()/60 + et.second()/3600, 4)
+
+                block.update_block_data({
+                    "duration":            new_dur_h,
+                    "end_hour":            end_hour,
+                    "end_qdate":           end_qdate,
+                    "status":              getattr(block, "STATUS_TEXT", {}).get("ABORTED", "狀態：❌ 異常中斷"),
+                    "abnormal":            True,
+                    "abnormal_reason":     reason,
+                    "abnormal_encoder":    enc,
+                    "suppress_auto_stop":  True,   # ← 關鍵：禁止自動 stop
+                })
+
+                parent_view.save_schedule()
+                parent_view.update()
+            except Exception:
+                pass
+
 
             # # 第三次（含以上）：判定異常，執行提早收尾
             # self._mismatch_counts.pop(blk_id, None)
