@@ -34,7 +34,7 @@ class BlockManager:
         )
         log(f"✅ 已加入 block: {label}")    
         
-        self.view.draw_blocks()
+        # self.view.draw_blocks()
         self.view.save_schedule()
 
     def get_block_by_id(self, block_id):

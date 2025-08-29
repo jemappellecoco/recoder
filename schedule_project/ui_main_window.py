@@ -1108,7 +1108,8 @@ class MainWindow(QMainWindow):
             self._paste_block_at_scene_pos(scene_pos)
 
     def _paste_block_at_scene_pos(self, scene_pos):
-        tpl = self.copied_block_template
+        # tpl = self.copied_block_template
+        tpl = self.copied_block_template.copy()
         tpl.pop("status", None)      # 不複製舊狀態
         tpl.pop("live_status", None) # 也不要帶即時提示
         # 另外別忘了換新的 id
@@ -1178,6 +1179,7 @@ class MainWindow(QMainWindow):
             new_bd["status"] = ""  # JSON 清空
             # 重畫並把活體物件也設回等待中
             self.view.draw_grid()
+            self.view.draw_blocks()
             blk = next((x for x in self.view.blocks if getattr(x, "block_id", None) == new_bd.get("id")), None)
             if blk:
                 blk.set_state("WAITING")
@@ -1406,3 +1408,4 @@ class MainWindow(QMainWindow):
         log("👋 MainWindow 已關閉")
         super().closeEvent(event)
         os._exit(0)
+        QApplication.quit()
